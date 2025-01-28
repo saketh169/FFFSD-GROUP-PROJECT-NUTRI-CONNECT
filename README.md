@@ -1,1 +1,4 @@
-# FFSD-GROUP-PROJECT-NUTRI-CONNECT-   THIS REPO CONSISTS OF FFSD GROUP PROJECT FILES REQUIRED AND IT IS COLLABARATIVELY SHARED AMONG 5 GROUP MEMEBERS
+# FFSD Group Project - Nutri Connect
+Repository Description:
+This repository contains all the essential files for the FFSD Group Project: Nutri Connect. It is collaboratively managed and shared among the 5 group members.
+
