@@ -1,4 +1,4 @@
-const anchorTags = document.querySelectorAll(' a') // Select all anchor tags inside nav-bar
+const anchorTags = document.querySelectorAll('nav a') // Select all anchor tags inside nav-bar
 
 anchorTags.forEach(anchor => {
   anchor.addEventListener('click', event => {
