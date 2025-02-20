@@ -11,7 +11,8 @@
     />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login - Page</title>
+    <title>Login</title>
+    <!-- Bootstrap CSS -->
    
     <style>
       #login{
@@ -58,16 +59,17 @@
          
       }
 
-    
+      
     </style>
   </head>
 
   <body>
     
-    <div id="cross" class="btn btn-outline-success" onclick="location.href='index.html' "
+    <div id="cross" class="btn btn-outline-success" onclick="location.href='practice.html' "
      >
       <i class="fa-solid fa-xmark"  ></i>
     </div>
+    
   
     <section id="login">
       
@@ -78,13 +80,13 @@
         <form id="loginForm" class="needs-validation" novalidate>
           <div class="mb-3">
             <label for="email" class="form-label">Email:</label>
-            <input id="email" type="email" class="form-control" placeholder="Enter Email" required />
+            <input id="email" type="email" class="form-control" placeholder="Enter Email" required minlength="10" maxlength="50"/>
             <div class="invalid-feedback">Please enter a valid email.</div>
           </div>
 
           <div class="mb-3">
             <label for="password" class="form-label">Password:</label>
-            <input id="password" type="password" class="form-control" placeholder="Enter Password" minlength="6" required />
+            <input id="password" type="password" class="form-control" placeholder="Enter Password" minlength="6" maxlength="20" />
             <div class="invalid-feedback">Password must be at least 6 characters long.</div>
           </div>
 
