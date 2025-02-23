@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="user.css" />
+    <link rel="stylesheet" href="Links/css/bootstrap.min.css" />
+    <title> User Page </title>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body>
+    <style>
+      #profile {
+        position: fixed;
+        width: 150px;
+        height: 45px;
+        right: 30px;
+        border-radius: 5px;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between; /* Aligns content horizontally */
+        align-items: center; /* Vertically center content */
+      }
+
+      #profile i {
+        margin: 5px; /* Space between text and icon */
+      }
+
+      #profile div {
+        border: 2px solid green;
+        border-radius: 50%;
+        padding: 5px;
+      }
+      #profile:hover div {
+        border: 2px solid white;
+      }
+    </style>
+
+    <header class="top">
+      <div class="top1">
+        <div id="logo"></div>
+
+        <div
+          id="profile"
+          onclick="location.href='User-Profile.html'"
+          class="btn btn-outline-success"
+        >
+          <b>PROFILE</b>
+          <div>
+            <i class="fa-regular fa-user"></i>
+          </div>
+        </div>
+      </div>
+
+      <!-- Full-Width Navbar with Toggler -->
+      <div class="container-fluid navbar-container">
+        <nav id="nav-bar" class="navbar navbar-expand-lg navbar-light">
+          <div class="container">
+            <!-- Navbar Toggler Icon -->
+            <button
+              id="toggler"
+              class="navbar-toggler"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarNav"
+              style="border: 3px solid #28a745"
+            >
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav mx-auto">
+                <li class="nav-item">
+                  <a class="nav-link" href="user.html">HOME</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="Services.html">SERVICES</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="Diet-Programs.html"
+                    >DIET PROGRAMS</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="Membership.html">MEMBERSHIP</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="Blog.html">BLOG</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="Contactus.html">FAQS</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <div class="ads">
+        <div class="ad" id="ad-1"></div>
+        <div class="ad" id="ad-2"></div>
+        <div class="ad" id="ad-3"></div>
+        <div class="ad" id="ad-4"></div>
+        <div class="ad" id="ad-5"></div>
+        <div class="ad" id="ad-6"></div>
+      </div>
+
+      <div class="dots-container">
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </div>
+
+      <div id="About-content">About-content</div>
+      <div id="Login">Login</div>
+      <div id="Diet-programs-content">Diet-programs-content</div>
+      <div id="Blog-content">Blog-content</div>
+    </main>
+
+    <footer class="bottom">
+      <div class="footer-container">
+        <div class="footer-contact">
+          <h3>Contact Us :</h3>
+          <p>
+            Email :
+            <a href="mailto:nutriconnect6@gmail.com">nutriconnect6@gmail.com</a>
+          </p>
+          <p>Phone : <a href="tel:+19876543210">+91 (987) 654-3210</a></p>
+          <p>Address : 45 Wellness Avenue, Greenfield, CA 93927</p>
+        </div>
+        <div class="footer-follow">
+          <h3>Follow Us :</h3>
+          <div class="social-icons">
+            <a
+              href="https://www.facebook.com/profile.php?id=61572485733709"
+              target="_blank"
+              ><i class="fa-brands fa-facebook fa-xl"></i
+            ></a>
+            <a
+              href="https://www.instagram.com/nutriconnect2025?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+              target="_blank"
+            >
+              <i class="fa-brands fa-instagram fa-xl"></i
+            ></a>
+            <a
+              href="https://x.com/NutriC21?t=ngy3BuReV6VcrXl3WXrCvg&s=09"
+              target="_blank"
+              ><i class="fa-brands fa-x-twitter fa-xl"></i
+            ></a>
+            <a
+              href="https://www.linkedin.com/in/nutri-connect-a0b774349?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
+              target="_blank"
+              ><i class="fa-brands fa-linkedin fa-xl"></i
+            ></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-end">
+        <pre>
+          &copy;2025 Nutri Connect. All Rights Reserved.      </pre
+        >
+        <ul>
+          <li><a href="#privacy">Privacy Policy</a></li>
+          <li><a href="#terms">Terms of Use</a></li>
+        </ul>
+      </div>
+    </footer>
+
+    <script src="user.js"></script>
+    <script src="Links/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+      let slideIndex = 0;
+      let totalAds = document.getElementsByClassName("ad").length;
+      let dots = document.getElementsByClassName("dot");
+
+      function showSlides() {
+        for (let i = 0; i < dots.length; i++) {
+          dots[i].classList.remove("active");
+        }
+        dots[slideIndex].classList.add("active");
+
+        slideIndex++;
+        if (slideIndex >= totalAds) {
+          slideIndex = 0;
+        }
+
+        setTimeout(showSlides, 5000);
+      }
+
+      showSlides();
+
+    
+    </script>
+
+    <script src="active.js"></script>
+  </body>
+</html>
