@@ -109,66 +109,90 @@ body {
 
 .main{
   position: absolute;
-  top:150px;
+  top:110px;
   width:100%;
+  background-color: #f0f8f4; ;
    
 }
 
-/* Home Section */
+
+.index-img {
+  height: 650px;
+  width: 100%;
+  background-image: url("IMAGES/index.jpg");
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+
+  
+}
+
+.index-img::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+ 
+}
+
 #home-part {
-padding: 40px 20px;
-text-align: center;
-background-color: #f0f8f4; 
-border-radius: 10px;
-margin-top: 60px;
-font-family: Arial, sans-serif;
+  position: absolute;
+  left:100px;
+  text-align: center;
+  z-index: 1;
+  color: white;
+  padding: 20px;
+  max-width: 500px;
 }
 
 #home-part h1 {
-font-size: 2.5rem; 
-color: #2c5e1a; 
-margin-bottom: 20px;
+  font-size: 2.5rem;
+  margin-bottom: 20px;
 }
 
 #home-part p {
-font-size: 1.2rem; 
-color: #4e4e4e;
-line-height: 1.6;
-margin-bottom: 20px;
+  font-size: 1.2rem;
+  line-height: 1.6;
+  margin-bottom: 20px;
 }
 
 .slogans h3 {
-font-size: 1.8rem;
-color: #2c5e1a; 
-margin-top: 30px;
-font-weight: bold;
+  font-size: 1.8rem;
+  margin-top: 30px;
+  font-weight: bold;
 }
 
 .slogans p {
-font-size: 1.2rem;
-color: #4e4e4e;
-margin-top: 10px;
-font-style: italic;
+  font-size: 1.2rem;
+  margin-top: 10px;
+  font-style: italic;
+  text-align: center;
 }
 
 #home-part .btn {
-padding: 12px 25px;
-background-color: #4CAF50; 
-color: #fff;
-text-decoration: none;
-border-radius: 5px;
-font-size: 1.1rem;
-font-weight: bold;
-margin-top: 20px;
+  
+  padding: 12px 25px;
+  background-color: #4CAF50;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin-top: 20px;
+  transition: background-color 0.3s ease;
 }
 
 #home-part .btn:hover {
-background-color: #45a049;
+  background-color: #45a049;
 }
 
 #Title {
   position: absolute;
-  top:600px;
+  top:900px;
   width: 100%;
   font-size: 50px;
   text-align: center;
@@ -178,7 +202,7 @@ background-color: #45a049;
 
 .role-cards {
   position: absolute;
-  top:700px;
+  top:1000px;
   left:100px;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive layout */
@@ -186,6 +210,7 @@ background-color: #45a049;
   justify-content: center;
   margin: 50px ;
   width: 80%; 
+  
 }
 
 
@@ -243,7 +268,9 @@ font-weight: bold;
 /* Services Section */
 .services-section {
 border: 3px solid #7fb77e; 
-margin-top: 850px;
+position: absolute;
+top:1750px;
+width: 100%;
 background-color: #e9f7ef;
 padding: 30px;
 border-radius: 10px;
@@ -283,7 +310,9 @@ color: #4e4e4e;
 /* Testimonials Section */
 .testimonials-section {
 border: 3px solid #ffab73; 
-margin-top: 260px;
+position: absolute;
+top:2300px;
+width: 100%;
 background-color: #fff4e5; 
 padding: 30px;
 border-radius: 10px;
@@ -325,7 +354,8 @@ margin-top: 10px;
 /* FAQS Section */
 .faqs-section {
 border: 3px solid #71c9ce; /* Teal Blue */
-margin-top: 200px;
+margin-top:2200px;
+width: 100%;
 background-color: #f2f2f2;
 padding: 30px;
 border-radius: 10px;
@@ -356,23 +386,28 @@ margin-top: 10px;
 
 @media (max-width: 992px) {
 
+  #toggler{
+    margin-top: -5px;
+  }
+  #home{
+    margin-top:20px;
+  }
 .role-cards{
   left:50px; 
 }
 .services-section{
-  margin-top: 1100px;  }
+  margin-top:750px;  }
 
   .testimonials-section{
-    margin-top: 100px;
+    margin-top: 950px;
   }
   .faqs-section {
-    margin-top: 100px;
+    margin-top: 3450px;
   }
-#toggler{
-  margin-top: -5px;
-}
-#home{
-  margin-top:20px;
+
+.bottom{
+  position: absolute;
+  
 }
 
 .navbar-nav .nav-item {
@@ -381,7 +416,39 @@ margin-top: 10px;
     background-color: #98Fb98;
 }
 
+
+.role-cards {
+  grid-template-columns: 1fr;
+  gap: 20px;
+  width: 90%;
+  margin: 0px auto;
 }
+
+.service-cards {
+  flex-direction: column;
+  align-items: center;
+}
+
+.service-card {
+  width: 90%;
+  margin-bottom: 20px;
+}
+
+.testimonial-cards {
+  flex-direction: column;
+  align-items: center;
+}
+
+.testimonial-card {
+  margin-bottom: 20px;
+}
+
+.bottom{
+  margin-top:1500px;
+}
+
+}
+
 
 #User {     
   height:220px;
@@ -421,7 +488,7 @@ margin-top: 10px;
 
 .bottom{
   position: absolute;
-  top:3100px;
+  top:3500px;
   left:0px;
   background-color:#232F3E;
   height:300px;
