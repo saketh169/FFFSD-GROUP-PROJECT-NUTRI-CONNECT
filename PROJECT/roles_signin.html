@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
- 
-  <title> ROLES SIGN-IN PAGE </title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ROLES SIGN-IN PAGE</title>
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link
@@ -18,11 +19,18 @@
       background-color: #f3f8e9; /* Light green background */
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: center;
       height: 100vh;
       margin: 0;
       padding: 0 20px;
     }
+    .signin {
+      display: flex;
+      justify-content: start;
+      width: 100%;
+      
+    }
+    
     .left-side {
       flex: 1;
       display: flex;
@@ -30,7 +38,7 @@
       align-items: center;
     }
     .left-side img {
-      max-width: 80%;
+      max-width: 600px;
       height: auto;
       border-radius: 10px;
     }
@@ -39,6 +47,31 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      min-width: 50%; 
+    }
+
+    /* Media Query for Small Screens */
+    @media (max-width: 992px) {
+      .signin {
+        
+        flex-direction: column; /* Stack items vertically */
+        gap: 20px; 
+        margin-top: 200px;/* Add space between stacked items */
+      }
+      .left-side, .right-side {
+        min-width: 100%; /* Ensure both sides take full width on small screens */
+      }
+      .left-side{
+        order:2;
+      }
+      .right-side{
+        order:1;
+      }
+      .left-side img {
+        max-width: 100%;
+        margin-bottom: 20px; /* Ensure the image scales properly on small screens */
+      }
+
     }
     .signin-box {
       background-color: #ffffff; 
@@ -86,15 +119,16 @@
 <div id="cross" class="btn btn-outline-success" onclick="window.history.back();">
 <i class="fa-solid fa-xmark"></i>
 </div>
-
-  <!-- Left Side: Image -->
-  <div class="left-side">
+   
+<div class="signin">
+   <!-- Left Side: Image -->
+   <div id="signitem" class="left-side">
     <img src="IMAGES/LOGIN.png" alt="Health Image">
   </div>
   
 
   <!-- Right Side: Sign In Box -->
-  <div class="right-side">
+  <div id="signitem"  class="right-side">
     <div class="signin-box">
       <h2>LOGIN</h2>
       <button class="btn btn-primary" onclick="redirectToLogin('user')">User</button>
@@ -104,6 +138,8 @@
     </div>
   </div>
 
+</div>
+ 
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
