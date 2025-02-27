@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  
-  <title> ROLES SIGN-UP PAGE </title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ROLES SIGN-UP PAGE</title>
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link
@@ -18,10 +19,18 @@
       background-color: #f3f8e9; /* Light green background */
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: center;
       height: 100vh;
       margin: 0;
       padding: 0 20px;
+    }
+    .signup {
+      
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+     
     }
     .left-side {
       flex: 1;
@@ -36,7 +45,7 @@
       align-items: center;
     }
     .right-side img {
-      max-width: 80%;
+      max-width: 800px;
       height: auto;
       border-radius: 10px;
     }
@@ -78,6 +87,26 @@
         font-size: 40px;
         border-radius: 100%;
       }
+
+    /* Media Query for Small Screens */
+    @media (max-width: 992px) {
+       
+      .signup {
+        margin-top:150px;
+        flex-direction: column; /* Stack items vertically */
+        gap: 20px; /* Add space between stacked items */
+      }
+      .left-side, .right-side {
+        min-width: 100%; /* Ensure both sides take full width on small screens */
+      }
+      .getstarted-box {
+        width: 100%; /* Make the get-started box full width on small screens */
+        max-width: 400px; /* Optional: Limit the maximum width */
+      }
+      .right-side img {
+        max-width: 100%; /* Ensure the image scales properly on small screens */
+      }
+    }
   </style>
 </head>
 <body>
@@ -86,6 +115,9 @@
 <div id="cross" class="btn btn-outline-success" onclick="window.history.back();">
 <i class="fa-solid fa-xmark"></i>
 </div>
+
+
+<div class="signup">
 
   <!-- Left Side: Get Started Box -->
   <div class="left-side">
@@ -100,8 +132,9 @@
 
   <!-- Right Side: Image -->
   <div class="right-side">
-    <img src="IMAGES\GET-STARTED.avif" alt="Health Image">
+    <img src="IMAGES/GET-STARTED.avif" alt="Health Image">
   </div>
+</div>
 
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
