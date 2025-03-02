@@ -1,136 +1,243 @@
+
+
+
 body {
-    font-family: Arial, sans-serif;
-    color: rgb(51, 51, 51);
-    line-height: 1.6;
-    margin: 0px;
+  font-family: Arial, sans-serif;
+  color: rgb(51, 51, 51);
+  line-height: 1.6;
+  margin: 0px;
 
 }
 
-
 .top {
-    position: fixed;
-    top: 0;
-    height:130px;
-    width: 100%;
-    z-index: 1000;
+  position: fixed;
+  top: 0;
+  height: 130px;
+  width: 100%;
+  z-index: 1;
 }
 
 .top1 {
-   
-    box-shadow: rgba(0, 0, 0, 0.6) 0px 2px 5px;
-    position: fixed;
-    left: 0px;
-    right: 120px;
-    height: 60px;
-    width: 100%;
-    background-color:#D2F0C8;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    z-index: 10;
+  box-shadow: rgba(0, 0, 0, 0.6) 0px 2px 5px;
+  position: fixed;
+  left: 0;
+  right: 0;
+  height: 60px;
+  width: 100%;
+  background-color: #D2F0C8;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
 }
 
+#logo-container {
+  position: absolute;
+  top: 0;
+  left: 50px;
+  padding-top: 6px; /* Add padding to the container */
+  z-index: 100;
+  background-color: #50C878;
+  border-radius: 100%;
+}
 
 #logo {
-    position: fixed;
-    top:0px;
-    left:0px;
-    height: 111px;
-    width: 113px;
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-image: url(IMAGES/Logo.png);
-    border: 3px solid #90ee90;
-   
- 
+  height: 105px;
+  width: 113px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  border-radius: 100%;
+  background-image: url(IMAGES/Logo.png);
+  border: 3px solid  #50C878;
 }
 
 
-#login {
-    position: fixed;
-    right:180px;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-   
-}
 
 /* Navbar Style */
 #nav-bar {
-    position: fixed;
-    top: 60px;
-    left: 110px;
-    width: 96%;
-    height: 50px;
-    z-index: 999; 
-    background-color: #50C878;
-    border: 2px solid #28a745; /* Green outline for navbar */
-   
+  z-index: 10; /* Lower z-index than logo */
+  position: fixed;
+  top: 60px;
+  left: 0;
+  width: 100%;
+  height: 50px;
+  background-color: #50C878;
+  border-bottom: 2px solid #28a745;
 }
 
 /* Navbar Items Spacing */
 .navbar-nav .nav-item {
-    margin: 0px 50px;
+  margin: 0 50px;
 }
 
-
 .navbar-nav .nav-link {
-    font-weight: bold;
-    font-size: 16px;
-    color: white; /* White font color */
-    transition: all 0.3s ease-in-out;
-    padding: 8px 15px;
-    border-radius: 5px;
+  font-weight: bold;
+  font-size: 16px;
+  transition: all 0.3s ease-in-out;
+  padding: 8px 15px;
+  border-radius: 5px;
 }
 
 .navbar-nav .nav-link:hover {
-    margin: 0;
-    background-color: rgba(20, 133, 52, 1); /* Darker Green */
-    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1); /* Shadow effect on hover */
-    transform: translateY(-2px); 
-    color: white !important;
+  background-color: rgba(20, 133, 52, 1);
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+  color: white !important;
 }
-
-
-#active-page a {
-  font-weight: bold;
-  background-color: rgba(10, 90, 35, 1); /* Darker Green */
-  border: 3px solid #28a745;
-  color: white !important; /* Underline effect */
-}
-
 
 .navbar-nav .nav-item.active .nav-link {
-    background-color: rgba(40, 167, 69, 0.8); /* Darker green shade */
-    color: white; /* Text color white */
+  background-color: rgba(40, 167, 69, 0.8);
+  color: white;
 }
 
+#profile {
+  position: fixed;
+  width: 150px;
+  height: 45px;
+  right: 30px;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between; /* Aligns content horizontally */
+  align-items: center; /* Vertically center content */
+}
+
+#profile i {
+  margin: 5px; /* Space between text and icon */
+}
+
+#profile div {
+  border: 2px solid;
+  border-radius: 50%;
+  padding: 5px;
+}
+#profile:hover div {
+  border: 2px solid white;
+}
+
+#contact {
+  background-color: #28a745; /* Green theme */
+  color: white;
+  padding: 10px ;
+  margin-right: 10px;
+  border-radius: 5px;
+  outline:2px solid #46b06C;
+  display: inline-block; 
+  transition: background-color 0.3s ease;
+}
+
+#contact:hover {
+  background-color: #218838; 
+ /* Darker green on hover */
+}
+
+#contact i{
+ font-size: 25px;
+ color: #F8F8F8;
+ 
+}
 
 /* Responsive Design */
 
 @media (max-width: 992px) {
-    #toggler{
-      margin-top: -5px;
-    }
-    #home{
-      margin-top:20px;
-    }
-  
+          
+      #toggler {
+        margin-top: -5px;
+        position: fixed;
+        right: 100px;
+        top: 70px;
+      }
+      #contact{
+      
+        position: fixed;
+        right:10px;
+        top:61.5px;
+      
+      }
     .navbar-nav .nav-item {
         margin: 0px ;
         text-align: center;
         background-color: #98Fb98;
     }
+    .navbar-nav {
+      margin-top:4px;
+    }
+
+    #home{
+      margin-top:50px;
+    }
   
   }
 
-.main{
-    position: absolute;
-    top:200px;
-     width:100%;
-   
- }
+
+    #profile {
+      position: fixed;
+      width: 150px;
+      height: 45px;
+      right: 30px;
+      border-radius: 5px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center; 
+    }
+
+    #profile i {
+      margin: 5px;
+    }
+
+    #profile div {
+      border: 2px solid;
+      border-radius: 50%;
+      padding: 5px;
+    }
+    #profile:hover div {
+      border: 2px solid white;
+    }
+
+    /* Custom Green Shades */
+    .bg-light-green {
+    background-color: #e8f5e9; 
+    }
+
+    .bg-medium-green {
+    background-color: #66bb6a;
+    }
+
+    .bg-dark-green {
+    background-color: #2e7d32;
+    }
+
+    /* Custom Button Colors */
+    .btn-light-green {
+    background-color: #81c784; 
+    border-color: #81c784;
+    color: #fff;
+    }
+
+    .btn-dark-green {
+    background-color: #388e3c; 
+    border-color: #388e3c;
+    color: #fff;
+    }
+
+      
+    .active-page a {
+    font-weight: bold;
+    background-color: #46b06C; 
+    border: 3px solid #28a745;
+    color: white !important; 
+    }
+
+
+    .main{
+        position: absolute;
+        top:200px;
+        width:100%;
+      
+    }
 
  .ads {
     position: absolute;
@@ -239,20 +346,19 @@ body {
     text-align: center;
     align-content: center;
     top:720px;
-    width:100%;
-    height:500px;
-    background-color:lightgray;
-
+    height:auto;
+    
+ 
 }
 
-#Login{
+#guide{
     position: absolute;
     text-align: center;
     align-content: center;
     top:1320px;
-    width:100%;
-    height:450px;
-    background-color:lightgray;
+    height:auto;
+   width: 100%;
+    
 
 }
 
@@ -262,10 +368,11 @@ body {
     position: absolute;
     text-align: center;
     align-content: center;
-    top:1920px;
-    width:100%;
-    height:450px;
-    background-color:lightgray;
+    top:2020px;
+    left:0px;
+    height:auto;
+    width: 100%;
+    
 
 }
 
@@ -274,21 +381,34 @@ body {
     position: absolute;
     text-align: center;
     align-content: center;
-    top:2520px;
-    width:100%;
-    height:400px;
-    background-color:lightgray;
+    top:2620px;
+    left:0px;
+    height:auto;
+    width: 100%;
+    
 
 }
 
 
+#FAQs{
+  position: absolute;
+  text-align: center;
+  align-content: center;
+  top:3220px;
+  left:100px;
+  width:100%;
+  border: 3px solid #71c9ce; /* Teal Blue */
+  padding:50px;
+
+}
+
 
 .bottom{
     position: absolute;
-    top:2950px;
+    top:3800px;
     left:0px;
     background-color:#232F3E;
-    height:300px;
+    height:auto;
     width:100%;
     width: 100%;
     color: #FFFFFF;
