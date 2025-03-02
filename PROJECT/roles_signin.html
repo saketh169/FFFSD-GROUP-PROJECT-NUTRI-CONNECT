@@ -12,7 +12,7 @@
   integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
   crossorigin="anonymous"
   referrerpolicy="no-referrer"
-/>
+ />
   
   <style>
     body {
@@ -24,83 +24,59 @@
       margin: 0;
       padding: 0 20px;
     }
-    .signin {
-      display: flex;
-      justify-content: start;
-      width: 100%;
+    .signup {
       
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+     
     }
-    
     .left-side {
       flex: 1;
       display: flex;
       justify-content: center;
       align-items: center;
     }
-    .left-side img {
-      max-width: 600px;
-      height: auto;
-      border-radius: 10px;
-    }
     .right-side {
       flex: 1;
       display: flex;
       justify-content: center;
       align-items: center;
-      min-width: 50%; 
     }
-
-    /* Media Query for Small Screens */
-    @media (max-width: 992px) {
-      .signin {
-        
-        flex-direction: column; /* Stack items vertically */
-        gap: 20px; 
-        margin-top: 200px;/* Add space between stacked items */
-      }
-      .left-side, .right-side {
-        min-width: 100%; /* Ensure both sides take full width on small screens */
-      }
-      .left-side{
-        order:2;
-      }
-      .right-side{
-        order:1;
-      }
-      .left-side img {
-        max-width: 100%;
-        margin-bottom: 20px; /* Ensure the image scales properly on small screens */
-      }
-
+    .right-side img {
+      max-width: 800px;
+      height: auto;
+      border-radius: 10px;
     }
-    .signin-box {
-      background-color: #ffffff; 
-      border: 2px solid #a3c293;
-      border-radius: 12px; 
-      padding: 40px; 
-      width: 500px;
-      height: 400px; 
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    .login-box {
+      background-color: #ffffff; /* White background */
+      border: 2px solid #a3c293; /* Light green border */
+      border-radius: 12px; /* Rounded corners */
+      padding: 40px; /* Increased padding */
+      width: 500px; /* Increased width */
+      height: 400px; /* Increased height */
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
       text-align: center;
       display: flex;
       flex-direction: column;
       justify-content: center;
     }
-    .signin-box h2 {
-      color: #4d7c3f; 
-      margin-bottom: 30px; 
+    .login-box h2 {
+      color: #4d7c3f; /* Dark green text */
+      margin-bottom: 30px; /* Increased margin */
     }
-    .signin-box .btn {
-      background-color: #6a994e; 
+    .login-box .btn {
+      background-color: #6a994e; /* Green button */
       border: none;
       transition: background-color 0.3s; /* Smooth hover effect */
       width: 100%;
-      padding: 12px;
-      margin-top: 15px; 
-      font-size: 16px; 
+      padding: 12px; /* Increased padding */
+      margin-top: 15px; /* Increased margin */
+      font-size: 16px; /* Increased font size */
     }
-    .signin-box .btn:hover {
-      background-color: #4d7c3f; 
+    .login-box .btn:hover {
+      background-color: #4d7c3f; /* Darker green on hover */
     }
 
     #cross {
@@ -111,6 +87,26 @@
         font-size: 40px;
         border-radius: 100%;
       }
+
+    /* Media Query for Small Screens */
+    @media (max-width: 992px) {
+     
+      .signup {
+        margin-top:150px;
+        flex-direction: column; /* Stack items vertically */
+        gap: 20px; /* Add space between stacked items */
+      }
+      .left-side, .right-side {
+        min-width: 100%; /* Ensure both sides take full width on small screens */
+      }
+      .login-box {
+        width: 100%; /* Make the get-started box full width on small screens */
+        max-width: 400px; /* Optional: Limit the maximum width */
+      }
+      .right-side img {
+        max-width: 100%; /* Ensure the image scales properly on small screens */
+      }
+    }
   </style>
 </head>
 <body>
@@ -119,33 +115,33 @@
 <div id="cross" class="btn btn-outline-success" onclick="window.history.back();">
 <i class="fa-solid fa-xmark"></i>
 </div>
-   
-<div class="signin">
-   <!-- Left Side: Image -->
-   <div id="signitem" class="left-side">
-    <img src="IMAGES/LOGIN.png" alt="Health Image">
-  </div>
-  
 
-  <!-- Right Side: Sign In Box -->
-  <div id="signitem"  class="right-side">
-    <div class="signin-box">
+
+<div class="signup">
+
+  <!-- Left Side: Get Started Box -->
+  <div class="left-side">
+    <div class="login-box">
       <h2>LOGIN</h2>
-      <button class="btn btn-primary" onclick="redirectToLogin('user')">User</button>
-      <button class="btn btn-primary" onclick="redirectToLogin('dietitian')">Dietitian</button>
-      <button class="btn btn-primary" onclick="redirectToLogin('admin')">Admin</button>
-      <button class="btn btn-primary" onclick="redirectToLogin('organization')">Organization</button>
+      <button class="btn btn-primary" onclick="redirectToSignin('user')">User</button>
+      <button class="btn btn-primary" onclick="redirectToSignin('dietitian')">Dietitian</button>
+      <button class="btn btn-primary" onclick="redirectToSignin('admin')">Admin</button>
+      <button class="btn btn-primary" onclick="redirectToSignin('organization')">Organization</button>
     </div>
   </div>
 
+  <!-- Right Side: Image -->
+  <div class="right-side">
+    <img src="IMAGES/LOGIN.avif" alt="Health Image">
+  </div>
 </div>
- 
+
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    function redirectToLogin(role) {
+    function redirectToSignin(role) {
         window.location.href = `Sign_in.html?role=${role}`;
-      }
+    }
 </script>
 
 </body>
