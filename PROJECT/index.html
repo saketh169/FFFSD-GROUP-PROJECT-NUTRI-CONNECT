@@ -13,10 +13,11 @@
       referrerpolicy="no-referrer"
     />
   </head>
+  
   <body>
     <header class="top">
       <div class="top1">
-        <div id="logo"></div>
+        
         <button
           id="login"
           onclick="location.href='roles_signin.html'"
@@ -31,6 +32,10 @@
         >
           <b>Get Started</b>
         </button>
+      </div>
+
+      <div id="logo-container">
+        <div id="logo"></div>
       </div>
 
       <!-- Full-Width Navbar with Toggler -->
@@ -50,7 +55,7 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
               <ul class="navbar-nav mx-auto">
-                <li class="nav-item" id="home">
+                <li class="nav-item " id="home">
                   <a class="nav-link" href="#home">HOME</a>
                 </li>
                 <li class="nav-item">
@@ -65,14 +70,18 @@
                 <li class="nav-item">
                   <a class="nav-link" href="#FAQS">FAQS</a>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="Contactus.html">CONTACT US</a>
-                </li>
+               
               </ul>
             </div>
           </div>
+          <a id="contact"  href="Contactus.html"> <i class="fa-solid fa-phone-volume"></i></a>
+         
         </nav>
+        
       </div>
+      
+        
+      
     </header>
 
     <main class="main">
@@ -88,7 +97,7 @@
               <h3>Empowering Your Health Journey</h3>
               <p>"Your health, your choice, our guidance."</p>
             </div>
-            <a href="#services" class="btn">Explore Our Services</a>
+            <button onclick=" window.scrollTo({ top: 1650, behavior: 'smooth' });" class="btn">Explore Our Services</button>
           </section>
 
         </div>
