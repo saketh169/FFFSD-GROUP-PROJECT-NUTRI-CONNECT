@@ -185,6 +185,9 @@ body {
   .user-guide-section .content {
     margin-bottom: 20px;
   }
+  .lab-container img {
+    margin-top: 50px;
+  }
 
 
   }
