@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Received Queries</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e8f5e9; /* Light green background */
+            color: #333;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .container {
+            background-color: #ffffff; /* White container */
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 800px;
+        }
+        h1 {
+            color: #2e7d32; /* Darker green text */
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: bold;
+        }
+        .query-card {
+            background-color: #f5f5f5; /* Light gray background */
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .query-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        .query-card h5 {
+            margin-bottom: 10px;
+            color: #2e7d32; /* Darker green text */
+            font-weight: bold;
+        }
+        .query-card p {
+            margin: 5px 0;
+            color: #555;
+        }
+        .query-card .role {
+            font-weight: bold;
+            color: #007bff;
+        }
+        .query-card .timestamp {
+            font-size: 0.9em;
+            color: #777;
+        }
+        .reply-button {
+            background-color: #2e7d32; /* Darker green button */
+            color: #fff;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .reply-button:hover {
+            background-color: #1b5e20; /* Even darker green on hover */
+        }
+        .reply-section {
+            display: none;
+            margin-top: 15px;
+        }
+        .reply-section textarea {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            margin-bottom: 10px;
+            resize: vertical; /* Allow vertical resizing */
+        }
+        .reply-section button {
+            background-color: #2e7d32; /* Darker green button */
+            color: #fff;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .reply-section button:hover {
+            background-color: #1b5e20; /* Even darker green on hover */
+        }
+
+        #cross {
+            position: fixed;
+            top: 5px;
+            left: 10px;
+            line-height: 20px;
+            font-size: 40px;
+            border-radius: 100%;
+        }
+      
+      
+    
+    </style>
+</head>
+<body>
+  
+    <!-- Back Button -->
+    <div id="cross" class="btn btn-outline-success" onclick="window.history.back();">
+        <i class="fa-solid fa-xmark"></i>
+    </div>
+    <div class="container">
+        <h1>Received Queries</h1>
+        <div id="queries-container">
+            <!-- Queries will be dynamically inserted here -->
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+
+    <!-- JavaScript to fetch and display queries -->
+    <script>
+        // Sample data (replace with data fetched from a backend API)
+        const queries = [
+            {
+                id: 1,
+                role: "User",
+                name: "John Doe",
+                email: "john.doe@example.com",
+                message: "How can I reset my password?",
+                timestamp: "2023-10-15 10:30 AM"
+            },
+            {
+                id: 2,
+                role: "Dietitian",
+                name: "Jane Smith",
+                email: "jane.smith@example.com",
+                message: "I am unable to upload my certification documents.",
+                timestamp: "2023-10-14 03:45 PM"
+            },
+            {
+                id: 3,
+                role: "User",
+                name: "Alice Johnson",
+                email: "alice.johnson@example.com",
+                message: "Can I change my diet plan after signing up?",
+                timestamp: "2023-10-13 09:15 AM"
+            },
+            {
+                id: 4,
+                role: "Organization",
+                name: "Nutri Connect",
+                email: "support@nutriconnect.org",
+                message: "We are experiencing issues with our payment gateway. Please assist.",
+                timestamp: "2023-10-12 02:00 PM"
+            },
+            {
+                id: 5,
+                role: "User",
+                name: "Michael Brown",
+                email: "michael.brown@example.com",
+                message: "How do I contact a dietitian for a consultation?",
+                timestamp: "2023-10-11 11:45 AM"
+            },
+            {
+                id: 6,
+                role: "Dietitian",
+                name: "Sarah Lee",
+                email: "sarah.lee@example.com",
+                message: "Can you provide more details about the new diet plan guidelines?",
+                timestamp: "2023-10-10 04:20 PM"
+            }
+        ];
+
+        // Function to display queries
+        function displayQueries() {
+            const queriesContainer = document.getElementById("queries-container");
+            queriesContainer.innerHTML = ""; // Clear existing content
+
+            queries.forEach(query => {
+                const queryCard = document.createElement("div");
+                queryCard.className = "query-card";
+
+                queryCard.innerHTML = `
+                    <h5>${query.role}: ${query.name}</h5>
+                    <p><strong>Email:</strong> ${query.email}</p>
+                    <p><strong>Message:</strong> ${query.message}</p>
+                    <p class="timestamp"><strong>Received:</strong> ${query.timestamp}</p>
+                    <button class="reply-button" onclick="toggleReplySection(${query.id})">Reply</button>
+                    <div id="reply-section-${query.id}" class="reply-section">
+                        <textarea placeholder="Type your reply here..."></textarea>
+                        <button onclick="sendReply(${query.id})">Send Reply</button>
+                    </div>
+                `;
+
+                queriesContainer.appendChild(queryCard);
+            });
+        }
+
+        // Function to toggle reply section visibility
+        function toggleReplySection(queryId) {
+            const replySection = document.getElementById(`reply-section-${queryId}`);
+            replySection.style.display = replySection.style.display === "block" ? "none" : "block";
+        }
+
+        // Function to send a reply (simulated)
+        function sendReply(queryId) {
+            const replyText = document.querySelector(`#reply-section-${queryId} textarea`).value;
+            if (replyText.trim()) {
+                alert(`Reply sent for query ID ${queryId}:\n\n${replyText}`);
+                document.querySelector(`#reply-section-${queryId} textarea`).value = ""; // Clear textarea
+                toggleReplySection(queryId); // Hide reply section
+            } else {
+                alert("Please enter a reply.");
+            }
+        }
+
+        // Display queries when the page loads
+        window.onload = displayQueries;
+    </script>
+</body>
+</html>

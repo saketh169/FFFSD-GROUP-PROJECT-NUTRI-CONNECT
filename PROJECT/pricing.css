@@ -1,0 +1,237 @@
+body{
+    background-color: rgb(220, 223, 220);
+   
+}
+.textcenter{
+    text-align: center;
+}
+
+.heading{
+    font-size: 30px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    padding-top: 30px;
+    
+
+}
+.text{
+font-size: large;
+}
+
+.plan1{
+    padding: 10px;
+    font-size: large;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+    border-radius: 6px;
+    cursor: pointer;
+    background-color: #28a745;
+    color: white;
+}
+.plan1:hover{
+    background-color: #218838;
+    
+    transform: scale(1.05);
+}
+.plan2{
+    padding: 10px;
+    font-size: large;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+    border-radius: 6px;
+    background-color: #28a745;
+    color: white;
+    margin-left: 7px;
+}
+
+
+.plan2:hover{
+    background-color: #218838;
+    transform: scale(1.05);
+}
+
+.container1{
+    display: flex;
+    gap: 20px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+/* Plan card */
+.plancard1{
+    background:white;
+    border-radius: 10px;
+    padding: 20px;
+    width: 250px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: 0.3s;
+    border: 2px solid #4CAF50;
+    margin-bottom: 10px;
+}
+
+.plancard1:hover{
+    transform: scale(1.05);
+}
+.plan1para{
+    color: #555;
+    font-size: 14px;
+}
+.price1{
+    font-size: 24px;
+    font-weight: bold;
+    color: black;
+    margin:15px 0px;
+
+}
+.b1{
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    width: 100%;
+    
+}
+.b1:hover{
+    background-color:#218838;
+}
+.plancard2{
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    width: 250px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: 0.3s;
+    border: 2px solid #4CAF50;
+    margin-bottom: 10px;
+}
+
+
+.plancard2:hover {
+    transform: scale(1.05);
+}
+
+
+.plan2para{
+    color: #555;
+    font-size: 14px;
+}
+
+.price2{
+    font-size: 24px;
+    font-weight: bold;
+    color: black;
+    margin: 15px 0;
+}
+
+/* Button */
+.b2{
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    width: 100%;
+}
+
+.b2:hover {
+    background-color: #218838;
+}
+
+.plancard3{
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    width: 250px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: 0.3s;
+    border: 2px solid #4CAF50;
+    margin-bottom: 10px;
+}
+
+.plancard3:hover {
+    transform: scale(1.05);
+}
+.plan3para{
+    color: #555;
+    font-size: 14px;
+}
+.price3{
+    font-size: 24px;
+    font-weight: bold;
+    color: black;
+    margin: 15px 0;
+}
+.b3{
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    width: 100%;
+    
+}
+.b3:hover {
+    background-color: #218838;
+}
+
+table {
+    width: 90%;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+}
+
+thead {
+    background: white;
+    font-weight: bold;
+}
+
+thead .p-1{
+    padding: 15px;
+    text-align: left;
+    font-size: 18px;
+    color: black;
+    border-bottom: 1px solid #ddd;
+}
+
+.p-2{
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+.border-b:last-child .p-2 {
+    border-bottom: none;
+}
+
+.p-2{
+    font-weight: bold;
+}
+
+.p-2{
+    font-size: 16px;
+}
+.p-3{
+    padding: 15px;
+    text-align: left;
+    font-size: 18px;
+    color: black;
+    border-bottom: 1px solid #ddd;
+    font-weight: bold;
+}
+
+.p-2{
+    color:#805ad5;
+    font-size: 18px;
+}
+

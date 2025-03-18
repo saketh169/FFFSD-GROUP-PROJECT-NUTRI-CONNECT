@@ -1,0 +1,113 @@
+
+app.get('/user_dash', (req, res) => {
+  // Example user data (replace with actual data from the database or session)
+  const user = {
+    name: 'John Doe',
+    age: 30,
+    email: 'john.doe@example.com',
+    phone: '+1234567890',
+    dob: '1993-05-15',
+  };
+
+  // Render the template and pass the user object
+  res.render('dash_user', { title: 'User Dashboard', user: user });
+});
+
+app.get('/dietitian_dash', (req, res) => {
+  // Example dietitian data (replace with actual data from the database or session)
+  const dietitian = {
+    name: 'Dr. Jane Smith',
+    email: 'janesmith@example.com',
+    specialization: 'Weight Loss, Sports Nutrition',
+    experience: '10+ years',
+    location: 'New York, USA',
+  };
+
+  // Render the template and pass the dietitian object
+  res.render('dash_dietitian', { title: 'Dietitian Dashboard', dietitian: dietitian });
+});
+
+app.get('/admin_dash', (req, res) => {
+  // Example admin data (replace with actual data from the database or session)
+  const admin = {
+    name: 'Admin Name',
+    email: 'admin@nutriconnect.com',
+    phone: '+91 98765 43210',
+    role: 'Super Admin',
+  };
+
+  // Render the template and pass the admin object
+  res.render('dash_admin', { title: 'Admin Dashboard', admin: admin });
+});
+
+app.get('/organization_dash', (req, res) => {
+  // Example organization data (replace with actual data from the database or session)
+  const organization = {
+    name: 'World Education Services',
+    email: 'WES123@gmail.com',
+    phone: '+91 98765 43210',
+    address: 'Plot No. 45, Greenway Colony, 517681, India',
+  };
+
+  // Render the template and pass the organization object
+  res.render('dash_organization', { title: 'Organization Dashboard', organization: organization });
+});
+
+/*
+
+Here are all 8 links for both Signin and Signup routes, based on the four roles (user, dietitian, admin, and organization):
+
+Signin Links
+User Signin:
+http://localhost:3000/Signin?role=user
+
+Dietitian Signin:
+http://localhost:3000/Signin?role=dietitian
+
+Admin Signin:
+http://localhost:3000/Signin?role=admin
+
+Organization Signin:
+http://localhost:3000/Signin?role=organization
+
+Signup Links
+User Signup:
+http://localhost:3000/Signup?role=user
+
+Dietitian Signup:
+http://localhost:3000/Signup?role=dietitian
+
+Admin Signup:
+http://localhost:3000/Signup?role=admin
+
+Organization Signup:
+http://localhost:3000/Signup?role=organization
+
+*/
+
+
+
+// Route for the sign-in page with role-based rendering
+router.get('/Signin', (req, res) => {
+  const role = req.query.role; // Get the role from the query parameter
+  if (!role) {
+      return res.status(400).send('Role is required');
+  }
+
+  // Construct the path to Sign_in.html
+  const signInPath = path.join(__dirname, '../Sign_in.html'); // Go up one level and into PROJECT/Sign_in.html
+  res.sendFile(signInPath); // Serve Sign_in.html from the correct directory
+})
+
+// Route for the sign-up page with role-based rendering
+router.get('/Signup', (req, res) => {
+  const role = req.query.role; // Get the role from the query parameter
+  if (!role) {
+      return res.status(400).send('Role is required');
+  }
+
+  // Construct the path to Sign_up.html
+  const signUpPath = path.join(__dirname, '../Sign_up.html'); // Go up one level and into PROJECT/Sign_up.html
+  res.sendFile(signUpPath); // Serve Sign_up.html from the correct directory
+});
+

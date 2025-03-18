@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="pricing.css">
+    <title>Document</title>
+   
+</head>
+<style>
+   
+    #cross {
+        position: fixed;
+        top: 5px;
+        left: 10px;
+        line-height: 20px;
+        font-size: 40px;
+        border-radius: 100%;
+    }
+    </style>
+<body>
+    <!-- Back Button -->
+    <div id="cross" class="btn btn-outline-success" onclick="window.history.back();">
+    <i class="fa-solid fa-xmark"></i>
+    </div>
+
+    <div class="container1">
+        <div class="plancard1">
+            <h2 class="h1">Basic Plan</h2>
+            <p class="plan1para"> </p>
+            <p class="plan1para">Personalized nutrition plan, email support, and health tracking tools.</p>
+            <p class="price1"><span>&#8377</span>999<span>/year</span></p>
+            <button class="b1" onclick="window.location.href='pricing_asic.html'">Choose Plan</button>
+        </div>
+        
+        <div class="plancard2">
+            <h2 class="h2">Premium Plan</h2>
+            <p class="plan2para"> </p>
+            <p class="plan2para">Includes all Basic features, meal planning assistance, and priority support.</p>
+            <p class="price2"><span>&#8377</span>1999<span>/year</span></p>
+            <button class="b2" onclick="window.location.href='pricing_premium.html'">Choose Plan</button>
+        </div>
+        
+        <div class="plancard3">
+            <h2 class="h2">Ultimate Plan</h2>
+            <p class="plan3para"> </p>
+            <p class="plan3para">All Premium features, plus in-depth health analysis and personal coaching.</p>
+            <p class="price3"><span>&#8377</span>2999<span>/year</span></p>
+            <button class="b3" onclick="window.location.href='pricing_ultimate.html'">Choose Plan</button>
+        </div>
+    </div>
+</body>
+</html>

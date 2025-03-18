@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="Links/css/bootstrap.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <!-- Bootstrap CSS -->
+   
+    <style>
+      #login{
+        margin:0px;
+
+      }
+      body {
+        background-color: #f3f8e9; 
+      }
+      .card {
+        background-color: #ffffff; 
+        border-radius: 12px;
+        border: 2px solid #a3c293; 
+      }
+      h2 {
+        color: #4d7c3f; 
+        font-weight: bold;
+      }
+      .form-label {
+        color: #52734d; 
+        font-weight: 500;
+      }
+      .form-control {
+        border: 1px solid #a3c293;
+      }
+      .btn-primary {
+        background-color: #6a994e; 
+        border: none;
+        transition: 0.3s;
+      }
+      .btn-primary:hover {
+        background-color: #4d7c3f;
+      }
+      .invalid-feedback {
+        color: #b23e3e; 
+      }
+
+      #cross{
+         position:fixed;
+         top:5px; left:10px; 
+         line-height: 20px;
+         font-size:40px; 
+         border-radius:100%;     
+         
+      }
+
+      
+    </style>
+  </head>
+
+  <body>
+    
+    <div id="cross" class="btn btn-outline-success" onclick="location.href='practice.html' "
+     >
+      <i class="fa-solid fa-xmark"  ></i>
+    </div>
+    
+  
+    <section id="login">
+      
+    <div class="container min-vh-100 d-flex justify-content-center align-items-center">
+      <div class="card p-4 shadow-lg" style="height:430px; max-width: 400px; width: 100%">
+        <h2 class="text-center mb-4"><b>LOGIN</b></h2>
+
+        <form id="loginForm" class="needs-validation" novalidate>
+          <div class="mb-3">
+            <label for="email" class="form-label">Email:</label>
+            <input id="email" type="email" class="form-control" placeholder="Enter Email" required minlength="10" maxlength="50"/>
+            <div class="invalid-feedback">Please enter a valid email.</div>
+          </div>
+
+          <div class="mb-3">
+            <label for="password" class="form-label">Password:</label>
+            <input id="password" type="password" class="form-control" placeholder="Enter Password" minlength="6" maxlength="20" />
+            <div class="invalid-feedback">Password must be at least 6 characters long.</div>
+          </div>
+
+          <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" id="rememberMe" />
+            <label class="form-check-label" for="rememberMe">Remember Me</label>
+          </div>
+
+          <div class="d-grid">
+            <button type="submit" class="btn btn-primary">Login</button>
+          </div>
+
+          <p class="text-center mt-3">
+            Don't have an account? <a href="Get-started.html" style="color: #6a994e; text-decoration: none;">Get Started</a>
+          </p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- JavaScript for Form Validation -->
+    <script>
+      (function () {
+        "use strict";
+        let form = document.getElementById("loginForm");
+
+        form.addEventListener("submit", function (event) {
+          if (!form.checkValidity()) {
+            event.preventDefault();
+            event.stopPropagation();
+          }
+          form.classList.add("was-validated");
+        }, false);
+      })();
+
+    </script>
+  </body>
+</html>
