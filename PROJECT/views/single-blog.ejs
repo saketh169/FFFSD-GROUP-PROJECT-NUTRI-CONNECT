@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= blog.title %></title> <!-- Changed post to blog -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0fff4;
+            color: #333;
+        }
+        
+        header {
+            background: #28a745;
+            color: white;
+            text-align: center;
+            padding: 1.5em;
+            font-size: 24px;
+        }
+        
+        main {
+            padding: 20px;
+            max-width: 800px;
+            margin: auto;
+            text-align: center;
+        }
+        
+        img {
+            width: 100%;
+            max-width: 400px;
+            height: auto;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        
+        article {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: left;
+        }
+        
+        h3 {
+            color: #28a745;
+        }
+        
+        p {
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .back-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+        }
+
+        .back-button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1><%= blog.title %></h1> <!-- Changed post to blog -->
+    </header>
+
+    <main>
+        <img src="<%= blog.image %>" alt="<%= blog.title %>"> <!-- Changed post to blog -->
+        <article>
+            <p><%= blog.content %></p> <!-- Changed post to blog -->
+        </article>
+
+        <a href="/" class="back-button">Back to Blog</a>
+    </main>
+</body>
+</html>

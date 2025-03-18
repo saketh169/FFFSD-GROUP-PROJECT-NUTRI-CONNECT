@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <style>
+        .logo {
+            display: flex;
+            align-items: center;
+            font-family: 'Poppins', sans-serif;
+            font-size: 24px;
+            font-weight: bold;
+            color: #1E6F5C;
+            text-decoration: none;
+            background-color: #D2F0C8;
+            width: auto;
+            height: 50px;
+            top: 2px;
+            position: sticky;
+            border-radius: 10px;
+            padding: 10px;
+        }
+
+        .logo .highlight {
+            color: #28B463;
+        }
+
+        .logo .icon-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: #28B463;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .logo .icon {
+            font-size: 24px;
+            color: #FFFFFF;
+        }
+
+        .logo:hover .icon-container {
+            background-color: #1E6F5C;
+            transform: scale(1.1);
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover {
+            color: #28B463;
+            transition: color 0.3s ease;
+        }
+
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .navbar {
+            background-color: #28a745;
+        }
+
+        .sidebar {
+            background-color: #343a40;
+            color: white;
+            padding: 20px;
+        }
+
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .sidebar a:hover {
+            background-color: #28a745;
+        }
+
+        .main-content {
+            padding: 20px;
+        }
+
+        .card {
+            margin-bottom: 20px;
+            border: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            background-color: #28a745;
+            color: white;
+            font-weight: bold;
+        }
+
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border: 5px solid #28a745;
+            border-radius: 50%;
+        }
+
+        .badge {
+            font-size: 0.9em;
+        }
+
+        .btn-custom {
+            margin: 5px;
+        }
+
+        .contact-icon {
+            color: #1E90FF;
+            transition: color 0.3s ease;
+            margin-left: 10px;
+        }
+
+        .contact-icon:hover {
+            color: #00BFFF;
+        }
+
+        .address-text {
+            color: #1E90FF;
+            transition: color 0.3s ease;
+        }
+
+        .social-icons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .social-icons a {
+            color: #1E90FF;
+            transition: color 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            color: #00BFFF;
+        }
+
+        .contact-section {
+            margin-top: 100px;
+            padding: 10px;
+            border: 4px solid #00BFFF;
+            border-radius: 10px;
+        }
+
+        .contact-section h3 {
+            margin-bottom: 20px;
+        }
+
+        .contact-section a:hover {
+            background-color: #007ACC;
+        }
+
+        .contact-footer {
+            display: none;
+            position: relative;
+            top: 0px;
+            background-color: #343a40;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .social-icons {
+                flex-direction: row;
+                justify-content: center;
+                gap: 30px;
+            }
+
+            .main-content {
+                position: relative;
+                top: 0px;
+            }
+
+            .contact-section {
+                display: none;
+            }
+
+            .contact-footer {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <div class="logo">
+                <div class="icon-container">
+                    <i class="icon fas fa-leaf"></i>
+                </div>
+                <span>
+                    <span class="highlight">N</span>utri
+                    <span class="highlight">C</span>onnect
+                    <span>: Admin</span>
+                </span>
+            </div>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Layout -->
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-3 col-lg-2 sidebar">
+                <h4>Menu</h4>
+                <a href="/admin"><i class="fas fa-home"></i> Home</a>
+                <a href="/verify_org"><i class="fas fa-shield-alt"></i> Verify Organization</a>
+                <a href="/admin_dash"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                <a href="/queries"><i class="fas fa-database"></i> Queries</a> 
+                
+
+                <!-- Contact Section -->
+                <div class="contact-section">
+                    <h3>Contact Us :</h3>
+                    <p>
+                        Email :
+                        <a href="https://mail.google.com/mail/?view=cm&to=nutriconnect6@gmail.com" target="_blank">
+                            <i class="fa-solid fa-envelope fa-lg contact-icon"></i>
+                        </a>
+                    </p>
+                    <p>
+                        Phone :
+                        <a href="tel:+917075783143">
+                            <i class="fa-solid fa-phone fa-lg contact-icon"></i>
+                        </a>
+                    </p>
+                    <h3>Follow Us :</h3>
+                    <div class="social-icons">
+                        <a href="https://www.facebook.com/profile.php?id=61572485733709" target="_blank">
+                            <i class="fa-brands fa-facebook fa-xl"></i>
+                        </a>
+                        <a href="https://www.instagram.com/nutriconnect2025?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank">
+                            <i class="fa-brands fa-instagram fa-xl"></i>
+                        </a>
+                        <a href="https://x.com/NutriC21?t=ngy3BuReV6VcrXl3WXrCvg&s=09" target="_blank">
+                            <i class="fa-brands fa-x-twitter fa-xl"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/in/nutri-connect-a0b774349?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank">
+                            <i class="fa-brands fa-linkedin fa-xl"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="col-md-9 col-lg-10 main-content">
+                <h2>Welcome, <%= admin.name %>!</h2>
+
+                <!-- Admin Info & Quick Stats -->
+                <div class="row d-flex align-items-start">
+                    <!-- Admin Info -->
+                    <div class="col-md-4">
+                        <div class="card text-center pb-4">
+                            <div class="card-header">Admin Profile</div>
+                            <div class="card-body">
+                                <img src="https://www.shutterstock.com/image-photo/serious-handsome-young-indian-professional-260nw-2451794195.jpg"
+                                    class="profile-img rounded-circle" alt="Admin Image">
+                                <h5 class="card-title mt-2"><%= admin.name %></h5>
+                                <p><strong>Email:</strong> <%= admin.email %></p>
+                                <p><strong>Phone:</strong> <%= admin.phone %></p>
+                                <p><strong>Role:</strong> Super Admin</p>
+                                <button class="btn btn-outline-primary btn-sm btn-custom">Edit Profile</button>
+                                <button class="btn btn-outline-secondary btn-sm btn-custom">Change Password</button>
+                                <span class="badge bg-success">Active</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Stats Section -->
+                    <div class="col-md-8 d-flex flex-column gap-3">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-header">Total Users</div>
+                                    <div class="card-body">
+                                        <h3 class="card-title">1,234</h3>
+                                        <p class="card-text">Registered users on the platform.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-header">Active Meal Plans</div>
+                                    <div class="card-body">
+                                        <h3 class="card-title">567</h3>
+                                        <p class="card-text">Meal plans currently active.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Chart Section -->
+                        <div class="card">
+                            <div class="card-header">Website Growth Statistics</div>
+                            <div class="card-body">
+                                <canvas id="growthChart" width="400" height="200"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Activity Section -->
+                <div class="card mt-4">
+                    <div class="card-header">Recent Activity</div>
+                    <div class="card-body">
+                        <ul class="list-group">
+                            <li class="list-group-item">New user registered: John Doe</li>
+                            <li class="list-group-item">Meal plan "Weight Loss" updated</li>
+                            <li class="list-group-item">New subscription: Monthly Plan</li>
+                            <li class="list-group-item">User feedback received</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Section as Footer (Hidden on Large Screens, Visible on Small Screens) -->
+    <div class="contact-footer">
+        <h3>Contact Us :</h3>
+        <p>
+            Email :
+            <a href="https://mail.google.com/mail/?view=cm&to=nutriconnect6@gmail.com" target="_blank">
+                <i class="fa-solid fa-envelope fa-lg contact-icon"></i>
+            </a>
+        </p>
+        <p>
+            Phone :
+            <a href="tel:+917075783143">
+                <i class="fa-solid fa-phone fa-lg contact-icon"></i>
+            </a>
+        </p>
+        <p>
+            Address :
+            <span class="address-text">Plot No. 45, Greenway Colony, 517681, India</span>
+        </p>
+        <h3>Follow Us :</h3>
+        <div class="social-icons">
+            <a href="https://www.facebook.com/profile.php?id=61572485733709" target="_blank">
+                <i class="fa-brands fa-facebook fa-xl"></i>
+            </a>
+            <a href="https://www.instagram.com/nutriconnect2025?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank">
+                <i class="fa-brands fa-instagram fa-xl"></i>
+            </a>
+            <a href="https://x.com/NutriC21?t=ngy3BuReV6VcrXl3WXrCvg&s=09" target="_blank">
+                <i class="fa-brands fa-x-twitter fa-xl"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/nutri-connect-a0b774349?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank">
+                <i class="fa-brands fa-linkedin fa-xl"></i>
+            </a>
+        </div>
+    </div>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Initialize Chart -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const ctx = document.getElementById('growthChart').getContext('2d');
+            const growthChart = new Chart(ctx, {
+                type: 'line', // You can change this to 'bar', 'pie', etc.
+                data: {
+                    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+                    datasets: [{
+                        label: 'Number of Users',
+                        data: [100, 200, 300, 400, 500, 600, 700],
+                        backgroundColor: 'rgba(40, 167, 69, 0.2)',
+                        borderColor: 'rgba(40, 167, 69, 1)',
+                        borderWidth: 2
+                    }, {
+                        label: 'Website Rating',
+                        data: [4.5, 4.6, 4.7, 4.8, 4.9, 5.0, 5.0],
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    },
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+        });
+    </script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
