@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nutri Connect - Weekly Appointments</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Header */
+        .title-section {
+            background: linear-gradient(135deg, #2196F3, #21CBF3); /* Blue gradient */
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-bottom: 2px solid #1E88E5;
+            
+        }
+        .title-section h1 {
+            margin: 0;
+            font-size: 28px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .title-section h1 i {
+            font-size: 32px;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 200px;
+            background: linear-gradient(135deg, #2196F3, #21CBF3); /* Blue gradient */
+            padding: 20px;
+            height: 90vh;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+        }
+        .sidebar .day {
+            padding: 15px;
+            margin: 10px 0;
+            cursor: pointer;
+            color: white;
+            border-radius: 5px;
+            text-align: left;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .sidebar .day:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(5px);
+        }
+        .sidebar .day.active {
+            background: rgba(255, 255, 255, 0.3);
+            font-weight: bold;
+        }
+        .sidebar .day i {
+            font-size: 18px;
+        }
+
+        /* Content */
+        .content {
+            flex: 1;
+            padding: 20px;
+            background-color: #e3f2fd; /* Light blue background */
+        }
+        .appointments {
+            display: none;
+            padding: 20px;
+            border: 1px solid #2196F3; /* Blue border */
+            background: #ffffff;
+            border-radius: 10px;
+            margin-top: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .appointments.active {
+            display: block;
+        }
+        h2 {
+            color: #2196F3; /* Blue color */
+            margin-bottom: 20px;
+        }
+        h3 {
+            color: #2196F3; /* Blue color */
+            margin-bottom: 15px;
+        }
+        p {
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #ffffff;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        p:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        p i {
+            margin-right: 10px;
+            color: #2196F3; /* Blue color */
+        }
+        
+        #cross {
+            position: fixed;
+            top: 5px;
+            left: 10px;
+            line-height: 20px;
+            font-size: 40px;
+            border-radius: 100%;
+        }
+        </style>
+    
+        
+    </head>
+    <body>
+    
+    <!-- Back Button -->
+    <div id="cross" class="btn btn-outline-primary" onclick="window.history.back();">
+        <i class="fa-solid fa-xmark"></i>
+    </div>
+   
+    <!-- Header -->
+    <div class="title-section">
+        <h1><i class="fas fa-calendar-alt"></i> Weekly Appointment Schedule - User</h1>
+    </div>
+
+    <div class="d-flex flex-grow-1">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="day active" onclick="showAppointments('monday')">
+                <i class="fas fa-sun"></i> Monday
+            </div>
+            <div class="day" onclick="showAppointments('tuesday')">
+                <i class="fas fa-cloud"></i> Tuesday
+            </div>
+            <div class="day" onclick="showAppointments('wednesday')">
+                <i class="fas fa-umbrella"></i> Wednesday
+            </div>
+            <div class="day" onclick="showAppointments('thursday')">
+                <i class="fas fa-cloud-sun"></i> Thursday
+            </div>
+            <div class="day" onclick="showAppointments('friday')">
+                <i class="fas fa-moon"></i> Friday
+            </div>
+            <div class="day" onclick="showAppointments('saturday')">
+                <i class="fas fa-star"></i> Saturday
+            </div>
+            <div class="day" onclick="showAppointments('sunday')">
+                <i class="fas fa-bed"></i> Sunday
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <!-- Monday -->
+            <div id="monday" class="appointments active">
+                <h3><i class="fas fa-calendar-check"></i> Monday Appointments</h3>
+                <p><i class="fas fa-clock"></i> 09:00 AM - Community Nutrition Workshop</p>
+                <p><i class="fas fa-clock"></i> 11:00 AM - Dietician Consultation</p>
+                <p><i class="fas fa-clock"></i> 02:00 PM - Group Discussion on Meal Plans</p>
+                <p><i class="fas fa-clock"></i> 04:00 PM - Follow-Up with Dietician</p>
+            </div>
+
+            <!-- Tuesday -->
+            <div id="tuesday" class="appointments">
+                <h3><i class="fas fa-calendar-check"></i> Tuesday Appointments</h3>
+                <p><i class="fas fa-clock"></i> 10:00 AM - Webinar on Healthy Eating</p>
+                <p><i class="fas fa-clock"></i> 12:00 PM - Dietician Consultation</p>
+                <p><i class="fas fa-clock"></i> 03:00 PM - Community Q&A Session</p>
+                <p><i class="fas fa-clock"></i> 05:00 PM - Progress Review with Dietician</p>
+            </div>
+
+            <!-- Wednesday -->
+            <div id="wednesday" class="appointments">
+                <h3><i class="fas fa-calendar-check"></i> Wednesday Appointments</h3>
+                <p><i class="fas fa-clock"></i> 09:30 AM - Fitness and Nutrition Workshop</p>
+                <p><i class="fas fa-clock"></i> 11:30 AM - Dietician Consultation</p>
+                <p><i class="fas fa-clock"></i> 02:30 PM - Group Discussion on Wellness</p>
+                <p><i class="fas fa-clock"></i> 04:30 PM - Follow-Up with Dietician</p>
+            </div>
+
+            <!-- Thursday -->
+            <div id="thursday" class="appointments">
+                <h3><i class="fas fa-calendar-check"></i> Thursday Appointments</h3>
+                <p><i class="fas fa-clock"></i> 10:00 AM - Community Nutrition Workshop</p>
+                <p><i class="fas fa-clock"></i> 12:00 PM - Dietician Consultation</p>
+                <p><i class="fas fa-clock"></i> 03:00 PM - Webinar on Diet Trends</p>
+                <p><i class="fas fa-clock"></i> 05:00 PM - Progress Review with Dietician</p>
+            </div>
+
+            <!-- Friday -->
+            <div id="friday" class="appointments">
+                <h3><i class="fas fa-calendar-check"></i> Friday Appointments</h3>
+                <p><i class="fas fa-clock"></i> 09:00 AM - Group Discussion on Meal Prep</p>
+                <p><i class="fas fa-clock"></i> 11:00 AM - Dietician Consultation</p>
+                <p><i class="fas fa-clock"></i> 02:00 PM - Community Q&A Session</p>
+                <p><i class="fas fa-clock"></i> 04:00 PM - Follow-Up with Dietician</p>
+            </div>
+
+            <!-- Saturday -->
+            <div id="saturday" class="appointments">
+                <h3><i class="fas fa-calendar-check"></i> Saturday Appointments</h3>
+                <p><i class="fas fa-clock"></i> 10:00 AM - Health Awareness Talk</p>
+                <p><i class="fas fa-clock"></i> 12:00 PM - Dietician Consultation</p>
+                <p><i class="fas fa-clock"></i> 03:00 PM - Community Nutrition Workshop</p>
+            </div>
+
+            <!-- Sunday -->
+            <div id="sunday" class="appointments">
+                <h3><i class="fas fa-calendar-check"></i> Sunday Appointments</h3>
+                <p><i class="fas fa-bed"></i> Rest and Self-Care</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showAppointments(day) {
+            document.querySelectorAll('.appointments').forEach(div => div.classList.remove('active'));
+            document.getElementById(day).classList.add('active');
+            
+            document.querySelectorAll('.sidebar .day').forEach(div => div.classList.remove('active'));
+            document.querySelector(`.sidebar .day[onclick="showAppointments('${day}')"]`).classList.add('active');
+        }
+    </script>
+</body>
+</html>

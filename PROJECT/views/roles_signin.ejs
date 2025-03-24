@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ROLES SIGN-IN PAGE</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+  integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+ />
+  
+  <style>
+    body {
+      background-color: #f3f8e9; /* Light green background */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      padding: 0 20px;
+    }
+    .signup {
+      
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+     
+    }
+    .left-side {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .right-side {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .right-side img {
+      max-width: 800px;
+      height: auto;
+      border-radius: 10px;
+    }
+    .login-box {
+      background-color: #ffffff; /* White background */
+      border: 2px solid #a3c293; /* Light green border */
+      border-radius: 12px; /* Rounded corners */
+      padding: 40px; /* Increased padding */
+      width: 500px; /* Increased width */
+      height: 400px; /* Increased height */
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .login-box h2 {
+      color: #4d7c3f; /* Dark green text */
+      margin-bottom: 30px; /* Increased margin */
+    }
+    .login-box .btn {
+      background-color: #6a994e; /* Green button */
+      border: none;
+      transition: background-color 0.3s; /* Smooth hover effect */
+      width: 100%;
+      padding: 12px; /* Increased padding */
+      margin-top: 15px; /* Increased margin */
+      font-size: 16px; /* Increased font size */
+    }
+    .login-box .btn:hover {
+      background-color: #4d7c3f; /* Darker green on hover */
+    }
+
+    #cross {
+        position: fixed;
+        top: 5px;
+        left: 10px;
+        line-height: 20px;
+        font-size: 40px;
+        border-radius: 100%;
+      }
+
+    /* Media Query for Small Screens */
+    @media (max-width: 992px) {
+     
+      .signup {
+        margin-top:450px;
+        flex-direction: column; /* Stack items vertically */
+        gap: 20px; /* Add space between stacked items */
+      }
+      .left-side, .right-side {
+        min-width: 100%; /* Ensure both sides take full width on small screens */
+      }
+      .login-box {
+        width: 100%; /* Make the get-started box full width on small screens */
+        max-width: 400px; /* Optional: Limit the maximum width */
+      }
+      .right-side img {
+        margin-top: 50px;
+        max-width: 100%; 
+        margin-bottom: 50px;/* Ensure the image scales properly on small screens */
+      }
+    }
+
+    .nutrition-moral {
+      position: absolute;
+      top:5px;
+      margin-left:60px;
+      margin-right:60px;
+      text-align: center;
+      font-size: 22px;
+      padding: 15px;
+      color: #4d7c3f;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Back Button -->
+<div id="cross" class="btn btn-outline-success" onclick="window.history.back();">
+<i class="fa-solid fa-xmark"></i>
+</div>
+
+
+
+
+<div class="signup">
+
+  <!-- Left Side: Get Started Box -->
+  <div class="left-side">
+    <div class="login-box">
+      <h2>LOGIN</h2>
+      <button class="btn btn-primary" onclick="redirectToSignin('user')">User</button>
+      <button class="btn btn-primary" onclick="redirectToSignin('dietitian')">Dietitian</button>
+      <button class="btn btn-primary" onclick="redirectToSignin('admin')">Admin</button>
+      <button class="btn btn-primary" onclick="redirectToSignin('organization')">Organization</button>
+    </div>
+  </div>
+
+  <!-- Right Side: Image -->
+  <div class="right-side">
+    <img src="IMAGES/LOGIN.avif" alt="Health Image">
+  </div>
+</div>
+
+
+  <!-- Nutrition Moral Section -->
+  <div class="nutrition-moral">
+    "A healthy outside starts from the inside. Choose wisely, eat mindfully, and nourish your body every day!"
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+function redirectToSignin(role) {
+  window.location.href = `/Sign_in?role=${role}`;
+}
+</script>
+
+</body>
+</html>
