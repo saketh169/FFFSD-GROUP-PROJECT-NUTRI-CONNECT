@@ -1,0 +1,323 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dietician Diet Plans</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #e0f7fa, #b2ebf2);
+            color: #333;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            border-radius: 15px;
+            border: 2px solid #007bff; /* Outer box border */
+        }
+
+        h1 {
+            text-align: center;
+            color: #007bff;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        h1 i {
+            margin-right: 10px;
+            color: #007bff;
+        }
+
+        .back-button {
+            margin-bottom: 20px;
+        }
+
+        .back-button button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: #fff;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .back-button button:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+
+
+        /* Form Section */
+        .form-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .form-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .form-section input,
+        .form-section select,
+        .form-section textarea {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-section input:focus,
+        .form-section select:focus,
+        .form-section textarea:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        .form-section textarea {
+            resize: vertical;
+            height: 100px;
+        }
+
+        .form-section button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: #fff;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .form-section button:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+
+        .form-section button:active {
+            transform: translateY(0);
+        }
+
+        /* Cards Section */
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: left;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 2px solid #007bff; /* Card border */
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            background-color: #f0f8ff; /* Light blue background on hover */
+        }
+
+        .card h3 {
+            margin: 0 0 10px;
+            color: #007bff;
+            font-size: 1.5rem;
+        }
+
+        .card h3 i {
+            margin-right: 10px;
+            color: #007bff;
+        }
+
+        .card p {
+            margin: 5px 0;
+            color: #666;
+            font-size: 1rem;
+        }
+
+        .card ul {
+            margin: 10px 0 0;
+            padding-left: 20px;
+        }
+
+        .card ul li {
+            margin: 5px 0;
+            color: #555;
+            font-size: 0.95rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .cards-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Back Button -->
+        <div class="back-button">
+            <button onclick="history.back()"><i class="fas fa-arrow-left"></i> Back</button>
+        </div>
+
+        <h1><i class="fas fa-utensils"></i> Dietician Diet Plans</h1>
+
+        <!-- Form Section -->
+        <div class="form-section">
+            <input type="text" id="dietitian-name" placeholder="Enter Dietitian Name">
+            <select id="diet-type">
+                <option value="" disabled selected>Select Diet Type</option>
+                <option value="Keto">Keto</option>
+                <option value="Vegan">Vegan</option>
+                <option value="Vegetarian">Vegetarian</option>
+                <option value="Low-Calorie">Low-Calorie</option>
+                <option value="Mediterranean">Mediterranean</option>
+                <option value="Paleo">Paleo</option>
+            </select>
+            <input type="number" id="calories" placeholder="Enter Calories (e.g., 1800)">
+            <textarea id="meals" placeholder="Enter Meals (one per line)"></textarea>
+            <button onclick="addPlan()"><i class="fas fa-plus"></i> Add Plan</button>
+        </div>
+
+        <!-- Cards Section -->
+        <div class="cards-container" id="cards-container">
+            <!-- Cards will be dynamically added here -->
+        </div>
+    </div>
+
+
+    <script>
+        
+        // Fetch and render plans on page load
+        async function fetchPlans() {
+            try {
+                const response = await fetch(`/add-plans`);
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+
+                const data = await response.json(); // Parse the response as JSON
+                console.log('Response data:', data); // Debugging: Log the response data
+
+                // Ensure the response contains the "plans" array
+                if (Array.isArray(data.plans)) {
+                    renderPlans(data.plans); // Pass the "plans" array to renderPlans
+                } else {
+                    throw new Error('Invalid response format: "plans" is not an array.');
+                }
+            } catch (error) {
+                console.error('Error fetching plans:', error.message);
+                alert('Failed to fetch plans. Please try again later.');
+            }
+        }
+
+        // Render plans in the cards container
+        function renderPlans(plans) {
+            const cardsContainer = document.getElementById("cards-container");
+            cardsContainer.innerHTML = ""; // Clear existing content
+
+            // Ensure plans is an array before using forEach
+            if (Array.isArray(plans)) {
+                plans.forEach(plan => {
+                    const card = document.createElement("div");
+                    card.className = "card";
+
+                    // Format meals as a list
+                    const mealsList = plan.meals.map(meal => `<li>${meal}</li>`).join("");
+
+                    card.innerHTML = `
+                        <h3><i class="fas fa-user-md"></i> ${plan.dietitian || plan.dietitian_name}</h3>
+                        <p><strong>Diet Type:</strong> ${plan.dietType || plan.diet_type}</p>
+                        <p><strong>Calories:</strong> ${plan.calories}</p>
+                        <ul>${mealsList}</ul>
+                    `;
+
+                    cardsContainer.appendChild(card);
+                });
+            } else {
+                console.error('Invalid plans data:', plans);
+            }
+        }
+
+        // Add a new plan
+        async function addPlan() {
+            const dietitianName = document.getElementById("dietitian-name").value.trim();
+            const dietType = document.getElementById("diet-type").value.trim();
+            const calories = document.getElementById("calories").value.trim();
+            const meals = document.getElementById("meals").value.trim();
+        
+            if (!dietitianName || !dietType || !calories || !meals) {
+                alert("Please fill out all fields.");
+                return;
+            }
+        
+            try {
+                const response = await fetch(`/add-plans`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ dietitianName, dietType, calories, meals }),
+                });
+        
+                if (response.ok) {
+                    alert('Plan added successfully!');
+        
+                    // Clear the input fields after successful submission
+                    document.getElementById("dietitian-name").value = "";
+                    document.getElementById("diet-type").value = "";
+                    document.getElementById("calories").value = "";
+                    document.getElementById("meals").value = "";
+        
+                    // Refresh the list of plans
+                    fetchPlans();
+                } else {
+                    alert('Failed to add plan.');
+                }
+            } catch (error) { 
+                console.error('Error adding plan:', error);
+                alert('An error occurred. Please try again.');
+            }
+        }
+
+        // Fetch plans on page load
+        fetchPlans();
+    </script>
+</body>
+</html>

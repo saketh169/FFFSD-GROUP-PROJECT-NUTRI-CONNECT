@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meal Plan Generator</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<style>
+    /* General Styles */
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #D2F0C8;
+        color: #333;
+        margin: 0;
+        padding: 0;
+        line-height: 1.6;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 20px auto;
+        padding: 20px;
+        padding-top: 10px;
+        background-color: white;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+        border-radius: 15px;
+        border:4px solid  #50c878; 
+    }
+
+    i {
+        font-size: 20px; /* Default size */
+    }
+
+    .toggle-btn i,
+    .diet-option i,
+    .generate-btn i,
+    .macros i {
+        font-size: 30px; /* Larger size for icons in buttons and macros */
+    }
+
+    h1, h2 {
+        text-align: center;
+        color: #444;
+    }
+
+    h1 {
+        margin-bottom: 20px;
+        font-size: 2.5rem;
+        color: #1E6F5C; 
+    }
+
+    h2 {
+        margin-top: 30px;
+        font-size: 2rem;
+    }
+
+    p {
+        text-align: center;
+        color: #666;
+        font-size: 1.1rem;
+    }
+
+    /* Toggle Buttons */
+    .toggle-options {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin: 20px 0;
+    }
+
+    .toggle-btn {
+        padding: 15px 30px;
+        border: none;
+        border-radius: 10px;
+        background-color: #e9ecef;
+        color: #333;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 1.2rem;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .toggle-btn.active {
+        background-color: #007bff;
+        color: #fff;
+    }
+
+    .toggle-btn:hover {
+        background-color: #0056b3;
+        color: #fff;
+        transform: scale(1.05);
+    }
+
+    /* Diet Options */
+    .diet-options {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+        margin: 20px 0;
+    }
+
+    .diet-option {
+        padding: 20px 25px;
+        border: none;
+        border-radius: 10px;
+        background-color: #e9ecef;
+        color: #333;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 1.2rem;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .diet-option.selected {
+        background-color: #28a745;
+        color: #fff;
+    }
+
+    .diet-option:hover {
+        background-color: #0056b3;
+        color: #fff;
+        transform: scale(1.05);
+    }
+
+    /* Input Fields */
+    .input-group {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 15px;
+        margin: 20px 0;
+    }
+
+    input[type="number"], select {
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        font-size: 1.2rem;
+    }
+
+    input[type="number"] {
+        width: 120px;
+    }
+
+    select {
+        width: 140px;
+    }
+
+    /* Macros Section */
+    .macros {
+        display: flex;
+        justify-content: space-around;
+        margin: 20px 0;
+        padding: 20px;
+        background-color: #e9ecef;
+        border-radius: 10px;
+    }
+
+    .macros span {
+        padding: 15px;
+        border-radius: 10px;
+        background-color: #fff;
+        color: #333;
+        font-size: 1.1rem;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        transition: all 0.3s ease;
+    }
+
+    .macros span:hover {
+        background-color: #007bff;
+        color: #fff;
+        transform: scale(1.05);
+    }
+
+    /* Generate Button */
+    .generate-btn {
+        display: block;
+        width: 100%;
+        padding: 20px;
+        border: none;
+        border-radius: 10px;
+        background-color: #28a745;
+        color: #fff;
+        font-size: 1.5rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin: 20px 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 15px;
+    }
+
+    .generate-btn:hover {
+        background-color: #218838;
+        transform: scale(1.05);
+    }
+
+    /* Meal Plan Output */
+    #meal-plan {
+        margin-top: 20px;
+        padding: 20px;
+        background-color: #e9ecef;
+        border-radius: 10px;
+        position: relative;
+    }
+
+    .loading-spinner {
+        display: none;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
+        font-size: 1.5rem;
+        color: #333;
+    }
+
+    #meal-plan-content {
+        display: grid;
+        gap: 20px;
+    }
+
+    .meal-card {
+        display: flex;
+        align-items: center;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+    }
+
+    .meal-card:hover {
+        transform: scale(1.02);
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .meal-card img {
+        width: 120px;
+        height: 120px;
+        border-radius: 10px;
+        margin-right: 25px;
+        object-fit: cover;
+    }
+
+    .meal-card h3 {
+        margin: 0;
+        color: #444;
+        font-size: 1.5rem;
+    }
+
+    .meal-card p {
+        margin: 10px 0;
+        color: #666;
+        font-size: 1.2rem;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .diet-options {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .diet-option {
+            width: 100%;
+            text-align: center;
+        }
+
+        .macros {
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .meal-card {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .meal-card img {
+            margin-right: 0;
+            margin-bottom: 15px;
+        }
+    }
+
+    .back-button {
+        margin-bottom: 20px;
+    }
+
+    .back-button button {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        background-color: #007bff;
+        color: #fff;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .back-button button:hover {
+        background-color: #0056b3;
+        transform: translateY(-2px);
+    }
+   
+    </style>
+<body>
+    <div class="container">
+        <!-- Back Button -->
+        <div class="back-button">
+            <button onclick="history.back()"><i class="fas fa-arrow-left"></i> Back</button>
+        </div>
+
+        <h1>Create Your Personalized Meal Plan</h1>
+        <p>Select your preferred diet and customize your meal plan:</p>
+
+        <!-- Toggle for AI vs Dietitian -->
+        <div class="toggle-options">
+            <button id="ai-toggle" class="toggle-btn active" onclick="toggleMode('ai')">
+                <i class="fas fa-robot"></i> AI-Generated
+            </button>
+            <button id="dietitian-toggle" class="toggle-btn" onclick="toggleMode('dietitian')">
+                <i class="fas fa-user-md"></i> Dietitian-Generated
+            </button>
+        </div>
+
+        <!-- Diet Options -->
+        <div class="diet-options">
+            <div class="diet-option selected" onclick="selectDiet(this)">
+                <i class="fas fa-utensils"></i> Anything
+            </div>
+            <div class="diet-option" onclick="selectDiet(this)">
+                <i class="fas fa-bacon"></i> Keto
+            </div>
+            <div class="diet-option" onclick="selectDiet(this)">
+                <i class="fas fa-fish"></i> Mediterranean
+            </div>
+            <div class="diet-option" onclick="selectDiet(this)">
+                <i class="fas fa-drumstick-bite"></i> Paleo
+            </div>
+            <div class="diet-option" onclick="selectDiet(this)">
+                <i class="fas fa-leaf"></i> Vegan
+            </div>
+            <div class="diet-option" onclick="selectDiet(this)">
+                <i class="fas fa-carrot"></i> Vegetarian
+            </div>
+        </div>
+
+        <!-- Calorie and Meal Input -->
+        <div class="input-group">
+            <label for="calories"><i class="fas fa-fire"></i> I want to eat</label>
+            <input type="number" id="calories" value="1800"> calories
+        </div>
+
+        <div class="input-group">
+            <label for="meals"><i class="fas fa-utensil-spoon"></i> in</label>
+            <select id="meals">
+                <option value="2">2 meals</option>
+                <option value="3" selected>3 meals</option>
+                <option value="4">4 meals</option>
+                <option value="5">5 meals</option>
+            </select>
+        </div>
+
+        <!-- Macros -->
+        <div class="macros">
+            <span><i class="fas fa-bread-slice"></i> At least 90g Carbs</span>
+            <span><i class="fas fa-cheese"></i> At least 40g Fat</span>
+            <span><i class="fas fa-dumbbell"></i> At least 90g Protein</span>
+        </div>
+
+        <!-- Generate Button -->
+        <button class="generate-btn" onclick="generatePlan()">
+            <i class="fas fa-magic"></i> Generate Meal Plan
+        </button>
+
+        <!-- Meal Plan Output -->
+        <h2>Your Meal Plan</h2>
+        <div id="meal-plan">
+            <div class="loading-spinner" id="loading-spinner">
+                <i class="fas fa-spinner fa-spin"></i> Generating your meal plan...
+            </div>
+            <div id="meal-plan-content"></div>
+        </div>
+    </div>
+
+    <script src="/js/meal_user.js"></script>
+</body>
+</html>

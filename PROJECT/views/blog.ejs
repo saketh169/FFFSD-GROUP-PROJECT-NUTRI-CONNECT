@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    
+    <link rel="stylesheet" href="Links/css/bootstrap.min.css" />
+    <title> Blog Page</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  
+     </head>
+    
+
+     <style>
+      body {
+          background-color: #f5f9ed;
+          text-align: center;
+          font-family: Arial, sans-serif;
+         
+        }
+
+        main{
+          margin-top: 50px;
+        }
+        
+        
+        .post-button-container {
+          text-align: center;
+          margin-top: 20px;
+        }
+        .post-button {
+          background-color: #28a745;
+          color: white;
+          padding: 10px 20px;
+          text-decoration: none;
+          font-size: 18px;
+          border-radius: 5px;
+          font-weight: bold;
+          display: inline-block;
+        }
+        .post-button:hover {
+          background-color: #b9e41e;
+        }
+       
+        .blog-heading {
+          display: flex;
+          position: relative;
+          top: 20px;
+          height: auto;
+          width: 95%;
+          margin: auto;
+          border-radius: 10px;
+          flex-wrap: wrap;
+          padding-bottom: 20px;
+          
+        }
+        
+        .logo-content {
+        
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          position: relative;
+          height: 327px;
+          border: 1px solid green;
+          border-radius: 10px 10px 0 0;
+          width: 100%;
+        }
+        
+        .our-blog {
+          position: relative;
+          height: auto;
+          width: 100%;
+          text-align: center;
+          margin-top: 30px;
+        }
+        
+        .heading-logo-content p {
+          font-weight: bolder;
+          font-size: 20px;
+          margin-top: 10px;
+        }
+        
+        .blog-nav {
+          position: relative;
+          /* border: 1px solid green; */
+          height: auto;
+          width: 100%;
+          border-radius: 0 0 10px 10px;
+          margin-top: 10px;
+          padding: 10px 0;
+        }
+        
+        #blog-nav-items {
+          display: flex;
+          flex-direction: row;
+          list-style-type: none;
+          justify-content: space-around;
+          align-items: center;
+          /* border: 1px solid green; */
+          border-radius: 0 0 10px 10px;
+          height: auto;
+          color: wheat;
+          background-color: rgba(29, 23, 23, 0.867);
+          align-content: center;
+          flex-wrap: wrap;
+          padding: 10px;
+        }
+        
+        .blog-nav-link {
+          color: white;
+          text-decoration: none;
+          padding: 5px 10px;
+        }
+        
+        .blog-nav-link:hover {
+          color: white;
+          background-color: rgba(243, 240, 237, 0.523);
+        }
+        
+        .blog-section {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
+          gap: 20px;
+          position: relative;
+          top: 50px;
+          padding-top: 20px;
+          margin-bottom: 200px;
+          max-height: 70vh;
+          width: 100%;
+        
+        }
+        
+        .header {
+          max-width: 200px;
+          border-bottom: 2px solid #8bc34a;
+          font-size: 18px;
+          font-weight: bold;
+          color: #333;
+          margin-bottom: 10px;
+          padding-bottom: 8px;
+        }
+        
+        .blog-container{
+          background-color: white;
+          padding: 20px;
+          border-radius: 10px;
+          max-width: 400px;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .image-container {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          background-color: #b9f279;
+          padding: 20px;
+          border-radius: 10px;
+          overflow: hidden;
+        
+        }
+        .image-container img {
+          /* max-width: 100%; */
+          border-radius: 10px;
+          height: 300px;
+          width: 300px;
+        }
+        .content {
+          margin-top: 20px;
+        }
+        .content h2 {
+          font-size: 20px;
+          color: #333;
+        }
+        .content p {
+          color: #666;
+          margin-top: 10px;
+          font-size: 14px;
+          line-height: 1.5;
+        }
+        .read-more {
+          display: inline-block;
+          margin-top: 15px;
+          padding: 10px 15px;
+          background-color: #8bc34a;
+          color: white;
+          text-decoration: none;
+          border-radius: 5px;
+          font-size: 14px;
+          transition: background 0.3s;
+        }
+        .read-more:hover {
+          background-color: #689f38;
+        }
+        @media (max-width: 600px) {
+          .container {
+              max-width: 100%;
+          }
+
+          .blog-section{
+            margin-bottom: 200px;
+          }
+        
+        }
+        
+        
+        @media (max-width: 768px) {
+          .blog-heading {
+              flex-direction: column;
+              align-items: center;
+              height: auto;
+          }
+        
+          .logo-content, .our-blog {
+              height: auto;
+          }
+        
+          .blog-nav {
+              margin-top: 5px;
+              padding: 5px 0;
+          }
+        
+          #blog-nav-items {
+              flex-wrap: wrap;
+              justify-content: center;
+              gap: 10px;
+              padding: 5px 0;
+          }
+        
+        }
+
+         #cross {
+        position: fixed;
+        top: 5px;
+        left: 10px;
+        line-height: 20px;
+        font-size: 40px;
+        border-radius: 100%;
+    }
+
+    .theme{
+      max-width: 200px;
+      border-bottom: 2px solid #8bc34a;
+      font-size: 18px;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 10px;
+      padding-bottom: 8px;
+
+    }
+  </style>
+     
+     <body>
+ 
+    <main class="main">
+      
+  <div class="blog-heading">
+    <div class="logo-content">
+      <div class="our-blog">
+        <div id="cross" class="btn btn-outline-success" onclick="window.history.back();">
+          <i class="fa-solid fa-xmark"></i>
+      </div>
+        <h2 class="heading-logo-content">Our blogs</h2>
+        <br />
+        <br />
+        <p>
+          Welcome to the blog section of Nutri-Connect , your trusted source
+          for insightful articles,tips and expert advice for nutrition and
+          wellness. Here we strive to provide you with
+        </p>
+        <p>
+          engaging and informative content that will inspire you to make
+          informed decisions with your health. Explore our blog to discover a
+          wealth of resources that
+        </p>
+        <p>
+          cover a wide range of topics related to nutrition, fitness and
+          overall well-being.
+        </p>
+      </div>
+    </div>
+    <div class="blog-nav">
+      <ul id="blog-nav-items">
+        <li class="blog-nav-item">
+          <a class="blog-nav-link" href="#all">All</a>
+        </li>
+        <li class="blog-nav-item">
+          <a class="blog-nav-link" href="#weightloss">Weight Loss Tips</a>
+        </li>
+        <li class="blog-nav-item">
+          <a class="blog-nav-link" href="#healthy">Healthy Eating</a>
+        </li>
+        <li class="blog-nav-item">
+          <a class="blog-nav-link" href="#exercise">Fitness And Exercise</a>
+        </li>
+        <li class="blog-nav-item">
+          <a class="blog-nav-link" href="#motivation"
+          >Mindset and Motivation</a
+          >
+        </li>
+        <li class="blog-nav-item">
+          <a class="blog-nav-link" href="#recipes"
+          >Recipes And Meal Planning</a
+          >
+        </li>
+      </ul>
+    </div>
+  </div>
+
+    <a href="/post" style="display: block; text-align: center; margin: 20px auto; padding: 10px 15px; background-color: #28a745; color: white; text-decoration: none; border-radius: 5px; font-size: 16px; width: 150px; font-weight: bold;">
+        Post Blog
+    </a>
+
+    <div class="blog-section">
+        <% blogs.forEach(blog => { %>
+            <div class="blog-container">
+                <div class="header"><%= blog.title %></div>
+                <div class="theme"> Theme: <%= blog.theme %></div>
+                <div class="image-container">
+                    <img src="<%= blog.image %>" alt="Blog Image">
+                </div>
+                <div class="content">
+                    <p><%= blog.content.substring(0, 100) %>...</p>
+                </div>
+                <a href="/blog/<%= blogs.indexOf(blog) %>" class="read-more">Read More</a>
+            </div>
+        <% }); %>
+    </div>
+       
+    </main>
+    <script src="Links/js/bootstrap.bundle.min.js"></script>
+
+  </body>
+</html>
