@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Complete Profile</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    /* General Styles */
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(135deg, #e8f5e9, #c8e6c9); /* Light green gradient */
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      background-color: #ffffff; /* White background for the form container */
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      width: 800px; /* Increased width */
+      padding: 30px;
+      animation: fadeIn 0.5s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h1 {
+      color: #2e8b57; /* Dark green */
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    h2 {
+      color: #2e8b57; /* Dark green */
+      margin-bottom: 20px;
+      font-size: 24px;
+      font-weight: 600;
+    }
+
+    .form-container {
+      display: none;
+    }
+
+    .form-container.active {
+      display: block;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      color: #2e8b57; /* Dark green */
+      font-weight: bold;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    input[type="email"],
+    input[type="password"],
+    textarea {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
+      box-sizing: border-box;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    input[type="text"]:focus,
+    input[type="number"]:focus,
+    input[type="email"]:focus,
+    input[type="password"]:focus,
+    textarea:focus {
+      border-color: #2e8b57; /* Dark green on focus */
+      box-shadow: 0 0 8px rgba(46, 139, 87, 0.3);
+      outline: none;
+    }
+
+    textarea {
+      resize: vertical;
+      height: 120px;
+    }
+
+    .button-container {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 30px;
+    }
+
+    button {
+      background-color: #2e8b57; /* Dark green */
+      color: #ffffff; /* White text */
+      border: none;
+      padding: 12px 25px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    button:hover {
+      background-color: #3cb371; /* Lighter green on hover */
+      transform: translateY(-2px);
+    }
+
+    button[type="submit"] {
+      background-color: #228b22; /* Darker green for submit button */
+    }
+
+    button[type="submit"]:hover {
+      background-color: #2e8b57; /* Lighter green on hover */
+    }
+
+    #cross {
+        position: fixed;
+        top: 5px;
+        left: 10px;
+        line-height: 20px;
+        font-size: 40px;
+        border-radius: 100%;
+    }
+
+    .error-message {
+      color: #dc3545; /* Red color for error messages */
+      font-size: 14px;
+      margin-top: -15px;
+      margin-bottom: 15px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Back Button -->
+<div id="cross" class="btn btn-outline-success" onclick="window.history.back();">
+    <i class="fa-solid fa-xmark"></i>
+</div>
+
+  <div class="container">
+    <h1>Complete Profile</h1>
+
+    <!-- Form 1: Additional Details -->
+    <div id="form1" class="form-container active">
+      <h2>Additional Details</h2>
+      <form id="dietitianForm">
+        <label for="specialization">Specialization:</label>
+        <input type="text" id="specialization" name="specialization" placeholder="Enter specialization" required>
+        <div id="specializationError" class="error-message"></div>
+
+        <label for="rating">Rating:</label>
+        <input type="number" id="rating" name="rating" placeholder="Enter rating" required>
+        <div id="ratingError" class="error-message"></div>
+
+        <label for="image">Image URL:</label>
+        <input type="text" id="image" name="image" placeholder="Enter image URL" required>
+        <div id="imageError" class="error-message"></div>
+
+        <label for="location">Location:</label>
+        <input type="text" id="location" name="location" placeholder="Enter location" required>
+        <div id="locationError" class="error-message"></div>
+
+        <label for="mode">Mode:</label>
+        <input type="text" id="mode" name="mode" placeholder="Enter mode" required>
+        <div id="modeError" class="error-message"></div>
+
+        <label for="experience">Experience (years):</label>
+        <input type="number" id="experience" name="experience" placeholder="Enter experience" required>
+        <div id="experienceError" class="error-message"></div>
+
+        <label for="fees">Fees:</label>
+        <input type="number" id="fees" name="fees" placeholder="Enter fees" required>
+        <div id="feesError" class="error-message"></div>
+
+        <label for="language">Language:</label>
+        <input type="text" id="language" name="language" placeholder="Enter language" required>
+        <div id="languageError" class="error-message"></div>
+
+        <div class="button-container">
+          <button type="button" id="nextButton">Next</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Form 2: Professional Details -->
+    <div id="form2" class="form-container">
+      <h2>Professional Details</h2>
+      <form id="dietitianInfoForm">
+
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title" placeholder="Enter title" required>
+        <div id="titleError" class="error-message"></div>
+
+        <label for="description">Description:</label>
+        <textarea id="description" name="description" placeholder="Enter description" required></textarea>
+        <div id="descriptionError" class="error-message"></div>
+
+        <label for="specialties">Specialties:</label>
+        <input type="text" id="specialties" name="specialties" placeholder="Enter specialties" required>
+        <div id="specialtiesError" class="error-message"></div>
+
+        <label for="education">Education:</label>
+        <input type="text" id="education" name="education" placeholder="Enter education" required>
+        <div id="educationError" class="error-message"></div>
+
+        <label for="expertise">Expertise:</label>
+        <input type="text" id="expertise" name="expertise" placeholder="Enter expertise" required>
+        <div id="expertiseError" class="error-message"></div>
+
+        <label for="testimonials">Testimonials:</label>
+        <textarea id="testimonials" name="testimonials" placeholder="Enter testimonials" required></textarea>
+        <div id="testimonialsError" class="error-message"></div>
+
+        <div class="button-container">
+          <button type="button" id="prevButton">Previous</button>
+          <button type="submit">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+  
+    // JavaScript to handle form navigation
+    const form1 = document.getElementById('form1');
+    const form2 = document.getElementById('form2');
+    const nextButton = document.getElementById('nextButton');
+    const prevButton = document.getElementById('prevButton');
+
+    nextButton.addEventListener('click', async () => {
+      // Validate and submit the first form
+      const formData = {
+        specialization: document.getElementById('specialization').value,
+        rating: document.getElementById('rating').value,
+        image: document.getElementById('image').value,
+        location: document.getElementById('location').value,
+        mode: document.getElementById('mode').value,
+        experience: document.getElementById('experience').value,
+        fees: document.getElementById('fees').value,
+        language: document.getElementById('language').value,
+      };
+
+      if (!validateForm(formData)) return;
+
+      try {
+        const response = await fetch('/dietitians-info1', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData),
+        });
+
+        if (response.ok) {
+          // Move to the next form without showing an alert
+          form1.classList.remove('active');
+          form2.classList.add('active');
+        } else {
+          alert('Failed to submit additional details.');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    });
+
+    prevButton.addEventListener('click', () => {
+      form2.classList.remove('active');
+      form1.classList.add('active');
+    });
+
+    // Function to validate form fields
+    function validateForm(formData) {
+      let isValid = true;
+      for (const key in formData) {
+        if (!formData[key]) {
+          document.getElementById(`${key}Error`).textContent = `${key} is required`;
+          isValid = false;
+        } else {
+          document.getElementById(`${key}Error`).textContent = '';
+        }
+      }
+      return isValid;
+    }
+
+    // Handle form submission for dietitians_info table
+    document.getElementById('dietitianInfoForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const formData = {
+        title: document.getElementById('title').value,
+        description: document.getElementById('description').value,
+        specialties: document.getElementById('specialties').value,
+        education: document.getElementById('education').value,
+        expertise: document.getElementById('expertise').value,
+        testimonials: document.getElementById('testimonials').value,
+      };
+
+      if (!validateForm(formData)) return;
+
+      try {
+        const response = await fetch('/dietitians-info2', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData),
+        });
+
+        if (response.ok) {
+          alert('Professional details submitted successfully!');
+          window.location.href = '/dietitian_dash'; // Redirect to dashboard
+        } else {
+          alert('Failed to submit professional details.');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    });
+  </script>
+</body>
+</html>
