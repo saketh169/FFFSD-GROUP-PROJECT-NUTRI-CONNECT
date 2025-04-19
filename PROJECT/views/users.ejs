@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Users Page | Nutri-Connect</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* Root Variables */
+        :root {
+            --primary-green: #28a745;
+            --light-green: #d4edda;
+            --dark-green: #218838;
+            --white: #fff;
+            --black: #444d53;
+            --gray: #f8f9fa;
+            --red: #dc3545;
+            --dark-red: #c82333;
+        }
+
+        /* Global Reset */
+        * {
+            font-family: "Poppins", sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--light-green);
+        }
+
+        /* Main Container */
+        .main-container {
+            max-width: 1200px;
+            margin: 80px auto 20px;
+        }
+
+        .container-box {
+            background-color: var(--white);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            border: 2px solid var(--primary-green);
+            margin-bottom: 20px;
+        }
+
+        .removed-container {
+            border: 2px solid var(--red);
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            color: var(--primary-green);
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            color: var(--primary-green);
+            margin-bottom: 15px;
+        }
+
+        .removed-container h2 {
+            color: var(--red);
+        }
+
+        /* Initial Message */
+        .initial-message {
+            text-align: center;
+            font-size: 1.2rem;
+            color: var(--black);
+            margin-bottom: 20px;
+        }
+
+        /* Search Bar */
+        .search-bar {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .search-bar input {
+            width: 300px;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid var(--light-green);
+        }
+
+        .search-bar button {
+            padding: 10px 20px;
+            border-radius: 5px;
+            background-color: var(--primary-green);
+            color: var(--white);
+            border: none;
+            cursor: pointer;
+        }
+
+        .search-bar button:hover {
+            background-color: var(--dark-green);
+        }
+
+        /* Button Group */
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .btn-group .btn {
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-group .btn:hover {
+            background-color: var(--dark-green);
+            color: var(--white);
+        }
+
+        .btn-group .btn.active {
+            background-color: var(--dark-green);
+            color: var(--white);
+        }
+
+        /* Table Styling */
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        .table th,
+        .table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--light-green);
+        }
+
+        .table th {
+            background-color: var(--primary-green);
+            color: var(--white);
+            border: 1px solid white;
+        }
+
+        .removed-container .table th {
+            background-color: var(--red);
+        }
+
+        .table th:nth-child(1),
+        .table td:nth-child(1) {
+            width: 300px; /* First column width */
+        }
+
+        .table th:nth-child(2),
+        .table td:nth-child(2) {
+            width: 100px; /* Second column width */
+        }
+
+        .table tr:hover {
+            background-color: var(--light-green);
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 8px 12px;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-info {
+            background-color: var(--primary-green);
+            color: var(--white);
+            border: none;
+        }
+
+        .btn-info:hover {
+            background-color: var(--dark-green);
+        }
+
+        .btn-remove {
+            background-color: var(--red);
+            color: var(--white);
+            border: none;
+        }
+
+        .btn-remove:hover {
+            background-color: var(--dark-red);
+        }
+
+        .btn-restore {
+            background-color: #ffc107;
+            color: var(--black);
+            border: none;
+        }
+
+        .btn-restore:hover {
+            background-color: #e0a800;
+            color: var(--black);
+        }
+
+        /* Dropdown for Details */
+        .details-dropdown {
+            background-color: var(--gray);
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 10px;
+            border: 1px solid var(--light-green);
+            transition: opacity 0.3s ease;
+            opacity: 0;
+            display: none;
+        }
+
+        .details-dropdown.show {
+            opacity: 1;
+            display: block;
+        }
+
+        .details-dropdown p {
+            margin: 5px 0;
+            font-size: 14px;
+            color: var(--black);
+        }
+
+        /* Confirmation Dialogue */
+        .confirmation-dialogue {
+            background-color: var(--gray);
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 10px;
+            border: 1px solid var(--light-green);
+            transition: opacity 0.3s ease;
+            opacity: 0;
+            display: none;
+        }
+
+        .confirmation-dialogue.show {
+            opacity: 1;
+            display: block;
+        }
+
+        .confirmation-dialogue p {
+            margin-bottom: 10px;
+            font-size: 14px;
+            color: var(--black);
+        }
+
+        .confirmation-dialogue .btn-group {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+
+        /* Hidden Class */
+        .hidden {
+            display: none;
+        }
+
+        #cross {
+            position: fixed;
+            top: 5px;
+            left: 10px;
+            line-height: 20px;
+            font-size: 40px;
+            border-radius: 100%;
+        }
+
+        /* Total Count */
+        .total-count {
+            text-align: center;
+            font-size: 1.2rem;
+            color: var(--black);
+            margin-bottom: 20px;
+        }
+
+        .removed-count {
+            color: var(--red);
+            font-weight: bold;
+        }
+
+        table td.text-end .btn {
+            margin-right: 10px; /* Adds a 10px gap between buttons */
+        }
+        
+        .table td.text-end .btn:last-child {
+            margin-right: 0; /* Removes margin from the last button to avoid extra space at the end */
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Back Button -->
+    <div id="cross" class="btn btn-outline-success" onclick="window.history.back();">
+        <i class="fa-solid fa-xmark"></i>
+    </div>
+
+    <div class="main-container">
+        <!-- Active Users Container -->
+        <div class="container-box">
+            <h1>Admin Users Management</h1>
+
+            <!-- Initial Message -->
+            <div class="initial-message" id="initialMessage">
+                Choose the type of users you want to view.
+            </div>
+
+            <!-- Search Bar -->
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Search by name..." oninput="searchUsers()">
+                <button onclick="searchUsers()"><i class="fas fa-search"></i> Search</button>
+            </div>
+
+            <!-- Button Group -->
+            <div class="btn-group">
+                <button class="btn btn-primary active" id="clientsBtn">Clients</button>
+                <button class="btn btn-primary" id="dietitiansBtn">Dietitians</button>
+            </div>
+
+            <!-- Total Count -->
+            <div class="total-count" id="totalCount">
+                Total Users: <span id="usersCount">0</span> | Total Dietitians: <span id="dietitiansCount">0</span>
+            </div>
+
+            <!-- Users Table -->
+            <div id="usersTable" class="hidden">
+                <h2>Registered Users</h2>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th class="text-center">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="usersTableBody">
+                        <!-- Users data will be populated here -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Dietitians Table -->
+            <div id="dietitiansTable" class="hidden">
+                <h2>Registered Dietitians</h2>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th class="text-center">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="dietitiansTableBody">
+                        <!-- Dietitians data will be populated here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Removed Users Container -->
+        <div class="container-box removed-container">
+            <h2>Removed Users</h2>
+
+            <!-- Search Bar for Removed Users -->
+            <div class="search-bar">
+                <input type="text" id="searchRemovedInput" placeholder="Search removed users..." oninput="searchRemovedUsers()">
+                <button onclick="searchRemovedUsers()"><i class="fas fa-search"></i> Search</button>
+            </div>
+
+            <!-- Button Group for Removed Users -->
+            <div class="btn-group">
+                <button class="btn btn-primary active" id="removedClientsBtn">Removed Clients</button>
+                <button class="btn btn-primary" id="removedDietitiansBtn">Removed Dietitians</button>
+            </div>
+
+            <!-- Total Removed Count -->
+            <div class="total-count">
+                Total Removed Users: <span class="removed-count" id="removedUsersCount">0</span> | 
+                Total Removed Dietitians: <span class="removed-count" id="removedDietitiansCount">0</span>
+            </div>
+
+            <!-- Removed Users Table -->
+            <div id="removedUsersTable">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Removed On</th>
+                            <th class="text-center">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="removedUsersTableBody">
+                        <!-- Removed users data will be populated here -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Removed Dietitians Table -->
+            <div id="removedDietitiansTable" class="hidden">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Removed On</th>
+                            <th class="text-center">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="removedDietitiansTableBody">
+                        <!-- Removed dietitians data will be populated here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+    // Function to handle API errors
+    async function handleResponse(response) {
+        console.log(`Response status: ${response.status}, Content-Type: ${response.headers.get('content-type')}`);
+        if (!response.ok) {
+            const text = await response.text();
+            console.log('Raw response:', text);
+            let errorMessage = 'Request failed';
+            try {
+                const error = JSON.parse(text);
+                errorMessage = error.message || errorMessage;
+            } catch (e) {
+                errorMessage = text || 'Unknown error';
+            }
+            if (response.status === 401) {
+                alert('Unauthorized: Please log in as admin.');
+                window.location.href = '/roles_signin';
+            }
+            throw new Error(errorMessage);
+        }
+        const text = await response.text();
+        console.log('Response text:', text);
+        try {
+            const data = JSON.parse(text);
+            console.log('Parsed response:', data);
+            return data;
+        } catch (e) {
+            console.error('Invalid JSON:', text);
+            throw new Error('Response is not valid JSON: ' + text);
+        }
+    }
+
+    // Function to populate users table
+    function populateUsersTable(users) {
+        console.log('Populating users table:', users);
+        const usersTableBody = document.getElementById("usersTableBody");
+        usersTableBody.innerHTML = users.map(user => `
+            <tr><td>${user.name}</td><td class="text-end"><button class="btn btn-info" onclick="viewUserInfo('${user._id}')"><i class="fas fa-eye"></i></button><button class="btn btn-remove" onclick="showRemoveConfirmation('${user._id}', 'user')"><i class="fas fa-trash"></i></button></td></tr>
+            <tr id="userDetails${user._id}" class="details-dropdown"><td colspan="2"><p><strong>Email:</strong> ${user.email}</p><p><strong>Phone:</strong> ${user.phone || 'N/A'}</p><p><strong>DOB:</strong> ${user.dob ? user.dob.split('T')[0] : 'N/A'}</p><p><strong>Gender:</strong> ${user.gender || 'N/A'}</p><p><strong>Address:</strong> ${user.address || 'N/A'}</p><p><strong>Age:</strong> ${user.age || 'N/A'}</p></td></tr>
+            <tr id="userRemoveConfirmation${user._id}" class="confirmation-dialogue"><td colspan="2"><p>Are you sure you want to remove this user?</p><div class="btn-group"><button class="btn btn-remove" onclick="removeUser('${user._id}')">Yes</button><button class="btn btn-info" onclick="hideRemoveConfirmation('${user._id}', 'user')">No</button></div></td></tr>
+        `).join("");
+        document.getElementById("usersCount").textContent = users.length;
+    }
+
+    // Function to populate dietitians table
+    function populateDietitiansTable(dietitians) {
+        console.log('Populating dietitians table:', dietitians);
+        const dietitiansTableBody = document.getElementById("dietitiansTableBody");
+        dietitiansTableBody.innerHTML = dietitians.map(dietitian => `
+            <tr><td>${dietitian.name}</td><td class="text-end"><button class="btn btn-info" onclick="viewDietitianInfo('${dietitian._id}')"><i class="fas fa-eye"></i></button><button class="btn btn-remove" onclick="showRemoveConfirmation('${dietitian._id}', 'dietitian')"><i class="fas fa-trash"></i></button></td></tr>
+            <tr id="dietitianDetails${dietitian._id}" class="details-dropdown"><td colspan="2"><p><strong>Email:</strong> ${dietitian.email}</p><p><strong>Age:</strong> ${dietitian.age || 'N/A'}</p><p><strong>Phone:</strong> ${dietitian.phone || 'N/A'}</p><p><strong>Verification Status:</strong> ${dietitian.verificationStatus || 'N/A'}</p></td></tr>
+            <tr id="dietitianRemoveConfirmation${dietitian._id}" class="confirmation-dialogue"><td colspan="2"><p>Are you sure you want to remove this dietitian?</p><div class="btn-group"><button class="btn btn-remove" onclick="removeDietitian('${dietitian._id}')">Yes</button><button class="btn btn-info" onclick="hideRemoveConfirmation('${dietitian._id}', 'dietitian')">No</button></div></td></tr>
+        `).join("");
+        document.getElementById("dietitiansCount").textContent = dietitians.length;
+    }
+
+    // Function to populate removed accounts table
+    function populateRemovedAccountsTable(removedAccounts, type) {
+        console.log(`Populating removed accounts table for type: ${type}`, removedAccounts);
+        const tableBody = type === 'user' ? document.getElementById("removedUsersTableBody") : document.getElementById("removedDietitiansTableBody");
+        const filteredAccounts = removedAccounts.filter(account => account.accountType.toLowerCase() === type);
+        console.log(`Filtered ${type} accounts:`, filteredAccounts);
+        tableBody.innerHTML = filteredAccounts.map(account => `
+            <tr>
+                <td>${account.name}</td>
+                <td>${account.removedOn || 'N/A'}</td>
+                <td class="text-end">
+                    <button class="btn btn-info" onclick="viewRemoved${account.accountType.toLowerCase() === 'user' ? 'User' : 'Dietitian'}Info('${account.id}')"><i class="fas fa-eye"></i></button>
+                    <button class="btn btn-restore" onclick="showRestoreConfirmation('${account.id}', '${account.accountType.toLowerCase()}')"><i class="fas fa-undo"></i> Restore</button>
+                </td>
+            </tr>
+            <tr id="removed${account.accountType.toLowerCase() === 'user' ? 'User' : 'Dietitian'}Details${account.id}" class="details-dropdown">
+                <td colspan="3">
+                    <p><strong>Email:</strong> ${account.email}</p>
+                    <p><strong>Phone:</strong> ${account.phone || 'N/A'}</p>
+                    ${account.accountType.toLowerCase() === 'user' ? `
+                        <p><strong>DOB:</strong> ${account.dob || 'N/A'}</p>
+                        <p><strong>Gender:</strong> ${account.gender || 'N/A'}</p>
+                        <p><strong>Address:</strong> ${account.address || 'N/A'}</p>
+                        <p><strong>Age:</strong> ${account.age || 'N/A'}</p>
+                    ` : `
+                        <p><strong>Age:</strong> ${account.age || 'N/A'}</p>
+                        <p><strong>Verification Status:</strong> ${account.verificationStatus || 'N/A'}</p>
+                    `}
+                </td>
+            </tr>
+            <tr id="${account.accountType.toLowerCase()}RestoreConfirmation${account.id}" class="confirmation-dialogue">
+                <td colspan="3">
+                    <p>Are you sure you want to restore this ${account.accountType.toLowerCase()}?</p>
+                    <div class="btn-group">
+                        <button class="btn btn-restore" onclick="restoreAccount('${account.id}', '${account.accountType.toLowerCase()}')">Yes</button>
+                        <button class="btn btn-info" onclick="hideRestoreConfirmation('${account.id}', '${account.accountType.toLowerCase()}')">No</button>
+                    </div>
+                </td>
+            </tr>
+        `).join("");
+        updateRemovedCounts(removedAccounts);
+    }
+
+    // Function to update removed counts
+    async function updateRemovedCounts(removedAccounts) {
+        try {
+            if (!removedAccounts) {
+                const response = await fetch('/removed-accounts', { credentials: 'include' });
+                const data = await handleResponse(response);
+                removedAccounts = data.data || [];
+            }
+            console.log('Updating removed counts with:', removedAccounts);
+            const removedUsers = removedAccounts.filter(account => account.accountType.toLowerCase() === 'user').length;
+            const removedDietitians = removedAccounts.filter(account => account.accountType.toLowerCase() === 'dietitian').length;
+            document.getElementById("removedUsersCount").textContent = removedUsers;
+            document.getElementById("removedDietitiansCount").textContent = removedDietitians;
+        } catch (err) {
+            console.error('Error updating removed counts:', err);
+        }
+    }
+
+    // Function to show user/dietitian details
+    function viewUserInfo(id) { document.getElementById(`userDetails${id}`).classList.toggle("show"); }
+    function viewDietitianInfo(id) { document.getElementById(`dietitianDetails${id}`).classList.toggle("show"); }
+    function viewRemovedUserInfo(id) { document.getElementById(`removedUserDetails${id}`).classList.toggle("show"); }
+    function viewRemovedDietitianInfo(id) { document.getElementById(`removedDietitianDetails${id}`).classList.toggle("show"); }
+
+    // Function to show/hide confirmations
+    function showRemoveConfirmation(id, type) { document.getElementById(`${type}RemoveConfirmation${id}`).classList.add("show"); }
+    function hideRemoveConfirmation(id, type) { document.getElementById(`${type}RemoveConfirmation${id}`).classList.remove("show"); }
+    function showRestoreConfirmation(id, type) { document.getElementById(`${type}RestoreConfirmation${id}`).classList.add("show"); }
+    function hideRestoreConfirmation(id, type) { document.getElementById(`${type}RestoreConfirmation${id}`).classList.remove("show"); }
+
+    // Function to remove a user
+    async function removeUser(id) {
+        try {
+            console.log('Removing user:', id);
+            const response = await fetch(`/users-list/${id}`, { method: 'DELETE', credentials: 'include' });
+            const data = await handleResponse(response);
+            alert(data.message);
+            hideRemoveConfirmation(id, 'user');
+            await Promise.all([fetchUsers(), fetchRemovedAccounts()]);
+        } catch (err) {
+            console.error('Remove user error:', err);
+            alert('Error removing user: ' + err.message);
+        }
+    }
+
+    // Function to remove a dietitian
+    async function removeDietitian(id) {
+        try {
+            console.log('Removing dietitian:', id);
+            const response = await fetch(`/dietitian-list/${id}`, { method: 'DELETE', credentials: 'include' });
+            const data = await handleResponse(response);
+            alert(data.message);
+            hideRemoveConfirmation(id, 'dietitian');
+            await Promise.all([fetchDietitians(), fetchRemovedAccounts()]);
+        } catch (err) {
+            console.error('Remove dietitian error:', err);
+            alert('Error removing dietitian: ' + err.message);
+        }
+    }
+
+    // Function to restore an account
+    async function restoreAccount(id, type) {
+        try {
+            console.log(`Restoring ${type} with id: ${id}`);
+            const response = await fetch(`/removed-accounts/${id}/restore`, {
+                method: 'POST',
+                credentials: 'include',
+                headers: { 'Content-Type': 'application/json' }
+            });
+            const data = await handleResponse(response);
+            console.log('Restore response:', data);
+            alert(data.message);
+            hideRestoreConfirmation(id, type);
+            await Promise.all([fetchUsers(), fetchDietitians(), fetchRemovedAccounts()]);
+        } catch (err) {
+            console.error(`Restore ${type} error:`, err);
+            alert(`Error restoring ${type}: ` + err.message);
+        }
+    }
+
+    // Function to fetch users
+    async function fetchUsers(searchTerm = '') {
+        try {
+            const url = searchTerm ? `/users-list/search?q=${encodeURIComponent(searchTerm)}` : '/users-list';
+            console.log('Fetching users from:', url);
+            const response = await fetch(url, { credentials: 'include' });
+            const data = await handleResponse(response);
+            console.log('Users data:', data.data);
+            populateUsersTable(data.data || []);
+        } catch (err) {
+            console.error('Fetch users error:', err);
+            alert('Error fetching users: ' + err.message);
+        }
+    }
+
+    // Function to fetch dietitians
+    async function fetchDietitians(searchTerm = '') {
+        try {
+            const url = searchTerm ? `/dietitian-list/search?q=${encodeURIComponent(searchTerm)}` : '/dietitian-list';
+            console.log('Fetching dietitians from:', url);
+            const response = await fetch(url, { credentials: 'include' });
+            const data = await handleResponse(response);
+            console.log('Dietitians data:', data.data);
+            populateDietitiansTable(data.data || []);
+        } catch (err) {
+            console.error('Fetch dietitians error:', err);
+            alert('Error fetching dietitians: ' + err.message);
+        }
+    }
+
+    // Function to fetch removed accounts
+    async function fetchRemovedAccounts(searchTerm = '') {
+        try {
+            const url = searchTerm ? `/removed-accounts/search?q=${encodeURIComponent(searchTerm)}` : '/removed-accounts';
+            console.log('Fetching removed accounts from:', url);
+            const response = await fetch(url, { credentials: 'include' });
+            const data = await handleResponse(response);
+            console.log('Removed accounts data:', data.data);
+            populateRemovedAccountsTable(data.data || [], 'user');
+            populateRemovedAccountsTable(data.data || [], 'dietitian');
+        } catch (err) {
+            console.error('Fetch removed accounts error:', err);
+            alert('Error fetching removed accounts: ' + err.message);
+        }
+    }
+
+    // Function to search users/dietitians
+    function searchUsers() {
+        const searchTerm = document.getElementById("searchInput").value.toLowerCase();
+        if (document.getElementById("clientsBtn").classList.contains("active")) {
+            fetchUsers(searchTerm);
+        } else {
+            fetchDietitians(searchTerm);
+        }
+    }
+
+    // Function to search removed accounts
+    function searchRemovedUsers() {
+        const searchTerm = document.getElementById("searchRemovedInput").value.toLowerCase();
+        fetchRemovedAccounts(searchTerm);
+    }
+
+    // Toggle between Users and Dietitians tables
+    document.getElementById("clientsBtn").addEventListener("click", () => {
+        const searchTerm = document.getElementById("searchInput").value.toLowerCase();
+        document.getElementById("usersTable").classList.remove("hidden");
+        document.getElementById("dietitiansTable").classList.add("hidden");
+        document.getElementById("initialMessage").classList.add("hidden");
+        document.getElementById("clientsBtn").classList.add("active");
+        document.getElementById("dietitiansBtn").classList.remove("active");
+        fetchUsers(searchTerm);
+    });
+
+    document.getElementById("dietitiansBtn").addEventListener("click", () => {
+        const searchTerm = document.getElementById("searchInput").value.toLowerCase();
+        document.getElementById("dietitiansTable").classList.remove("hidden");
+        document.getElementById("usersTable").classList.add("hidden");
+        document.getElementById("initialMessage").classList.add("hidden");
+        document.getElementById("dietitiansBtn").classList.add("active");
+        document.getElementById("clientsBtn").classList.remove("active");
+        fetchDietitians(searchTerm);
+    });
+
+    // Toggle between Removed Users and Dietitians tables
+    document.getElementById("removedClientsBtn").addEventListener("click", () => {
+        const searchTerm = document.getElementById("searchRemovedInput").value.toLowerCase();
+        document.getElementById("removedUsersTable").classList.remove("hidden");
+        document.getElementById("removedDietitiansTable").classList.add("hidden");
+        document.getElementById("removedClientsBtn").classList.add("active");
+        document.getElementById("removedDietitiansBtn").classList.remove("active");
+        fetchRemovedAccounts(searchTerm);
+    });
+
+    document.getElementById("removedDietitiansBtn").addEventListener("click", () => {
+        const searchTerm = document.getElementById("searchRemovedInput").value.toLowerCase();
+        document.getElementById("removedDietitiansTable").classList.remove("hidden");
+        document.getElementById("removedUsersTable").classList.add("hidden");
+        document.getElementById("removedDietitiansBtn").classList.add("active");
+        document.getElementById("removedClientsBtn").classList.remove("active");
+        fetchRemovedAccounts(searchTerm);
+    });
+
+    // Initialize tables on page load
+    document.addEventListener("DOMContentLoaded", () => {
+        fetchUsers();
+        fetchDietitians();
+        fetchRemovedAccounts();
+    });
+    </script>
+</body>
+
+</html>

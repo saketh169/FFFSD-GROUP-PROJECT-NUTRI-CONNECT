@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client Report</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #eef7f0;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            max-width: 600px;
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+        h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+        .report, .documents {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            background: #f9f9f9;
+            border-left: 5px solid #4CAF50;
+            text-align: left;
+        }
+        .report p {
+            margin: 10px 0;
+            color: #34495e;
+            font-weight: bold;
+        }
+        .documents h3 {
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+        .document-button {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            text-align: center;
+            background: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        .document-button:hover {
+            background: #388E3C;
+        }
+        .back-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 20px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        .back-button:hover {
+            background: #217dbb;
+        }
+
+        #cross {
+            position: fixed;
+            top: 5px;
+            left: 10px;
+            line-height: 20px;
+            font-size: 40px;
+            border-radius: 100%;
+        }
+    </style>
+</head>
+<body>
+
+        <!-- Back Button -->
+    <div id="cross" class="btn btn-outline-success" onclick="window.history.back();">
+        <i class="fa-solid fa-xmark"></i>
+    </div>
+
+    <div class="container">
+        <h2>Client Report</h2>
+        <div class="report">
+            <p><strong>Name:</strong> Emily Smith</p>
+            <p><strong>Status:</strong> Elevated BP</p>
+            <p><strong>Last Measurement:</strong> 130/85 - 78 BPM</p>
+            <p><strong>Last Visit:</strong> Mar 10, 2025</p>
+            <p><strong>Health Concern:</strong> Cardiac Health</p>
+            <p><strong>Diet Plan:</strong> Targeted diet plan to control cholesterol and manage hypertension.</p>
+        </div>
+        <div class="documents">
+            <h3>Uploaded Health Reports</h3>
+            <a href="https://arxiv.org/pdf/2203.12345.pdf" class="document-button" target="_blank">View Health Report 1</a>
+            <a href="https://www.hq.nasa.gov/alsj/a17/A17_FlightPlan.pdf" class="document-button" target="_blank">View Health Report 2</a>
+            <a href="https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf" class="document-button" target="_blank">View Health Report 3</a>
+        </div>
+        
+    </div>
+</body>
+</html>

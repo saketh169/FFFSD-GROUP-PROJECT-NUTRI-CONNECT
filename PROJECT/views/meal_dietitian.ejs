@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Dietician Diet Plans</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+        <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+        <style>
+            body {
+                font-family: 'Inter', sans-serif;
+                background: linear-gradient(135deg, #e6f3fa, #b3d4fc);
+                color: #1f2937;
+                margin: 0;
+                padding: 0;
+                min-height: 100vh;
+            }
+
+            .container {
+                max-width: 1280px;
+                margin: 2rem auto;
+                padding: 2rem;
+                background: #ffffff;
+                border-radius: 1.25rem;
+                box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+                border: 1px solid #e2e8f0;
+            }
+
+            h1 {
+                text-align: center;
+                color: #1e40af;
+                font-size: 2.5rem;
+                font-weight: 800;
+                margin-bottom: 2rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 0.75rem;
+            }
+
+            .back-button button {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                padding: 0.75rem 1.5rem;
+                border-radius: 0.5rem;
+                background: #1e40af;
+                color: white;
+                font-weight: 600;
+                transition: all 0.3s ease;
+            }
+
+            .back-button button:hover {
+                background: #1e3a8a;
+                transform: translateY(-3px);
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            }
+
+            .form-section {
+                background: #f8fafc;
+                padding: 2rem;
+                border-radius: 1rem;
+                margin-bottom: 2.5rem;
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+                transition: all 0.3s ease;
+            }
+
+            .form-section:hover {
+                box-shadow: 0 6px 25px rgba(0, 0, 0, 0.1);
+            }
+
+            .form-section label {
+                font-weight: 600;
+                color: #374151;
+                margin-bottom: 0.5rem;
+                display: block;
+            }
+
+            .form-section input,
+            .form-section select,
+            .form-section textarea {
+                width: 100%;
+                padding: 0.875rem;
+                margin-bottom: 1.25rem;
+                border: 1px solid #d1d5db;
+                border-radius: 0.5rem;
+                font-size: 1rem;
+                transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            }
+
+            .form-section input:focus,
+            .form-section select:focus,
+            .form-section textarea:focus {
+                border-color: #1e40af;
+                outline: none;
+                box-shadow: 0 0 0 4px rgba(30, 64, 175, 0.15);
+            }
+
+            .form-section textarea {
+                resize: vertical;
+                min-height: 140px;
+            }
+
+            .form-section button {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                padding: 0.875rem 1.75rem;
+                border-radius: 0.5rem;
+                font-weight: 600;
+                transition: all 0.3s ease;
+            }
+
+            .form-section .add-other-btn {
+                background: #4f46e5;
+                color: white;
+            }
+
+            .form-section .add-other-btn:hover {
+                background: #4338ca;
+                transform: translateY(-3px);
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            }
+
+            .form-section .submit-btn {
+                background: #047857;
+                color: white;
+            }
+
+            .form-section .submit-btn:hover {
+                background: #065f46;
+                transform: translateY(-3px);
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            }
+
+            .form-section .clear-btn {
+                background: #ef4444;
+                color: white;
+            }
+
+            .form-section .clear-btn:hover {
+                background: #dc2626;
+                transform: translateY(-3px);
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            }
+
+            .form-section button:disabled {
+                background: #9ca3af;
+                cursor: not-allowed;
+                transform: none;
+                box-shadow: none;
+            }
+
+            .meal-plan-group {
+                border: 1px solid #e2e8f0;
+                padding: 1.5rem;
+                border-radius: 0.75rem;
+                margin-bottom: 1.5rem;
+                position: relative;
+                background: #ffffff;
+            }
+
+            .meal-item {
+                border: 1px solid #e2e8f0;
+                padding: 1rem;
+                border-radius: 0.5rem;
+                margin-bottom: 1rem;
+                background: #f8fafc;
+            }
+
+            .cards-container {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 2rem;
+                margin-top: 2rem;
+            }
+
+            .card {
+                background: #ffffff;
+                padding: 1.75rem;
+                border-radius: 1rem;
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+                border: 1px solid #e2e8f0;
+                transition: all 0.3s ease;
+                position: relative;
+            }
+
+            .card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 6px 25px rgba(0, 0, 0, 0.1);
+                background: #f8fafc;
+            }
+
+            .card-content {
+                margin-bottom: 1.5rem;
+            }
+
+            .card img {
+                width: 80px;
+                height: 80px;
+                object-fit: cover;
+                border-radius: 0.25rem;
+                border: 1px solid #e2e8f0;
+                margin-right: 1rem;
+            }
+
+            .card h3 {
+                color: #1e40af;
+                font-size: 1.75rem;
+                font-weight: 700;
+                margin-bottom: 1rem;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+            }
+
+            .card p {
+                margin: 0.75rem 0;
+                color: #4b5563;
+                font-size: 1.1rem;
+            }
+
+            .meal-list {
+                display: flex;
+                flex-direction: column;
+                gap: 1rem;
+                margin-top: 1rem;
+            }
+
+            .meal-item {
+                display: flex;
+                align-items: center;
+                padding: 0.75rem;
+                border-radius: 0.5rem;
+                background: #f8fafc;
+                transition: all 0.3s ease;
+            }
+
+            .meal-item:hover {
+                background: #e6f3fa;
+            }
+
+            .meal-item img {
+                width: 80px;
+                height: 80px;
+                object-fit: cover;
+                border-radius: 0.25rem;
+                border: 1px solid #e2e8f0;
+                margin-right: 1rem;
+            }
+
+            .meal-item-content p {
+                margin: 0;
+                font-size: 1rem;
+                color: #374151;
+            }
+
+            .plans-section {
+                margin-top: 2.5rem;
+                padding: 1.5rem;
+                border: 1px solid #e2e8f0;
+                border-radius: 1rem;
+                background: #f8fafc;
+            }
+
+            .plans-section h2 {
+                color: #1e40af;
+                font-size: 2rem;
+                font-weight: 700;
+                margin-bottom: 1.25rem;
+            }
+
+            .loading-spinner {
+                display: none;
+                text-align: center;
+                padding: 1.5rem;
+                color: #1e40af;
+                font-size: 1.25rem;
+            }
+
+            .loading-spinner.active {
+                display: block;
+            }
+
+            .error-message {
+                color: #ef4444;
+                font-size: 0.9rem;
+                margin-top: 0.25rem;
+                font-weight: 500;
+                display: none;
+            }
+
+            .required::after {
+                content: '*';
+                color: #ef4444;
+                margin-left: 0.25rem;
+            }
+
+            @media (max-width: 1024px) {
+                .cards-container {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+            }
+
+            @media (max-width: 768px) {
+                .container {
+                    margin: 1.5rem;
+                    padding: 1.5rem;
+                }
+
+                h1 {
+                    font-size: 2rem;
+                }
+
+                .cards-container {
+                    grid-template-columns: 1fr;
+                }
+
+                .card {
+                    padding: 1.25rem;
+                }
+
+                .meal-item img {
+                    width: 60px;
+                    height: 60px;
+                }
+            }
+        </style>
+    </head>
+<body>
+    <div class="container">
+        <div class="back-button">
+            <button onclick="history.back()"><i class="fas fa-arrow-left"></i> Back</button>
+        </div>
+
+        <h1><i class="fas fa-utensils"></i> Dietician Diet Plans</h1>
+
+        <div class="form-section">
+            <div class="mb-4">
+                <label for="dietitian-name" class="required">Dietitian Name</label>
+                <input type="text" id="dietitian-name" placeholder="e.g., Dr. Jane Smith" required title="Enter the name of the dietician">
+                <div class="error-message" id="dietitian-error">Please enter a valid name.</div>
+            </div>
+
+            <div class="mb-4">
+                <label for="diet-type" class="required">Diet Type</label>
+                <select id="diet-type" required title="Select the type of diet plan">
+                    <option value="" disabled selected>Choose a diet type</option>
+                    <option value="Anything">Anything</option>
+                    <option value="Keto">Keto (High-fat, low-carb)</option>
+                    <option value="Vegan">Vegan (Plant-based)</option>
+                    <option value="Vegetarian">Vegetarian (No meat)</option>
+                    <option value="Mediterranean">Mediterranean (Heart-healthy)</option>
+                    <option value="Paleo">Paleo (Whole foods)</option>
+                    <option value="Low-Carb">Low-Carb (Reduced carbs)</option>
+                    <option value="Gluten-Free">Gluten-Free (No gluten)</option>
+                </select>
+                <div class="error-message" id="diet-type-error">Please select a diet type.</div>
+            </div>
+            <div class="mb-4">
+                <label for="calories" class="required">Daily Calories</label>
+                <input type="number" id="calories" placeholder="e.g., 1800" min="500" max="5000" required title="Enter daily calorie intake (500–5000)">
+                <div class="error-message" id="calories-error">Please enter a value between 500 and 5000.</div>
+            </div>
+            <div class="mb-4">
+                <label for="meal-count" class="required">Number of Meals</label>
+                <input type="number" id="meal-count" placeholder="e.g., 3" min="1" max="10" required title="Enter number of meals (1–10)">
+                <div class="error-message" id="meal-count-error">Please enter a value between 1 and 10.</div>
+                <button class="add-other-btn mt-2" onclick="generateMealFields()"><i class="fas fa-plus"></i> Generate Meal Fields</button>
+            </div>
+            <div id="meal-plans-container"></div>
+            <div class="flex gap-4 mt-4">
+                <!-- Removed onclick attribute -->
+                <button id="add-plan-btn" class="submit-btn"><i class="fas fa-check"></i> Submit Plan</button>
+                <button class="clear-btn" onclick="clearForm()"><i class="fas fa-trash"></i> Clear Form</button>
+            </div>
+        </div>
+
+        <div class="loading-spinner" id="loading-spinner">
+            <i class="fas fa-spinner fa-spin"></i> Loading plans...
+        </div>
+
+        <div class="plans-section">
+            <h2>All Diet Plans</h2>
+            <div class="cards-container" id="plans-container"></div>
+        </div>
+    </div>
+
+    <script>
+        // DOM Elements
+        const dietitianNameInput = document.getElementById('dietitian-name');
+        const dietTypeSelect = document.getElementById('diet-type');
+        const caloriesInput = document.getElementById('calories');
+        const mealCountInput = document.getElementById('meal-count');
+        const mealPlansContainer = document.getElementById('meal-plans-container');
+        const plansContainer = document.getElementById('plans-container');
+        const loadingSpinner = document.getElementById('loading-spinner');
+        const addPlanBtn = document.getElementById('add-plan-btn');
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            // Attach event listeners
+            if (addPlanBtn) {
+                addPlanBtn.addEventListener('click', addPlans);
+            }
+            const addOtherBtn = document.getElementById('add-other-btn');
+            if (addOtherBtn) {
+                addOtherBtn.addEventListener('click', generateMealFields);
+            }
+            const clearBtn = document.querySelector('.clear-btn');
+            if (clearBtn) {
+                clearBtn.addEventListener('click', clearForm);
+            }
+
+            // Fetch plans on page load
+            fetchPlans();
+        });
+
+        // Generate meal input fields
+        function generateMealFields() {
+            const mealCount = parseInt(mealCountInput.value);
+            mealPlansContainer.innerHTML = '';
+
+            if (!mealCount || mealCount < 1 || mealCount > 10) {
+                showError('meal-count-error', 'Please enter a value between 1 and 10');
+                return;
+            }
+
+            hideError('meal-count-error');
+
+            for (let i = 0; i < mealCount; i++) {
+                const mealGroup = document.createElement('div');
+                mealGroup.className = 'meal-plan-group';
+                mealGroup.innerHTML = `
+                    <label class="required">Meal ${i + 1} Name</label>
+                    <input type="text" class="meal-name" placeholder="e.g., Breakfast: Scrambled eggs (350 cal)" required>
+                    <div class="error-message meal-name-error" id="meal-name-error-${i}">Please enter a valid meal name.</div>
+                    <label>Meal Image URL (Optional)</label>
+                    <input type="url" class="meal-image-url" placeholder="e.g., https://images.unsplash.com/photo-...">
+                    <div class="error-message meal-image-error" id="meal-image-error-${i}">Please enter a valid image URL.</div>
+                    <label>Meal Image File (Optional)</label>
+                    <input type="file" class="meal-image-file" accept="image/jpeg,image/png,image/gif">
+                    <div class="error-message meal-image-file-error" id="meal-image-file-error-${i}">Please upload a valid image (JPEG, PNG, GIF).</div>
+                `;
+                mealPlansContainer.appendChild(mealGroup);
+            }
+        }
+
+        // Form validation
+        function validateForm() {
+            let isValid = true;
+            hideAllErrors();
+
+            // Validate basic fields
+            if (!dietitianNameInput.value.trim()) {
+                showError('dietitian-error', 'Please enter a valid name');
+                isValid = false;
+            }
+
+            if (!dietTypeSelect.value) {
+                showError('diet-type-error', 'Please select a diet type');
+                isValid = false;
+            }
+
+            const calories = parseInt(caloriesInput.value);
+            if (isNaN(calories) || calories < 500 || calories > 5000) {
+                showError('calories-error', 'Please enter a value between 500 and 5000');
+                isValid = false;
+            }
+
+            const mealCount = parseInt(mealCountInput.value);
+            if (isNaN(mealCount) || mealCount < 1 || mealCount > 10) {
+                showError('meal-count-error', 'Please enter a value between 1 and 10');
+                isValid = false;
+            }
+
+            // Validate meal fields
+            const mealNames = document.querySelectorAll('.meal-name');
+            const mealImageUrls = document.querySelectorAll('.meal-image-url');
+            const mealImageFiles = document.querySelectorAll('.meal-image-file');
+
+            if (mealNames.length !== mealCount) {
+                showError('meal-count-error', 'Number of meals does not match meal fields');
+                isValid = false;
+            }
+
+            mealNames.forEach((mealName, index) => {
+                if (!mealName.value.trim()) {
+                    showError(`meal-name-error-${index}`, 'Please enter a valid meal name');
+                    isValid = false;
+                }
+
+                const imageUrl = mealImageUrls[index].value.trim();
+                const imageFile = mealImageFiles[index].files[0];
+
+                if (imageUrl && imageFile) {
+                    showError(`meal-image-error-${index}`, 'Please provide either an image URL or file, not both');
+                    isValid = false;
+                }
+
+                if (imageUrl && !isValidUrl(imageUrl)) {
+                    showError(`meal-image-error-${index}`, 'Please enter a valid image URL');
+                    isValid = false;
+                }
+
+                if (imageFile && !['image/jpeg', 'image/png', 'image/gif'].includes(imageFile.type)) {
+                    showError(`meal-image-file-error-${index}`, 'Please upload a valid image (JPEG, PNG, GIF)');
+                    isValid = false;
+                }
+            });
+
+            return isValid;
+        }
+
+        // Helper functions
+        function isValidUrl(url) {
+            try {
+                new URL(url);
+                return true;
+            } catch {
+                return false;
+            }
+        }
+
+        function showError(id, message) {
+            const errorElement = document.getElementById(id);
+            if (errorElement) {
+                errorElement.textContent = message;
+                errorElement.style.display = 'block';
+            }
+        }
+
+        function hideError(id) {
+            const errorElement = document.getElementById(id);
+            if (errorElement) {
+                errorElement.style.display = 'none';
+            }
+        }
+
+        function hideAllErrors() {
+            document.querySelectorAll('.error-message').forEach(el => {
+                el.style.display = 'none';
+            });
+        }
+
+        // Clear form
+        function clearForm() {
+            dietitianNameInput.value = '';
+            dietTypeSelect.value = '';
+            caloriesInput.value = '';
+            mealCountInput.value = '';
+            mealPlansContainer.innerHTML = '';
+            hideAllErrors();
+        }
+
+        // Render plans
+        function renderPlans(plans) {
+            plansContainer.innerHTML = '';
+
+            if (!plans || plans.length === 0) {
+                plansContainer.innerHTML = '<p class="text-center">No diet plans found</p>';
+                return;
+            }
+
+            plans.forEach(plan => {
+                const card = document.createElement('div');
+                card.className = 'card';
+
+                const mealItems = plan.meals.map(meal => `
+                    <div class="meal-item">
+                        ${meal.image ? `<img src="${meal.image}" alt="${meal.name}" onerror="this.style.display='none'">` : ''}
+                        <div class="meal-item-content">
+                            <p>${meal.name}</p>
+                        </div>
+                    </div>
+                `).join('');
+
+                card.innerHTML = `
+                    <div class="card-content">
+                        <h3><i class="fas fa-user-md"></i> ${plan.dietitianName}</h3>
+                        <p><strong>Diet Type:</strong> ${plan.dietType}</p>
+                        <p><strong>Calories:</strong> ${plan.calories} kcal</p>
+                        <p><strong>Meal Count:</strong> ${plan.mealCount}</p>
+                    </div>
+                    <div class="meal-list">
+                        ${mealItems}
+                    </div>
+                `;
+                plansContainer.appendChild(card);
+            });
+        }
+
+        // Fetch plans from API
+        async function fetchPlans() {
+            loadingSpinner.classList.add('active');
+
+            try {
+                const response = await fetch('/get-plans');
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+
+                const data = await response.json();
+                if (!data.success) throw new Error(data.message || 'Failed to fetch plans');
+
+                renderPlans(data.plans);
+            } catch (error) {
+                console.error('Error fetching plans:', error);
+                plansContainer.innerHTML = `<p class="text-center text-red-500">Error loading plans: ${error.message}</p>`;
+            } finally {
+                loadingSpinner.classList.remove('active');
+            }
+        }
+
+        // Add new plan
+        async function addPlans(event) {
+            event.preventDefault(); // Prevent default form submission if triggered via form
+            if (!validateForm()) return;
+
+            const dietitianName = dietitianNameInput.value.trim();
+            const dietType = dietTypeSelect.value;
+            const calories = parseInt(caloriesInput.value);
+            const mealCount = parseInt(mealCountInput.value);
+
+            const mealNames = document.querySelectorAll('.meal-name');
+            const mealImageUrls = document.querySelectorAll('.meal-image-url');
+            const mealImageFiles = document.querySelectorAll('.meal-image-file');
+
+            const formData = new FormData();
+
+            // Prepare meals data
+            const meals = Array.from(mealNames).map((mealName, index) => {
+                const meal = {
+                    name: mealName.value.trim(),
+                    image: mealImageUrls[index].value.trim() || null
+                };
+
+                // Add image file if exists
+                if (mealImageFiles[index].files[0]) {
+                    formData.append(`mealImage${index}`, mealImageFiles[index].files[0]);
+                }
+
+                return meal;
+            });
+
+            // Create plan object
+            const plan = {
+                dietitianName,
+                dietType,
+                calories,
+                mealCount,
+                meals
+            };
+
+            formData.append('plans', JSON.stringify([plan]));
+
+            addPlanBtn.disabled = true;
+            loadingSpinner.classList.add('active');
+
+            try {
+                const response = await fetch('/add-plans', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!response.ok) throw new Error('Server responded with error');
+
+                const data = await response.json();
+
+                if (data.success) {
+                    clearForm();
+                    alert('Plan added successfully!');
+                    // Refresh the plans from the server
+                    fetchPlans();
+                } else {
+                    throw new Error(data.message || 'Failed to add plan');
+                }
+            } catch (error) {
+                console.error('Error adding plan:', error);
+                alert(`Failed to add plan: ${error.message}`);
+            } finally {
+                addPlanBtn.disabled = false;
+                loadingSpinner.classList.remove('active');
+            }
+        }
+
+        // Expose functions to HTML onclick attributes (only for those still using onclick)
+        window.generateMealFields = generateMealFields;
+        window.clearForm = clearForm;
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
