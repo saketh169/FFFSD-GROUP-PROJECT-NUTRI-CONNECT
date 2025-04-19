@@ -1,0 +1,60 @@
+body {
+    background-color: #f3f8e9;
+  }
+  .card {
+    background-color: #ffffff;
+    border-radius: 12px;
+    border: 2px solid #a3c293;
+  }
+  h2 {
+    color: #4d7c3f;
+    font-weight: bold;
+  }
+  .form-label {
+    color: #52734d;
+    font-weight: 500;
+  }
+  .form-check-input {
+    border: 1px solid black;
+  }
+  .form-control {
+    border: 1px solid #a3c293;
+  }
+  .btn-primary {
+    background-color: #6a994e;
+    border: none;
+    transition: 0.3s;
+  }
+  .btn-primary:hover {
+    background-color: #4d7c3f;
+  }
+  .invalid-feedback {
+    color: #b23e3e;
+  }
+  #cross {
+    position: fixed;
+    top: 5px;
+    left: 10px;
+    line-height: 20px;
+    font-size: 40px;
+    border-radius: 100%;
+  }
+  .login-form {
+    display: none;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 991.98px) {
+    .card {
+      width: 100%;
+      max-width: 100%;
+      border-radius: 0;
+      border: none;
+      box-shadow: none;
+      margin-left: 15px; /* Add left padding */
+      margin-right: 15px; /* Add right padding */
+    }
+    .container {
+      padding: 0;
+    }
+  }

@@ -1,0 +1,380 @@
+
+
+
+  body {
+      font-family: Arial, sans-serif;
+      color: rgb(51, 51, 51);
+      line-height: 1.6;
+      margin: 0px;
+    
+    }
+  
+  .top {
+    position: fixed;
+    top: 0;
+    height: 130px;
+    width: 100%;
+    z-index: 1000;
+    
+  }
+  
+  .top1 {
+    box-shadow: rgba(0, 0, 0, 0.6) 0px 2px 5px;
+    position: fixed;
+    left: 0;
+    right: 0;
+    height: 60px;
+    width: 100%;
+    background-color: #D2F0C8;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    z-index: 1001;
+  }
+  
+  #profile {
+    position: fixed;
+    width: 150px;
+    height: 45px;
+    right: 30px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between; /* Aligns content horizontally */
+    align-items: center; /* Vertically center content */
+  }
+  
+  #profile i {
+    margin: 5px; /* Space between text and icon */
+  }
+  
+  #profile div {
+    border: 2px solid;
+    border-radius: 50%;
+    padding: 5px;
+  }
+  #profile:hover div {
+    border: 2px solid white;
+  }
+  
+  
+  #nav-bar {
+    z-index: 1002;
+    position: fixed;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    height: 50px;
+    background-color: #50c878;
+    border-bottom: 2px solid #28a745;
+  }
+  
+  
+  .navbar-nav .nav-link {
+    font-weight: bold;
+    font-size: 16px;
+    transition: all 0.3s ease-in-out;
+    padding: 10px 15px;
+    border-radius: 5px;
+  }
+  
+  .navbar-nav .nav-link:hover {
+    background-color: rgba(20, 133, 52, 1);
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+    color: white !important;
+  }
+  
+  .navbar-nav .nav-item.active .nav-link {
+    background-color: rgba(40, 167, 69, 0.8);
+    color: white;
+  }
+  
+  
+  .navbar-nav {
+    margin-left: 200px;
+    width: 70%;
+    justify-content: space-between;
+   
+   }
+  
+  
+#contact {
+  background-color: #28a745;
+  color: white;
+  height:45px;
+  padding: 10px;
+  border-radius: 5px;
+  outline: 2px solid #46b06c;
+  display: inline-block;
+  transition: background-color 0.3s ease;
+  position: fixed;
+  right:20px;
+  top:61.5px;
+  
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+
+}
+
+#contact:hover {
+  background-color: #218838;
+  transform: scale(1.1); 
+}
+
+#contact i {
+  font-size: 22px;
+  color: #f8f8f8;
+}
+
+#chatbot {
+  background-color: #28a745;
+  color: white;
+  height:45px;
+  padding: 10px;
+  border-radius: 5px;
+  outline: 2px solid #46b06c;
+  display: inline-block;
+  transition: background-color 0.3s ease;
+  position: fixed;
+  right:100px;
+  top:61.5px;
+
+
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+#chatbot:hover {
+  background-color: #218838;
+  transform: scale(1.1); 
+}
+
+#chatbot i {
+  font-size: 24px;
+  color: #f8f8f8;
+}
+
+  
+  .active-page a {
+    font-weight: bold;
+    background-color: #46b06c;
+    border: 3px solid #28a745;
+    color: white !important;
+  }
+  
+  
+    /* Responsive Design */
+  
+    @media (max-width: 992px) {
+
+      .logo{
+        margin-right: 270px;
+      }
+  
+      #toggler {
+        margin-top: -5px;
+        position: fixed;
+        left: 30px;
+        top: 70px;
+      }
+      
+    .navbar-nav .nav-item {
+        margin: 0px ;
+        text-align: center;
+        background-color: #98Fb98;
+    }
+    .navbar-nav {
+      margin-top:54px;
+      width: 100%;
+      
+    }
+
+      .dietitian-guide-section{
+        flex-direction: column;
+        
+      }
+
+          
+      .dietitian-guide-section .content {
+        margin-bottom: 20px;
+      }
+
+      .dietitian-section img{
+        margin-top: 30px;
+      }
+
+     
+    }
+
+  
+      #profile {
+        position: fixed;
+        width: 150px;
+        height: 45px;
+        right: 30px;
+        border-radius: 5px;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center; 
+        gap:7px;
+      }
+  
+      #profile i {
+        margin: 5px;
+      }
+  
+      #profile div {
+        border: 2px solid;
+        border-radius: 50%;
+        
+      
+      }
+      #profile:hover div {
+        border: 2px solid white;
+      }
+  
+      
+  
+      .main{
+          position: absolute;
+          top:200px;
+          width:100%;
+        
+      }
+  
+   .ads {
+      position: absolute;
+      top:150px;
+        display: flex;
+       overflow: hidden;
+       width: 100%;
+       height: 450px;
+       position: relative;
+      
+     }
+  
+     .ads div {
+       animation: slide-ads 30s ease-in-out infinite;
+     }
+  
+     @keyframes slide-ads {
+       0% {
+         transform: translateX(0);
+       }
+       20% {
+         transform: translateX(-100%);
+       }
+       40% {
+         transform: translateX(-200%);
+       }
+       60% {
+         transform: translateX(-300%);
+       }
+       80% {
+         transform: translateX(-400%);
+       }
+       100% {
+         transform: translateX(-500%);
+       }
+     }
+  
+     .ad {
+       height: 420px;
+       width: 100%;
+       flex-shrink: 0;
+       display: flex;
+       align-items: center;
+       justify-content: center;
+       font-size: 24px;
+       color: #fff;
+       text-align: center;
+     }
+  
+     .dots-container {
+       position: relative;
+       top: 150px;
+       width: 100%;
+       display: flex;
+       justify-content: center;
+       margin-top: 10px;
+     }
+  
+     .dot {
+       width: 18px;
+       height: 18px;
+       background-color: #bbb;
+       border-radius: 50%;
+       margin: 0 5px;
+       transition: background-color 0.3s ease;
+     }
+  
+     .dot.active {
+       background-color: #ffd700;
+     }
+
+     
+     #ad-1 {
+        background-image: url("https://www.sehdph.org/wp-content/uploads/2022/03/March-National-Nutrition-Month-scaled.jpg");
+        background-size: cover;
+      }
+  
+     #ad-2 {
+       background-image: url("https://media.licdn.com/dms/image/v2/D4E12AQFCGJ9akt502w/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1678153407926?e=2147483647&v=beta&t=JL2dWaRnOTIfmnIYWj9Oke-NzVZ0SqtSajIvXt5gVec");
+       background-size: contain;
+     }
+  
+  
+     #ad-3 {
+       background-image: url("https://www.andalusiahealth.com/sites/andalusia/assets/posts/nutrition_month2_1200x630.jpg");
+       background-size: contain;
+     }
+  
+     #ad-4 {
+       background-image: url("https://media.licdn.com/dms/image/v2/C4E16AQHkMwdoZRu9SA/profile-displaybackgroundimage-shrink_200_800/profile-displaybackgroundimage-shrink_200_800/0/1614647032512?e=2147483647&v=beta&t=r-Y9Fif_DA-din5ePSCDT0s_7wklEJl6wCB_61t2ZRI");
+       background-size: cover;
+       background-position: center;
+     }
+  
+     #ad-5 {
+       background-image: url("https://img.freepik.com/free-vector/hand-drawn-fitness-nutrition-twitch-banner_23-2149701083.jpg");
+       background-size: cover;
+       background-position: center;
+     }
+  
+     #ad-6 {
+       background-image: url("https://media.licdn.com/dms/image/v2/C4D1BAQGcue9VtsbDkA/company-background_10000/company-background_10000/0/1647288754684/nutrition_and_co_cover?e=2147483647&v=beta&t=8evvgN6kwCFkHOmJoPxfEFm66nblRlFW282iTtAZJKQ");
+       background-size: cover;
+     }
+
+     .accordion-item {
+      z-index: 1; 
+    }
+
+      
+      #FAQs{
+        position: relative;
+        top:1100px;
+        text-align: center;
+        align-content: center;
+        width:100%;
+        border: 6px solid #71c9ce; /* Teal Blue */
+        padding:50px;
+        border-radius: 10px;
+        background-color: white;
+      
+      }
+      
+        
+      .faq {
+        background-color: white;
+        border-radius: 8px;
+        padding: 15px;
+        margin: 10px auto;
+        width: 80%;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-left: 5px solid #2c98f0; /* Blue Accent */
+      }
+      
