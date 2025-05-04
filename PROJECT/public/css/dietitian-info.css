@@ -1,0 +1,320 @@
+/* General Card Styling (Replaces .profile-section, .info-section) */
+.card {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+    border: none;
+}
+
+.card-body {
+    padding: 2rem;
+}
+
+.card-img-top {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #4CAF50;
+    margin: 2rem auto;
+    display: block;
+}
+
+/* Profile Header (Inside Profile Card) */
+.card-title {
+    color: #333;
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.card-text {
+    color: #666;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+}
+
+.rating {
+    color: #FFD700;
+    font-size: 1.2rem;
+    margin: 0.5rem 0;
+}
+
+.rating .fas {
+    margin-right: 0.2rem;
+}
+
+.rating span {
+    color: #333;
+    font-size: 1rem;
+}
+
+/* Section Headers */
+.card-body h5.card-title {
+    color: #333;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #4CAF50;
+}
+
+/* Contact Information */
+.card-body p {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.8rem;
+    color: #333;
+}
+
+.card-body p i {
+    color: #4CAF50;
+    font-size: 1.2rem;
+}
+
+/* Specialization Tags */
+.specialization-tags .badge-primary {
+    background: #E8F5E9;
+    color: #2E7D32;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Education and Expertise Lists */
+.list-unstyled {
+    padding: 0;
+}
+
+.list-unstyled li {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    background: #F5F5F5;
+    border-radius: 5px;
+}
+
+.list-unstyled li i {
+    color: #4CAF50;
+    font-size: 1.5rem;
+}
+
+/* Testimonials */
+.testimonial-item {
+    background: #F5F5F5;
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.testimonial-text {
+    color: #333;
+    font-style: italic;
+    margin-bottom: 0.5rem;
+}
+
+.testimonial-author {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+/* Booking Section */
+.booking-form {
+    padding: 1rem 0;
+}
+
+.form-group label {
+    color: #333;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+.slots-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.slot-button {
+    padding: 0.8rem;
+    border: 2px solid #4CAF50;
+    border-radius: 5px;
+    background: #fff;
+    color: #4CAF50;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    text-align: center;
+}
+
+.slot-button:hover:not(:disabled) {
+    background: #4CAF50;
+    color: #fff;
+    transform: translateY(-2px);
+}
+
+.slot-button.booked {
+    background: #E0E0E0;
+    border-color: #9E9E9E;
+    color: #757575;
+    cursor: not-allowed;
+}
+
+.bookings-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.booking-card {
+    background: #F5F5F5;
+    border-radius: 8px;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.booking-card:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.booking-info p {
+    margin: 0.5rem 0;
+    color: #333;
+}
+
+.cancel-booking {
+    background: #dc3545;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.cancel-booking:hover {
+    background: #c82333;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Alerts */
+.alert {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    min-width: 300px;
+    padding: 1rem;
+    border-radius: 5px;
+    animation: slideIn 0.3s ease-out;
+}
+
+.alert-success {
+    background: #E8F5E9;
+    color: #2E7D32;
+    border: 1px solid #A5D6A7;
+}
+
+.alert-danger {
+    background: #FFEBEE;
+    color: #C62828;
+    border: 1px solid #EF9A9A;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Modal Styles */
+.modal-content {
+    border-radius: 10px;
+}
+
+.modal-header {
+    background: #4CAF50;
+    color: #fff;
+    border-radius: 10px 10px 0 0;
+}
+
+.modal-body {
+    padding: 2rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-control {
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    padding: 0.8rem;
+}
+
+.form-control:focus {
+    border-color: #4CAF50;
+    box-shadow: 0 0 0 0.2rem rgba(76, 175, 80, 0.25);
+}
+
+/* Date Picker Enhancement */
+input[type="date"] {
+    padding: 0.8rem;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    width: 100%;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+input[type="date"]:focus {
+    border-color: #4CAF50;
+    box-shadow: 0 0 0 0.2rem rgba(76, 175, 80, 0.25);
+    outline: none;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .row {
+        flex-direction: column;
+    }
+
+    .col-md-4, .col-md-8 {
+        width: 100%;
+    }
+
+    .card-img-top {
+        width: 120px;
+        height: 120px;
+    }
+
+    .booking-card {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
+
+    .cancel-booking {
+        width: 100%;
+    }
+
+    .slots-container {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    }
+}

@@ -1,0 +1,70 @@
+body {
+  background-color: #f3f8e9; /* Soft Green Background */
+}
+
+.card {
+  background-color: #ffffff; /* White Card */
+  border-radius: 12px;
+  border: 2px solid #a3c293; /* Light Green Border */
+}
+
+h2 {
+  color: #4d7c3f;
+  font-weight: bold;
+}
+
+.form-label {
+  color: #52734d;
+  font-weight: 500;
+}
+
+.form-control {
+  border: 1px solid #a3c293;
+}
+.form-check-input {
+  border: 1px solid black;
+}
+.btn-primary {
+  background-color: #6a994e;
+  border: none;
+  transition: 0.3s;
+}
+
+.btn-primary:hover {
+  background-color: #4d7c3f;
+}
+
+.invalid-feedback {
+  color: #b23e3e;
+}
+
+#cross {
+  position: absolute;
+  top: 5px;
+  left: 10px;
+  line-height: 20px;
+  font-size: 40px;
+  border-radius: 100%;
+}
+
+/* Hide all forms by default */
+.signup-form {
+  display: none;
+}
+
+/* Responsive adjustments */
+@media (max-width: 991.98px) {
+  .card {
+    margin-top:80px;
+    width: 100%;
+    max-width: 100%;
+    border-radius: 0;
+    border: none;
+    box-shadow: none;
+    margin-left: 15px; /* Add left margin */
+    margin-right: 15px; /* Add right margin */
+  }
+  .container {
+    padding: 0;
+  }
+}

@@ -1,0 +1,495 @@
+main {
+    display: flex;
+    margin-top: 90px;
+    position: relative;
+    gap: 20px;
+    padding: 20px;
+}
+
+.filters-sidebar {
+    width: 250px;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 90px;
+    height: calc(100vh - 110px);
+    overflow-y: auto;
+}
+
+.filter-group {
+    margin-bottom: 20px;
+}
+
+.filter-group h3 {
+    margin-bottom: 10px;
+}
+
+.filter-apply {
+    background-color: #3cb371;
+    padding: 10px;
+    color: white;
+    border: none;
+    margin: 15px 5px 0 0;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.button-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+}
+
+.checkbox-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.checkbox-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.checkbox-item input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+}
+
+.search-section {
+    flex: 1;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    min-height: calc(100vh - 130px);
+}
+
+.search-section h1 {
+    margin-bottom: 20px;
+}
+
+.search-bar {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.search-bar input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.search-bar button {
+    padding: 10px 20px;
+    background-color: #3cb371;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.search-bar button:hover {
+    background-color: #45a049;
+}
+
+.nutritionist-list {
+    display: grid;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.nutritionist-card {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.nutritionist-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.nutritionist-card img {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+
+.nutritionist-info {
+    flex: 1;
+}
+
+.nutritionist-card h3 {
+    margin: 0;
+    font-size: 18px;
+    color: #2e8b57;
+}
+
+.nutritionist-card p {
+    margin: 5px 0;
+    color: #666;
+}
+
+.nutritionist-card .specialization {
+    font-weight: bold;
+    color: #3cb371;
+}
+
+.nutritionist-card button {
+    margin-left: auto;
+    margin-right: 20px;
+    padding: 10px 15px;
+    background-color: #3cb371;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-weight: bold;
+
+}
+
+.nutritionist-card button:hover {
+    background-color: #45a049;
+    transform: scale(1.05);
+}
+
+
+.view-profile-btn  {
+    margin-left: auto;
+    padding: 10px 15px;
+    background-color: #3cb371;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-weight: bold;
+   
+}
+
+.view-profile-btn:hover {
+    background-color: #45a049;
+    transform: scale(1.05);
+}
+
+.booking-sidebar {
+    position: fixed;
+    top: 0;
+    right: -400px;
+    width: 400px;
+    height: 100vh;
+    background-color: white;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    transition: right 0.3s ease;
+    z-index: 1000;
+    overflow-y: auto;
+}
+
+.booking-sidebar.active {
+    right: 0;
+}
+
+.booking-sidebar h2 {
+    margin-bottom: 15px;
+    color: #2e8b57;
+}
+
+#confirmation {
+    order: -1;
+    margin-bottom: 20px;
+    background-color: #e6f7e6;
+    border: 1px solid #3cb371;
+    border-radius: 4px;
+    padding: 15px;
+    text-align: center;
+}
+
+#confirmation.hidden {
+    display: none;
+}
+
+.back-button {
+    background: none;
+    border: none;
+    color: #28a745;
+    font-size: 1.1em;
+    cursor: pointer;
+    padding: 5px 0;
+    margin-bottom: 20px;
+}
+
+.back-button:hover {
+    color: #218838;
+}
+
+.date-input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.time-slots {
+    margin-top: 20px;
+}
+
+.time-slots h3 {
+    color: #333;
+    margin: 15px 0 10px;
+    font-size: 1.1em;
+}
+
+.slot-buttons {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.time-slot {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-color: #f8f9fa;
+}
+
+.time-slot:hover {
+    background-color: #e9ecef;
+    border-color: #28a745;
+}
+
+.time-slot.selected {
+    background-color: #28a745;
+    color: white;
+    border-color: #28a745;
+}
+
+.time-slot.booked {
+    background-color: #dc3545;
+    color: white;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.confirm-button {
+    width: 100%;
+    padding: 12px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1.1em;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+}
+
+.confirm-button:hover {
+    background-color: #218838;
+}
+
+.confirm-button:disabled {
+    background-color: #6c757d;
+    cursor: not-allowed;
+}
+
+.confirmation {
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 4px;
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+    color: #155724;
+}
+
+.confirmation.hidden {
+    display: none;
+}
+
+.success-message {
+    text-align: center;
+}
+
+.success-message h3 {
+    color: #28a745;
+    margin-bottom: 10px;
+}
+
+.success-message p {
+    margin: 5px 0;
+}
+
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 15px 20px;
+    background-color: #28a745;
+    color: white;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transform: translateX(120%);
+    transition: transform 0.3s ease;
+    z-index: 1100;
+}
+
+.notification.show {
+    transform: translateX(0);
+}
+
+.notification-icon {
+    font-size: 1.2em;
+}
+
+.notification-close {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 0 5px;
+    font-size: 1.2em;
+}
+
+.alert {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 15px 20px;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 1100;
+    animation: slideDown 0.3s ease;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+@keyframes slideDown {
+    from {
+        transform: translate(-50%, -100%);
+    }
+    to {
+        transform: translate(-50%, 0);
+    }
+}
+
+@media (max-width: 1200px) {
+    .booking-sidebar {
+        width: 320px;
+    }
+
+    .nutritionist-card {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .nutritionist-card img {
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+
+    .nutritionist-card button {
+        margin: 15px auto 0;
+    }
+}
+
+@media (max-width: 992px) {
+    header nav a {
+        font-size: medium;
+        margin: 0 5px;
+        padding: 6px 8px;
+    }
+
+    .filters-sidebar {
+        width: 220px;
+    }
+}
+
+@media (max-width: 768px) {
+   
+    main {
+        flex-direction: column;
+        margin-top: 160px;
+    }
+
+    .booking-sidebar {
+        width: 100%;
+        right: -100%;
+    }
+
+    .slot-buttons {
+        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    }
+
+    .filters-sidebar {
+        position: relative;
+        width: 100%;
+        top: 0;
+        height: auto;
+        margin-bottom: 20px;
+        max-height: 300px;
+    }
+
+    .search-section {
+        margin-left: 0;
+    }
+
+    .search-bar {
+        flex-direction: column;
+    }
+
+    .search-bar input {
+        margin-bottom: 10px;
+    }
+
+    
+}
+
+@media (max-width: 576px) {
+  
+    .nutritionist-card {
+        padding: 10px;
+    }
+
+    .time-slot {
+        padding: 6px 10px;
+        font-size: 14px;
+    }
+
+    .notification {
+        width: 90%;
+        left: 5%;
+        right: 5%;
+    }
+}
