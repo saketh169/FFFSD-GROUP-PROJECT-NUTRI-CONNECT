@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Query Management</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2e7d32;
+            --primary-dark: #1b5e20;
+            --primary-light: #81c784;
+            --secondary-color: #ff8f00;
+            --light-bg: #f5f5f5;
+            --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --card-shadow-hover: 0 8px 16px rgba(0, 0, 0, 0.12);
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            color: var(--primary-dark);
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: 700;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            border-radius: 2px;
+        }
+        
+        .section-title {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .section-title i {
+            font-size: 1.2em;
+        }
+        
+        .query-section {
+            background-color: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.3s ease;
+        }
+        
+        .query-section:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--card-shadow-hover);
+        }
+        
+        .query-card {
+            background-color: white;
+            border-left: 4px solid var(--primary-color);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .query-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .query-card.unread {
+            background-color: #f0f7ff;
+            border-left-color: var(--secondary-color);
+        }
+        
+        .query-card h5 {
+            margin-bottom: 10px;
+            color: var(--primary-dark);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .query-card h5 i {
+            color: var(--secondary-color);
+        }
+        
+        .query-card p {
+            margin: 5px 0;
+            color: #555;
+        }
+        
+        .query-card .role-badge {
+            display: inline-block;
+            background-color: var(--primary-light);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+        
+        .timestamp {
+            font-size: 0.85em;
+            color: #777;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .btn-reply {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-reply:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+        
+        .reply-section {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            border-left: 3px solid var(--secondary-color);
+        }
+        
+        .reply-section textarea {
+            width: 100%;
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+            margin-bottom: 12px;
+            resize: vertical;
+            min-height: 100px;
+            font-family: inherit;
+        }
+        
+        .reply-section button {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .reply-section button:hover {
+            background-color: #e65100;
+            transform: translateY(-2px);
+        }
+        
+        .reply-history {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px dashed #ddd;
+        }
+        
+        .reply-item {
+            background-color: #f8f9fa;
+            border-radius: 6px;
+            padding: 12px;
+            margin-bottom: 10px;
+            position: relative;
+            padding-left: 40px;
+        }
+        
+        .reply-item::before {
+            content: '→';
+            position: absolute;
+            left: 15px;
+            top: 12px;
+            color: var(--secondary-color);
+            font-weight: bold;
+        }
+        
+        .reply-item .timestamp {
+            font-size: 0.8em;
+            color: #6c757d;
+        }
+        
+        .no-content {
+            text-align: center;
+            color: #6c757d;
+            padding: 30px;
+            font-size: 1.1em;
+        }
+        
+        .no-content i {
+            font-size: 2em;
+            color: #adb5bd;
+            margin-bottom: 15px;
+        }
+        
+        #cross {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: white;
+            border-radius: 50%;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        #cross:hover {
+            transform: scale(1.1);
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .tab-container {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            font-weight: 500;
+            color: #6c757d;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .tab.active {
+            color: var(--primary-color);
+            border-bottom-color: var(--primary-color);
+        }
+        
+        .tab:hover:not(.active) {
+            color: var(--primary-dark);
+            border-bottom-color: #dee2e6;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .status-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 0.75em;
+            padding: 3px 8px;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+        
+        .status-pending {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+        
+        .status-replied {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .query-section {
+                padding: 15px;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Back Button -->
+    <div id="cross" class="btn" onclick="window.history.back();">
+        <i class="fa-solid fa-arrow-left"></i>
+    </div>
+    
+    <div class="container">
+        <h1><i class="fas fa-envelope-open-text"></i> Query Management</h1>
+        
+        <div class="tab-container">
+            <div class="tab active" onclick="switchTab('pending')">
+                <i class="fas fa-inbox"></i> Pending Queries
+            </div>
+            <div class="tab" onclick="switchTab('replied')">
+                <i class="fas fa-history"></i> Reply History
+            </div>
+        </div>
+        
+        <!-- Pending Queries Tab -->
+        <div id="pending-tab" class="tab-content active">
+            <div class="query-section">
+                <h3 class="section-title"><i class="fas fa-question-circle"></i> New Queries</h3>
+                
+                <div id="pending-queries-container">
+                    <div class="no-content">
+                        <i class="fas fa-spinner fa-spin"></i>
+                        <p>Loading queries...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Reply History Tab -->
+        <div id="replied-tab" class="tab-content">
+            <div class="query-section">
+                <h3 class="section-title"><i class="fas fa-reply"></i> Reply History</h3>
+                
+                <div id="replied-queries-container">
+                    <div class="no-content">
+                        <i class="fas fa-spinner fa-spin"></i>
+                        <p>Loading history...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+
+    <script>
+        // Tab switching functionality
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelector(`.tab[onclick="switchTab('${tabName}')"]`).classList.add('active');
+            
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            document.getElementById(`${tabName}-tab`).classList.add('active');
+        }
+
+        // Function to format date
+        const formatDate = (dateString) => {
+            if (!dateString) return 'N/A';
+            const date = new Date(dateString);
+            return date.toLocaleString('en-US', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+            });
+        };
+
+        // Function to sanitize HTML to prevent XSS
+        const sanitizeHTML = (str) => {
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        };
+
+        // Function to fetch queries
+        async function fetchQueries() {
+            try {
+                const response = await fetch('/queries-list', {
+                    method: 'GET',
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    if (response.status === 401) {
+                        alert('Unauthorized: Please log in as admin.');
+                        window.location.href = '/roles_signin';
+                        return [];
+                    }
+                    throw new Error(errorData.message || 'Failed to fetch queries');
+                }
+
+                const result = await response.json();
+                if (!result.success) {
+                    throw new Error(result.message || 'Failed to fetch queries');
+                }
+
+                return result.data || [];
+            } catch (error) {
+                console.error('Error fetching queries:', error);
+                alert(`Failed to fetch queries: ${error.message}`);
+                return [];
+            }
+        }
+
+        // Function to display queries
+        async function displayQueries() {
+            const pendingContainer = document.getElementById('pending-queries-container');
+            const repliedContainer = document.getElementById('replied-queries-container');
+
+            pendingContainer.innerHTML = '<div class="no-content"><i class="fas fa-spinner fa-spin"></i><p>Loading queries...</p></div>';
+            repliedContainer.innerHTML = '<div class="no-content"><i class="fas fa-spinner fa-spin"></i><p>Loading history...</p></div>';
+
+            const queries = await fetchQueries();
+
+            pendingContainer.innerHTML = '';
+            repliedContainer.innerHTML = '';
+
+            if (queries.length === 0) {
+                pendingContainer.innerHTML = '<div class="no-content"><i class="fas fa-check-circle"></i><p>No pending queries</p></div>';
+                repliedContainer.innerHTML = '<div class="no-content"><i class="fas fa-clock"></i><p>No reply history yet</p></div>';
+                return;
+            }
+
+            const pendingQueries = queries.filter(query => query.status === 'pending');
+            const repliedQueries = queries.filter(query => query.status === 'replied').sort((a, b) => 
+                new Date(b.replied_at) - new Date(a.replied_at)
+            );
+
+            if (pendingQueries.length > 0) {
+                pendingQueries.forEach(query => {
+                    pendingContainer.appendChild(createQueryCard(query));
+                });
+            } else {
+                pendingContainer.innerHTML = '<div class="no-content"><i class="fas fa-check-circle"></i><p>No pending queries</p></div>';
+            }
+
+            if (repliedQueries.length > 0) {
+                repliedQueries.forEach(query => {
+                    repliedContainer.appendChild(createQueryCard(query));
+                });
+            } else {
+                repliedContainer.innerHTML = '<div class="no-content"><i class="fas fa-clock"></i><p>No reply history yet</p></div>';
+            }
+        }
+
+        // Function to create query card
+        function createQueryCard(query) {
+            const isReplied = query.status === 'replied';
+            const queryCard = document.createElement('div');
+            queryCard.className = `query-card ${isReplied ? '' : 'unread'}`;
+
+            const statusBadge = isReplied 
+                ? '<span class="status-badge status-replied"><i class="fas fa-check-circle"></i> Replied</span>'
+                : '<span class="status-badge status-pending"><i class="fas fa-clock"></i> Pending</span>';
+
+            const roleBadge = query.role 
+                ? `<span class="role-badge">${sanitizeHTML(query.role)}</span>` 
+                : '';
+
+            queryCard.innerHTML = `
+                ${statusBadge}
+                <h5><i class="fas fa-user"></i> ${sanitizeHTML(query.name || 'Anonymous')} ${roleBadge}</h5>
+                <p><strong><i class="fas fa-envelope"></i> Email:</strong> ${sanitizeHTML(query.email || 'N/A')}</p>
+                <p><strong><i class="fas fa-comment"></i> Query:</strong> ${sanitizeHTML(query.query || 'No query provided')}</p>
+                <p class="timestamp"><i class="fas fa-calendar-alt"></i> Submitted: ${formatDate(query.created_at)}</p>
+                ${isReplied ? `
+                    <div class="reply-history">
+                        <h6><i class="fas fa-reply"></i> Admin Reply:</h6>
+                        <div class="reply-item">
+                            <p>${sanitizeHTML(query.admin_reply)}</p>
+                            <p class="timestamp"><i class="fas fa-clock"></i> Replied: ${formatDate(query.replied_at)}</p>
+                        </div>
+                    </div>
+                ` : ''}
+                ${!isReplied ? `
+                    <div class="action-buttons">
+                        <button class="btn-reply" onclick="toggleReplySection('${query._id}')"><i class="fas fa-reply"></i> Reply</button>
+                    </div>
+                    <div id="reply-section-${query._id}" class="reply-section">
+                        <textarea placeholder="Type your reply here..." id="reply-text-${query._id}"></textarea>
+                        <button onclick="sendReply('${query._id}', this, '${query.email || ''}', '${query.name || 'User'}', '${query.query || 'N/A'}')"><i class="fas fa-paper-plane"></i> Send Reply</button>
+                    </div>
+                ` : ''}
+            `;
+
+            return queryCard;
+        }
+
+        // Function to toggle reply section
+        function toggleReplySection(queryId) {
+            const replySection = document.getElementById(`reply-section-${queryId}`);
+            replySection.style.display = replySection.style.display === 'block' ? 'none' : 'block';
+            if (replySection.style.display === 'block') {
+                document.getElementById(`reply-text-${queryId}`).focus();
+            }
+        }
+
+        // Function to send reply
+        async function sendReply(queryId, button, userEmail, userName, userQuery) {
+            const replyText = document.getElementById(`reply-text-${queryId}`).value.trim();
+            if (!replyText) {
+                alert('Please enter a reply.');
+                return;
+            }
+
+            if (!userEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(userEmail)) {
+                alert('Cannot send reply: Invalid or missing email address.');
+                return;
+            }
+
+            button.disabled = true;
+            button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+
+            try {
+                const response = await fetch(`/queries-list/${queryId}/reply`, {
+                    method: 'PUT',
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ admin_reply: replyText }),
+                });
+
+                const result = await response.json();
+                if (!result.success) {
+                    throw new Error(result.message || 'Failed to submit reply');
+                }
+
+                // Construct mailto link
+                const subject = encodeURIComponent('Response to Your Query - NutriConnect');
+                const body = encodeURIComponent(
+                    `Dear ${userName},\n\n` +
+                    `Thank you for reaching out to us. Below is our response to your query:\n\n` +
+                    `Your Query: ${userQuery}\n\n` +
+                    `Our Response: ${replyText}\n\n` +
+                    `If you have any further questions, feel free to contact us at nutriconnect6@gmail.com.\n\n` +
+                    `Best regards,\n` +
+                    `The NutriConnect Team`
+                );
+                const mailtoLink = `mailto:${userEmail}?subject=${subject}&body=${body}`;
+
+                // Open email client
+                window.location.href = mailtoLink;
+
+                alert('Reply submitted successfully! Your email client has been opened to send the reply.');
+                document.getElementById(`reply-text-${queryId}`).value = '';
+                toggleReplySection(queryId);
+                await displayQueries();
+                switchTab('replied');
+            } catch (error) {
+                console.error('Error sending reply:', error);
+                alert(`Failed to submit reply: ${error.message}`);
+            } finally {
+                button.disabled = false;
+                button.innerHTML = '<i class="fas fa-paper-plane"></i> Send Reply';
+            }
+        }
+
+        // Initial load
+        window.onload = displayQueries;
+    </script>
+</body>
+</html>

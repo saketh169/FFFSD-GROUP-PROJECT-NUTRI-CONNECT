@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= blog.title %></title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
+        
+        :root {
+            --primary-color: #4caf50;
+            --primary-light: #80e27e;
+            --primary-dark: #087f23;
+            --accent-color: #ff9800;
+            --accent-light: #ffc947;
+            --accent-dark: #c66900;
+            --gradient-start: #4caf50;
+            --gradient-end: #8bc34a;
+            --text-color: #1b4332;
+            --text-light: #2d6a4f;
+            --light-gray: #f1f8e9;
+            --medium-gray: #dcedc8;
+            --dark-gray: #33691e;
+            --white: #ffffff;
+            --shadow-sm: 0 4px 6px rgba(76, 175, 80, 0.05);
+            --shadow: 0 10px 25px rgba(76, 175, 80, 0.1);
+            --shadow-lg: 0 20px 40px rgba(76, 175, 80, 0.12);
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --border-radius: 16px;
+            --content-width: 850px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: var(--light-gray);
+            background-image: url("data:image/svg+xml,%3Csvg width='52' height='26' viewBox='0 0 52 26' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%234caf50' fill-opacity='0.05'%3E%3Cpath d='M10 10c0-2.21-1.79-4-4-4-3.314 0-6-2.686-6-6h2c0 2.21 1.79 4 4 4 3.314 0 6 2.686 6 6 0 2.21 1.79 4 4 4 3.314 0 6 2.686 6 6 0 2.21 1.79 4 4 4v2c-3.314 0-6-2.686-6-6 0-2.21-1.79-4-4-4-3.314 0-6-2.686-6-6zm25.464-1.95l8.486 8.486-1.414 1.414-8.486-8.486 1.414-1.414z' /%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            color: var(--text-color);
+            line-height: 1.7;
+            font-size: 16px;
+        }
+
+        /* Header styles with enhanced gradient and animation */
+        header {
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='rgba(255,255,255,.075)' fill-rule='evenodd'/%3E%3C/svg%3E"), linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            color: var(--white);
+            text-align: center;
+            padding: 3rem 2rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            border-bottom-left-radius: 30% 50px;
+            border-bottom-right-radius: 30% 50px;
+            margin-bottom: 2rem;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 200%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            animation: shimmer 6s infinite ease-in-out;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            50% { transform: translateX(100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        header h1 {
+            margin: 0;
+            font-family: 'Playfair Display', serif;
+            font-size: 2.75rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            text-transform: capitalize;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 2;
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .theme {
+            font-size: 1rem;
+            font-weight: 500;
+            font-style: italic;
+            margin-top: 1rem;
+            padding: 8px 16px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            display: inline-block;
+            color: var(--white);
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 2;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            animation: fadeIn 1.2s ease-out;
+        }
+
+        /* Main content container */
+        main {
+            max-width: var(--content-width);
+            margin: 0 auto 3rem;
+            padding: 0 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Author info section with enhanced styling */
+        .author-info {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin: 0 auto 2rem;
+            padding: 1rem 1.5rem;
+            background: var(--white);
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            font-size: 0.95rem;
+            color: var(--dark-gray);
+            position: relative;
+            max-width: calc(var(--content-width) - 3rem);
+            transform: translateY(-30px);
+            border: 1px solid var(--medium-gray);
+        }
+
+        .author-info::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            border-radius: 16px 16px 0 0;
+        }
+
+        .author-name {
+            font-weight: 600;
+            color: var(--primary-dark);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .author-name::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-color);
+            transition: var(--transition);
+        }
+
+        .author-name:hover {
+            color: var(--accent-color);
+        }
+
+        .author-name:hover::after {
+            width: 100%;
+        }
+
+        .author-email {
+            font-style: italic;
+            color: var(--text-light);
+            opacity: 0.85;
+        }
+
+        .badge {
+            padding: 5px 12px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--white);
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            box-shadow: 0 2px 5px rgba(76, 175, 80, 0.3);
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .badge::before {
+            content: "\f787";  /* carrot icon */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            font-size: 0.8rem;
+        }
+        
+        .badge[dietitian]::before {
+            content: "\f0f5";  /* utensils icon for dietitian */
+        }
+
+        /* Gallery and image styling */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .gallery-item {
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            transition: var(--transition);
+            position: relative;
+            background: var(--white);
+            height: 100%;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .gallery-item::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0) 40%);
+            opacity: 0;
+            transition: var(--transition);
+            z-index: 1;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .gallery-item:hover::after {
+            opacity: 1;
+        }
+
+        .single-image {
+            max-width: 100%;
+            margin: 2.5rem auto;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            position: relative;
+        }
+
+        .single-image img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            vertical-align: middle;
+            transition: transform 0.5s ease;
+        }
+
+        .single-image:hover img {
+            transform: scale(1.02);
+        }
+
+        /* Article content styling */
+        article {
+            background: var(--white);
+            padding: 5.5rem 3rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 2.5rem;
+            position: relative;
+        }
+
+        article::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary-color), var(--accent-color));
+            border-radius: var(--border-radius) 0 0 var(--border-radius);
+        }
+
+        h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--text-color);
+            font-size: 1.85rem;
+            font-weight: 600;
+            margin: 1.5rem 0 1rem;
+            line-height: 1.4;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+        }
+
+        p {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: var(--text-light);
+            margin: 0 0 1.5rem;
+        }
+
+        /* Button styling */
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: var(--white);
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 30px;
+            transition: var(--transition);
+            box-shadow: 0 4px 10px rgba(76, 175, 80, 0.3);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .back-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--accent-color), var(--accent-dark));
+            z-index: -1;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .back-button:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 7px 15px rgba(58, 134, 255, 0.4);
+        }
+
+        .back-button:hover::before {
+            opacity: 1;
+        }
+
+        .back-button:active {
+            transform: translateY(0);
+        }
+
+        /* Quill editor styles */
+        .ql-editor {
+            padding: 20px;
+        }
+
+        .ql-editor img {
+            max-width: 100%;
+            height: auto;
+            margin: 2rem auto;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .ql-editor img:hover {
+            transform: scale(1.01);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .ql-editor h1, .ql-editor h2 {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .ql-editor blockquote {
+            border-left: 4px solid var(--primary-color);
+            margin: 1.5rem 0;
+            padding: 1rem 1.5rem;
+            background: rgba(58, 134, 255, 0.05);
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+            font-style: italic;
+            color: var(--text-light);
+        }
+
+        .ql-editor ul, .ql-editor ol {
+            padding-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .ql-editor li {
+            margin-bottom: 0.5rem;
+        }
+
+        .ql-editor a {
+            color: var(--primary-color);
+            text-decoration: none;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .ql-editor a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-color);
+            transition: var(--transition);
+        }
+
+        .ql-editor a:hover {
+            color: var(--accent-color);
+        }
+
+        .ql-editor a:hover::after {
+            width: 100%;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 900px) {
+            :root {
+                --content-width: 100%;
+            }
+
+            header {
+                padding: 2.5rem 1.5rem;
+                border-bottom-left-radius: 20% 30px;
+                border-bottom-right-radius: 20% 30px;
+            }
+
+            header h1 {
+                font-size: 2.25rem;
+            }
+
+            .author-info {
+                padding: 0.75rem 1.25rem;
+                transform: translateY(-20px);
+            }
+
+            article {
+                padding: 2rem 2.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 2rem 1.5rem;
+            }
+
+            header h1 {
+                font-size: 2rem;
+            }
+
+            .gallery {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 1rem;
+            }
+
+            article {
+                padding: 1.75rem 2rem;
+            }
+
+            main {
+                padding: 0 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header {
+                padding: 1.75rem 1rem;
+                border-bottom-left-radius: 15% 20px;
+                border-bottom-right-radius: 15% 20px;
+            }
+
+            header h1 {
+                font-size: 1.75rem;
+            }
+
+            .theme {
+                font-size: 0.9rem;
+                padding: 6px 12px;
+            }
+
+            .author-info {
+                flex-direction: column;
+                gap: 6px;
+                text-align: center;
+                padding: 0.75rem 1rem;
+            }
+
+            article {
+                padding: 1.5rem 1.75rem;
+            }
+
+            h3 {
+                font-size: 1.6rem;
+            }
+
+            .back-button {
+                padding: 10px 18px;
+                font-size: 0.95rem;
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1><%= blog.title %></h1>
+        <% if (blog.theme) { %>
+            <p class="theme">Theme: <%= blog.theme %></p>
+        <% } %>
+    </header>
+
+    <main>
+        <div class="author-info">
+            <p>Posted by <span class="author-name"><%= blog.authorName %></span> <span class="author-email">(<%= blog.authorEmail %>)</span></p>
+            <% if (blog.authorType === 'dietitian') { %>
+                <span class="badge">Dietitian</span>
+            <% } else { %>
+                <span class="badge">User</span>
+            <% } %>
+        </div>
+        
+        <% if (blog.images && blog.images.length > 0) { %>
+            <% if (blog.images.length === 1) { %>
+                <div class="single-image">
+                    <img src="<%= blog.images[0] %>" alt="<%= blog.title %>">
+                </div>
+            <% } else { %>
+                <div class="gallery">
+                    <% blog.images.forEach(image => { %>
+                        <div class="gallery-item">
+                            <img src="<%= image %>" alt="<%= blog.title %>">
+                        </div>
+                    <% }); %>
+                </div>
+            <% } %>
+        <% } %>
+        
+        <article class="ql-editor">
+            <%- blog.content %>
+        </article>
+
+        <a href="/blog" class="back-button">
+            <i class="fas fa-arrow-left"></i> Back to Blog
+        </a>
+    </main>
+</body>
+</html>

@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organization Document Verification</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e8f5e9;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            color: #1b5e20;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #2e7d32;
+            color: white;
+            font-size: 1.1em;
+        }
+        tr:hover {
+            background-color: #c8e6c9;
+            cursor: pointer;
+        }
+        .document-details {
+            display: none;
+            padding: 20px;
+            background-color: #f1f8e9;
+            border: 1px solid #a5d6a7;
+            border-radius: 10px;
+            margin-top: 10px;
+        }
+        .document-details.active {
+            display: block;
+        }
+        .document-details h3 {
+            margin-top: 0;
+            color: #1b5e20;
+            font-size: 1.5em;
+            border-bottom: 2px solid #2e7d32;
+            padding-bottom: 10px;
+        }
+        .document-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding: 15px;
+            border: 1px solid #a5d6a7;
+            border-radius: 8px;
+            background-color: #fff;
+            width: 100%;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .document-row:hover {
+            background-color: #e8f5e9;
+        }
+        .document-row a {
+            color: #2e7d32;
+            text-decoration: none;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        .document-row a:hover {
+            color: #1b5e20;
+            text-decoration: underline;
+        }
+        .approve-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        .approve-buttons button {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+            margin-left: 20px;
+            transition: background-color 0.3s ease;
+        }
+        .approve-buttons button.approve {
+            background-color: #4caf50;
+            color: white;
+        }
+        .approve-buttons button.approve:hover {
+            background-color: #388e3c;
+        }
+        .approve-buttons button.disapprove {
+            background-color: #e53935;
+            color: white;
+        }
+        .approve-buttons button.disapprove:hover {
+            background-color: #c62828;
+        }
+        .optional {
+            color: #888;
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+        .final-approval {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .final-approval button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            margin: 0 10px;
+            transition: background-color 0.3s ease;
+            display: inline-block;
+        }
+        .final-approval button.final-approve {
+            background-color: #4caf50;
+            color: white;
+        }
+        .final-approval button.final-approve:hover {
+            background-color: #388e3c;
+        }
+        .final-approval button.final-disapprove {
+            background-color: #e53935;
+            color: white;
+        }
+        .final-approval button.final-disapprove:hover {
+            background-color: #c62828;
+        }
+        .final-approval button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+        .upload-report {
+            margin-top: 20px;
+            padding: 20px;
+            border: 1px solid #a5d6a7;
+            border-radius: 10px;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .upload-report h4 {
+            margin-top: 0;
+            color: #1b5e20;
+            font-size: 1.2em;
+            border-bottom: 2px solid #2e7d32;
+            padding-bottom: 10px;
+        }
+        .upload-box {
+            margin-top: 15px;
+        }
+        .upload-box input[type="file"] {
+            padding: 10px;
+            border: 1px solid #a5d6a7;
+            border-radius: 5px;
+            width: 100%;
+            max-width: 300px;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 14px;
+            color: #1b5e20;
+        }
+        .footer a {
+            color: #2e7d32;
+            text-decoration: none;
+        }
+        .footer a:hover {
+            color: #1b5e20;
+            text-decoration: underline;
+        }
+        #cross {
+            position: fixed;
+            top: 5px;
+            left: 10px;
+            line-height: 20px;
+            font-size: 40px;
+            border-radius: 100%;
+        }
+        .close-button {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+            background-color: #6c757d;
+            color: white;
+            margin-top: 10px;
+        }
+        .close-button:hover {
+            background-color: #5a6268;
+        }
+        .file-viewer {
+            display: none;
+            position: fixed;
+            top: 5%;
+            left: 5%;
+            width: 90vw;
+            height: 90vh;
+            background-color: #fff;
+            border: 1px solid #a5d6a7;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            padding: 20px;
+            padding-top: 40px;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+        .file-viewer.active {
+            display: block;
+        }
+        .file-viewer iframe, .file-viewer img {
+            padding: 10px;
+            width: 100%;
+            height: calc(100% - 50px);
+            border: none;
+            display: block;
+            object-fit: contain;
+        }
+        .file-viewer .close-viewer {
+            position: absolute;
+            top: 5px;
+            right: 10px;
+            padding: 8px 15px;
+            background-color: #6c757d;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .file-viewer .close-viewer:hover {
+            background-color: #5a6268;
+        }
+        #file-content {
+            width: 100%;
+            height: calc(100% - 50px);
+            overflow: auto;
+        }
+        .notification-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 2000;
+            max-width: 350px;
+        }
+        .notification {
+            padding: 15px 20px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            animation: slideIn 0.3s ease-out;
+            transition: all 0.3s ease;
+        }
+        .notification.success {
+            background-color: #4caf50;
+            border-left: 5px solid #388e3c;
+        }
+        .notification.error {
+            background-color: #e53935;
+            border-left: 5px solid #c62828;
+        }
+        .notification.warning {
+            background-color: #ff9800;
+            border-left: 5px solid #f57c00;
+        }
+        .notification.info {
+            background-color: #2196f3;
+            border-left: 5px solid #1976d2;
+        }
+        .notification.final-reject {
+            background-color: #c62828;
+            border-left: 5px solid #a62626;
+            font-weight: bold;
+            border-radius: 10px;
+        }
+        .notification.final-reject.error {
+            background-color: #a62626;
+            border-left: 5px solid #851f1f;
+        }
+        .notification i {
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+        .notification-close {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 1.2em;
+            margin-left: 15px;
+        }
+        .confirmation-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 3000;
+            justify-content: center;
+            align-items: center;
+        }
+        .confirmation-modal.active {
+            display: flex;
+        }
+        .confirmation-content {
+            background-color: white;
+            padding: 25px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        .confirmation-content h4 {
+            margin-top: 0;
+            color: #1b5e20;
+            font-size: 1.3em;
+            margin-bottom: 20px;
+        }
+        .confirmation-buttons {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 25px;
+            gap: 10px;
+        }
+        .confirmation-buttons button {
+            padding: 8px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+        }
+        .confirmation-buttons .confirm-btn {
+            background-color: #4caf50;
+            color: white;
+        }
+        .confirmation-buttons .confirm-btn:hover {
+            background-color: #388e3c;
+        }
+        .confirmation-buttons .cancel-btn {
+            background-color: #6c757d;
+            color: white;
+        }
+        .confirmation-buttons .cancel-btn:hover {
+            background-color: #5a6268;
+        }
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        @keyframes slideOut {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="cross" class="btn btn-outline-success" onclick="window.history.back();">
+        <i class="fa-solid fa-xmark"></i>
+    </div>
+    <h1>Organization Document Verification</h1>
+    <div class="notification-container" id="notification-container"></div>
+    <div class="confirmation-modal" id="confirmation-modal">
+        <div class="confirmation-content">
+            <h4>Confirm Action</h4>
+            <p id="confirmation-message"></p>
+            <div class="confirmation-buttons">
+                <button class="confirm-btn" id="confirm-btn">Yes</button>
+                <button class="cancel-btn" id="cancel-btn">No</button>
+            </div>
+        </div>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>Organization Name</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody id="organizations-table-body">
+        </tbody>
+    </table>
+    <div class="file-viewer" id="file-viewer">
+        <button class="close-viewer" onclick="closeFileViewer()"><i class="fas fa-times"></i> Close</button>
+        <div id="file-content"></div>
+    </div>
+    <div class="footer">
+        <p>If you have any questions, please contact our support team at <a href="mailto:support@orgverify.com"><i class="fas fa-envelope"></i> support@orgverify.com</a>.</p>
+    </div>
+
+    <script>
+        const fieldMap = {
+            org_logo: { name: 'Organization Logo', ext: 'png', icon: 'fas fa-image', isImage: true },
+            org_brochure: { name: 'Organization Brochure', ext: 'pdf', icon: 'fas fa-file-pdf', isImage: false },
+            legal_document: { name: 'Legal Document', ext: 'pdf', icon: 'fas fa-file-contract', isImage: false },
+            tax_document: { name: 'Tax Document', ext: 'pdf', icon: 'fas fa-file-invoice-dollar', isImage: false },
+            address_proof: { name: 'Proof of Address', ext: 'pdf', icon: 'fas fa-map-marker-alt', isImage: false },
+            business_license: { name: 'Business License', ext: 'pdf', icon: 'fas fa-id-card', isImage: false },
+            authorized_rep_id: { name: 'Identity Proof', ext: 'pdf', icon: 'fas fa-user-check', isImage: false },
+            bank_document: { name: 'Bank Document', ext: 'pdf', icon: 'fas fa-university', isImage: false },
+            finalReport: { name: 'Final Report', ext: 'pdf', icon: 'fas fa-file-alt', isImage: false }
+        };
+
+        function showNotification(message, type = 'info', duration = 5000, isFinalReject = false) {
+            const container = document.getElementById('notification-container');
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}${isFinalReject ? ' final-reject' : ''}`;
+            
+            let icon;
+            switch(type) {
+                case 'success': icon = 'fas fa-check-circle'; break;
+                case 'error': icon = 'fas fa-exclamation-circle'; break;
+                case 'warning': icon = 'fas fa-exclamation-triangle'; break;
+                default: icon = 'fas fa-info-circle';
+            }
+            
+            notification.innerHTML = `
+                <div>
+                    <i class="${icon}"></i>
+                    ${message}
+                </div>
+                <button class="notification-close" onclick="this.parentElement.style.animation='slideOut 0.3s ease-out';setTimeout(() => this.parentElement.remove(), 300)">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+            
+            container.appendChild(notification);
+            
+            if (duration > 0) {
+                setTimeout(() => {
+                    notification.style.animation = 'slideOut 0.3s ease-out';
+                    setTimeout(() => notification.remove(), 300);
+                }, duration);
+            }
+        }
+
+        function showConfirmationModal(message, onConfirm) {
+            const modal = document.getElementById('confirmation-modal');
+            const messageElement = document.getElementById('confirmation-message');
+            const confirmBtn = document.getElementById('confirm-btn');
+            const cancelBtn = document.getElementById('cancel-btn');
+
+            messageElement.textContent = message;
+            modal.classList.add('active');
+
+            // Remove existing event listeners to prevent duplicates
+            const newConfirmBtn = confirmBtn.cloneNode(true);
+            const newCancelBtn = cancelBtn.cloneNode(true);
+            confirmBtn.parentNode.replaceChild(newConfirmBtn, confirmBtn);
+            cancelBtn.parentNode.replaceChild(newCancelBtn, cancelBtn);
+
+            newConfirmBtn.addEventListener('click', () => {
+                modal.classList.remove('active');
+                onConfirm();
+            });
+
+            newCancelBtn.addEventListener('click', () => {
+                modal.classList.remove('active');
+            });
+        }
+
+        async function fetchOrganizations() {
+            try {
+                const response = await fetch('/organization-doc/organizations', {
+                    credentials: 'include'
+                });
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                const organizations = await response.json();
+                renderOrganizations(organizations);
+            } catch (error) {
+                console.error('Error fetching organizations:', error);
+                showNotification('Failed to load organizations. Please ensure you are logged in as an admin.', 'error');
+            }
+        }
+
+        function renderOrganizations(organizations) {
+            const tbody = document.getElementById('organizations-table-body');
+            tbody.innerHTML = '';
+
+            const statusIcons = {
+                'Not Received': 'hourglass-half',
+                'Received': 'hourglass-half',
+                'Verified': 'check-circle',
+                'Rejected': 'times-circle'
+            };
+
+            organizations.forEach((org, index) => {
+                const rowId = index + 1;
+                const verificationStatus = org.verificationStatus || {};
+                const overallStatus = verificationStatus.finalReport || 'Not Received';
+                const displayStatus = overallStatus === 'Not Received' ? 'Pending' : overallStatus;
+
+                const orgRow = `
+                    <tr onclick="toggleDocumentDetails(${rowId})">
+                        <td>${org.org_name || 'Unknown Organization'}</td>
+                        <td><i class="fas fa-${statusIcons[overallStatus]}"></i> ${displayStatus}</td>
+                    </tr>
+                    <tr class="document-details" id="details-${rowId}">
+                        <td colspan="2">
+                            <h3><i class="fas fa-folder-open"></i> Documents Submitted by ${org.org_name || 'Unknown'}</h3>
+                            <div id="documents-${rowId}">
+                            </div>
+                            <div class="upload-report" id="upload-report-${rowId}">
+                                <h4><i class="fas fa-upload"></i> Upload Verification Report</h4>
+                                <div class="upload-box">
+                                    <input type="file" id="approval-form-${rowId}" accept=".pdf" onchange="handleFileUpload('${org._id}', ${rowId})">
+                                </div>
+                            </div>
+                            <div class="final-approval">
+                                <button id="final-verify-${rowId}" class="final-approve" onclick="finalVerify('${org._id}', ${rowId})" ${overallStatus === 'Not Received' ? 'disabled' : ''}>
+                                    <i class="fas fa-check-circle"></i> Final Approve
+                                </button>
+                                <button id="final-reject-${rowId}" class="final-disapprove" onclick="finalReject('${org._id}', ${rowId})" ${overallStatus === 'Not Received' ? 'disabled' : ''}>
+                                    <i class="fas fa-times-circle"></i> Final Reject
+                                </button>
+                            </div>
+                            <button class="close-button" onclick="toggleDocumentDetails(${rowId})"><i class="fas fa-times"></i> Close</button>
+                        </td>
+                    </tr>
+                `;
+                tbody.insertAdjacentHTML('beforeend', orgRow);
+
+                const documentsDiv = document.getElementById(`documents-${rowId}`);
+                Object.keys(fieldMap).forEach(field => {
+                    const status = verificationStatus[field] || 'Not Uploaded';
+                    const fileExists = ['Received', 'Pending', 'Verified', 'Rejected'].includes(status);
+                    const docRow = `
+                        <div class="document-row">
+                            <strong><i class="${fieldMap[field].icon}"></i> ${fieldMap[field].name}:</strong>
+                            ${fileExists ? `
+                                <a href="#" onclick="viewFile('${org._id}', '${field}', ${rowId})"><i class="fas fa-eye"></i> View</a>
+                                <a href="#" onclick="downloadFile('${org._id}', '${field}', '${fieldMap[field].name}', '${fieldMap[field].ext}')"><i class="fas fa-download"></i> Download</a>
+                            ` : `<span>Not Uploaded</span>`}
+                            <span class="optional">(${status})</span>
+                            ${status === 'Pending' && field !== 'finalReport' ? `
+                                <div class="approve-buttons">
+                                    <button class="approve" onclick="verifyDocument('${org._id}', '${field}', ${rowId})"><i class="fas fa-check"></i> Verify</button>
+                                    <button class="disapprove" onclick="rejectDocument('${org._id}', '${field}', ${rowId})"><i class="fas fa-times"></i> Reject</button>
+                                </div>
+                            ` : ''}
+                        </div>
+                    `;
+                    documentsDiv.insertAdjacentHTML('beforeend', docRow);
+                });
+            });
+        }
+
+        function toggleDocumentDetails(rowId) {
+            const details = document.getElementById(`details-${rowId}`);
+            details.classList.toggle('active');
+        }
+
+        async function viewFile(orgId, field, rowId) {
+            try {
+                const fileViewer = document.getElementById('file-viewer');
+                const fileContent = document.getElementById('file-content');
+                fileContent.innerHTML = '<div>Loading...</div>';
+
+                const response = await fetch(`/organization-doc/files/${orgId}/${field}?t=${Date.now()}`, {
+                    credentials: 'include'
+                });
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                const data = await response.json();
+                if (!data.success) {
+                    throw new Error(data.message);
+                }
+
+                const { mime, base64 } = data.file;
+                const dataUrl = `data:${mime};base64,${base64}`;
+
+                fileContent.innerHTML = '';
+
+                if (fieldMap[field].isImage) {
+                    const img = document.createElement('img');
+                    img.src = dataUrl;
+                    img.alt = fieldMap[field].name;
+                    img.onerror = () => showNotification('Failed to load image', 'error');
+                    fileContent.appendChild(img);
+                } else {
+                    const iframe = document.createElement('iframe');
+                    iframe.src = dataUrl;
+                    iframe.onerror = () => showNotification('Failed to load document. The file may be corrupted or inaccessible.', 'error');
+                    fileContent.appendChild(iframe);
+                }
+
+                fileViewer.classList.add('active');
+            } catch (error) {
+                console.error('Error viewing file:', error);
+                showNotification('Failed to load document: ' + error.message, 'error');
+            }
+        }
+
+        async function downloadFile(orgId, field, fileName, fileExt) {
+            try {
+                const response = await fetch(`/organization-doc/files/${orgId}/${field}?t=${Date.now()}`, {
+                    credentials: 'include'
+                });
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                const data = await response.json();
+                if (!data.success) {
+                    throw new Error(data.message);
+                }
+
+                const { mime, base64 } = data.file;
+                const dataUrl = `data:${mime};base64,${base64}`;
+
+                const link = document.createElement('a');
+                link.href = dataUrl;
+                link.download = `${fileName}.${fileExt}`;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            } catch (error) {
+                console.error('Error downloading file:', error);
+                showNotification('Failed to download document: ' + error.message, 'error');
+            }
+        }
+
+        function closeFileViewer() {
+            const fileViewer = document.getElementById('file-viewer');
+            fileViewer.classList.remove('active');
+            document.getElementById('file-content').innerHTML = '';
+        }
+
+        async function verifyDocument(orgId, field, rowId) {
+            try {
+                const response = await fetch(`/organization-doc/${orgId}/approve`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify({ field })
+                });
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                const updatedOrg = await response.json();
+                showNotification(`Document ${fieldMap[field].name} verified.`, 'success');
+                updateDocumentStatus(orgId, field, 'Verified', rowId);
+            } catch (error) {
+                console.error('Error verifying document:', error);
+                showNotification('Failed to verify document.', 'error');
+            }
+        }
+
+        async function rejectDocument(orgId, field, rowId) {
+            try {
+                const response = await fetch(`/organization-doc/${orgId}/disapprove`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify({ field })
+                });
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                const updatedOrg = await response.json();
+                showNotification(`Document ${fieldMap[field].name} rejected.`, 'success');
+                updateDocumentStatus(orgId, field, 'Rejected', rowId);
+            } catch (error) {
+                console.error('Error rejecting document:', error);
+                showNotification('Failed to reject document.', 'error');
+            }
+        }
+
+        function updateDocumentStatus(orgId, field, status, rowId) {
+            const documentsDiv = document.getElementById(`documents-${rowId}`);
+            const docRows = documentsDiv.getElementsByClassName('document-row');
+            for (const row of docRows) {
+                if (row.querySelector('strong').textContent.includes(fieldMap[field].name)) {
+                    const statusSpan = row.querySelector('.optional');
+                    statusSpan.textContent = `(${status})`;
+                    const buttonsDiv = row.querySelector('.approve-buttons');
+                    if (buttonsDiv) {
+                        buttonsDiv.remove();
+                    }
+                    break;
+                }
+            }
+        }
+
+        async function finalVerify(orgId, rowId) {
+            showConfirmationModal('Are you sure you want to finally approve this organization?', async () => {
+                try {
+                    const response = await fetch(`/organization-doc/${orgId}/final-approve`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        credentials: 'include'
+                    });
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    showNotification('Organization has been finally approved!', 'success');
+                    window.location.reload();
+                } catch (error) {
+                    console.error('Error submitting final approval:', error);
+                    showNotification('Failed to submit final approval.', 'error');
+                }
+            });
+        }
+
+        async function finalReject(orgId, rowId) {
+            showConfirmationModal('Are you sure you want to finally reject this organization?', async () => {
+                try {
+                    const response = await fetch(`/organization-doc/${orgId}/final-disapprove`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        credentials: 'include'
+                    });
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    showNotification('Organization has been finally rejected.', 'success', 5000, true);
+                    window.location.reload();
+                } catch (error) {
+                    console.error('Error submitting final rejection:', error);
+                    showNotification('Failed to submit final rejection.', 'error', 5000, true);
+                }
+            });
+        }
+
+        async function handleFileUpload(orgId, rowId) {
+            const fileInput = document.getElementById(`approval-form-${rowId}`);
+            if (fileInput.files.length === 0) {
+                showNotification('Please select a file to upload.', 'warning');
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('finalReport', fileInput.files[0]);
+
+            try {
+                const response = await fetch(`/organization-doc/${orgId}/upload-report`, {
+                    method: 'POST',
+                    credentials: 'include',
+                    body: formData
+                });
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                const updatedOrg = await response.json();
+
+                if (!updatedOrg || !updatedOrg._id || !updatedOrg.verificationStatus) {
+                    throw new Error('Invalid response: Missing required organization data');
+                }
+
+                showNotification('Verification report uploaded successfully.', 'success');
+
+                const documentsDiv = document.getElementById(`documents-${rowId}`);
+                const docRows = documentsDiv.getElementsByClassName('document-row');
+                for (const row of docRows) {
+                    if (row.querySelector('strong').textContent.includes(fieldMap.finalReport.name)) {
+                        const statusSpan = row.querySelector('.optional');
+                        statusSpan.textContent = '(Received)';
+                        const existingLinks = row.querySelectorAll('a');
+                        if (existingLinks.length === 0) {
+                            const links = `
+                                <a href="#" onclick="viewFile('${orgId}', 'finalReport', ${rowId})"><i class="fas fa-eye"></i> View</a>
+                                <a href="#" onclick="downloadFile('${orgId}', 'finalReport', '${fieldMap.finalReport.name}', '${fieldMap.finalReport.ext}')"><i class="fas fa-download"></i> Download</a>
+                            `;
+                            const notUploadedSpan = row.querySelector('span:not(.optional)');
+                            if (notUploadedSpan) {
+                                notUploadedSpan.outerHTML = links;
+                            }
+                        }
+                        break;
+                    }
+                }
+
+                fileInput.value = '';
+
+                document.getElementById(`final-verify-${rowId}`).disabled = false;
+                document.getElementById(`final-reject-${rowId}`).disabled = false;
+
+                const details = document.getElementById(`details-${rowId}`);
+                details.classList.add('active');
+            } catch (error) {
+                console.error('Error uploading report:', error);
+                showNotification('Failed to upload verification report: ' + error.message, 'error');
+            }
+        }
+
+        fetchOrganizations();
+    </script>
+</body>
+</html>

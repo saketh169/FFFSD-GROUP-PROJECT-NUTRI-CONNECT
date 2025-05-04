@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="/css/index.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+    <title>Project : NUTRI CONNECT ( ROLE PAGE )</title>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+      <!-- Google Font: Poppins -->
+      <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap" rel="stylesheet">
+  </head>
+      <style>
+        
+          .logo {
+              display: flex;
+              align-items: center;
+              font-family: 'Poppins', sans-serif;
+              font-size: 24px;
+              font-weight: bold;
+              position: absolute;
+              left:50px;
+              color: #1E6F5C; 
+          }
+  
+          .logo .highlight {
+              color: #28B463;
+          }
+  
+          .logo .icon-container {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              width: 40px; /* Circle size */
+              height: 40px; /* Circle size */
+              background-color: #28B463; /* Darker green circle */
+              border-radius: 50%; /* Make it circular */
+              margin-right: 10px; /* Space between icon and text */
+          }
+  
+          .logo .icon {
+              font-size: 24px; /* Icon size */
+              color: #FFFFFF; /* White icon */
+          }
+  
+          /* Hover effect */
+          .logo:hover .icon-container {
+              background-color: #1E6F5C; /* Darker green on hover */
+              transform: scale(1.1); /* Slightly enlarge circle */
+              transition: all 0.3s ease;
+          }
+  
+          .logo:hover {
+              color: #28B463; /* Brighter green on hover */
+              transition: color 0.3s ease;
+          }
+
+           /* Footer Styles */
+          
+          .bottom{
+            position: absolute;
+            top:4300px;
+            left:0px;
+            background-color:#232F3E;
+            height:auto;
+            width:100%;
+            width: 100%;
+            color: #FFFFFF;
+          }   
+
+         
+          footer {
+              background-color: #232F3E;
+              color: white;
+              padding-top: 60px;
+          }
+          
+          .footer-content {
+              display: grid;
+              grid-template-columns: repeat(3, 1fr);
+              gap: 40px;
+              max-width: 1200px;
+              margin: 0 auto;
+              padding: 0 20px;
+          }
+          
+          .footer-column h3 {
+              font-size: 1.2rem;
+              margin-bottom: 20px;
+              position: relative;
+              padding-bottom: 10px;
+          }
+          
+          .footer-column h3::after {
+              content: '';
+              position: absolute;
+              bottom: 0;
+              left: 0;
+              width: 50px;
+              height: 2px;
+              background-color: #50c878;
+          }
+          
+          .footer-links {
+              list-style: none;
+              padding: 0;
+          }
+          
+          .footer-links li {
+              margin-bottom: 12px;
+          }
+          
+          .footer-links a {
+              color: #F0E68C;
+              text-decoration: none;
+              transition: all 0.3s ease;
+          }
+          
+          .footer-links a:hover {
+              color: #FFD700;
+              padding-left: 5px;
+          }
+          
+          .footer-contact a {
+              color: #1E90FF;
+              text-decoration: none;
+          }
+          
+          .footer-contact a:hover {
+              color: #00BFFF;
+          }
+          
+          .footer-bottom {
+              background-color: rgba(0, 0, 0, 0.2);
+              padding: 20px 0;
+              margin-top: 60px;
+              text-align: center;
+          }
+          
+          .footer-bottom p {
+              margin: 0;
+              color: rgba(255, 255, 255, 0.7);
+          }
+          
+          .footer-bottom a {
+              color: #F0E68C;
+              text-decoration: none;
+              margin: 0 10px;
+          }
+          
+          .footer-bottom a:hover {
+              color: #FFD700;
+          }
+          
+          /* Responsive Design */
+          @media (max-width: 992px) {
+              .footer-content {
+                  grid-template-columns: 1fr 1fr;
+              }
+          }
+          
+          @media (max-width: 768px) {
+              .footer-content {
+                  grid-template-columns: 1fr;
+              }
+          }
+
+          .social-links {
+              display: flex;
+              gap: 15px;
+              margin-top: 15px;
+              font-size: 20px;
+          }
+          
+          .social-link {
+              width: 40px;
+              height: 40px;
+              border-radius: 50%;
+              background-color: #f8f9fa;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              color: #28a745;
+              transition: all 0.3s ease;
+          }
+          
+          .social-link:hover {
+              background-color: #28a745;
+              color: white;
+              transform: translateY(-3px);
+          }
+      </style>
+      
+  
+  <body>
+    <header class="top">
+      <div class="top1">
+
+         <!-- Logo Container -->
+    <div class="logo">
+     
+      <div class="icon-container">
+          <i class="icon fas fa-leaf"></i>
+      </div>
+      <span>
+          <span class="highlight">N</span>utri 
+          <span class="highlight">C</span>onnect
+      </span>
+  </div>
+        
+        <button
+          id="login"
+          onclick="location.href='/roles_signin'"
+          class="btn btn-outline-success"
+        >
+          <b>Login</b>
+        </button>
+        
+        <button
+          id="get-started"
+          onclick="location.href='/roles_signup'"
+          class="btn btn-success"
+        >
+          <b>Get Started</b>
+        </button>
+      </div>
+
+      <!-- Full-Width Navbar with Toggler -->
+      <div class="container-fluid navbar-container">
+        <nav id="nav-bar" class="navbar navbar-expand-lg navbar-light">
+          
+            <!-- Toggler Button -->
+            <button
+              id="toggler"
+              class="navbar-toggler"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarNav"
+              style="border: 3px solid #28a745"
+            >
+              <span class="navbar-toggler-icon"></span>
+            </button>
+      
+            <!-- Navbar Items -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav mx-auto">
+                  <li class="nav-item " id="home">
+                    <a class="nav-link" href="#home">HOME</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#role">ROLE</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#services">SERVICES</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#testimonials">TESTIMONIALS</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#FAQS">FAQS</a>
+                  </li>
+                 
+                </ul>
+            </div>
+
+            <a  id="blog" class="fixed-button" href="/blog" title="blog">
+              <i class="fas fa-blog"></i> 
+            </a>
+            
+            <a  id="chatbot" class="fixed-button" href="/chatbot"  title="chatbot">
+              <i class="fas fa-robot"></i>
+            </a>
+
+            
+            <!-- Contact Us Icon -->
+            <a id="contact" class="fixed-button"  href="/contact" title="Contact us">
+              <i class="fa-solid fa-phone-volume"></i>
+            </a>
+          </div>
+        </nav>
+        
+      </div>
+      
+    </header>
+
+    <main class="main">
+      <!-- Home Section -->
+        <div class="index-img">
+          <section id="home-part" class="home-section">
+            <h1>Welcome to Nutri Connect</h1>
+            <p>
+              Nutri Connect is your ultimate platform for health and wellness. Whether you're a user seeking personalized nutrition plans, a dietitian looking to grow your practice, an organization certifying professionals, or an admin managing the platform, we've got you covered.
+            </p>
+            <div class="slogans">
+              <h3>Empowering Health and Wellness</h3>
+              <p>"Your journey, our support, better health for everyone."</p>
+            </div>
+            <a href="#services-part" class="btn">Explore Our Services</a>
+          </section>
+
+        </div>
+      
+
+      <div
+        class="container d-flex justify-content-center align-items-center text-center"
+      >
+        <h2 id="Title"><b>CHOOSE YOUR ROLE?</b></h2>
+      </div>
+
+     
+      <!-- Role Cards -->
+      <div class="role-cards">
+        <!-- User Role Card -->
+        <div class="role-card" onclick="redirectToLogin('user')">
+          <div class="role-card-image" id="User"></div>
+          <h3>User</h3>
+          <p>Looking for personalized nutrition plans? Start your journey here!</p>
+        </div>
+
+        <!-- Dietitian Role Card -->
+        <div class="role-card" onclick="redirectToLogin('dietitian')">
+          <div class="role-card-image" id="Dietician"></div>
+          <h3>Dietitian</h3>
+          <p>Join our platform to help users achieve their health goals.</p>
+        </div>
+
+        <!-- Admin Role Card -->
+        <div class="role-card" onclick="redirectToLogin('admin')">
+          <div class="role-card-image" id="Admin"></div>
+          <h3>Admin</h3>
+          <p>Manage and oversee the platform's operations.</p>
+        </div>
+
+        <!-- Organization Role Card -->
+        <div class="role-card" onclick="redirectToLogin('organization')">
+          <div class="role-card-image" id="Organization"></div>
+          <h3>Certifying Organization</h3>
+          <p>Partner with us to certify dietitians and expand your reach.</p>
+        </div>
+      </div>
+
+      <!-- Services Section -->
+    <section id="services-part" class="services-section container-fluid">
+      <h2 class="section-title">Our Services</h2>
+      <div class="service-cards">
+        <!-- Service for Users -->
+        <div class="service-card full-width">
+          <i class="fa-solid fa-user fa-3x"></i>
+          <h3>For Users</h3>
+          <p>
+            Get personalized diet plans, track your health progress, and connect with certified dietitians for one-on-one consultations.
+          </p>
+        </div>
+
+        <!-- Service for Dietitians -->
+        <div class="service-card full-width">
+          <i class="fa-solid fa-stethoscope fa-3x"></i>
+          <h3>For Dietitians</h3>
+          <p>
+            Expand your practice by connecting with clients online, creating custom meal plans, and managing consultations seamlessly.
+          </p>
+        </div>
+
+        <!-- Service for Admins -->
+        <div class="service-card full-width">
+          <i class="fa-solid fa-cogs fa-3x"></i>
+          <h3>For Admins</h3>
+          <p>
+            Manage the platform, oversee user and dietitian activities, and ensure smooth operations with advanced tools.
+          </p>
+        </div>
+
+        <!-- Service for Certifying Organizations -->
+        <div class="service-card full-width">
+          <i class="fa-solid fa-building fa-3x"></i>
+          <h3>For Certifying Organizations</h3>
+          <p>
+            Partner with us to certify dietitians, ensure quality standards, and expand your reach in the nutrition industry.
+          </p>
+        </div>
+
+        <!-- Service for Fitness Enthusiasts -->
+        <div class="service-card full-width">
+          <i class="fa-solid fa-dumbbell fa-3x"></i>
+          <h3>For Fitness Enthusiasts</h3>
+          <p>
+            Combine nutrition and fitness with tailored workout plans, progress tracking, and expert guidance.
+          </p>
+        </div>
+
+        <!-- Service for Nutrition Educators -->
+        <div class="service-card full-width">
+          <i class="fa-solid fa-book fa-3x"></i>
+          <h3>For Nutrition Educators</h3>
+          <p>
+            Share your knowledge through workshops, articles, and videos to educate and inspire the community.
+          </p>
+        </div>
+      </div>
+    </section>
+
+       <!-- Testimonials Section -->
+    <section id="testimonials-part" class="testimonials-section container-fluid">
+      <h2 class="section-title">What Our Users Say</h2>
+      <div class="testimonial-cards">
+        <!-- Testimonial 1 -->
+        <div class="testimonial-card">
+          <div class="testimonial-image">
+            <img src="IMAGES/T1.jpg" alt="Rahul Sharma" />
+          </div>
+          <div class="testimonial-content">
+            <h3>Rahul Sharma</h3>
+            <p>
+              "Nutri Connect has been a game-changer for me. The personalized diet plans and expert consultations helped me achieve my fitness goals. Highly recommended!"
+            </p>
+          </div>
+        </div>
+
+        <!-- Testimonial 2 -->
+        <div class="testimonial-card">
+          <div class="testimonial-image">
+            <img src="IMAGES/T2.png" alt="Priya Patel" />
+          </div>
+          <div class="testimonial-content">
+            <h3>Priya Patel</h3>
+            <p>
+              "I love how easy it is to connect with dietitians on Nutri Connect. The platform is user-friendly, and the advice I received was spot on. Thank you!"
+            </p>
+          </div>
+        </div>
+
+        <!-- Testimonial 3 -->
+        <div class="testimonial-card">
+          <div class="testimonial-image">
+            <img src="IMAGES/T3.avif" alt="Anil Kumar" />
+          </div>
+          <div class="testimonial-content">
+            <h3>Anil Kumar</h3>
+            <p>
+              "As a fitness enthusiast, Nutri Connect has been a great tool for tracking my progress and getting tailored nutrition advice. It's a must-try!"
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  
+      <!-- FAQS Section -->
+      <section id="FAQS-part" class="faqs-section container">
+        <h2 class="section-title">Frequently Asked Questions</h2>
+        <div class="accordion" id="faqAccordion">
+          <div class="faq">
+            <div class="accordion-item">
+              <h3 class="accordion-header" id="faqOne">
+                <button
+                  class="accordion-button "
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#collapseOne"
+                  aria-expanded="true"
+                  aria-controls="collapseOne"
+                >
+                  What services does Nutri Connect provide?
+                </button>
+              </h3>
+              <div
+                id="collapseOne"
+                class="accordion-collapse collapse show"
+                aria-labelledby="faqOne"
+                data-bs-parent="#faqAccordion"
+              >
+                <div class="accordion-body">
+                  Nutri Connect offers personalized diet plans, online
+                  consultations with dietitians, and health tracking.
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="faq">
+            <div class="accordion-item">
+              <h3 class="accordion-header" id="faqTwo">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#collapseTwo"
+                  aria-expanded="false"
+                  aria-controls="collapseTwo"
+                >
+                  How do I get started with Nutri Connect?
+                </button>
+              </h3>
+              <div
+                id="collapseTwo"
+                class="accordion-collapse collapse"
+                aria-labelledby="faqTwo"
+                data-bs-parent="#faqAccordion"
+              >
+                <div class="accordion-body">
+                  Simply click the 'Get Started' button on the homepage to begin
+                  your journey.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="faq">
+            <div class="accordion-item">
+              <h3 class="accordion-header" id="faqThree">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#collapseThree"
+                  aria-expanded="false"
+                  aria-controls="collapseThree"
+                >
+                  Can I consult with a dietitian online?
+                </button>
+              </h3>
+              <div
+                id="collapseThree"
+                class="accordion-collapse collapse"
+                aria-labelledby="faqThree"
+                data-bs-parent="#faqAccordion"
+              >
+                <div class="accordion-body">
+                  Yes, Nutri Connect offers online consultations with certified
+                  dietitians via video or chat.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="faq">
+          <div class="accordion-item">
+            <h3 class="accordion-header" id="faqFour">
+              <button
+                class="accordion-button collapsed"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#collapseFour"
+                aria-expanded="false"
+                aria-controls="collapseFour"
+              >
+                How can I see the Dashboard?
+              </button>
+            </h3>
+            <div
+              id="collapseFour"
+              class="accordion-collapse collapse"
+              aria-labelledby="faqFour"
+              data-bs-parent="#faqAccordion"
+            >
+              <div class="accordion-body">
+                You can see your dashboard in ypur profile section once you logged in.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      </section>
+    </main>
+
+    <!-- Footer from Contact Us page -->
+    <footer class="bottom"> 
+      <div class="footer-content">
+        <div class="footer-column">
+          <h3>Contact Us</h3>
+          <ul class="footer-links">
+            <li>
+              <a href="https://mail.google.com/mail/?view=cm&to=nutriconnect6@gmail.com" , target="_blank">
+                <i class="fas fa-envelope"></i> nutriconnect6@gmail.com
+              </a>
+            </li>
+            <li>
+              <a href="tel:+917075783143">
+                <i class="fas fa-phone"></i> +91 70757 83143
+              </a>
+            </li>
+            <li>
+              <a href="tel:+919876543210">
+                <i class="fas fa-phone"></i> +91 98765 43210
+              </a>
+            </li>
+            <li>
+              <i class="fas fa-map-marker-alt"></i> 45 Wellness Avenue, Greenfield, CA 93927
+            </li>
+          </ul>
+        </div>
+        
+        <div class="footer-column">
+          <h3>Quick Links</h3>
+          <ul class="footer-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/roles_signin">Choose Your Role</a></li>
+            <li><a href="/blog">Blog & Resources</a></li>
+            <li><a href="/contact">Contact Us</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-column">
+          <h3>Follow Us</h3>
+          <div class="social-links" style="justify-content: flex-start;">
+            <a href="https://www.facebook.com/profile.php?id=61572485733709" target="_blank" class="social-link">
+              <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="https://www.instagram.com/nutriconnect2025" target="_blank" class="social-link">
+              <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://x.com/NutriC21?t=ngy3BuReV6VcrXl3WXrCvg&s=09" target="_blank" class="social-link">
+              <i class="fab fa-twitter"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/nutri-connect-a0b774349" target="_blank" class="social-link">
+              <i class="fab fa-linkedin-in"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <p>&copy; 2025 Nutri Connect. All Rights Reserved. 
+          <a href="/terms_conditions">Terms of Use</a> |
+          <a href="/privacy-policy">Privacy Policy</a> 
+         
+        </p>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
+    <script src="/js/index.js"></script>
+
+    <script>
+     // Function to redirect to the sign-in page with the selected role
+    function redirectToLogin(role) {
+      window.location.href = `/Sign_in?role=${role}`;
+    }
+
+    </script>
+  </body>
+</html>

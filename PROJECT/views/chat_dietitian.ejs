@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dietician Side Chat</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body {
+            background-color: #e8f5e9; /* Light green background */
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .chat-container {
+            width: 90%;
+            max-width: 900px;
+            height: 80vh;
+            display: flex;
+            flex-direction: column;
+            background: #f0fff4; /* Light greenish chat area */
+            border-radius: 15px;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+
+        /* Header */
+        .chat-header {
+            background: #4caf50;
+            color: white;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .header-icons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .header-icons i {
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .header-icons i:hover {
+            transform: scale(1.2);
+            color: #c8e6c9;
+        }
+
+        /* Chat body */
+        .chat-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .message {
+            max-width: 70%;
+            padding: 10px;
+            border-radius: 15px;
+            margin-bottom: 10px;
+            word-wrap: break-word;
+        }
+
+        .sent {
+            align-self: flex-end;
+            background: #81c784;
+            color: white;
+            text-align: right;
+        }
+
+        .received {
+            align-self: flex-start;
+            background: #c8e6c9;
+            text-align: left;
+        }
+
+        /* Input area */
+        .chat-input {
+            display: flex;
+            padding: 10px;
+            background: white;
+            border-top: 1px solid #ddd;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 20px;
+            outline: none;
+            background: #f0fff0;
+        }
+
+        .chat-input button {
+            background: #4caf50;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 50%;
+            margin-left: 10px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .chat-input button:hover {
+            background: #388e3c;
+        }
+
+        /* Media Queries */
+        @media (max-width: 768px) {
+            .chat-container {
+                height: 90vh;
+                width: 100%;
+                border-radius: 0;
+            }
+
+            .chat-header {
+                font-size: 16px;
+                padding: 10px;
+            }
+
+            .chat-input input {
+                padding: 8px;
+            }
+
+            .chat-input button {
+                padding: 8px 12px;
+            }
+        }
+
+        /* Hover tooltips */
+        .tooltip-text {
+            position: absolute;
+            background-color: black;
+            color: white;
+            padding: 5px 8px;
+            font-size: 12px;
+            border-radius: 5px;
+            display: none;
+        }
+
+        .header-icons i:hover::after {
+            display: inline-block;
+        }
+
+         #cross {
+        position: fixed;
+        top: 5px;
+        left: 10px;
+        line-height: 20px;
+        font-size: 40px;
+        border-radius: 100%;
+    }
+    </style>
+</head>
+<body>
+
+<!-- Back Button -->
+<div id="cross" class="btn btn-outline-success" onclick="window.history.back();">
+    <i class="fa-solid fa-xmark"></i>
+</div>
+
+<div class="chat-container">
+    <!-- Chat Header -->
+    <div class="chat-header">
+        <span>Client</span>
+        <div class="header-icons">
+            <i class="fa-solid fa-circle-user" title="Profile"></i>
+            <i class="fa-solid fa-envelope" title="Mail"></i>
+        </div>
+    </div>
+
+    <!-- Chat Body -->
+    <div class="chat-body" id="chat-body">
+        <!-- Messages will be loaded here -->
+    </div>
+
+    <!-- Chat Input -->
+    <div class="chat-input">
+        <input type="text" id="message-input" placeholder="Type a message..." onkeypress="handleKeyPress(event)">
+        <button onclick="sendMessage()"><i class="fa-solid fa-paper-plane" title="Send"></i></button>
+    </div>
+</div>
+
+<script>
+    // Handle Enter key press
+    function handleKeyPress(event) {
+        if (event.key === 'Enter') {
+            sendMessage();
+        }
+    }
+
+    // Function to add a message to the chat
+    function addMessage(text, isSent) {
+        const chatBody = document.getElementById("chat-body");
+        const newMessage = document.createElement("div");
+        newMessage.classList.add("message", isSent ? "sent" : "received");
+        newMessage.textContent = text;
+        chatBody.appendChild(newMessage);
+        chatBody.scrollTop = chatBody.scrollHeight;
+    }
+
+    async function sendMessage() {
+        const input = document.getElementById("message-input");
+        const message = input.value.trim();
+
+        if (message !== "") {
+            try {
+                // Send message to backend
+                const response = await fetch('/dietitian-messages', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        dietitian_msg: message
+                    })
+                });
+
+                if (response.ok) {
+                    // Add the sent message to the chat
+                    addMessage(message, true);
+                    
+                    // Clear input
+                    input.value = "";
+                } else {
+                    console.error('Failed to save message');
+                    alert('Failed to send message');
+                }
+            } catch (error) {
+                console.error('Error sending message:', error);
+                alert('Error sending message');
+            }
+        }
+    }
+
+    // Load dietitian messages when page loads
+    async function loadDietitianMessages() {
+        try {
+           
+            addMessage("Hello! I'm your dietitian. How can I help you today?", true);
+            addMessage("Hi! I have some questions about my diet.", false);
+
+            addMessage("Have you been following the meal plan I suggested?", true);
+            addMessage("I've been following the plan but struggling with breakfast options.", false);
+           
+            
+            // Then load messages from the server
+            const response = await fetch('/dietitian-messages');
+            if (response.ok) {
+                const messages = await response.json();
+                
+                // Add dietitian messages to chat (as sent messages)
+                messages.forEach(msg => {
+                    addMessage(msg.dietitian_msg, true);
+                });
+            }
+        } catch (error) {
+            console.error('Error loading messages:', error);
+        }
+    }
+
+    // Load messages when page loads
+    window.addEventListener('DOMContentLoaded', loadDietitianMessages);
+</script>
+
+</body>
+</html>

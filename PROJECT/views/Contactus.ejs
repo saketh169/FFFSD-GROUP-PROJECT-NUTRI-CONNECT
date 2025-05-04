@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+    <title>Project : NUTRI CONNECT ( CONTACT US )</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <style>
+      .logo {
+        display: flex;
+        align-items: center;
+        font-family: 'Poppins', sans-serif;
+        font-size: 24px;
+        font-weight: bold;
+        position: absolute;
+        left: 50px;
+        color: #1E6F5C; 
+      }
+
+      .logo .highlight {
+        color: #28B463;
+      }
+
+      .logo .icon-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        background-color: #28B463;
+        border-radius: 50%;
+        margin-right: 10px;
+      }
+
+      .logo .icon {
+        font-size: 24px;
+        color: #FFFFFF;
+      }
+
+      .logo:hover .icon-container {
+        background-color: #1E6F5C;
+        transform: scale(1.1);
+        transition: all 0.3s ease;
+      }
+
+      .logo:hover {
+        color: #28B463;
+        transition: color 0.3s ease;
+      }
+    
+      body {
+        font-family: Arial, sans-serif;
+        color: rgb(51, 51, 51);
+        line-height: 1.6;
+        margin: 0px;
+        background-color: #E8F5E9; 
+      }
+    
+      .top {
+        position: fixed;
+        top: 0;
+        height: 130px;
+        width: 100%;
+        z-index: 1;
+      }
+    
+      .top1 {
+        box-shadow: rgba(0, 0, 0, 0.6) 0px 2px 5px;
+        position: fixed;
+        left: 0;
+        right: 0;
+        height: 60px;
+        width: 100%;
+        background-color: #D2F0C8;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        z-index: 10;
+      }
+    
+      #login {
+        position: fixed;
+        right: 180px;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        z-index: 100;
+      }
+    
+      #get-started {
+        position: fixed;
+        right: 30px;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        z-index: 100;
+      }
+    
+      #nav-bar {
+        z-index: 10;
+        position: fixed;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        height: 50px;
+        background-color: #50c878;
+        border-bottom: 2px solid #28a745;
+      }
+    
+      .navbar-nav .nav-link {
+        font-weight: bold;
+        font-size: 16px;
+        transition: all 0.3s ease-in-out;
+        padding: 10px 15px;
+        border-radius: 5px;
+      }
+    
+      .navbar-nav .nav-link:hover {
+        background-color: rgba(20, 133, 52, 1);
+        box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+        transform: translateY(-2px);
+        color: white !important;
+      }
+    
+      .navbar-nav .nav-item.active .nav-link {
+        background-color: rgba(40, 167, 69, 0.8);
+        color: white;
+      }
+    
+      .navbar-nav {
+        margin-left: 200px;
+        width: 60%;
+        justify-content: center;
+      }
+
+      .container { 
+        flex: 1;
+      }
+    
+      .main {
+        position: absolute;
+        top: 110px;
+        width: 100%;
+      }
+    
+      /* Updated Contact Form Styles */
+      .contact-form {
+        border: 2px solid #2E7D32;
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 30px;
+        margin-top: 95px;
+        background-color: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        transition: all 0.3s ease;
+      }
+
+      .contact-form:hover {
+        box-shadow: 0 6px 25px rgba(0, 0, 0, 0.12);
+        border-color: #4CAF50;
+      }
+
+      .contact-form h2 {
+        text-align: center;
+        margin-bottom: 30px;
+        color: #1E6F5C;
+        font-size: 28px;
+        font-weight: 600;
+        position: relative;
+        padding-bottom: 15px;
+      }
+
+      .contact-form h2::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 3px;
+        background-color: #28B463;
+      }
+
+      .contact-form .form-label {
+        font-weight: 500;
+        color: #333;
+        margin-bottom: 8px;
+        font-size: 15px;
+      }
+
+      .contact-form españ .form-control {
+        background-color: #f8f9fa;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        padding: 12px 15px;
+        font-size: 15px;
+        color: #333;
+        transition: all 0.3s ease;
+        height: 48px;
+      }
+
+      .contact-form .form-control:focus {
+        border-color: #28B463;
+        box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.2);
+        background-color: white;
+      }
+
+      .contact-form textarea.form-control {
+        height: 80px;
+        resize: vertical;
+        margin: 0 auto;
+        display: block;
+      }
+
+      .contact-form .form-select {
+        border-radius: 8px;
+        border: 1px solid #e0e0e0;
+        padding: 12px 15px;
+        background-color: #f8f9fa;
+        color: #333;
+        cursor: pointer;
+        height: 48px;
+        font-size: 15px;
+        transition: all 0.3s ease;
+      }
+
+      .contact-form .form-select:focus {
+        border-color: #28B463;
+        box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.2);
+      }
+
+      .contact-form .btn-primary {
+        background-color: #28a745;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 500;
+        width: 100%;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        height: 48px;
+      }
+
+      .contact-form .btn-primary:hover {
+        background-color: #218838;
+        transform: translateY(-2px);
+      }
+
+      /* Validation Styles (Show only after submission) */
+      .invalid-feedback {
+        display: none;
+        color: #dc3545; /* Bootstrap's default red */
+        font-size: 0.875rem;
+        margin-top: 0.25rem;
+      }
+
+      .was-validated .form-control:invalid,
+      .was-validated .form-select:invalid {
+        border-color: #dc3545;
+        padding-right: calc(1.5em + 0.75rem);
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e");
+        background-repeat: no-repeat;
+        background-position: right calc(0.375em + 0.1875rem) center;
+        background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+      }
+
+      .was-validated textarea.form-control:invalid {
+        border-color: #dc3545;
+      }
+
+      .was-validated :invalid ~ .invalid-feedback {
+        display: block;
+      }
+
+      /* Message Box Styles */
+      #messageBox {
+        background-color: white;
+        border: 2px solid #2E7D32;
+        border-radius: 12px;
+        padding: 25px;
+        margin-top: 20px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      #messageBox h2 {
+        color: #1E6F5C;
+        font-size: 20px;
+        margin-bottom: 20px;
+        text-align: center;
+        font-weight: 600;
+      }
+
+      #messageBox p {
+        text-align: left;
+        margin: 12px 0;
+        font-size: 16px;
+        color: #555;
+        line-height: 1.6;
+      }
+
+      #messageBox p strong {
+        color: #333;
+        font-weight: 500;
+        display: inline-block;
+        width: 80px;
+      }
+
+      .contact-section {
+        display: flex;
+        justify-content: space-evenly;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        gap: 100px;
+      }
+    
+      .contact-section div {
+        width: 100%;
+      }
+
+      #msg {
+        margin-bottom: 10px;
+        text-align: center;
+        align-content: center;
+      }
+    
+      /* Responsive Design */
+      @media (max-width: 992px) {
+        .logo {
+          margin-right: 270px;
+        }
+    
+        #toggler {
+          margin-top: -5px;
+          position: fixed;
+          left: 30px;
+          top: 70px;
+        }
+        
+        .navbar-nav .nav-item {
+          margin: 0px;
+          text-align: center;
+          background-color: #98Fb98;
+        }
+      
+        .navbar-nav {
+          margin-top: 54px;
+          width: 100%;
+        }
+
+        .contact-section {
+          flex-direction: column;
+          gap: 20px;
+        }
+
+        .contact-form {
+          margin-top: 150px;
+        }
+
+        #msg {
+          margin-top: 50px;
+          max-width: 100%;
+        }
+
+        .contact-form textarea.form-control {
+          width: 100%;
+        }
+      }
+    
+      #contact-img {
+        position: relative;
+        top: 100px;
+        height: 500px;
+        border-radius: 10px;
+        display: block;
+        margin: auto;
+      }
+
+      /* Contact Container Styles */
+      #contact-container {
+        position: relative;
+        top: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 200px;
+        width: 90%;
+        margin: 50px auto;
+        padding: 20px;
+        background: #fff;
+        border-radius: 15px;
+        border: 2px solid #2E7D32;
+      }
+
+      #contact-container .contact-info {
+        background: #c8e6c9;
+        width: 600px;
+        padding: 40px;
+        border-radius: 15px;
+        border-left: 5px solid #2e7d32;
+        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+        text-align: center;
+      }
+
+      #contact-container .contact-info h3 {
+        color: #4CAF50;
+        font-size: 40px;
+        margin-bottom: 20px;
+        font-weight: bold;
+      }
+
+      #contact-container .contact-info p {
+        font-size: 18px;
+        color: #555;
+        margin-bottom: 15px;
+        line-height: 1.6;
+      }
+
+      #contact-container .contact-info a {
+        color: #1E90FF;
+        font-weight: bold;
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+
+      #contact-container .contact-info a:hover {
+        color: #0056b3;
+      }
+
+      #contact-container .social-info {
+        margin-top: 20px;
+        text-align: center;
+      }
+
+      #contact-container .social-info h3 {
+        color: #1b5e20;
+        font-size: 26px;
+      }
+
+      #contact-container .social {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        margin-top: 15px;
+      }
+
+      #contact-container .social a {
+        font-size: 28px;
+        color: #2e7d32;
+        transition: transform 0.3s ease, color 0.3s ease;
+      }
+
+      #contact-container .social a:hover {
+        color: #1b5e20;
+        transform: scale(1.2);
+      }
+
+      #contact-container .contact-image {
+        width: 530px;
+        height: auto;
+        border-radius: 15px;
+        display: block;
+      }
+
+      @media (max-width: 992px) {
+        #contact-container {
+          flex-direction: column;
+          gap: 20px;
+        }
+      }
+
+      /* Fixed Button Styles */
+      .fixed-button {
+        background-color: #28a745;
+        color: white;
+        height: 45px;
+        padding: 10px;
+        border-radius: 5px;
+        outline: 2px solid #46b06c;
+        display: inline-block;
+        position: fixed;
+        top: 61.5px;
+        box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+        transition: background-color 0.3s ease, transform 0.2s ease;
+      }
+
+      .fixed-button:hover {
+        background-color: #218838;
+        transform: scale(1.1);
+      }
+
+      .fixed-button i {
+        font-size: 24px;
+        color: #f8f8f8;
+      }
+
+      #contact {
+        right: 20px;
+      }
+    
+      #chatbot {
+        right: 80px;
+      }
+    
+      #blog {
+        right: 150px;
+      }
+
+      /* Map Section */
+      .map-container {
+        margin-top: 60px;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        border: 2px solid #2E7D32;
+      }
+
+      /* Footer Styles */
+      .bottom {
+        position: relative;
+        width: 100%;
+        margin-top: 170px;
+        left: 0px;
+        background-color: #232F3E;
+        height: 402px;
+        color: #FFFFFF;
+      }   
+
+      footer {
+        background-color: #232F3E;
+        color: white;
+        padding-top: 60px;
+      }
+      
+      .footer-content {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 40px;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+      
+      .footer-column h3 {
+        font-size: 1.2rem;
+        margin-bottom: 20px;
+        position: relative;
+        padding-bottom: 10px;
+      }
+      
+      .footer-column h3::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 50px;
+        height: 2px;
+        background-color: #50c878;
+      }
+      
+      .footer-links {
+        list-style: none;
+        padding: 0;
+      }
+      
+      .footer-links li {
+        margin-bottom: 12px;
+      }
+      
+      .footer-links a {
+        color: #F0E68C;
+        text-decoration: none;
+        transition: all 0.3s ease;
+      }
+      
+      .footer-links a:hover {
+        color: #FFD700;
+        padding-left: 5px;
+      }
+      
+      .footer-contact a {
+        color: #1E90FF;
+        text-decoration: none;
+      }
+      
+      .footer-contact a:hover {
+        color: #00BFFF;
+      }
+      
+      .footer-bottom {
+        background-color: rgba(0, 0, 0, 0.2);
+        padding: 20px 0;
+        margin-top: 70px;
+        text-align: center;
+      }
+      
+      .footer-bottom p {
+        margin: 0;
+        color: rgba(255, 255, 255, 0.7);
+      }
+      
+      .footer-bottom a {
+        color: #F0E68C;
+        text-decoration: none;
+        margin: 0 10px;
+      }
+      
+      .footer-bottom a:hover {
+        color: #FFD700;
+      }
+      
+      /* Responsive Design for Footer */
+      @media (max-width: 992px) {
+        .footer-content {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+      
+      @media (max-width: 768px) {
+        .footer-content {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .social-links {
+        display: flex;
+        gap: 15px;
+        margin-top: 15px;
+        font-size: 20px;
+      }
+      
+      .social-link {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: #f8f9fa;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #28a745;
+        transition: all 0.3s ease;
+      }
+      
+      .social-link:hover {
+        background-color: #28a745;
+        color: white;
+        transform: translateY(-3px);
+      }
+    </style>
+  </head>
+  <body>
+    <header class="top">
+      <div class="top1">
+        <!-- Logo Container -->
+        <div class="logo">
+          <div class="icon-container">
+            <i class="icon fas fa-leaf"></i>
+          </div>
+          <span>
+            <span class="highlight">N</span>utri
+            <span class="highlight">C</span>onnect
+          </span>
+        </div>
+      </div>
+
+      <!-- Full-Width Navbar with Toggler -->
+      <div class="container-fluid navbar-container">
+        <nav id="nav-bar" class="navbar navbar-expand-lg navbar-light">
+          <div class="container">
+            <!-- Toggler Button -->
+            <button
+              id="toggler"
+              class="navbar-toggler"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarNav"
+              style="border: 3px solid #28a745"
+            >
+              <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Navbar Items -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav mx-auto">
+                <li class="nav-item" id="home">
+                  <a class="nav-link" onclick="history.back()">HOME</a>
+                </li>
+              </ul>
+            </div>
+
+            <a id="blog" class="fixed-button" href="/blog" title="blog">
+              <i class="fas fa-blog"></i> 
+            </a>
+            
+            <a id="chatbot" class="fixed-button" href="/chatbot" title="chatbot">
+              <i class="fas fa-robot"></i>
+            </a>
+
+            <!-- Contact Us Icon -->
+            <a id="contact" class="fixed-button" href="/contactus" title="contactus">
+              <i class="fa-solid fa-phone-volume"></i>
+            </a>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <div class="contact-section">
+        <div class="contact-form">
+          <h2>Contact Us</h2>
+          <form class="query-form needs-validation" onsubmit="submitQuery(event)" novalidate>
+            <div class="mb-3">
+              <label for="name" class="form-label">Full Name</label>
+              <input
+                type="text"
+                class="form-control"
+                id="name"
+                name="name"
+                placeholder="Enter your full name"
+                required
+                minlength="2"
+                maxlength="50"
+              />
+              <div class="invalid-feedback">Please enter a valid name (2-50 characters).</div>
+            </div>
+            <div class="mb-3">
+              <label for="email" class="form-label">Email Address</label>
+              <input
+                type="email"
+                class="form-control"
+                id="email"
+                name="email"
+                placeholder="Enter your email address"
+                required
+                minlength="5"
+                maxlength="50"
+              />
+              <div class="invalid-feedback">Please enter a valid email address (5-50 characters).</div>
+            </div>
+            <div class="mb-3">
+              <label for="role" class="form-label">Your Role</label>
+              <select class="form-select" id="role" name="role" required>
+                <option value="" disabled selected>Select your role</option>
+                <option value="Client">Client</option>
+                <option value="Dietitian">Dietitian</option>
+                <option value="Organization">Organization</option>
+                <option value="Others">Others</option>
+              </select>
+              <div class="invalid-feedback">Please select your role.</div>
+            </div>
+            <div class="mb-3">
+              <label for="query" class="form-label">Your Message</label>
+              <textarea
+                class="form-control"
+                id="query"
+                name="query"
+                rows="5"
+                placeholder="Type your message here..."
+                required
+                minlength="5"
+                maxlength="500"
+              ></textarea>
+              <div class="invalid-feedback" id="query-feedback">Please enter a message (5-500 characters).</div>
+            </div>
+            <div class="d-grid">
+              <button type="submit" class="btn btn-primary">Send Message</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Message Box -->
+        <div id="msg">
+          <h2>Message Sent:</h2>
+          <div id="messageBox">
+            <!-- Submitted data will be displayed here -->
+          </div>
+        </div>
+      </div>
+
+      <div id="contact-container">
+        <!-- Image Section -->
+        <img src="https://img.freepik.com/free-vector/flat-design-illustration-customer-support_23-2148887720.jpg?t=st=1741808563~exp=1741812163~hmac=5a44417f93ba9f82a4917f85e71c6850b44927dff043e28298f97f1deba55578&w=900" alt="Nutri Connect" class="contact-image">
+
+        <!-- Contact Information Section -->
+        <div class="contact-info">
+          <h3>Contact Us</h3>
+          <p>
+            <strong>Email:</strong>
+            <a href="mailto:nutriconnect6@gmail.com">nutriconnect6@gmail.com</a>
+            <a href="https://mail.google.com/mail/?view=cm&to=nutriconnect6@gmail.com" target="_blank">
+              <i class="fa-solid fa-envelope fa-lg ms-2"></i>
+            </a>
+          </p>
+          <p>
+            <strong>Phone 1:</strong>
+            <a href="tel:+917075783143">+91 70757 83143</a>
+            <a href="tel:+917075783143">
+              <i class="fa-solid fa-phone fa-lg ms-2"></i>
+            </a>
+          </p>
+          <p>
+            <strong>Phone 2:</strong>
+            <a href="tel:+919876543210">+91 98765 43210</a>
+            <a href="tel:+919876543210">
+              <i class="fa-solid fa-phone fa-lg ms-2"></i>
+            </a>
+          </p>
+          <p>
+            <strong>Address:</strong>
+            <span>45 Wellness Avenue, Greenfield, CA 93927</span>
+          </p>
+          <p style="font-style: italic; color: #1b5e20; margin-top: 20px;">
+            For further queries, feel free to reach out to us. We're here to help!
+          </p>
+
+          <!-- Social Media Links -->
+          <div class="social-info">
+            <h3>Follow Us</h3>
+            <div class="social">
+              <a href="https://www.facebook.com/profile.php?id=61572485733709" target="_blank">
+                <i class="fa-brands fa-facebook"></i>
+              </a>
+              <a href="https://www.instagram.com/nutriconnect2025" target="_blank">
+                <i class="fa-brands fa-instagram"></i>
+              </a>
+              <a href="https://x.com/NutriC21?t=ngy3BuReV6VcrXl3WXrCvg&s=09" target="_blank">
+                <i class="fa-brands fa-x-twitter"></i>
+              </a>
+              <a href="https://www.linkedin.com/in/nutri-connect-a0b774349" target="_blank">
+                <i class="fa-brands fa-linkedin"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Map Section -->
+      <div class="map-container container" style="margin-top: 150px;">
+        <iframe 
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.215256064383!2d-121.2428449245378!3d36.31787237228439!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x809045c13decb8cd%3A0x7a1a8a3a0b1b2b3b!2s45%20Wellness%20Ave%2C%20Greenfield%2C%20CA%2093927%2C%20USA!5e0!3m2!1sen!2sin!4v1712345678901!5m2!1sen!2sin" 
+          width="100%" 
+          height="400" 
+          style="border:0;" 
+          allowfullscreen="" 
+          loading="lazy" 
+          referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+      </div>
+    </main>
+
+    <footer class="bottom"> 
+      <div class="footer-content">
+        <div class="footer-column">
+          <h3>Contact Us</h3>
+          <ul class="footer-links">
+            <li>
+              <a href="https://mail.google.com/mail/?view=cm&to=nutriconnect6@gmail.com" target="_blank">
+                <i class="fas fa-envelope"></i> nutriconnect6@gmail.com
+              </a>
+            </li>
+            <li>
+              <a href="tel:+917075783143">
+                <i class="fas fa-phone"></i> +91 70757 83143
+              </a>
+            </li>
+            <li>
+              <a href="tel:+919876543210">
+                <i class="fas fa-phone"></i> +91 98765 43210
+              </a>
+            </li>
+            <li>
+              <i class="fas fa-map-marker-alt"></i> 45 Wellness Avenue, Greenfield, CA 93927
+            </li>
+          </ul>
+        </div>
+        
+        <div class="footer-column">
+          <h3>Quick Links</h3>
+          <ul class="footer-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/roles_signin">Choose Your Role</a></li>
+            <li><a href="/blog">Blog & Resources</a></li>
+            <li><a href="/contact">Contact Us</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-column">
+          <h3>Follow Us</h3>
+          <div class="social-links" style="justify-content: flex-start;">
+            <a href="https://www.facebook.com/profile.php?id=61572485733709" target="_blank" class="social-link">
+              <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="https://www.instagram.com/nutriconnect2025" target="_blank" class="social-link">
+              <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://x.com/NutriC21?t=ngy3BuReV6VcrXl3WXrCvg&s=09" target="_blank" class="social-link">
+              <i class="fab fa-twitter"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/nutri-connect-a0b774349" target="_blank" class="social-link">
+              <i class="fab fa-linkedin-in"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <p>© 2025 Nutri Connect. All Rights Reserved. 
+          <a href="/terms_conditions">Terms of Use</a> |
+          <a href="/privacy-policy">Privacy Policy</a>
+        </p>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
+    
+    <script>
+      function submitQuery(event) {
+        event.preventDefault();
+
+        const form = event.target;
+        const queryInput = form.querySelector('#query');
+        const queryFeedback = form.querySelector('#query-feedback');
+
+        // Reset custom validity to ensure fresh validation
+        queryInput.setCustomValidity('');
+
+        // Custom validation for query minimum length
+        if (queryInput.value.length < 5) {
+          queryInput.setCustomValidity('Message must be at least 5 characters long.');
+          queryFeedback.textContent = 'Please enter a message (5-500 characters).';
+        }
+
+        // Check form validity and show validation only on submit
+        if (!form.checkValidity()) {
+          form.classList.add('was-validated');
+          return;
+        }
+
+        // Prepare form data
+        const formData = new FormData(form);
+        const data = {
+          name: formData.get('name'),
+          email: formData.get('email'),
+          role: formData.get('role'),
+          query: formData.get('query'),
+        };
+
+        // Submit form data to server
+        fetch('/contact', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        })
+          .then((response) => response.json())
+          .then((result) => {
+            if (result.message) {
+              // Display submitted data in the message box
+              const messageBox = document.getElementById('messageBox');
+              messageBox.innerHTML = `
+                <h2>Submission Details</h2>
+                <p><strong>Name:</strong> ${data.name}</p>
+                <p><strong>Email:</strong> ${data.email}</p>
+                <p><strong>Role:</strong> ${data.role}</p>
+                <p><strong>Query:</strong> ${data.query}</p>
+              `;
+              alert('Query submitted successfully!');
+            } else {
+              alert('Failed to submit query. Please try again.');
+            }
+          })
+          .catch((error) => {
+            console.error('Error:', error);
+            alert('An error occurred. Please try again.');
+          });
+
+        // Reset form and validation styles
+        form.reset();
+        form.classList.remove('was-validated');
+        queryInput.setCustomValidity('');
+        queryFeedback.textContent = 'Please enter a message (5-500 characters).';
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,1957 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Nutri Connect - Dietician Weekly Schedule</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+      .logo {
+        display: flex;
+        align-items: center;
+        font-family: 'Poppins', sans-serif;
+        font-size: 24px;
+        font-weight: bold;
+        position: absolute;
+        left:50px;
+        color: #1E6F5C; 
+      }
+
+      .logo .highlight {
+        color: #28B463;
+      }
+
+      .logo .icon-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        background-color: #28B463;
+        border-radius: 50%;
+        margin-right: 10px;
+      }
+
+      .logo .icon {
+        font-size: 24px;
+        color: #FFFFFF;
+      }
+
+      .logo:hover .icon-container {
+        background-color: #1E6F5C;
+        transform: scale(1.1);
+        transition: all 0.3s ease;
+      }
+
+      .logo:hover {
+        color: #28B463;
+        transition: color 0.3s ease;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        color: rgb(51, 51, 51);
+        line-height: 1.6;
+        margin: 0px;
+        background-color: #f5f7fa;
+      }
+
+      .top {
+        position: fixed;
+        top: 0;
+        height: 130px;
+        width: 100%;
+        z-index: 1;
+      }
+
+      .top1 {
+        box-shadow: rgba(0, 0, 0, 0.6) 0px 2px 5px;
+        position: fixed;
+        left: 0;
+        right: 0;
+        height: 60px;
+        width: 100%;
+        background-color: #D2F0C8;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+      }
+
+      #profile {
+        position: fixed;
+        width: 150px;
+        height: 45px;
+        right: 30px;
+        border-radius: 5px;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      #profile i {
+        margin: 5px;
+      }
+
+      #profile div {
+        border: 2px solid;
+        border-radius: 50%;
+        padding: 5px;
+      }
+      #profile:hover div {
+        border: 2px solid white;
+      }
+
+      #nav-bar {
+        z-index: 1000;
+        position: fixed;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        height: 50px;
+        background-color: #50c878;
+        border-bottom: 2px solid #28a745;
+      }
+
+      .navbar-nav .nav-link {
+        font-weight: bold;
+        font-size: 16px;
+        transition: all 0.3s ease-in-out;
+        padding: 10px 15px;
+        border-radius: 5px;
+      }
+
+      .navbar-nav .nav-link:hover {
+        background-color: rgba(20, 133, 52, 1);
+        box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+        transform: translateY(-2px);
+        color: white !important;
+      }
+
+      .navbar-nav .nav-item.active .nav-link {
+        background-color: rgba(40, 167, 69, 0.8);
+        color: white;
+      }
+
+      .navbar-nav {
+        margin-left: 200px;
+        width: 70%;
+        justify-content: space-between;
+      }
+
+      .active-page a {
+        font-weight: bold;
+        background-color: #46b06c;
+        border: 3px solid #28a745;
+        color: white !important;
+        border-radius: 15%;
+      }
+
+      @media (max-width: 992px) {
+        .logo{
+          margin-right: 270px;
+        }
+
+        #toggler {
+          margin-top: -5px;
+          position: fixed;
+          left: 30px;
+          top: 70px;
+        }
+        
+        .navbar-nav .nav-item {
+          margin: 0px;
+          text-align: center;
+          background-color: #98Fb98;
+        }
+        .navbar-nav {
+          margin-top:54px;
+          width: 100%;
+        }
+      }   
+
+      #profile {
+        position: fixed;
+        width: 150px;
+        height: 45px;
+        right: 30px;
+        border-radius: 5px;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap:7px;
+      }
+
+      .main{
+        position: relative;
+        top:70px;
+        width:100%;
+      }
+
+  
+      /* Updated Main Section Styles */
+      .title-section {
+        background: linear-gradient(135deg, #4CAF50, #81C784);
+        color: white;
+        padding: 20px 0;
+        text-align: center;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        
+       
+      }
+      
+      .title-section h1 {
+        margin: 0;
+        font-size: 28px;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+      }
+      
+      .title-section h1 i {
+        font-size: 32px;
+      }
+
+      .sidebar {
+        width: 220px;
+        background: white;
+        padding: 20px 10px;
+        height: calc(100vh - 72px);
+        box-shadow: 2px 0 10px rgba(0, 0, 0, 0.08);
+        position: sticky;
+        top: 72px;
+        overflow-y: auto;
+      }
+      
+      .sidebar .day {
+        padding: 20px;
+        margin: 8px 0;
+        cursor: pointer;
+        color: #555;
+        border-radius: 8px;
+        text-align: left;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        background: white;
+        border: 1px solid #e0e0e0;
+      }
+      
+      .sidebar .day:hover {
+        background: #f1f8ff;
+        transform: translateX(3px);
+        border-color: #4CAF50;
+      }
+      
+      .sidebar .day.active {
+        background: #e8f5e9;
+        font-weight: 600;
+        color: #4CAF50;
+        border-left: 4px solid #4CAF50;
+      }
+      
+      .sidebar .day i {
+        font-size: 18px;
+        width: 24px;
+        text-align: center;
+      }
+      
+      .sidebar .date {
+        font-size: 12px;
+        color: #777;
+        margin-top: 3px;
+      }
+
+      .content {
+        flex: 1;
+        padding: 25px;
+        background-color: #e8f5e9;
+      }
+      
+      .day-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #e0e0e0;
+      }
+      
+      .day-title {
+        color: #4CAF50;
+        font-size: 22px;
+        font-weight: 600;
+      }
+      
+      .day-date {
+        color: #666;
+        font-size: 16px;
+      }
+      
+      .appointments-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 20px;
+      }
+      
+      .appointment-card {
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        padding: 20px;
+        transition: all 0.3s ease;
+        border-left: 4px solid #4CAF50;
+      }
+      
+      .appointment-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+      }
+      
+      .appointment-card.workshop {
+        border-left-color: #81C784;
+      }
+      
+      .appointment-card.consultation {
+        border-left-color: #4CAF50;
+      }
+      
+      .appointment-card.group {
+        border-left-color: #FFC107;
+      }
+      
+      .appointment-card.followup {
+        border-left-color: #F44336;
+      }
+      
+      .appointment-time {
+        font-size: 14px;
+        color: #666;
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      
+      .appointment-title {
+        font-size: 18px;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 10px;
+      }
+      
+      .appointment-details {
+        font-size: 14px;
+        color: #666;
+        margin-bottom: 15px;
+      }
+      
+      .appointment-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 13px;
+        color: #888;
+      }
+      
+      .appointment-mode {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        padding: 3px 8px;
+        border-radius: 12px;
+        background: #e8f5e9;
+        color: #4CAF50;
+      }
+      
+      .appointment-mode.online {
+        background: #e6f4ea;
+        color: #81C784;
+      }
+      
+      .appointment-status {
+        font-weight: 600;
+      }
+      
+      .appointment-status.confirmed {
+        color: #4CAF50;
+      }
+      
+      .appointment-status.available {
+        color: #2196F3;
+      }
+      
+      .no-appointments {
+        text-align: center;
+        padding: 40px;
+        color: #888;
+        font-size: 16px;
+      }
+      
+      #cross {
+       
+        position: relative;
+        top:55px;
+        left:10px;
+        align-self: flex-start;
+        font-size: 30px;
+        color:white; 
+        z-index: 0;
+        background: rgba(255,255,255,0.2);
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        transition: all 0.3s;
+        cursor: pointer;
+      }
+      
+      #cross:hover {
+        background: rgba(255,255,255,0.3);
+        transform: scale(1.1);
+      }
+      
+      .client-info {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-top: 10px;
+        padding-top: 10px;
+        border-top: 1px dashed #eee;
+      }
+      
+      .client-avatar {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background-color: #4CAF50;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        font-weight: bold;
+      }
+      
+      .client-name {
+        font-size: 13px;
+        color: #555;
+      }
+
+      #contact {
+        background-color: #28a745;
+        color: white;
+        height:45px;
+        padding: 10px;
+        border-radius: 5px;
+        outline: 2px solid #46b06c;
+        display: inline-block;
+        transition: background-color 0.3s ease;
+        position: fixed;
+        right:20px;
+        top:61.5px;
+        box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+        transition: background-color 0.3s ease, transform 0.2s ease;
+      }
+
+      #contact:hover {
+        background-color: #218838;
+        transform: scale(1.1); 
+      }
+
+      #contact i {
+        font-size: 22px;
+        color: #f8f8f8;
+      }
+
+      #chatbot {
+        background-color: #28a745;
+        color: white;
+        height:45px;
+        padding: 10px;
+        border-radius: 5px;
+        outline: 2px solid #46b06c;
+        display: inline-block;
+        transition: background-color 0.3s ease;
+        position: fixed;
+        right:100px;
+        top:61.5px;
+        box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+        transition: background-color 0.3s ease, transform 0.2s ease;
+      }
+
+      #chatbot:hover {
+        background-color: #218838;
+        transform: scale(1.1); 
+      }
+
+      #chatbot i {
+        font-size: 24px;
+        color: #f8f8f8;
+      }
+
+      /* Right Sidebar Styles */
+      .right-sidebar {
+        position: fixed;
+        right: -400px; /* Hidden by default */
+        top: 110px;
+        width: 400px;
+        height: calc(100vh - 130px);
+        background-color: white;
+        box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+        transition: right 0.3s ease;
+        z-index: 900;
+        padding: 20px;
+        overflow-y: auto;
+        padding-right: 50px;
+      }
+
+      .right-sidebar.open {
+        right: 0;
+      }
+
+      .right-sidebar-trigger {
+        position: fixed;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 40px;
+        height: 100px;
+        background-color: #4CAF50;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 5px 0 0 5px;
+        cursor: pointer;
+        z-index: 901;
+        box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
+      }
+
+      .right-sidebar-trigger i {
+        font-size: 20px;
+        transition: transform 0.3s;
+      }
+
+      .right-sidebar-trigger.open i {
+        transform: rotate(180deg);
+      }
+
+      .right-sidebar-header {
+        font-size: 20px;
+        font-weight: bold;
+        color: #4CAF50;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #e0e0e0;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .slot-control-btn {
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 15px;
+        border: none;
+        border-radius: 8px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        font-size: 16px;
+      }
+
+      .btn-view-available {
+        background-color: #2196F3;
+        color: white;
+      }
+
+      .btn-view-available:hover {
+        background-color: #0b7dda;
+        transform: translateY(-2px);
+      }
+
+      .btn-block-slots {
+        background-color: #F44336;
+        color: white;
+      }
+
+      .btn-block-slots:hover {
+        background-color: #d32f2f;
+        transform: translateY(-2px);
+      }
+
+      .btn-export-schedule {
+        background-color: #673AB7;
+        color: white;
+      }
+
+      .btn-export-schedule:hover {
+        background-color: #5e35b1;
+        transform: translateY(-2px);
+      }
+
+      /* Blocked slot styling */
+      .blocked-slot {
+        opacity: 0.7;
+        background-color: #f5f5f5;
+        border-left: 4px solid #9E9E9E !important;
+      }
+
+      .blocked-slot .appointment-title {
+        color: #757575;
+      }
+
+      .blocked-slot .appointment-details {
+        color: #9E9E9E;
+      }
+
+      /* Highlight available slots */
+      .highlight-available .appointment-card:not([data-status="available"]) {
+        opacity: 0.5;
+      }
+
+      .highlight-available .appointment-card[data-status="available"] {
+        opacity: 1;
+        border: 2px solid #2196F3;
+        transform: scale(1.02);
+        animation: pulse 2s infinite;
+      }
+
+      @keyframes pulse {
+        0% { box-shadow: 0 0 0 0 rgba(33, 150, 243, 0.4); }
+        70% { box-shadow: 0 0 0 10px rgba(33, 150, 243, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(33, 150, 243, 0); }
+      }
+
+      /* Block slots form */
+      .block-slots-form {
+        margin-top: 20px;
+        padding: 15px;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        display: none;
+      }
+
+      .block-slots-form h5 {
+        margin-bottom: 15px;
+        color: #4CAF50;
+      }
+
+      .form-group {
+        margin-bottom: 15px;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: 500;
+      }
+
+      .form-group select,
+      .form-group input {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+      }
+
+      .form-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+        margin-top: 15px;
+      }
+
+      .form-actions button {
+        padding: 8px 15px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+
+      .btn-cancel {
+        background-color: #f5f5f5;
+      }
+
+      .btn-submit {
+        background-color: #F44336;
+        color: white;
+      }
+
+      /* Status indicators */
+      .status-indicators {
+        margin-top: 20px;
+      }
+
+      .status-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 8px;
+      }
+
+      .status-color {
+        width: 15px;
+        height: 15px;
+        border-radius: 3px;
+        margin-right: 10px;
+      }
+
+      .status-available {
+        background-color: #2196F3;
+      }
+
+      .status-booked {
+        background-color: #4CAF50;
+      }
+
+      .status-blocked {
+        background-color: #9E9E9E;
+      }
+
+      .status-workshop {
+        background-color: #81C784;
+      }
+
+      .status-followup {
+        background-color: #F44336;
+      }
+
+      /* Responsive adjustments */
+      @media (max-width: 1200px) {
+        .right-sidebar {
+          width: 280px;
+        }
+      }
+
+      @media (max-width: 992px) {
+        .right-sidebar {
+          top: 110px;
+          height: calc(100vh - 110px);
+        }
+      }
+
+      @media (max-width: 768px) {
+        .right-sidebar {
+          width: 250px;
+          padding: 15px;
+        }
+        
+        .slot-control-btn {
+          padding: 10px;
+          font-size: 14px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="top">
+      <div class="top1">
+        <!-- Logo Container -->
+        <div class="logo">
+          <div class="icon-container">
+            <i class="icon fas fa-leaf"></i>
+          </div>
+          <span>
+            <span class="highlight">N</span>utri 
+            <span class="highlight">C</span>onnect
+          </span>
+        </div>
+
+        <div
+          id="profile"
+          onclick="location.href='/dietitian_dash'"
+          class="btn btn-outline-success"
+        >
+          <b>PROFILE</b>
+          <div>
+            <i class="fa-regular fa-user"></i>
+          </div>
+        </div>
+      </div>
+     
+      <!-- Full-Width Navbar with Toggler -->
+      <div class="container-fluid navbar-container">
+        <nav id="nav-bar" class="navbar navbar-expand-lg navbar-light">
+          <div class="container">
+            <!-- Toggler Button -->
+            <button
+              id="toggler"
+              class="navbar-toggler"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarNav"
+              style="border: 3px solid #28a745"
+            >
+              <span class="navbar-toggler-icon"></span>
+            </button>
+      
+            <!-- Navbar Items -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav mx-auto">
+                <li class="nav-item">
+                  <a class="nav-link" href="/dietitian">HOME</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/dietitian-guide">GUIDE</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/dietitian-consultations">MY CLIENTS</a>
+                </li>
+                <li class="nav-item active-page">
+                  <a class="nav-link" href="/dietitian-schedule">SCHEDULE</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/blog">BLOG</a>
+                </li>
+              </ul>
+            </div>
+            
+            <a id="chatbot" href="/chatbot" title="chatbot">
+              <i class="fas fa-robot"></i>
+            </a>
+      
+            <!-- Contact Us Icon -->
+            <a id="contact" href="/contact" title="Contact us">
+              <i class="fa-solid fa-phone-volume"></i>
+            </a>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <main class="main">
+      <!-- Back Button -->
+      <div id="cross" onclick="window.history.back();">
+        <i class="fa-solid fa-arrow-left"></i>
+      </div>
+
+      <!-- Header -->
+      <div class="title-section">
+        <h1><i class="fas fa-calendar-alt"></i> Weekly Schedule - Dietitian</h1>
+      </div>
+
+      <div class="d-flex flex-grow-1">
+        <!-- Sidebar -->
+        <div class="sidebar">
+          <!-- Days will be populated by JavaScript -->
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+          <div class="day-header">
+            <h2 class="day-title">Monday</h2>
+            <div class="day-date">June 12, 2023</div>
+          </div>
+          
+          <div class="appointments-container" id="appointments-container">
+            <!-- Appointment cards will be populated by JavaScript -->
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Right Sidebar Trigger -->
+    <div class="right-sidebar-trigger" id="rightSidebarTrigger">
+      <i class="fas fa-chevron-left"></i>
+    </div>
+
+    <!-- Right Sidebar -->
+    <div class="right-sidebar" id="rightSidebar">
+      <div class="right-sidebar-header">
+        <i class="fas fa-calendar-alt"></i> Schedule Tools
+      </div>
+      
+      <button class="slot-control-btn btn-view-available" onclick="toggleAvailableSlots()">
+        <i class="fas fa-eye"></i> View Available Slots
+      </button>
+      
+      <button class="slot-control-btn btn-block-slots" onclick="toggleBlockSlotsForm()">
+        <i class="fas fa-ban"></i> Block Time Slots
+      </button>
+      
+      <button class="slot-control-btn btn-export-schedule" onclick="exportSchedule()">
+        <i class="fas fa-file-export"></i> Export Schedule
+      </button>
+      
+      <!-- Block Slots Form -->
+      <div class="block-slots-form" id="blockSlotsForm">
+        <h5><i class="fas fa-calendar-times"></i> Block Time Slots</h5>
+        
+        <div class="form-group">
+          <label for="blockDay">Day:</label>
+          <select id="blockDay" class="form-control">
+            <option value="monday">Monday</option>
+            <option value="tuesday">Tuesday</option>
+            <option value="wednesday">Wednesday</option>
+            <option value="thursday">Thursday</option>
+            <option value="friday">Friday</option>
+            <option value="saturday">Saturday</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="blockStartTime">Start Time:</label>
+          <input type="time" id="blockStartTime" class="form-control" value="09:00">
+        </div>
+        
+        <div class="form-group">
+          <label for="blockEndTime">End Time:</label>
+          <input type="time" id="blockEndTime" class="form-control" value="10:00">
+        </div>
+        
+        <div class="form-group">
+          <label for="blockReason">Reason (optional):</label>
+          <input type="text" id="blockReason" class="form-control" placeholder="Lunch break, Meeting, etc.">
+        </div>
+        
+        <div class="form-actions">
+          <button class="btn-cancel" onclick="toggleBlockSlotsForm()">Cancel</button>
+          <button class="btn-submit" onclick="blockSlots()">Block Slots</button>
+        </div>
+      </div>
+      
+      <!-- Status Indicators -->
+      <div class="status-indicators">
+        <h5><i class="fas fa-info-circle"></i> Status Indicators</h5>
+        <div class="status-item">
+          <div class="status-color status-available"></div>
+          <span>Available Slots</span>
+        </div>
+        <div class="status-item">
+          <div class="status-color status-booked"></div>
+          <span>Booked Appointments</span>
+        </div>
+        <div class="status-item">
+          <div class="status-color status-blocked"></div>
+          <span>Blocked Time</span>
+        </div>
+        <div class="status-item">
+          <div class="status-color status-workshop"></div>
+          <span>Workshops</span>
+        </div>
+        <div class="status-item">
+          <div class="status-color status-followup"></div>
+          <span>Follow-ups</span>
+        </div>
+      </div>
+    </div>
+
+     
+    <footer class="footer ">
+      <div class="container">
+        <div class="row">
+          <div id="footer-top">
+            <div class="col-lg-4 col-md-6 mb-4 mb-lg-0"  >
+              <div class="logo">
+                <div class="icon-container">
+                  <i class="icon fas fa-leaf"></i>
+                </div>
+                <span>
+                  <span class="highlight">N</span>utri 
+                  <span class="highlight">C</span>onnect <span class="pro-badge"></span>
+                </span>
+              </div>
+              <p class="footer-about">
+                NutriConnect Pro provides dietitians with tools to manage clients, 
+                create nutrition plans, and grow their practice through our platform.
+              </p>
+              <div class="social-links">
+                <a href="https://www.facebook.com/profile.php?id=61572485733709" target="_blank" class="social-link" aria-label="Facebook">
+                  <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="https://www.instagram.com/nutriconnect2025" target="_blank" class="social-link" aria-label="Instagram">
+                  <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://x.com/NutriC21" target="_blank" class="social-link" aria-label="Twitter">
+                  <i class="fab fa-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/in/nutri-connect-a0b774349" target="_blank" class="social-link" aria-label="LinkedIn">
+                  <i class="fab fa-linkedin-in"></i>
+                </a>
+              </div>
+            </div>
+            
+            <div class="col-lg-2 col-md-6 mb-4 mb-lg-0" >
+              <h5 class="footer-title">Quick Links</h5>
+              <ul class="footer-links">
+                <li><a href="/dietitian"><i class="fas fa-chevron-right"></i> Home</a></li>
+                <li><a href="/dietitian-clients"><i class="fas fa-chevron-right"></i> My Clients</a></li>
+                <li><a href="/dietitian-guide"><i class="fas fa-chevron-right"></i> Resources</a></li>
+                <li><a href="/dietitian-blog"><i class="fas fa-chevron-right"></i> Professional Blog</a></li>
+                <li><a href="/dietitian-schedule"><i class="fas fa-chevron-right"></i> My Schedule</a></li>
+                <li><a href="/contactus"><i class="fas fa-chevron-right"></i> Support</a></li>
+              </ul>
+            </div>
+           
+            <div class="col-lg-3 col-md-6" >
+              <h5 class="footer-title">Contact Info</h5>
+              <ul class="footer-contact-info">
+                <li>
+                  <i class="fas fa-map-marker-alt"></i>
+                  <span>Plot No. 45, Greenway Colony, 517681, India</span>
+                </li>
+                <li>
+                  <i class="fas fa-phone-alt"></i>
+                  <a href="tel:+917075783143">+91 70757 83143</a>
+                </li>
+                <li>
+                  <i class="fas fa-envelope"></i>
+                  <a href="mailto:pro@nutriconnect.com">pro@nutriconnect.com</a>
+                </li>
+                <li>
+                  <i class="fas fa-clock"></i>
+                  <span>Mon-Fri: 9AM - 6PM</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+          </div>     
+      <div class="footer-bottom">
+        <div class="container">
+          <div class="row align-items-center">
+            <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+              <p class="copyright mb-0">&copy; 2025 NutriConnect Pro. All rights reserved.</p>
+            </div>
+            <div class="col-md-6 text-center text-md-end">
+              <ul class="footer-menu">
+
+                <li><a href="/terms_conditions">Terms of Service</a></li>
+                <li><a href="/privacy-policy">Privacy Policy</a></li>
+              
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <style>
+
+      #footer-top{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+      }
+
+      
+    @media(max-width:992px){
+      #footer-top{
+        flex-direction: column;
+      }
+    }
+    
+      
+   
+      .footer-about {
+        color: #F0E68C;
+        margin-top: 100px;
+        margin-bottom: 20px;
+        line-height: 1.6;
+       
+      }
+      
+      .footer-title {
+        color: #FFFFFF;
+        font-size: 1.2rem;
+        margin-bottom: 20px;
+        position: relative;
+        padding-bottom: 10px;
+        font-weight: 600;
+      }
+      
+      .footer-title::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 50px;
+        height: 2px;
+        background-color: #50c878;
+      }
+      
+      .footer-links {
+        list-style: none;
+        padding: 0;
+      }
+      
+      .footer-links li {
+        margin-bottom: 12px;
+      }
+      
+      .footer-links a {
+        color: #F0E68C;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      
+      .footer-links a:hover {
+        color: #FFD700;
+        padding-left: 5px;
+      }
+      
+      .footer-links i {
+        font-size: 0.8rem;
+      }
+      
+      .footer-contact-info {
+        list-style: none;
+        padding: 0;
+      }
+      
+      .footer-contact-info li {
+        margin-bottom: 15px;
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        line-height: 1.5;
+      }
+      
+      .footer-contact-info i {
+        margin-top: 3px;
+        color: #50c878;
+      }
+      
+      .footer-contact-info a {
+        color: #1E90FF;
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+      
+      .footer-contact-info a:hover {
+        color: #00BFFF;
+      }
+      
+      .footer-bottom {
+        background-color: rgba(0, 0, 0, 0.2);
+        padding: 20px 0;
+        margin-top: 60px;
+      }
+      
+      .copyright {
+        color: rgba(255, 255, 255, 0.7);
+        margin: 0;
+      }
+      
+      .footer-menu {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+      }
+      
+      .footer-menu li {
+        display: inline-block;
+      }
+      
+      .footer-menu a {
+        color: #F0E68C;
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+      
+      .footer-menu a:hover {
+        color: #FFD700;
+      }
+      
+      /* Logo Styles */
+      .footer .logo {
+        display: flex;
+        align-items: center;
+        font-size: 24px;
+        font-weight: bold;
+        color:white;
+        margin-bottom: 20px;
+        margin-left:50px;
+      }
+      
+     .footer .logo .highlight {
+        color: #28B463;
+      }
+      
+     .footer .logo .icon-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        background-color: #28B463;
+        border-radius: 50%;
+       
+      }
+      
+     .footer .logo .icon {
+        font-size: 24px;
+        color: #FFFFFF;
+      }
+      
+      .footer .logo:hover .icon-container {
+        background-color: #1E6F5C;
+        transform: scale(1.1);
+        transition: all 0.3s ease;
+        
+      }
+      
+      .footer.logo:hover {
+        color: #28B463;
+        transition: color 0.3s ease;
+      }
+      
+      /* Social Links */
+      .social-links {
+        display: flex;
+        gap: 15px;
+        margin-top: 20px;
+      }
+      
+      .social-link {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: #f8f9fa;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #28a745;
+        transition: all 0.3s ease;
+      }
+      
+      .social-link:hover {
+        background-color: #28a745;
+        color: white;
+        transform: translateY(-3px);
+      }
+      
+      /* Responsive Design */
+      @media (max-width: 992px) {
+        .footer-menu {
+          justify-content: flex-end;
+        }
+      }
+      
+      @media (max-width: 768px) {
+        .footer-menu {
+          justify-content: center;
+        }
+        
+        .copyright,
+        .footer-menu {
+          text-align: center;
+        }
+        
+        .footer-menu {
+          margin-top: 10px;
+        }
+      }
+      </style>
+    
+    <style>
+      .footer {
+        position: relative;
+        top:300px;
+        left:0px;
+        height:auto;
+        width:100%;
+        background: linear-gradient(135deg, #232F3E 0%, #2c3e50 100%);
+        color: white;
+        padding: 60px 0 0;
+      
+      }
+    </style>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+      // Sample data for dietician's schedule
+      const scheduleData = {
+        days: generateWeekDates(),
+        
+        appointments: [
+          // Monday
+          {
+            id: 1,
+            day: 'monday',
+            time: '09:00 AM',
+            title: 'Initial Consultation',
+            description: 'Comprehensive health assessment and goal setting with new client.',
+            type: 'consultation',
+            mode: 'online',
+            client_name: 'John Doe',
+            status: 'confirmed'
+          },
+          {
+            id: 2,
+            day: 'monday',
+            time: '11:00 AM',
+            title: 'Meal Plan Review',
+            description: 'Personalized meal plan discussion and adjustments based on client progress.',
+            type: 'consultation',
+            mode: 'in-person',
+            client_name: 'Jane Smith',
+            status: 'confirmed'
+          },
+          {
+            id: 3,
+            day: 'monday',
+            time: '02:00 PM',
+            title: 'Nutrition Workshop',
+            description: 'Group session on understanding macronutrients and portion control.',
+            type: 'workshop',
+            mode: 'in-person',
+            client_name: 'Group Session',
+            status: 'confirmed'
+          },
+          {
+            id: 4,
+            day: 'monday',
+            time: '04:00 PM',
+            title: 'Follow-Up Session',
+            description: 'Progress tracking and strategy refinement with returning client.',
+            type: 'followup',
+            mode: 'online',
+            client_name: 'Alice Johnson',
+            status: 'confirmed'
+          },
+          {
+            id: 20,
+            day: 'monday',
+            time: '10:00 AM',
+            title: 'Available Slot',
+            description: 'This time slot is currently available for booking.',
+            type: 'consultation',
+            mode: 'online',
+            client_name: 'Available',
+            status: 'available'
+          },
+          {
+            id: 21,
+            day: 'monday',
+            time: '03:00 PM',
+            title: 'Available Slot',
+            description: 'This time slot is currently available for booking.',
+            type: 'consultation',
+            mode: 'in-person',
+            client_name: 'Available',
+            status: 'available'
+          },
+          
+          // Tuesday
+          {
+            id: 5,
+            day: 'tuesday',
+            time: '09:30 AM',
+            title: 'Available Slot',
+            description: 'This time slot is currently available for booking.',
+            type: 'consultation',
+            mode: 'online',
+            client_name: 'Available',
+            status: 'available'
+          },
+          {
+            id: 6,
+            day: 'tuesday',
+            time: '11:30 AM',
+            title: 'Gut Health Assessment',
+            description: 'Evaluation and recommendations for improving digestive health.',
+            type: 'consultation',
+            mode: 'in-person',
+            client_name: 'Michael Brown',
+            status: 'confirmed'
+          },
+          {
+            id: 7,
+            day: 'tuesday',
+            time: '02:30 PM',
+            title: 'Webinar: Healthy Eating',
+            description: 'Live webinar on establishing healthy eating habits.',
+            type: 'workshop',
+            mode: 'online',
+            client_name: 'Webinar Attendees',
+            status: 'confirmed'
+          },
+          {
+            id: 22,
+            day: 'tuesday',
+            time: '10:30 AM',
+            title: 'Available Slot',
+            description: 'This time slot is currently available for booking.',
+            type: 'consultation',
+            mode: 'in-person',
+            client_name: 'Available',
+            status: 'available'
+          },
+          
+          // Wednesday
+          {
+            id: 8,
+            day: 'wednesday',
+            time: '10:00 AM',
+            title: 'Pediatric Nutrition',
+            description: 'Specialized nutrition advice for children and adolescents.',
+            type: 'consultation',
+            mode: 'online',
+            client_name: 'Robert Wilson',
+            status: 'confirmed'
+          },
+          {
+            id: 9,
+            day: 'wednesday',
+            time: '01:00 PM',
+            title: 'Available Slot',
+            description: 'This time slot is currently available for booking.',
+            type: 'consultation',
+            mode: 'in-person',
+            client_name: 'Available',
+            status: 'available'
+          },
+          {
+            id: 10,
+            day: 'wednesday',
+            time: '03:30 PM',
+            title: 'Diabetes Management',
+            description: 'Meal planning and blood sugar control strategies.',
+            type: 'consultation',
+            mode: 'in-person',
+            client_name: 'Laura Martinez',
+            status: 'confirmed'
+          },
+          {
+            id: 23,
+            day: 'wednesday',
+            time: '11:00 AM',
+            title: 'Available Slot',
+            description: 'This time slot is currently available for booking.',
+            type: 'consultation',
+            mode: 'online',
+            client_name: 'Available',
+            status: 'available'
+          },
+          
+          // Thursday
+          {
+            id: 11,
+            day: 'thursday',
+            time: '10:00 AM',
+            title: 'Heart Health Nutrition',
+            description: 'Dietary strategies for cardiovascular health and cholesterol management.',
+            type: 'consultation',
+            mode: 'online',
+            client_name: 'David Lee',
+            status: 'confirmed'
+          },
+          {
+            id: 12,
+            day: 'thursday',
+            time: '12:00 PM',
+            title: 'Available Slot',
+            description: 'This time slot is currently available for booking.',
+            type: 'consultation',
+            mode: 'in-person',
+            client_name: 'Available',
+            status: 'available'
+          },
+          {
+            id: 13,
+            day: 'thursday',
+            time: '02:00 PM',
+            title: 'Meal Prep Workshop',
+            description: 'Hands-on session for preparing healthy meals for the week.',
+            type: 'workshop',
+            mode: 'in-person',
+            client_name: 'Workshop Participants',
+            status: 'confirmed'
+          },
+          {
+            id: 24,
+            day: 'thursday',
+            time: '04:00 PM',
+            title: 'Available Slot',
+            description: 'This time slot is currently available for booking.',
+            type: 'consultation',
+            mode: 'online',
+            client_name: 'Available',
+            status: 'available'
+          },
+          
+          // Friday
+          {
+            id: 14,
+            day: 'friday',
+            time: '09:00 AM',
+            title: 'Available Slot',
+            description: 'This time slot is currently available for booking.',
+            type: 'consultation',
+            mode: 'online',
+            client_name: 'Available',
+            status: 'available'
+          },
+          {
+            id: 15,
+            day: 'friday',
+            time: '11:00 AM',
+            title: 'Weight Loss Consultation',
+            description: 'Personalized plan for sustainable weight loss.',
+            type: 'consultation',
+            mode: 'in-person',
+            client_name: 'James Anderson',
+            status: 'confirmed'
+          },
+          {
+            id: 16,
+            day: 'friday',
+            time: '03:00 PM',
+            title: 'Follow-Up Session',
+            description: 'Progress tracking and adjustments to nutrition plan.',
+            type: 'followup',
+            mode: 'online',
+            client_name: 'Olivia White',
+            status: 'confirmed'
+          },
+          {
+            id: 25,
+            day: 'friday',
+            time: '01:00 PM',
+            title: 'Available Slot',
+            description: 'This time slot is currently available for booking.',
+            type: 'consultation',
+            mode: 'in-person',
+            client_name: 'Available',
+            status: 'available'
+          },
+          
+          // Saturday
+          {
+            id: 17,
+            day: 'saturday',
+            time: '10:00 AM',
+            title: 'Weekend Check-In',
+            description: 'Quick check-in to stay on track with weekend nutrition.',
+            type: 'consultation',
+            mode: 'online',
+            client_name: 'Daniel Harris',
+            status: 'confirmed'
+          },
+          {
+            id: 18,
+            day: 'saturday',
+            time: '12:00 PM',
+            title: 'Available Slot',
+            description: 'This time slot is currently available for booking.',
+            type: 'consultation',
+            mode: 'in-person',
+            client_name: 'Available',
+            status: 'available'
+          },
+          {
+            id: 26,
+            day: 'saturday',
+            time: '02:00 PM',
+            title: 'Available Slot',
+            description: 'This time slot is currently available for booking.',
+            type: 'consultation',
+            mode: 'online',
+            client_name: 'Available',
+            status: 'available'
+          },
+          
+          // Sunday
+          {
+            id: 19,
+            day: 'sunday',
+            time: 'All Day',
+            title: 'Rest Day',
+            description: 'No appointments scheduled. Enjoy your day of rest!',
+            type: 'rest',
+            mode: '',
+            client_name: '',
+            status: 'rest'
+          }
+        ]
+      };
+
+      // Function to generate dates for the next 7 days with correct day names
+      function generateWeekDates() {
+        const days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+        const today = new Date();
+        const weekDates = {};
+        
+        // Find the next occurrence of each day starting from today
+        days.forEach(day => {
+          const date = new Date(today);
+          // Calculate days until the next occurrence of this day
+          let diff = (days.indexOf(day.toLowerCase()) - date.getDay() + 7) % 7;
+          date.setDate(date.getDate() + diff);
+          
+          weekDates[day] = {
+            name: day.charAt(0).toUpperCase() + day.slice(1),
+            date: date.toLocaleDateString('en-US', { 
+              weekday: 'long', 
+              month: 'long', 
+              day: 'numeric',
+              year: 'numeric'
+            }),
+            shortDate: date.toLocaleDateString('en-US', { 
+              month: 'short', 
+              day: 'numeric'
+            }),
+            dateObj: date
+          };
+        });
+        
+        return weekDates;
+      }
+
+      // Function to get the correct day name for a date
+      function getDayName(date) {
+        const days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+        return days[date.getDay()];
+      }
+
+      // Function to render the sidebar with days
+      function renderSidebar() {
+        const sidebar = document.querySelector('.sidebar');
+        sidebar.innerHTML = '';
+        
+        // Sort days by date
+        const sortedDays = Object.entries(scheduleData.days)
+          .sort((a, b) => a[1].dateObj - b[1].dateObj);
+        
+        sortedDays.forEach(([dayKey, dayInfo]) => {
+          const dayElement = document.createElement('div');
+          dayElement.className = 'day';
+          dayElement.setAttribute('onclick', `showAppointments('${dayKey}')`);
+          
+          // Set today as active if it's the current day
+          const today = new Date();
+          if (dayInfo.dateObj.toDateString() === today.toDateString()) {
+            dayElement.classList.add('active');
+          }
+          
+          // Set appropriate icon for each day
+          let iconClass;
+          switch(dayKey) {
+            case 'sunday': iconClass = 'fa-bed'; break;
+            case 'monday': iconClass = 'fa-sun'; break;
+            case 'tuesday': iconClass = 'fa-cloud'; break;
+            case 'wednesday': iconClass = 'fa-umbrella'; break;
+            case 'thursday': iconClass = 'fa-cloud-sun'; break;
+            case 'friday': iconClass = 'fa-moon'; break;
+            case 'saturday': iconClass = 'fa-star'; break;
+          }
+          
+          dayElement.innerHTML = `
+            <i class="fas ${iconClass}"></i>
+            <div>
+              <div>${dayInfo.name}</div>
+              <div class="date">${dayInfo.shortDate}</div>
+            </div>
+          `;
+          
+          sidebar.appendChild(dayElement);
+        });
+      }
+
+      // Function to render appointments for a specific day
+      function renderAppointments(day) {
+        const container = document.getElementById('appointments-container');
+        const dayHeader = document.querySelector('.day-header');
+        const dayTitle = document.querySelector('.day-title');
+        const dayDate = document.querySelector('.day-date');
+        
+        // Update day header
+        dayTitle.textContent = scheduleData.days[day].name;
+        dayDate.textContent = scheduleData.days[day].date;
+        
+        // Filter appointments for the selected day
+        const dayAppointments = scheduleData.appointments.filter(app => app.day === day);
+        
+        // Clear container
+        container.innerHTML = '';
+        
+        if (dayAppointments.length === 0 || (day === 'sunday' && dayAppointments[0].type === 'rest')) {
+          if (day === 'sunday') {
+            container.innerHTML = `
+              <div class="no-appointments">
+                <i class="fas fa-bed fa-3x mb-3" style="color: #aaa;"></i>
+                <h4>Rest Day</h4>
+                <p>No appointments scheduled. Enjoy your day of rest!</p>
+              </div>
+            `;
+          } else {
+            container.innerHTML = `
+              <div class="no-appointments">
+                <i class="fas fa-calendar-check fa-3x mb-3" style="color: #aaa;"></i>
+                <h4>No Appointments</h4>
+                <p>You have no appointments scheduled for this day.</p>
+              </div>
+            `;
+          }
+          return;
+        }
+        
+        // Sort appointments by time
+        dayAppointments.sort((a, b) => {
+          return convertTimeTo24Hour(a.time) - convertTimeTo24Hour(b.time);
+        });
+        
+        // Render each appointment card
+        dayAppointments.forEach(app => {
+          const card = document.createElement('div');
+          card.className = `appointment-card ${app.type}`;
+          card.setAttribute('data-status', app.status);
+          
+          if (app.status === 'blocked') {
+            card.classList.add('blocked-slot');
+          }
+          
+          // Set type icon
+          let typeIcon, typeText;
+          switch(app.type) {
+            case 'workshop': 
+              typeIcon = 'fa-users'; 
+              typeText = 'Workshop';
+              break;
+            case 'consultation': 
+              typeIcon = app.status === 'available' ? 'fa-calendar-plus' : 'fa-user-md'; 
+              typeText = app.status === 'available' ? 'Available' : 'Consultation';
+              break;
+            case 'group': 
+              typeIcon = 'fa-comments'; 
+              typeText = 'Group';
+              break;
+            case 'followup': 
+              typeIcon = 'fa-sync-alt'; 
+              typeText = 'Follow-Up';
+              break;
+            case 'rest':
+              typeIcon = 'fa-bed';
+              typeText = 'Rest';
+              break;
+          }
+          
+          // Set mode icon and text
+          const modeIcon = app.mode === 'online' ? 'fa-video' : 'fa-user';
+          const modeText = app.mode === 'online' ? 'Online' : 'In-Person';
+          
+          // Client info section (only if not available/rest)
+          const clientInfo = app.status === 'available' || app.status === 'rest' || app.status === 'blocked' ? '' : `
+            <div class="client-info">
+              <div class="client-avatar">${app.client_name.split(' ').map(n => n[0]).join('')}</div>
+              <div class="client-name">${app.client_name}</div>
+            </div>
+          `;
+          
+          card.innerHTML = `
+            <div class="appointment-time">
+              <i class="far fa-clock"></i> ${app.time}
+            </div>
+            <div class="appointment-title">${app.title}</div>
+            <div class="appointment-details">${app.description}</div>
+            <div class="appointment-meta">
+              ${app.mode ? `
+                <span class="appointment-mode ${app.mode}">
+                  <i class="fas ${modeIcon}"></i> ${modeText}
+                </span>
+              ` : ''}
+              <span class="appointment-status ${app.status}">
+                ${app.status === 'confirmed' ? '<i class="fas fa-check-circle"></i> Confirmed' : ''}
+                ${app.status === 'available' ? '<i class="fas fa-plus-circle"></i> Available' : ''}
+                ${app.status === 'blocked' ? '<i class="fas fa-ban"></i> Blocked' : ''}
+              </span>
+            </div>
+            ${clientInfo}
+          `;
+          
+          container.appendChild(card);
+        });
+      }
+
+      // Helper function to convert time to 24-hour format for sorting
+      function convertTimeTo24Hour(time) {
+        if (time === 'All Day') return 0;
+        
+        const [timePart, modifier] = time.split(' ');
+        let [hours, minutes] = timePart.split(':');
+        
+        if (hours === '12') {
+          hours = '00';
+        }
+        
+        if (modifier === 'PM') {
+          hours = parseInt(hours, 10) + 12;
+        }
+        
+        return parseInt(hours + minutes, 10);
+      }
+
+      // Function to show appointments for a specific day
+      function showAppointments(day) {
+        // Update active state in sidebar
+        document.querySelectorAll('.sidebar .day').forEach(div => div.classList.remove('active'));
+        document.querySelector(`.sidebar .day[onclick="showAppointments('${day}')"]`).classList.add('active');
+        
+        // Render appointments for the selected day
+        renderAppointments(day);
+      }
+
+      // Toggle available slots highlighting
+      function toggleAvailableSlots() {
+        const container = document.getElementById('appointments-container');
+        container.classList.toggle('highlight-available');
+      }
+
+      // Toggle block slots form visibility
+      function toggleBlockSlotsForm() {
+        const form = document.getElementById('blockSlotsForm');
+        form.style.display = form.style.display === 'block' ? 'none' : 'block';
+      }
+
+      // Block selected time slots
+      function blockSlots() {
+        const day = document.getElementById('blockDay').value;
+        const startTime = document.getElementById('blockStartTime').value;
+        const endTime = document.getElementById('blockEndTime').value;
+        const reason = document.getElementById('blockReason').value || 'Blocked by dietician';
+        
+        if (!startTime || !endTime) {
+          alert('Please select both start and end times');
+          return;
+        }
+        
+        // Convert times to 24-hour format for comparison
+        const start24 = convertTimeTo24HourFormat(startTime);
+        const end24 = convertTimeTo24HourFormat(endTime);
+        
+        if (start24 >= end24) {
+          alert('End time must be after start time');
+          return;
+        }
+        
+        // Find all available appointments in the selected day that fall within the time range
+        const dayAppointments = scheduleData.appointments.filter(app => 
+          app.day === day && 
+          app.status === 'available' && 
+          isTimeInRange(app.time, start24, end24)
+        );
+        
+        if (dayAppointments.length === 0) {
+          alert('No available slots found in the selected time range');
+          return;
+        }
+        
+        // Block the slots
+        dayAppointments.forEach(app => {
+          app.status = 'blocked';
+          app.title = 'Blocked Time';
+          app.description = reason;
+          app.client_name = 'Blocked';
+        });
+        
+        // Refresh the view
+        renderAppointments(day);
+        
+        // Hide the form
+        toggleBlockSlotsForm();
+        
+        // Show success message
+        alert(`${dayAppointments.length} slots have been blocked successfully!`);
+      }
+
+      // Helper function to convert time to 24-hour format
+      function convertTimeTo24HourFormat(time) {
+        const [hours, minutes] = time.split(':');
+        return parseInt(hours) * 100 + parseInt(minutes);
+      }
+
+      // Helper function to check if a time string falls within a range
+      function isTimeInRange(timeStr, start24, end24) {
+        // Convert appointment time to 24-hour format
+        const timeParts = timeStr.split(' ');
+        const time = timeParts[0];
+        const modifier = timeParts[1];
+        
+        let [hours, minutes] = time.split(':');
+        hours = parseInt(hours);
+        minutes = parseInt(minutes);
+        
+        if (modifier === 'PM' && hours !== 12) {
+          hours += 12;
+        } else if (modifier === 'AM' && hours === 12) {
+          hours = 0;
+        }
+        
+        const time24 = hours * 100 + minutes;
+        return time24 >= start24 && time24 <= end24;
+      }
+
+      // Export schedule function
+      function exportSchedule() {
+        // In a real app, this would export to PDF or CSV
+        alert('Schedule exported successfully! (This would download a PDF/CSV in a real application)');
+      }
+
+      // Initialize the page
+      document.addEventListener('DOMContentLoaded', () => {
+        renderSidebar();
+        
+        // Start with today's appointments or Monday if today is Sunday
+        const today = new Date();
+        const todayDayName = getDayName(today).toLowerCase();
+        
+        if (scheduleData.days[todayDayName] && todayDayName !== 'sunday') {
+          renderAppointments(todayDayName);
+        } else {
+          renderAppointments('monday');
+        }
+        
+        // Add click handlers for sidebar days
+        document.querySelectorAll('.sidebar .day').forEach(day => {
+          day.addEventListener('click', function() {
+            const dayKey = this.getAttribute('onclick').match(/'([^']+)'/)[1];
+            showAppointments(dayKey);
+          });
+        });
+        
+        // Right sidebar toggle functionality
+        const rightSidebar = document.getElementById('rightSidebar');
+        const rightSidebarTrigger = document.getElementById('rightSidebarTrigger');
+        
+        rightSidebarTrigger.addEventListener('click', () => {
+          rightSidebar.classList.toggle('open');
+          rightSidebarTrigger.classList.toggle('open');
+        });
+        
+        // Close right sidebar when clicking outside
+        document.addEventListener('click', (e) => {
+          if (!rightSidebar.contains(e.target) && 
+              !rightSidebarTrigger.contains(e.target) &&
+              rightSidebar.classList.contains('open')) {
+            rightSidebar.classList.remove('open');
+            rightSidebarTrigger.classList.remove('open');
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
