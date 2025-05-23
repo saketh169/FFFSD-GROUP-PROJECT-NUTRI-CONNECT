@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NutriConnect Progress Tracker</title>
+  <meta name="description" content="Track your daily health progress with NutriConnect.">
+  <meta name="keywords" content="nutrition, health, progress tracker, NutriConnect">
+  <meta property="og:title" content="NutriConnect Progress Tracker">
+  <meta property="og:description" content="Monitor weight, water intake, and health goals.">
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer">
+  <!-- Chart.js -->
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <style>
+    :root {
+      --primary-color: #28a745;
+      --secondary-color: #1e6f5c;
+      --accent-color: #d2f0c8;
+      --text-color: #343a40;
+      --border-radius: 10px;
+      --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      --transition: all 0.3s ease;
+      --success-color: #28a745;
+      --error-color: #dc3545;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f8f9fa;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
+
+    main {
+      padding: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      background-color: var(--primary-color);
+      color: #fff;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      text-decoration: none;
+      font-size: 0.9rem;
+      margin-bottom: 1.5rem;
+      transition: var(--transition);
+    }
+
+    .back-btn i {
+      margin-right: 0.5rem;
+    }
+
+    .back-btn:hover {
+      background-color: #218838;
+      transform: translateX(-3px);
+    }
+
+    .card {
+      border: none;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      margin-bottom: 1.5rem;
+      transition: var(--transition);
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .card-header {
+      background-color: var(--primary-color);
+      color: #fff;
+      font-weight: 600;
+      border-radius: var(--border-radius) var(--border-radius) 0 0;
+      padding: 1rem;
+    }
+
+    .card-body {
+      padding: 1.5rem;
+    }
+
+    .progress-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .progress-form .form-group {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .progress-form label {
+      width: 120px;
+      color: var(--text-color);
+      font-weight: 500;
+    }
+
+    .progress-form input {
+      flex: 1;
+      padding: 0.5rem;
+      border: 1px solid #ced4da;
+      border-radius: 4px;
+      font-size: 0.9em;
+      transition: var(--transition);
+    }
+
+    .progress-form input:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 5px rgba(40, 167, 69, 0.3);
+    }
+
+    .progress-form button {
+      background-color: var(--primary-color);
+      color: #fff;
+      border: none;
+      padding: 0.75rem;
+      border-radius: 4px;
+      font-size: 0.9em;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .progress-form button:hover {
+      background-color: #218838;
+      transform: translateY(-2px);
+    }
+
+    .progress-form button:disabled {
+      background-color: #6c757d;
+      cursor: not-allowed;
+    }
+
+    .progress-error {
+      color: var(--error-color);
+      font-size: 0.8em;
+      text-align: center;
+      display: none;
+    }
+
+    .progress-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+    }
+
+    .progress-table th,
+    .progress-table td {
+      padding: 0.75rem;
+      text-align: left;
+      border-bottom: 1px solid #dee2e6;
+    }
+
+    .progress-table th {
+      background-color: var(--accent-color);
+      color: var(--text-color);
+      font-weight: 600;
+    }
+
+    .progress-table tr:hover {
+      background-color: #f1f1f1;
+    }
+
+    .progress-table .delete-btn {
+      color: var(--error-color);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .progress-table .delete-btn:hover {
+      color: #b02a37;
+      transform: scale(1.2);
+    }
+
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-content {
+      background-color: #fff;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      padding: 1.5rem;
+      max-width: 400px;
+      width: 90%;
+      text-align: center;
+      animation: slideIn 0.3s ease;
+    }
+
+    .modal-content h3 {
+      margin-bottom: 1rem;
+      color: var(--text-color);
+    }
+
+    .modal-content p {
+      margin-bottom: 1.5rem;
+      color: #6c757d;
+    }
+
+    .modal-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    .modal-btn {
+      padding: 0.5rem 1.5rem;
+      border: none;
+      border-radius: 4px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .modal-btn.yes {
+      background-color: var(--error-color);
+      color: #fff;
+    }
+
+    .modal-btn.yes:hover {
+      background-color: #b02a37;
+      transform: translateY(-2px);
+    }
+
+    .modal-btn.no {
+      background-color: #6c757d;
+      color: #fff;
+    }
+
+    .modal-btn.no:hover {
+      background-color: #5a6268;
+      transform: translateY(-2px);
+    }
+
+    /* Alert Styles */
+    .alert-container {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 600px;
+      z-index: 1100;
+      pointer-events: none;
+    }
+
+    .alert {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: #fff;
+      color: #fff;
+      padding: 0.75rem 1.5rem;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      margin-bottom: 0.5rem;
+      animation: slideDown 0.3s ease forwards;
+      pointer-events: auto;
+    }
+
+    .alert.success {
+      background-color: #39AD48;
+    }
+
+    .alert.error {
+      background-color: var(--error-color);
+    }
+
+    .alert .message {
+      flex: 1;
+      font-size: 0.9rem;
+    }
+
+    .alert .close-btn {
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 1rem;
+      cursor: pointer;
+      padding: 0 0.5rem;
+    }
+
+    .alert .close-btn:hover {
+      color: #e0e0e0;
+    }
+
+    @keyframes slideDown {
+      from { transform: translateY(-100%); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(0); opacity: 1; }
+      to { transform: translateY(-100%); opacity: 0; }
+    }
+
+    @media (max-width: 768px) {
+      main {
+        padding: 1rem;
+      }
+
+      .progress-form .form-group {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .progress-form label {
+        width: auto;
+      }
+
+      .progress-form input {
+        width: 100%;
+      }
+
+      .progress-table {
+        font-size: 0.85rem;
+      }
+
+      .progress-table th,
+      .progress-table td {
+        padding: 0.5rem;
+      }
+
+      .modal-content {
+        width: 95%;
+        padding: 1rem;
+      }
+
+      .alert-container {
+        width: 90%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <!-- Alert Container -->
+    <div class="alert-container" id="alertContainer"></div>
+
+    <!-- Back Button -->
+    <a href="/user_dash" class="back-btn" aria-label="Back to Dashboard">
+      <i class="fas fa-arrow-left"></i> Back to Dashboard
+    </a>
+
+    <h2 class="mb-4">Your Progress Tracker</h2>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header">Weight Trend</div>
+          <div class="card-body">
+            <% if (progressData && progressData.length) { %>
+              <canvas id="progressChart" width="400" height="200"></canvas>
+            <% } else { %>
+              <p class="text-center">No weight data available. Add your progress to see the trend.</p>
+            <% } %>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header">Add Daily Progress</div>
+          <div class="card-body">
+            <form id="progressForm" class="progress-form">
+              <div class="form-group">
+                <label for="weight">Weight (kg):</label>
+                <input type="number" id="weight" name="weight" step="0.1" min="20" max="300" required placeholder="e.g., 70.5" aria-describedby="weightHelp">
+                <small id="weightHelp" class="form-text text-muted">Enter your current weight (20-300 kg).</small>
+              </div>
+              <div class="form-group">
+                <label for="waterIntake">Water Intake (L):</label>
+                <input type="number" id="waterIntake" name="waterIntake" step="0.1" min="0" max="10" required placeholder="e.g., 2.0" aria-describedby="waterIntakeHelp">
+                <small id="waterIntakeHelp" class="form-text text-muted">Enter daily water intake (0-10 L).</small>
+              </div>
+              <div class="form-group">
+                <label for="goal">Goal:</label>
+                <input type="text" id="goal" name="goal" maxlength="50" required placeholder="e.g., Lose 5 kg" aria-describedby="goalHelp">
+                <small id="goalHelp" class="form-text text-muted">Set a health goal (max 50 characters).</small>
+              </div>
+              <button type="submit" aria-label="Save Progress">Save Progress</button>
+              <p id="progressError" class="progress-error"></p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card mt-4">
+      <div class="card-header">Progress History</div>
+      <div class="card-body">
+        <table class="progress-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Weight (kg)</th>
+              <th>Water Intake (L)</th>
+              <th>Goal</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="progressTableBody">
+            <% if (progressData && progressData.length) { %>
+              <% progressData.forEach(entry => { %>
+                <tr>
+                  <td><%= new Date(entry.createdAt).toLocaleDateString() %></td>
+                  <td><%= entry.weight %></td>
+                  <td><%= entry.waterIntake %></td>
+                  <td><%= entry.goal %></td>
+                  <td>
+                    <i class="fas fa-trash delete-btn" data-id="<%= entry._id %>" aria-label="Delete Entry"></i>
+                  </td>
+                </tr>
+              <% }) %>
+            <% } else { %>
+              <tr>
+                <td colspan="5" class="text-center">No progress entries yet.</td>
+              </tr>
+            <% } %>
+          </tbody>
+        </table>
+        <% if (totalPages > 1) { %>
+          <nav aria-label="Progress pagination" class="mt-3">
+            <ul class="pagination justify-content-center">
+              <li class="page-item <%= currentPage === 1 ? 'disabled' : '' %>">
+                <a class="page-link" href="/user-progress?page=<%= currentPage - 1 %>">Previous</a>
+              </li>
+              <% for (let i = 1; i <= totalPages; i++) { %>
+                <li class="page-item <%= currentPage === i ? 'active' : '' %>">
+                  <a class="page-link" href="/user-progress?page=<%= i %>"><%= i %></a>
+                </li>
+              <% } %>
+              <li class="page-item <%= currentPage === totalPages ? 'disabled' : '' %>">
+                <a class="page-link" href="/user-progress?page=<%= currentPage + 1 %>">Next</a>
+              </li>
+            </ul>
+          </nav>
+        <% } %>
+      </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteModal" class="modal">
+      <div class="modal-content">
+        <h3>Confirm Deletion</h3>
+        <p>Are you sure you want to delete this progress entry?</p>
+        <div class="modal-buttons">
+          <button class="modal-btn yes" id="confirmDelete" aria-label="Confirm Deletion">Yes</button>
+          <button class="modal-btn no" id="cancelDelete" aria-label="Cancel Deletion">No</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Function to show custom alert
+      function showAlert(message, type = 'success') {
+        const alertContainer = document.getElementById('alertContainer');
+        const alert = document.createElement('div');
+        alert.className = `alert ${type}`;
+        alert.innerHTML = `
+          <span class="message">${message}</span>
+          <button class="close-btn" aria-label="Close alert">&times;</button>
+        `;
+        alertContainer.appendChild(alert);
+
+        // Auto-remove after 5 seconds
+        setTimeout(() => {
+          alert.style.animation = 'slideUp 0.3s ease forwards';
+          setTimeout(() => alert.remove(), 300);
+        }, 5000);
+
+        // Manual close on click
+        alert.querySelector('.close-btn').addEventListener('click', () => {
+          alert.style.animation = 'slideUp 0.3s ease forwards';
+          setTimeout(() => alert.remove(), 300);
+        });
+      }
+
+      // Initialize Progress Chart
+      let chartInstance = null;
+      function initProgressChart() {
+        if (typeof Chart === 'undefined') {
+          console.error('Chart.js is not loaded.');
+          return;
+        }
+
+        const ctx = document.getElementById('progressChart')?.getContext('2d');
+        if (!ctx) return;
+
+        let progressData = [];
+        try {
+          progressData = JSON.parse('<%- JSON.stringify(progressData || []) %>');
+        } catch (e) {
+          console.error('Error parsing progressData:', e);
+          return;
+        }
+
+        if (!progressData.length) return;
+
+        const weightLabels = progressData.slice(-10).map(entry => new Date(entry.createdAt).toLocaleDateString());
+        const weightValues = progressData.slice(-10).map(entry => entry.weight);
+
+        // Destroy existing chart instance to prevent memory leaks
+        if (chartInstance) {
+          chartInstance.destroy();
+        }
+
+        chartInstance = new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: weightLabels,
+            datasets: [{
+              label: 'Weight (kg)',
+              data: weightValues,
+              borderColor: 'rgba(75, 192, 192, 1)',
+              borderWidth: 2,
+              fill: false
+            }]
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: false,
+                suggestedMin: Math.min(...weightValues) - 5,
+                suggestedMax: Math.max(...weightValues) + 5
+              }
+            }
+          }
+        });
+      }
+
+      // Update Progress Table and Chart
+      function updateProgressUI(newEntry) {
+        const tbody = document.getElementById('progressTableBody');
+        if (!tbody) return;
+
+        // Add new entry to the table
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${new Date(newEntry.createdAt).toLocaleDateString()}</td>
+          <td>${newEntry.weight}</td>
+          <td>${newEntry.waterIntake}</td>
+          <td>${newEntry.goal}</td>
+          <td><i class="fas fa-trash delete-btn" data-id="${newEntry._id}" aria-label="Delete Entry"></i></td>
+        `;
+        tbody.insertBefore(row, tbody.firstChild);
+
+        // Remove "No progress entries" row if present
+        const noDataRow = tbody.querySelector('tr td[colspan="5"]');
+        if (noDataRow) {
+          noDataRow.parentElement.remove();
+        }
+
+        // Update chart
+        let progressData = [];
+        try {
+          progressData = JSON.parse('<%- JSON.stringify(progressData || []) %>');
+        } catch (e) {
+          console.error('Error parsing progressData:', e);
+          return;
+        }
+        progressData.unshift(newEntry); // Add new entry to the start
+        const weightLabels = progressData.slice(-10).map(entry => new Date(entry.createdAt).toLocaleDateString());
+        const weightValues = progressData.slice(-10).map(entry => entry.weight);
+
+        if (chartInstance) {
+          chartInstance.data.labels = weightLabels;
+          chartInstance.data.datasets[0].data = weightValues;
+          chartInstance.options.scales.y.suggestedMin = Math.min(...weightValues) - 5;
+          chartInstance.options.scales.y.suggestedMax = Math.max(...weightValues) + 5;
+          chartInstance.update();
+        } else {
+          initProgressChart();
+        }
+
+        // Reattach delete button event listeners
+        row.querySelector('.delete-btn').addEventListener('click', handleDelete);
+      }
+
+      // Handle form submission
+      document.getElementById('progressForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const form = e.target;
+        const errorElement = document.getElementById('progressError');
+        errorElement.style.display = 'none';
+
+        // Validate inputs
+        const weight = parseFloat(form.weight.value);
+        const waterIntake = parseFloat(form.waterIntake.value);
+        const goal = form.goal.value.trim();
+
+        if (isNaN(weight) || weight < 20 || weight > 300) {
+          errorElement.textContent = 'Weight must be a number between 20 and 300 kg.';
+          errorElement.style.display = 'block';
+          return;
+        }
+
+        if (isNaN(waterIntake) || waterIntake < 0 || waterIntake > 10) {
+          errorElement.textContent = 'Water intake must be a number between 0 and 10 liters.';
+          errorElement.style.display = 'block';
+          return;
+        }
+
+        if (!goal || goal.length > 50) {
+          errorElement.textContent = 'Goal must be a non-empty string (max 50 characters).';
+          errorElement.style.display = 'block';
+          return;
+        }
+
+        try {
+          const res = await fetch('/user-progress?json=true', {
+            method: 'POST',
+            headers: { 
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+            },
+            body: JSON.stringify({ weight, waterIntake, goal })
+          });
+
+          if (!res.ok) {
+            const text = await res.text();
+            throw new Error(`Server error: ${text}`);
+          }
+
+          const data = await res.json();
+          if (!data.success) throw new Error(data.message || 'Failed to save progress');
+
+          showAlert('Progress saved successfully!', 'success');
+          form.reset();
+          updateProgressUI(data.entry); // Dynamically update UI with new entry
+        } catch (error) {
+          console.error('Save error:', error);
+          showAlert(`Error: ${error.message}`, 'error');
+        }
+      });
+
+      // Handle delete buttons
+      function handleDelete() {
+        const id = this.dataset.id;
+        const modal = document.getElementById('deleteModal');
+        const confirmBtn = document.getElementById('confirmDelete');
+        const cancelBtn = document.getElementById('cancelDelete');
+
+        // Show modal
+        modal.style.display = 'flex';
+
+        // Handle confirm deletion
+        const confirmHandler = async () => {
+          try {
+            const res = await fetch(`/user-progress/${id}`, {
+              method: 'DELETE',
+              headers: { 'Accept': 'application/json' }
+            });
+
+            if (!res.ok) {
+              const text = await res.text();
+              throw new Error(`Server error: ${text}`);
+            }
+
+            const data = await res.json();
+            if (!data.success) throw new Error(data.message || 'Failed to delete entry');
+
+            showAlert('Entry deleted successfully!', 'success');
+            this.closest('tr').remove();
+
+            // Update chart after deletion
+            let progressData = [];
+            try {
+              progressData = JSON.parse('<%- JSON.stringify(progressData || []) %>');
+            } catch (e) {
+              console.error('Error parsing progressData:', e);
+              return;
+            }
+            progressData = progressData.filter(entry => entry._id !== id);
+            if (progressData.length) {
+              const weightLabels = progressData.slice(-10).map(entry => new Date(entry.createdAt).toLocaleDateString());
+              const weightValues = progressData.slice(-10).map(entry => entry.weight);
+              if (chartInstance) {
+                chartInstance.data.labels = weightLabels;
+                chartInstance.data.datasets[0].data = weightValues;
+                chartInstance.options.scales.y.suggestedMin = Math.min(...weightValues) - 5;
+                chartInstance.options.scales.y.suggestedMax = Math.max(...weightValues) + 5;
+                chartInstance.update();
+              }
+            } else {
+              if (chartInstance) {
+                chartInstance.destroy();
+                chartInstance = null;
+              }
+              const canvas = document.getElementById('progressChart');
+              canvas.parentElement.innerHTML = '<p class="text-center">No weight data available. Add your progress to see the trend.</p>';
+              const tbody = document.getElementById('progressTableBody');
+              tbody.innerHTML = '<tr><td colspan="5" class="text-center">No progress entries yet.</td></tr>';
+            }
+          } catch (error) {
+            console.error('Delete error:', error);
+            showAlert(`Error: ${error.message}`, 'error');
+          } finally {
+            modal.style.display = 'none';
+            confirmBtn.removeEventListener('click', confirmHandler);
+            cancelBtn.removeEventListener('click', cancelHandler);
+          }
+        };
+
+        // Handle cancel
+        const cancelHandler = () => {
+          modal.style.display = 'none';
+          confirmBtn.removeEventListener('click', confirmHandler);
+          cancelBtn.removeEventListener('click', cancelHandler);
+        };
+
+        // Attach event listeners
+        confirmBtn.addEventListener('click', confirmHandler);
+        cancelBtn.addEventListener('click', cancelHandler);
+      }
+
+      document.querySelectorAll('.delete-btn').forEach(btn => {
+        btn.addEventListener('click', handleDelete);
+      });
+
+      // Initialize chart if data exists
+      if (document.getElementById('progressChart')) {
+        initProgressChart();
+      }
+    });
+  </script>
+</body>
+</html>

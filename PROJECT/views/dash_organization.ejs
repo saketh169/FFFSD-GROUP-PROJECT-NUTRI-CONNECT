@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organization Dashboard</title>
+    <meta name="description" content="NutriConnect Organization Dashboard for managing dietitian verification and profile settings.">
+    <meta name="keywords" content="organization, nutrition, health, NutriConnect">
+    <meta property="og:title" content="NutriConnect Organization Dashboard">
+    <meta property="og:description" content="Verify dietitians and manage your organization profile.">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <style>
+        .logo {
+            display: flex;
+            align-items: center;
+            font-family: 'Poppins', sans-serif;
+            font-size: 24px;
+            font-weight: bold;
+            color: #1E6F5C;
+            text-decoration: none;
+            background-color: #D2F0C8;
+            width: auto;
+            height: 50px;
+            top: 2px;
+            position: sticky;
+            border-radius: 10px;
+            padding: 10px;
+        }
+        .logo .highlight {
+            color: #28B463;
+        }
+        .logo .icon-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: #28B463;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        .logo .icon {
+            font-size: 24px;
+            color: #FFFFFF;
+        }
+        .logo:hover .icon-container {
+            background-color: #1E6F5C;
+            transform: scale(1.1);
+            transition: all 0.3s ease;
+        }
+        .logo:hover {
+            color: #28B463;
+            transition: color 0.3s ease;
+        }
+        body {
+            background-color: #f8f9fa;
+        }
+        .navbar {
+            background-color: #28a745;
+        }
+        .sidebar {
+            background-color: #343a40;
+            color: white;
+            padding: 20px;
+        }
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .sidebar a:hover {
+            background-color: #28a745;
+        }
+        .main-content {
+            padding: 20px;
+        }
+        .card {
+            margin-bottom: 20px;
+            border: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .card-header {
+            background-color: #28a745;
+            color: white;
+            font-weight: bold;
+        }
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border: 5px solid #28a745;
+            border-radius: 50%;
+            object-fit: cover;
+            cursor: pointer;
+            background-color: #f0f0f0;
+        }
+        .badge {
+            font-size: 0.9em;
+        }
+        .btn-custom {
+            margin: 5px;
+        }
+        .contact-icon {
+            color: #1E90FF;
+            transition: color 0.3s ease;
+            margin-left: 10px;
+        }
+        .contact-icon:hover {
+            color: #00BFFF;
+        }
+        .address-text {
+            color: #1E90FF;
+            transition: color 0.3s ease;
+        }
+        .social-icons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .social-icons a {
+            color: #1E90FF;
+            transition: color 0.3s ease;
+        }
+        .social-icons a:hover {
+            color: #00BFFF;
+        }
+        .contact-section {
+            margin-top: 100px;
+            padding: 10px;
+            border: 4px solid #00BFFF;
+            border-radius: 10px;
+        }
+        .contact-section h3 {
+            margin-bottom: 20px;
+        }
+        .contact-section a:hover {
+            background-color: #007ACC;
+        }
+        .contact-footer {
+            display: none;
+            background-color: #343a40;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            position: relative;
+            top: 1630px;
+        }
+        .verification-status {
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+            font-weight: bold;
+        }
+        .verified {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .pending {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+        .rejected {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        .profile-upload-container {
+            position: relative;
+            display: inline-block;
+        }
+        .profile-upload-btn {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: #28a745;
+            color: white;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .profile-upload-btn:hover {
+            background: #218838;
+        }
+        #profileUpload {
+            display: none;
+        }
+        .upload-text {
+            font-size: 12px;
+            margin-top: 5px;
+            color: #6c757d;
+        }
+        .large-profile-img {
+            max-width: 100%;
+            max-height: 80vh;
+            object-fit: contain;
+        }
+        /* Updated styling for Recent Dietitian Verifications table */
+        .organization-table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .organization-table th, .organization-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        .organization-table th {
+            background-color: #2e7d32;
+            color: white;
+            font-size: 1.1em;
+        }
+        .organization-table tr:hover {
+            background-color: #c8e6c9;
+            cursor: pointer;
+        }
+        @media (max-width: 768px) {
+            .social-icons {
+                flex-direction: row;
+                justify-content: center;
+                gap: 30px;
+            }
+            .main-content {
+                position: relative;
+                top: -200px;
+               
+            }
+            .contact-section {
+
+                display: none;
+            }
+            .contact-footer {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <div class="logo">
+                <div class="icon-container">
+                    <i class="icon fas fa-leaf"></i>
+                </div>
+                <span>
+                    <span class="highlight">N</span>utri
+                    <span class="highlight">C</span>onnect
+                    <span>: Organization</span>
+                </span>
+            </div>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/" aria-label="Logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- Main Layout -->
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-3 col-lg-2 sidebar">
+                <h4>Menu</h4>
+                <a href="/organization" aria-label="Home"><i class="fas fa-home"></i> Home</a>
+                <a href="/verify_diet" aria-label="Verify Dietitian"><i class="fas fa-file-signature"></i> Verify Dietitian</a>
+                <a href="/recieved_org" aria-label="My Verification Status"><i class="fas fa-shield-check"></i> My Verification Status</a>
+                <a href="/blog" aria-label="Blog"><i class="fas fa-blog"></i> Blog</a>
+                <!-- Contact Section -->
+                <div class="contact-section">
+                    <h3>Contact Us:</h3>
+                    <p>
+                        Email:
+                        <a href="https://mail.google.com/mail/?view=cm&to=nutriconnect6@gmail.com" target="_blank" aria-label="Email NutriConnect">
+                            <i class="fa-solid fa-envelope fa-lg contact-icon"></i>
+                        </a>
+                    </p>
+                    <p>
+                        Phone:
+                        <a href="tel:+917075783143" aria-label="Call NutriConnect">
+                            <i class="fa-solid fa-phone fa-lg contact-icon"></i>
+                        </a>
+                    </p>
+                    <h3>Follow Us:</h3>
+                    <div class="social-icons">
+                        <a href="https://www.facebook.com/profile.php?id=61572485733709" target="_blank" aria-label="Facebook">
+                            <i class="fa-brands fa-facebook fa-xl"></i>
+                        </a>
+                        <a href="https://www.instagram.com/nutriconnect2025?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" aria-label="Instagram">
+                            <i class="fa-brands fa-instagram fa-xl"></i>
+                        </a>
+                        <a href="https://x.com/NutriC21?t=ngy3BuReV6VcrXl3WXrCvg&s=09" target="_blank" aria-label="X Twitter">
+                            <i class="fa-brands fa-x-twitter fa-xl"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/in/nutri-connect-a0b774349?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" aria-label="LinkedIn">
+                            <i class="fa-brands fa-linkedin fa-xl"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- Contact Section as Footer -->
+            <div class="contact-footer">
+                <h3>Contact Us:</h3>
+                <p>
+                    Email:
+                    <a href="https://mail.google.com/mail/?view=cm&to=nutriconnect6@gmail.com" target="_blank" aria-label="Email NutriConnect">
+                        <i class="fa-solid fa-envelope fa-lg contact-icon"></i>
+                    </a>
+                </p>
+                <p>
+                    Phone:
+                    <a href="tel:+917075783143" aria-label="Call NutriConnect">
+                        <i class="fa-solid fa-phone fa-lg contact-icon"></i>
+                    </p>
+                <p>
+                    Address:
+                    <span class="address-text">Plot No. 45, Greenway Colony, 517681, India</span>
+                </p>
+                <h3>Follow Us:</h3>
+                <div class="social-icons">
+                    <a href="https://www.facebook.com/profile.php?id=61572485733709" target="_blank" aria-label="Facebook">
+                        <i class="fa-brands fa-facebook fa-xl"></i>
+                    </a>
+                    <a href="https://www.instagram.com/nutriconnect2025?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" aria-label="Instagram">
+                        <i class="fa-brands fa-instagram fa-xl"></i>
+                    </a>
+                    <a href="https://x.com/NutriC21?t=ngy3BuReV6VcrXl3WXrCvg&s=09" target="_blank" aria-label="X Twitter">
+                        <i class="fa-brands fa-x-twitter fa-xl"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/in/nutri-connect-a0b774349?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" aria-label="LinkedIn">
+                        <i class="fa-brands fa-linkedin fa-xl"></i>
+                    </a>
+                </div>
+            </div>
+            <!-- Main Content -->
+            <div class="col-md-9 col-lg-10 main-content">
+                <h2>Welcome, <%= organization.org_name %>!</h2>
+                <div class="row">
+                    <!-- Organization Info -->
+                    <div class="col-md-4">
+                        <div class="card text-center">
+                            <div class="card-header">Organization Profile</div>
+                            <div class="card-body">
+                                <div class="profile-upload-container">
+                                    <img id="profileImage" 
+                                         src="<%= organization.profileImageBase64 != null ? organization.profileImageBase64 : 'https://encrypted-tbn0.gstatic.com/images?q=tbniq9GcS2TgOv9CMmsUzYKCcLGWPvqcpUk6HXp2mnww&s' %>" 
+                                         class="profile-img" 
+                                         alt="Organization Image"
+                                         data-bs-toggle="modal"
+                                         data-bs-target="#imageModal"
+                                         onerror="this.src='https://encrypted-tbn0.gstatic.com/images?q=tbniq9GcS2TgOv9CMmsUzYKCcLGWPvqcpUk6HXp2mnww&s'">
+                                    <label for="profileUpload" class="profile-upload-btn" title="Change photo" aria-label="Upload profile photo">
+                                        <i class="fas fa-camera"></i>
+                                    </label>
+                                    <input type="file" id="profileUpload" accept="image/*">
+                                </div>
+                                <p class="upload-text">Click camera icon to update your profile photo</p>
+                                <h5 class="card-title mt-2"><%= organization.org_name %></h5>
+                                <p><strong>Email:</strong> <%= organization.email %></p>
+                                <p><strong>Phone:</strong> <%= organization.phone %></p>
+                                <p><strong>Address:</strong> <%= organization.address %></p>
+                                <button class="btn btn-outline-primary btn-sm btn-custom" onclick="window.location.href='/organization_dash/edit-profile'">Edit Profile</button>
+                                <button class="btn btn-outline-secondary btn-sm btn-custom" onclick="window.location.href='/organization_dash/change-pass'">Change Password</button>
+                                <span class="badge bg-success">Active</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Verification Status -->
+                    <div class="col-md-4">
+                        <div class="card" style="height: 300px;">
+                            <div class="card-header">Verification Status</div>
+                            <div class="card-body" id="verificationSection">
+                                <div class="verification-status pending">
+                                    <i class="fas fa-spinner fa-spin"></i> Checking verification status...
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Quick Actions -->
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-header">Quick Actions</div>
+                            <div class="card-body">
+                                <button class="btn btn-primary w-100 mb-2" onclick="window.location.href='/recieved_org'">View Verification Status</button>
+                                <button class="btn btn-warning w-100 mb-2" onclick="window.location.href='/verify_diet'">Verify Dietitian</button>
+                                <button class="btn btn-danger w-100" onclick="window.location.href='/'">Log Out</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Recent Dietitian Verifications -->
+                <div class="card mt-4">
+                    <div class="card-header">Recent Dietitian Verifications</div>
+                    <div class="card-body">
+                        <table class="organization-table">
+                            <thead>
+                                <tr>
+                                    <th>Dietitian Name</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="recent-dietitians-table-body">
+                                <tr>
+                                    <td colspan="2" class="text-center">
+                                        <i class="fas fa-spinner fa-spin"></i> Loading recent dietitians...
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Image Modal -->
+    <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="imageModalLabel">Profile Image</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <img id="largeProfileImage" src="" class="large-profile-img" alt="Large Profile Image">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Fetch Verification Status and Recent Dietitians on Page Load
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Verification status fetch
+            const verificationSection = document.getElementById('verificationSection');
+            try {
+                const response = await fetch('/organization-doc/org-check-status', { method: 'GET' });
+                const data = await response.json();
+                
+                if (data.success) {
+                    const finalReportStatus = data.finalReportStatus;
+                    let htmlContent = '';
+
+                    if (finalReportStatus === 'Not Received' || finalReportStatus === 'Received') {
+                        htmlContent = `
+                            <div class="verification-status pending">
+                                <i class="fas fa-spinner fa-spin"></i> Verification in Progress
+                            </div>
+                            <p class="mt-3">Your documents are under review by NutriConnect.</p>
+                            <p class="text-muted mb-2">
+                                Final report status: ${finalReportStatus}
+                            </p>
+                        `;
+                    } else if (finalReportStatus === 'Verified') {
+                        htmlContent = `
+                            <div class="verification-status verified">
+                                <i class="fas fa-check-circle"></i> Verified
+                            </div>
+                            <p class="mt-3">Your organization has been verified by NutriConnect.</p>
+                            <p class="text-muted mb-2">
+                                You can now verify dietitians.
+                            </p>
+                            <button class="btn btn-outline-success btn-md" onclick="window.location.href='/verify_diet'">
+                                Proceed to Verify Dietitian
+                            </button>
+                        `;
+                    } else if (finalReportStatus === 'Rejected') {
+                        htmlContent = `
+                            <div class="verification-status rejected">
+                                <i class="fas fa-times-circle"></i> Rejected
+                            </div>
+                            <p class="mt-3">Your application has been rejected. View the reason in the final report.</p>
+                            <p class="text-muted mb-2">
+                                Please review and resubmit your documents.
+                            </p>
+                            <button class="btn btn-outline-danger btn-md" onclick="window.location.href='/recieved_org'">
+                                View Verification Status
+                            </button>
+                        `;
+                    } else {
+                        htmlContent = `
+                            <div class="verification-status rejected">
+                                <i class="fas fa-exclamation-circle"></i> Unknown Status
+                            </div>
+                            <p class="mt-3">Received an unexpected status: ${finalReportStatus}</p>
+                        `;
+                    }
+
+                    verificationSection.innerHTML = htmlContent;
+                } else {
+                    verificationSection.innerHTML = `
+                        <div class="verification-status rejected">
+                            <i class="fas fa-exclamation-circle"></i> Error
+                        </div>
+                        <p class="mt-3">Failed to load verification status: ${data.message || 'Unknown error'}</p>
+                    `;
+                }
+            } catch (error) {
+                console.error('Error fetching verification status:', error);
+                verificationSection.innerHTML = `
+                    <div class="verification-status rejected">
+                        <i class="fas fa-exclamation-circle"></i> Error
+                    </div>
+                    <p class="mt-3">An error occurred while checking verification status.</p>
+                `;
+            }
+
+            // Fetch recent dietitians
+            const recentDietitiansTableBody = document.getElementById('recent-dietitians-table-body');
+            try {
+                const response = await fetch('/dietitian-doc/dietitians?limit=3&sort=createdAt', {
+                    method: 'GET',
+                    credentials: 'include'
+                });
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                let dietitians = await response.json();
+                
+                // Ensure only the 2 most recent dietitians are displayed
+                dietitians = dietitians
+                    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+                    .slice(0,3);
+                
+                recentDietitiansTableBody.innerHTML = '';
+                if (dietitians.length === 0) {
+                    recentDietitiansTableBody.innerHTML = `
+                        <tr>
+                            <td colspan="2" class="text-center">No recent dietitians found.</td>
+                        </tr>
+                    `;
+                    return;
+                }
+
+                const statusIcons = {
+                    'Not Received': 'hourglass-half',
+                    'Received': 'hourglass-half',
+                    'Verified': 'check-circle',
+                    'Rejected': 'times-circle'
+                };
+                const statusBadges = {
+                    'Not Received': 'warning',
+                    'Received': 'warning',
+                    'Verified': 'success',
+                    'Rejected': 'danger'
+                };
+
+                dietitians.forEach((dietitian) => {
+                    const verificationStatus = dietitian.verificationStatus || {};
+                    const overallStatus = verificationStatus.finalReport || 'Not Received';
+                    const displayStatus = overallStatus === 'Not Received' ? 'Pending' : overallStatus;
+
+                    const row = `
+                        <tr>
+                            <td>${dietitian.name || 'Unknown Dietitian'}</td>
+                            <td>
+                                <span class="badge bg-${statusBadges[overallStatus]}">
+                                    <i class="fas fa-${statusIcons[overallStatus]}"></i> ${displayStatus}
+                                </span>
+                            </td>
+                        </tr>
+                    `;
+                    recentDietitiansTableBody.insertAdjacentHTML('beforeend', row);
+                });
+            } catch (error) {
+                console.error('Error fetching recent dietitians:', error);
+                recentDietitiansTableBody.innerHTML = `
+                    <tr>
+                        <td colspan="2" class="text-center text-danger">
+                            <i class="fas fa-exclamation-circle"></i> Failed to load recent dietitians.
+                        </td>
+                    </tr>
+                `;
+            }
+        });
+
+        // Profile Photo Upload with Validation
+        document.getElementById('profileUpload').addEventListener('change', async (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            if (!['image/jpeg', 'image/png'].includes(file.type)) {
+                alert('Only JPEG or PNG images are allowed.');
+                return;
+            }
+
+            if (file.size > 5 * 1024 * 1024) {
+                alert('File size must be less than 5MB.');
+                return;
+            }
+
+            // Preview image
+            const reader = new FileReader();
+            reader.onload = () => document.getElementById('profileImage').src = reader.result;
+            reader.readAsDataURL(file);
+
+            // Upload to backend
+            const formData = new FormData();
+            formData.append('profileImage', file);
+            try {
+                const res = await fetch('/uploadorganization', { method: 'POST', body: formData });
+                const data = await res.json();
+                if (data.success) {
+                    alert('Profile photo uploaded successfully!');
+                    window.location.reload(); // Reload to fetch new base64 image
+                } else {
+                    alert(`Upload failed: ${data.message || 'Unknown error'}`);
+                }
+            } catch (error) {
+                console.error('Upload error:', error);
+                alert('An error occurred during upload.');
+            }
+        });
+
+        // Set modal image source when modal is shown
+        const imageModal = document.getElementById('imageModal');
+        imageModal.addEventListener('show.bs.modal', () => {
+            const profileImage = document.getElementById('profileImage');
+            const largeProfileImage = document.getElementById('largeProfileImage');
+            largeProfileImage.src = profileImage.src || 'https://via.placeholder.com/150?text=Default+Organization';
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="YOUR_CSRF_TOKEN_HERE">
+    <title><%= dietitian.name || 'Dietitian Profile' %> | NutriConnect</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e8f5e9;
+            color: #1b5e20;
+        }
+        .container {
+            max-width: 1200px;
+        }
+        .card {
+            background-color: #f1f8e9;
+            border: 1px solid #4caf50;
+            box-shadow: 0 2px 4px rgba(0, 128, 0, 0.1);
+        }
+        .card-img-top {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 4px solid #4caf50;
+            padding: 4px;
+            margin: 20px auto;
+            display: block;
+        }
+        .card-title, .modal-title, h6 {
+            color: #2e7d32;
+        }
+        .badge-primary {
+            background-color: #66bb6a;
+        }
+        .btn-primary {
+            background-color: #4caf50;
+            border-color: #4caf50;
+        }
+        .btn-primary:hover {
+            background-color: #388e3c;
+            border-color: #388e3c;
+        }
+        .btn-secondary {
+            background-color: #81c784;
+            border-color: #81c784;
+            color: #1b5e20;
+        }
+        .btn-secondary:hover {
+            background-color: #66bb6a;
+            border-color: #66bb6a;
+        }
+        .btn-back {
+            background-color: #6c757d;
+            border-color: #6c757d;
+            color: #fff;
+        }
+        .btn-back:hover {
+            background-color: #5a6268;
+            border-color: #5a6268;
+        }
+        .testimonial-item {
+            background-color: #e8f5e9;
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            border: 1px solid #a5d6a7;
+            position: relative;
+        }
+        .testimonial-close {
+            position: absolute;
+            top: 5px;
+            right: 10px;
+            cursor: pointer;
+            color: #b71c1c;
+            font-size: 1.2rem;
+        }
+        .testimonial-close:hover {
+            color: #ef5350;
+        }
+        .alert-success {
+            background-color: #c8e6c9;
+            color: #1b5e20;
+            border-color: #4caf50;
+        }
+        .alert-danger {
+            background-color: #ffcdd2;
+            color: #b71c1c;
+            border-color: #ef5350;
+        }
+        .alert {
+            position: fixed;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 800px;
+            max-width: 90%;
+            z-index: 1000;
+        }
+        .fa-star, .fa-star-half-alt {
+            color: #4caf50 !important;
+        }
+        .rating span, .card-text, .testimonial-text, .testimonial-author, p, li {
+            color: #1b5e20;
+        }
+        .specialization-tags .badge {
+            background-color: #81c784;
+            color: #1b5e20;
+        }
+        .modal-content {
+            background-color: #f1f8e9;
+            border: 1px solid #4caf50;
+        }
+        .form-control {
+            border-color: #a5d6a7;
+            background-color: #ffffff;
+        }
+        .form-control:focus {
+            border-color: #4caf50;
+            box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
+        }
+        a, a:hover {
+            color: #388e3c;
+        }
+    </style>
+</head>
+<body>
+    <% try { %>
+        <%- include('partials/header') %>
+    <% } catch (e) { %>
+        <!-- Header not found, skipping -->
+    <% } %>
+
+    <div class="container mt-4">
+        <!-- Back Button -->
+        <div class="mb-3">
+            <a href="/dietitian-profiles" class="btn btn-back" aria-label="Back to Dietitians List">
+                <i class="fas fa-arrow-left"></i> Back
+            </a>
+        </div>
+
+        <div class="row">
+            <!-- Dietitian Profile Section -->
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="<%= dietitian.profileImage || '/images/default-profile.jpg' %>" class="card-img-top" alt="<%= dietitian.name || 'Dietitian' %>">
+                    <div class="card-body">
+                        <h5 class="card-title"><%= dietitian.name || 'Unknown Dietitian' %></h5>
+                        <p class="card-text"><%= dietitian.title || 'Nutrition Specialist' %></p>
+                        <div class="rating" aria-label="Rating <%= dietitian.rating || 'N/A' %>">
+                            <% for(let i = 0; i < Math.floor(dietitian.rating || 0); i++) { %>
+                                <i class="fas fa-star"></i>
+                            <% } %>
+                            <% if(dietitian.rating && dietitian.rating % 1 !== 0) { %>
+                                <i class="fas fa-star-half-alt"></i>
+                            <% } %>
+                            <span class="ml-2">(<%= dietitian.rating || 'N/A' %>)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Information -->
+                <div class="card mt-3">
+                    <div class="card-body">
+                        <h6>Contact Information</h6>
+                        <p><i class="fas fa-map-marker-alt"></i> <%= dietitian.location || 'Not specified' %></p>
+                        <p><i class="fas fa-language"></i> <%= dietitian.languages && dietitian.languages.length ? dietitian.languages.join(', ') : 'Not specified' %></p>
+                        <p><i class="fas fa-video"></i> <%= dietitian.online ? 'Online Consultation Available' : 'Online Consultation Not Available' %></p>
+                        <p><i class="fas fa-building"></i> <%= dietitian.offline ? 'Offline Consultation Available' : 'Offline Consultation Not Available' %></p>
+                        <p><i class="fas fa-rupee-sign"></i> ₹<%= dietitian.fees || 'N/A' %> per session</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content Section -->
+            <div class="col-md-8">
+                <!-- About Section -->
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">About</h5>
+                        <p class="card-text"><%= dietitian.description || dietitian.about || 'No description available.' %></p>
+                    </div>
+                </div>
+
+                <!-- Specialization Section -->
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">Specialization</h5>
+                        <div class="specialization-tags">
+                            <% (dietitian.specialties || dietitian.specialization || []).forEach(specialty => { %>
+                                <span class="badge badge-primary mr-2 mb-2"><%= specialty %></span>
+                            <% }); %>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Education Section -->
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">Education</h5>
+                        <ul class="list-unstyled">
+                            <% (dietitian.education || []).forEach(edu => { %>
+                                <li><i class="fas fa-graduation-cap"></i> <%= edu %></li>
+                            <% }); %>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Expertise Section -->
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">Expertise</h5>
+                        <ul class="list-unstyled">
+                            <% (dietitian.expertise || []).forEach(exp => { %>
+                                <li><i class="fas fa-check-circle"></i> <%= exp %></li>
+                            <% }); %>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Certifications Section -->
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">Certifications</h5>
+                        <ul class="list-unstyled">
+                            <% (dietitian.certifications || []).forEach(cert => { %>
+                                <li>
+                                    <i class="fas fa-certificate"></i> 
+                                    <%= cert.name || 'Unnamed Certification' %> 
+                                    <%= cert.issuer ? `(${cert.issuer}${cert.year ? ', ' + cert.year : ''})` : cert.year ? `(${cert.year})` : '' %>
+                                </li>
+                            <% }); %>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Testimonials Section -->
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">Testimonials</h5>
+                        <div id="testimonials" class="testimonials">
+                            <% (dietitian.testimonials || []).slice(-2).forEach(testimonial => { %>
+                                <div class="testimonial-item mb-3" aria-label="Testimonial by <%= testimonial.author %>">
+                                    <span class="testimonial-close" title="Remove testimonial">×</span>
+                                    <p class="testimonial-text">"<%= testimonial.text %>"</p>
+                                    <p class="testimonial-author">- <%= testimonial.author %> (<%= testimonial.rating %> Stars)</p>
+                                </div>
+                            <% }); %>
+                        </div>
+                        <% if(user) { %>
+                            <button class="btn btn-primary" data-toggle="modal" data-target="#addTestimonialModal" aria-label="Add Testimonial">
+                                Add Testimonial
+                            </button>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Testimonial Modal -->
+    <div class="modal fade" id="addTestimonialModal" tabindex="-1" role="dialog" aria-labelledby="addTestimonialModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addTestimonialModalLabel">Add Testimonial</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="testimonialForm" aria-label="Testimonial Form">
+                        <div class="form-group">
+                            <label for="testimonialText">Your Testimonial</label>
+                            <textarea class="form-control" id="testimonialText" rows="3" required aria-required="true" aria-label="Testimonial Text"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="testimonialRating">Rating</label>
+                            <select class="form-control" id="testimonialRating" required aria-required="true" aria-label="Testimonial Rating">
+                                <option value="5">5 Stars</option>
+                                <option value="4">4 Stars</option>
+                                <option value="3">3 Stars</option>
+                                <option value="2">2 Stars</option>
+                                <option value="1">1 Star</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close Modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="submitTestimonial" aria-label="Submit Testimonial">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <% try { %>
+        <%- include('partials/footer') %>
+    <% } catch (e) { %>
+        <!-- Footer not found, skipping -->
+    <% } %>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Handle testimonial submission
+            $('#submitTestimonial').click(function () {
+                const testimonialText = $('#testimonialText').val();
+                const testimonialRating = $('#testimonialRating').val();
+                const dietitianId = window.location.pathname.split('/').pop();
+
+                $.ajax({
+                    url: `/dietitians/${dietitianId}/testimonials`,
+                    method: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({ testimonialText, testimonialRating }),
+                    success: function (response) {
+                        alert('Testimonial submitted successfully!');
+                        $('#addTestimonialModal').modal('hide');
+                        // Clear form fields
+                        $('#testimonialForm')[0].reset();
+                        // Update testimonials (limit to 2 most recent)
+                        const testimonials = $('#testimonials');
+                        testimonials.children('.testimonial-item').slice(0, -1).remove(); // Keep last one if exists
+                        testimonials.append(`
+                            <div class="testimonial-item mb-3" aria-label="Testimonial by ${response.testimonial.author}">
+                                <span class="testimonial-close" title="Remove testimonial">×</span>
+                                <p class="testimonial-text">"${response.testimonial.text}"</p>
+                                <p class="testimonial-author">- ${response.testimonial.author} (${response.testimonial.rating} Stars)</p>
+                            </div>
+                        `);
+                        // Remove oldest if more than 2
+                        if (testimonials.children('.testimonial-item').length > 2) {
+                            testimonials.children('.testimonial-item').first().remove();
+                        }
+                    },
+                    error: function (xhr) {
+                        alert('Error submitting testimonial: ' + (xhr.responseJSON?.error || 'Unknown error'));
+                    }
+                });
+            });
+
+            // Clear form when modal is opened
+            $('#addTestimonialModal').on('show.bs.modal', function () {
+                $('#testimonialForm')[0].reset();
+            });
+
+            // Handle close button for testimonials (frontend-only removal)
+            $('#testimonials').on('click', '.testimonial-close', function () {
+                $(this).closest('.testimonial-item').remove();
+            });
+        });
+    </script>
+</body>
+</html>

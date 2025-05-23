@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html>
+  <head>
+   
+    <title>Blog Page</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+  
+    <style>
+      :root {
+        --primary-color: #28a745;
+        --secondary-color: #f9e1a7;
+        --accent-color: #ff7043;
+        --text-color: #2d2d2d;
+        --light-bg: #f5f9ed;
+        --white: #ffffff;
+        --shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        --border-radius: 12px;
+        --transition: all 0.3s ease-in-out;
+        
+      }
+
+      body {
+        background: linear-gradient(to bottom, var(--light-bg), #e8f5e9);
+        font-family: 'Poppins', Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        color: var(--text-color);
+      }
+
+      main {
+        margin-top: 40px;
+        min-height: calc(100vh - 40px);
+        position: relative;
+      }
+
+      /* Header Section */
+      .blog-heading {
+        width: 90%;
+        max-width: 1200px;
+        margin: 0 auto 40px;
+        border-radius: var(--border-radius);
+        box-shadow: var(--shadow);
+        background: var(--white);
+        overflow: hidden;
+      }
+
+      .logo-content {
+        padding: 2rem;
+        background: linear-gradient(135deg, var(--primary-color), #66bb6a);
+        border-radius: var(--border-radius) var(--border-radius) 0 0;
+        text-align: center;
+        position: relative;
+      }
+
+      .logo-content::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 200%;
+        height: 100%;
+        background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+        animation: shimmer 4s infinite;
+      }
+
+      @keyframes shimmer {
+        0% { transform: translateX(-100%); }
+        100% { transform: translateX(100%); }
+      }
+
+      .our-blog {
+        width: 80%;
+        margin: 0 auto;
+        color: var(--white);
+      }
+
+      .heading-logo-content {
+        font-weight: 700;
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.15);
+      }
+
+      .our-blog p {
+        font-size: 1.1rem;
+        line-height: 1.6;
+        opacity: 0.9;
+      }
+
+      /* Navigation */
+      .blog-nav {
+        background: #2e7d32;
+        border-radius: 0 0 var(--border-radius) var(--border-radius);
+      }
+
+      #blog-nav-items {
+        display: flex;
+        flex-wrap: wrap;
+        list-style-type: none;
+        justify-content: center;
+        gap: 10px;
+        margin: 0;
+        padding: 15px;
+      }
+
+      .blog-nav-link {
+        color: var(--white);
+        text-decoration: none;
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-weight: 500;
+        font-size: 0.95rem;
+        transition: var(--transition);
+      }
+
+      .blog-nav-link:hover {
+        background: rgba(255, 255, 255, 0.2);
+        transform: translateY(-2px);
+      }
+
+      .blog-nav-link.active {
+        background: var(--accent-color);
+        color: var(--white);
+        font-weight: 600;
+      }
+
+      /* Blog Content */
+      .blog-section {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 2rem;
+        width: 90%;
+        max-width: 1200px;
+        margin: 0 auto 80px;
+        padding: 20px 0;
+      }
+
+      .blog-container {
+        background: var(--white);
+        padding: 1.5rem;
+        border-radius: var(--border-radius);
+        box-shadow: var(--shadow);
+        transition: var(--transition);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .blog-container:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+      }
+
+      .header {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: var(--primary-color);
+        margin-bottom: 0.5rem;
+        border-bottom: 2px solid var(--accent-color);
+        padding-bottom: 0.3rem;
+        max-height: 40px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .theme {
+        font-size: 0.95rem;
+        font-weight: 500;
+        color: var(--dark-gray);
+        margin-bottom: 0.5rem;
+        border-bottom: 1px solid var(--medium-gray);
+        padding-bottom: 0.3rem;
+        max-height: 30px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .author {
+        margin: 0.5rem 0;
+        font-size: 0.85rem;
+        color: var(--dark-gray);
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+
+      .badge {
+        padding: 3px 8px;
+        border-radius: 12px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: var(--white);
+      }
+
+      .bg-success {
+        background: var(--primary-color);
+      }
+
+      .bg-primary {
+        background: var(--accent-color);
+      }
+
+      .image-container {
+        margin: 1rem 0;
+        border-radius: var(--border-radius);
+        overflow: hidden;
+        position: relative;
+        height: 220px;
+        background: var(--secondary-color);
+      }
+
+      .image-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.4s ease;
+      }
+
+      .blog-container:hover .image-container img {
+        transform: scale(1.05);
+      }
+
+      .content {
+        margin-top: 1rem;
+      }
+
+      .content p {
+        font-size: 0.9rem;
+        color: var(--dark-gray);
+        line-height: 1.6;
+        margin: 0 0 1rem;
+        display: -webkit-box;
+      
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      /* Buttons */
+      .post-button {
+        display: block;
+        text-align: center;
+        margin: 1.5rem auto;
+        padding: 12px 24px;
+        background: var(--primary-color);
+        color: var(--white);
+        text-decoration: none;
+        border-radius: 30px;
+        font-size: 1rem;
+        font-weight: 600;
+        transition: var(--transition);
+        box-shadow: var(--shadow);
+        width: 150px;
+      }
+
+      .post-button:hover {
+        background: var(--primary-dark);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+      }
+
+      .read-more {
+        display: inline-block;
+        padding: 8px 16px;
+        background: var(--accent-color);
+        color: var(--white);
+        text-decoration: none;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 500;
+        transition: var(--transition);
+      }
+
+      .read-more:hover {
+        background: #f4511e;
+        transform: translateY(-1px);
+      }
+
+      
+      /* Pagination */
+      .pagination-wrapper {
+        width: 100%;
+        margin: 40px 0;
+      }
+
+      .pagination-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      .pagination {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 8px;
+        padding: 0;
+        margin: 0;
+      }
+
+      .page-item {
+        list-style: none;
+      }
+
+      .page-link {
+        padding: 8px 16px;
+        border: 1px solid var(--medium-gray);
+        text-decoration: none;
+        color: var(--primary-color);
+        border-radius: 8px;
+        font-size: 0.9rem;
+        transition: var(--transition);
+      }
+
+      .page-item.active .page-link {
+        background: var(--primary-color);
+        color: var(--white);
+        border-color: var(--primary-color);
+      }
+
+      .page-item.disabled .page-link {
+        color: #bdbdbd;
+        pointer-events: none;
+      }
+
+      .page-link:hover:not(.active) {
+        background: #e8f5e9;
+        border-color: var(--primary-color);
+      }
+
+      /* Responsive Adjustments */
+      @media (max-width: 768px) {
+        .blog-heading {
+          width: 95%;
+        }
+
+        #blog-nav-items {
+          gap: 8px;
+          padding: 10px;
+        }
+
+        .blog-nav-link {
+          font-size: 0.9rem;
+          padding: 6px 12px;
+        }
+
+        .our-blog {
+          width: 90%;
+        }
+
+        .blog-section {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .heading-logo-content {
+          font-size: 2rem;
+        }
+
+        .our-blog p {
+          font-size: 1rem;
+        }
+
+        .image-container {
+          height: 180px;
+        }
+
+        .header, .theme {
+          font-size: 1.1rem;
+        }
+      }
+
+      #cross {
+        position: fixed;
+        top: 5px;
+        left: 10px;
+        line-height: 20px;
+        font-size: 40px;
+        border-radius: 100%;
+        z-index: 1000;
+    }
+    @media(max-width:992px){
+      .main{
+        margin-top: 70px;
+      }
+    }
+    </style>
+  </head>
+     
+  <body>
+   
+   <!-- Back Button -->
+<div id="cross" class="btn btn-outline-success" onclick="window.history.back()">
+  <i class="fa-solid fa-xmark"></i>
+</div>
+   
+
+    <main class="main">
+       
+    
+      <div class="blog-heading">
+        <div class="logo-content">
+          <div class="our-blog">
+           
+            <h2 class="heading-logo-content">Our Blogs</h2>
+            <p>
+              Welcome to the blog section of Nutri-Connect, your trusted source
+              for insightful articles, tips, and expert advice on nutrition and
+              wellness. Here we strive to provide you with engaging and informative
+              content that will inspire you to make informed decisions about your health.
+              Explore our blog to discover a wealth of resources that cover a wide range
+              of topics related to nutrition, fitness, and overall well-being.
+            </p>
+          </div>
+        </div>
+        <div class="blog-nav">
+          <ul id="blog-nav-items">
+            <li class="blog-nav-item">
+              <a class="blog-nav-link <%= currentFilter === 'all' ? 'active' : '' %>" 
+                 href="/blog?filter=all">All</a>
+            </li>
+            <li class="blog-nav-item">
+              <a class="blog-nav-link <%= currentFilter === 'Weight Loss Tips' ? 'active' : '' %>" 
+                 href="/blog?filter=Weight Loss Tips">Weight Loss Tips</a>
+            </li>
+            <li class="blog-nav-item">
+              <a class="blog-nav-link <%= currentFilter === 'Healthy Eating' ? 'active' : '' %>" 
+                 href="/blog?filter=Healthy Eating">Healthy Eating</a>
+            </li>
+            <li class="blog-nav-item">
+              <a class="blog-nav-link <%= currentFilter === 'Fitness And Exercise' ? 'active' : '' %>" 
+                 href="/blog?filter=Fitness And Exercise">Fitness And Exercise</a>
+            </li>
+            <li class="blog-nav-item">
+              <a class="blog-nav-link <%= currentFilter === 'Mindset and Motivation' ? 'active' : '' %>" 
+                 href="/blog?filter=Mindset and Motivation">Mindset and Motivation</a>
+            </li>
+            <li class="blog-nav-item">
+              <a class="blog-nav-link <%= currentFilter === 'Recipes And Meal Planning' ? 'active' : '' %>" 
+                 href="/blog?filter=Recipes And Meal Planning">Recipes And Meal Planning</a>
+            </li>
+          </ul>
+        </div>
+        
+        <a href="/post" class="post-button">
+            Post Blog
+        </a>
+      </div>
+      
+      <div class="blog-section">
+        <% blogs.forEach(blog => { %>
+          <div class="blog-container" data-theme="<%= blog.theme %>">
+            <div class="header"><%= blog.title %></div>
+            <div class="theme">Theme: <%= blog.theme %></div>
+            <div class="author">
+                <small>By <%= blog.authorName %></small>
+                <% if (blog.authorType === 'dietitian') { %>
+                    <span class="badge bg-success">Dietitian</span>
+                <% } else { %>
+                    <span class="badge bg-primary">User</span>
+                <% } %>
+            </div>
+            <div class="image-container">
+                <% if (blog.images && blog.images.length > 0) { %>
+                    <img src="<%= blog.images[0] %>" alt="Blog Image">
+                <% } else { %>
+                    <img src="/path/to/default-image.jpg" alt="Default Blog Image">
+                <% } %>
+            </div>
+            <div class="content">
+                <p><%= blog.content.replace(/(<([^>]+)>)/gi, "").substring(0, 100) %>...</p>
+            </div>
+            <a href="/blog/<%= blog._id %>" class="read-more">Read More</a>
+        </div>
+        <% }); %>
+    </div>
+
+      <div class="pagination-wrapper">
+        <div class="pagination-container">
+          <nav aria-label="Blog pagination">
+            <ul class="pagination justify-content-center">
+              <% if (hasPreviousPage) { %>
+                <li class="page-item">
+                  <a class="page-link" 
+                     href="/blog?filter=<%= currentFilter %>&page=<%= currentPage - 1 %>">
+                    Previous
+                  </a>
+                </li>
+              <% } else { %>
+                <li class="page-item disabled">
+                  <span class="page-link">Previous</span>
+                </li>
+              <% } %>
+
+              <% for (let i = 1; i <= totalPages; i++) { %>
+                <li class="page-item <%= i === currentPage ? 'active' : '' %>">
+                  <a class="page-link" 
+                     href="/blog?filter=<%= currentFilter %>&page=<%= i %>">
+                    <%= i %>
+                  </a>
+                </li>
+              <% } %>
+
+              <% if (hasNextPage) { %>
+                <li class="page-item">
+                  <a class="page-link" 
+                     href="/blog?filter=<%= currentFilter %>&page=<%= currentPage + 1 %>">
+                    Next
+                  </a>
+                </li>
+              <% } else { %>
+                <li class="page-item disabled">
+                  <span class="page-link">Next</span>
+                </li>
+              <% } %>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
+   
+  </body>
+</html>

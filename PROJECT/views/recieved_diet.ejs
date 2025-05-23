@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dietitian Document Verification</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --primary-green: #2E7D32;
+            --primary-light: #6ABF69;
+            --primary-dark: #1B5E20;
+            --accent-green: #8BC34A;
+            --background-light: #F5F9F5;
+            --card-bg: #FFFFFF;
+            --text-dark: #333333;
+            --text-light: #666666;
+            --border-radius: 12px;
+            --box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background-color: var(--background-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+
+        .app-container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .header h1 {
+            color: var(--primary-dark);
+            font-weight: 700;
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: var(--text-light);
+            font-size: 1.1rem;
+        }
+
+        .back-btn {
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: var(--primary-green);
+            color: white;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+        }
+
+        .back-btn i {
+            font-size: 1.8rem;
+        }
+
+        .back-btn:hover {
+            background: var(--primary-dark);
+            transform: translateX(-3px);
+        }
+
+        .profile-card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 25px;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            transition: var(--transition);
+        }
+
+        .profile-card:hover {
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+        }
+
+        .profile-icon {
+            width: 72px;
+            height: 72px;
+            background: linear-gradient(135deg, var(--primary-light), var(--primary-green));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+            margin-right: 20px;
+            flex-shrink: 0;
+        }
+
+        .profile-info h2 {
+            margin: 0;
+            color: var(--primary-dark);
+            font-size: 1.4rem;
+        }
+
+        .profile-info p {
+            margin: 5px 0 0;
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+
+        .documents-card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 0;
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+
+        .document-item {
+            display: flex;
+            align-items: center;
+            padding: 20px 25px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+        }
+
+        .document-item:last-child {
+            border-bottom: none;
+        }
+
+        .document-item:hover {
+            background: rgba(106, 191, 105, 0.05);
+        }
+
+        .document-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(106, 191, 105, 0.1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-green);
+            font-size: 1.6rem;
+            margin-right: 20px;
+            flex-shrink: 0;
+        }
+
+        .document-info {
+            flex-grow: 1;
+        }
+
+        .document-info h3 {
+            margin: 0;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .document-status {
+            display: flex;
+            align-items: center;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .document-status i {
+            margin-right: 10px;
+        }
+
+        .status-badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-left: 15px;
+        }
+
+        .status-verified {
+            background: rgba(76, 175, 80, 0.1);
+            color: #4CAF50;
+        }
+
+        .status-pending {
+            background: rgba(255, 152, 0, 0.1);
+            color: #FF9800;
+        }
+
+        .status-rejected {
+            background: rgba(229, 57, 53, 0.1);
+            color: #E53935;
+        }
+
+        .status-not-uploaded {
+            background: rgba(136, 136, 136, 0.1);
+            color: #888;
+        }
+
+        .status-received {
+            background: rgba(33, 150, 243, 0.1);
+            color: #2196F3;
+        }
+
+        .final-report-card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 25px;
+            text-align: center;
+        }
+
+        .final-report-card h3 {
+            color: var(--primary-dark);
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .report-actions {
+            margin-top: 15px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .report-actions button,
+        .report-actions a {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .report-actions .view-btn {
+            background: var(--primary-green);
+            color: white;
+            border: none;
+        }
+
+        .report-actions .view-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        .report-actions .download-btn {
+            background: var(--accent-green);
+            color: white;
+            border: none;
+        }
+
+        .report-actions .download-btn:hover {
+            background: var(--primary-light);
+        }
+
+        .report-actions .reupload-btn {
+            background: var(--primary-dark);
+            color: white;
+            border: none;
+            text-decoration: none;
+        }
+
+        .report-actions .reupload-btn:hover {
+            background: var(--primary-green);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .footer a {
+            color: var(--primary-green);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer a:hover {
+            color: var(--primary-dark);
+            text-decoration: underline;
+        }
+
+        .notification-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 2000;
+            max-width: 350px;
+        }
+
+        .notification {
+            padding: 15px 20px;
+            margin-bottom: 15px;
+            border-radius: var(--border-radius);
+            color: white;
+            box-shadow: var(--box-shadow);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            animation: slideInNotification 0.3s ease-out;
+            transition: var(--transition);
+            background: var(--primary-green);
+        }
+
+        .notification.error {
+            background: #E53935;
+        }
+
+        .notification i {
+            margin-right: 10px;
+            font-size: 1.8rem;
+        }
+
+        .notification-close i {
+            font-size: 1.8rem;
+        }
+
+        .notification-close {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            margin-left: 15px;
+        }
+
+        .fas {
+            font-size: 1.5rem;
+        }
+
+        @keyframes slideInNotification {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @media (max-width: 768px) {
+            .app-container {
+                margin: 20px auto;
+                padding: 0 15px;
+            }
+            
+            .profile-card {
+                flex-direction: column;
+                text-align: center;
+                padding: 20px;
+            }
+            
+            .profile-icon {
+                margin-right: 0;
+                margin-bottom: 15px;
+                width: 60px;
+                height: 60px;
+                font-size: 1.8rem;
+            }
+            
+            .document-item {
+                padding: 15px;
+            }
+            
+            .document-icon {
+                margin-right: 15px;
+                width: 40px;
+                height: 40px;
+                font-size: 1.4rem;
+            }
+            
+            .status-badge {
+                margin-left: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <div class="header">
+            <button class="back-btn" onclick="window.history.back();">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <h1>Document Verification</h1>
+            <p>View the status of your submitted documents</p>
+        </div>
+
+        <div class="notification-container" id="notification-container"></div>
+
+        <div class="profile-card">
+            <div class="profile-icon">
+                <i class="fas fa-user-md"></i>
+            </div>
+            <div class="profile-info">
+                <h2 id="dietitian-name">Loading...</h2>
+                <p>Professional Dietitian</p>
+            </div>
+        </div>
+
+        <div class="documents-card">
+            <div id="document-list">
+                <!-- Documents will be populated here -->
+            </div>
+        </div>
+
+        <div class="final-report-card">
+            <h3><i class="fas fa-file-contract"></i> Final Verification Status</h3>
+            <div id="final-report-status" class="document-status" style="justify-content: center;">
+                <span class="status-badge status-not-uploaded">Loading...</span>
+            </div>
+            <div id="report-actions" class="report-actions"></div>
+        </div>
+
+        <div class="footer">
+            <p>Need assistance? Contact our support team at <a href="mailto:support@dietitianverify.com">support@dietitianverify.com</a></p>
+        </div>
+    </div>
+
+    <script>
+        const fieldMap = {
+            resume: { name: 'Professional Resume', icon: 'fas fa-file-alt' },
+            degree_certificate: { name: 'Degree Certificate', icon: 'fas fa-graduation-cap' },
+            license_document: { name: 'License Document', icon: 'fas fa-id-card' },
+            id_proof: { name: 'Government ID Proof', icon: 'fas fa-user-shield' },
+            experience_certificates: { name: 'Experience Certificates', icon: 'fas fa-briefcase' },
+            specialization_certifications: { name: 'Specialization Certifications', icon: 'fas fa-certificate' },
+            internship_certificate: { name: 'Internship Certificate', icon: 'fas fa-clipboard-check' },
+            research_papers: { name: 'Research Publications', icon: 'fas fa-book-open' },
+            finalReport: { name: 'Final Verification Report', icon: 'fas fa-file-contract' }
+        };
+
+        function getStatusClass(status) {
+            if (status === 'Verified') return 'status-verified';
+            if (status === 'Pending') return 'status-pending';
+            if (status === 'Rejected') return 'status-rejected';
+            if (status === 'Received') return 'status-received';
+            if (status === 'Not Uploaded') return 'status-not-uploaded';
+            if (status === 'Not Received') return 'status-not-uploaded';
+            return 'status-not-uploaded';
+        }
+
+        function getStatusIcon(status) {
+            if (status === 'Verified') return 'fas fa-check-circle';
+            if (status === 'Pending') return 'fas fa-hourglass-half';
+            if (status === 'Rejected') return 'fas fa-times-circle';
+            if (status === 'Received') return 'fas fa-check-circle';
+            return 'fas fa-minus-circle';
+        }
+
+        function showNotification(message, type = 'error', duration = 5000) {
+            const container = document.getElementById('notification-container');
+            const notification = document.createElement('div');
+            notification.className = `notification ${type === 'error' ? 'error' : ''}`;
+            
+            const icon = type === 'error' ? 'fas fa-exclamation-circle' : 'fas fa-info-circle';
+            notification.innerHTML = `
+                <div>
+                    <i class="${icon}"></i>
+                    ${message}
+                </div>
+                <button class="notification-close" onclick="this.parentElement.remove()">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+            
+            container.appendChild(notification);
+            
+            if (duration > 0) {
+                setTimeout(() => {
+                    notification.style.opacity = '0';
+                    setTimeout(() => notification.remove(), 300);
+                }, duration);
+            }
+        }
+
+        function viewReport(base64, mime) {
+            const byteCharacters = atob(base64);
+            const byteNumbers = new Array(byteCharacters.length);
+            for (let i = 0; i < byteCharacters.length; i++) {
+                byteNumbers[i] = byteCharacters.charCodeAt(i);
+            }
+            const byteArray = new Uint8Array(byteNumbers);
+            const blob = new Blob([byteArray], { type: mime });
+            const url = URL.createObjectURL(blob);
+            window.open(url, '_blank');
+            setTimeout(() => URL.revokeObjectURL(url), 1000);
+        }
+
+        function downloadReport(base64, filename) {
+            const link = document.createElement('a');
+            link.href = `data:application/pdf;base64,${base64}`;
+            link.download = filename || 'Final_Verification_Report.pdf';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        async function fetchDietitianDetails() {
+            try {
+                const response = await fetch('/dietitian-doc/me', {
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                const data = await response.json();
+
+                if (!data.success) {
+                    throw new Error(data.message || 'Failed to fetch dietitian details');
+                }
+
+                renderDietitianDetails(data.dietitian);
+            } catch (error) {
+                console.error('Error:', error);
+                showNotification('Failed to load data: ' + error.message);
+                renderDietitianDetails({
+                    name: 'Unknown Dietitian',
+                    verificationStatus: {
+                        resume: 'Not Uploaded',
+                        degree_certificate: 'Not Uploaded',
+                        license_document: 'Not Uploaded',
+                        id_proof: 'Not Uploaded',
+                        experience_certificates: 'Not Uploaded',
+                        specialization_certifications: 'Not Uploaded',
+                        internship_certificate: 'Not Uploaded',
+                        research_papers: 'Not Uploaded',
+                        finalReport: 'Not Received'
+                    },
+                    finalReport: null
+                });
+            }
+        }
+
+        function renderDietitianDetails(dietitian) {
+            document.getElementById('dietitian-name').textContent = dietitian.name;
+
+            const documentList = document.getElementById('document-list');
+            documentList.innerHTML = '';
+
+            const documentFields = [
+                'resume',
+                'degree_certificate',
+                'license_document',
+                'id_proof',
+                'experience_certificates',
+                'specialization_certifications',
+                'internship_certificate',
+                'research_papers'
+            ];
+
+            documentFields.forEach(field => {
+                const status = dietitian.verificationStatus[field] || 'Not Uploaded';
+                const fieldInfo = fieldMap[field];
+                const statusClass = getStatusClass(status);
+                const statusIcon = getStatusIcon(status);
+
+                const item = document.createElement('div');
+                item.className = 'document-item';
+                item.innerHTML = `
+                    <div class="document-icon">
+                        <i class="${fieldInfo.icon}"></i>
+                    </div>
+                    <div class="document-info">
+                        <h3>${fieldInfo.name}</h3>
+                    </div>
+                    <div class="document-status">
+                        <i class="${statusIcon}"></i>
+                        <span class="status-badge ${statusClass}">${status}</span>
+                    </div>
+                `;
+                documentList.appendChild(item);
+            });
+
+            const finalStatus = dietitian.verificationStatus.finalReport || 'Not Received';
+            const finalStatusClass = getStatusClass(finalStatus);
+            const finalStatusIcon = getStatusIcon(finalStatus);
+
+            const finalReportElement = document.getElementById('final-report-status');
+            finalReportElement.innerHTML = `
+                <i class="${finalStatusIcon}"></i>
+                <span class="status-badge ${finalStatusClass}">${finalStatus}</span>
+            `;
+
+            const reportActionsElement = document.getElementById('report-actions');
+            reportActionsElement.innerHTML = '';
+
+            // Always show View/Download buttons if finalReport.base64 exists
+            let actionsHtml = '';
+            if (dietitian.finalReport && dietitian.finalReport.base64) {
+                actionsHtml += `
+                    <button class="view-btn" onclick="viewReport('${dietitian.finalReport.base64}', '${dietitian.finalReport.mime}')">
+                        View Report
+                    </button>
+                    <button class="download-btn" onclick="downloadReport('${dietitian.finalReport.base64}', '${dietitian.finalReport.name}.pdf')">
+                        Download Report
+                    </button>
+                `;
+            }
+
+            // Add Re-upload button if status is Rejected
+            if (dietitian.verificationStatus.finalReport === 'Rejected') {
+                actionsHtml += `
+                    <a href="/doc_dietitian" class="reupload-btn">Re-upload Documents</a>
+                `;
+            }
+
+            reportActionsElement.innerHTML = actionsHtml;
+        }
+
+        document.addEventListener('DOMContentLoaded', fetchDietitianDetails);
+    </script>
+</body>
+</html>

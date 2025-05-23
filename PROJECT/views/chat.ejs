@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <title>Chat | NutriConnect</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            color: rgb(51, 51, 51);
+            line-height: 1.6;
+            margin: 0;
+            background-color: #e8f5e9;
+        }
+
+        .main {
+            width: 100%;
+            padding: 30px 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .chat-container {
+            background: linear-gradient(135deg, #ffffff, #f0fff4);
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(40, 167, 69, 0.15);
+            width: 1300px;
+            margin: 20px auto;
+            margin-top: 10px;
+            border: 2px solid #28a745;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+            margin-bottom: 50px;
+        }
+
+        .chat-container:hover {
+            transform: translateY(-5px);
+        }
+
+        .chat-header {
+            background: linear-gradient(to right, #28a745, #50c878);
+            color: white;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 3px solid #1E6F5C;
+            position: relative;
+            z-index: 1;
+        }
+
+        .back-btn {
+            position: absolute;
+            left: 20px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(to right, #e8f5e9, #f0fff4);
+            color: #28a745;
+            border: 2px solid #28a745;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+        }
+
+        .back-btn:hover {
+            background: linear-gradient(to right, #28a745, #50c878);
+            color: white;
+            transform: scale(1.15);
+            border-color: #1E6F5C;
+        }
+
+        .back-btn i {
+            font-size: 18px;
+        }
+
+        .chat-header-content {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .chat-header h5 {
+            margin: 0;
+            font-weight: 700;
+            font-size: 1.5rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .profile-placeholder {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #28a745;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .chat-body {
+            max-height: 450px;
+            overflow-y: auto;
+            padding: 25px;
+            background: url('https://www.transparenttextures.com/patterns/food.png') repeat;
+            background-size: 100px;
+            position: relative;
+        }
+
+        .chat-body::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .chat-body::-webkit-scrollbar-track {
+            background: #e8f5e9;
+            border-radius: 10px;
+        }
+
+        .chat-body::-webkit-scrollbar-thumb {
+            background: #28a745;
+            border-radius: 10px;
+        }
+
+        .chat-body::-webkit-scrollbar-thumb:hover {
+            background: #1E6F5C;
+        }
+
+        .message {
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease;
+        }
+
+        .message.sent {
+            align-items: flex-end;
+        }
+
+        .message.received {
+            align-items: flex-start;
+        }
+
+        .message.temporary .message-content {
+            opacity: 0.7;
+            border: 1px dashed #28a745;
+        }
+
+        .message.failed .message-content {
+            border: 1px solid #dc3545;
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .message-content {
+            max-width: 75%;
+            padding: 12px 18px;
+            border-radius: 20px;
+            font-size: 15px;
+            position: relative;
+            animation: slideIn 0.3s ease;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .message.sent .message-content {
+            background: linear-gradient(to right, #28a745, #46b06c);
+            color: white;
+            border: 1px solid #1E6F5C;
+        }
+
+        .message.received .message-content {
+            background: linear-gradient(to right, #f1f1f1, #e8f5e9);
+            color: #333;
+            border: 1px solid #28a745;
+        }
+
+        .message-content::before {
+            content: '';
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: inherit;
+            border-radius: 50%;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .message.sent .message-content::before {
+            right: -5px;
+        }
+
+        .message.received .message-content::before {
+            left: -5px;
+        }
+
+        .message-time {
+            font-size: 12px;
+            color: #555;
+            margin-top: 8px;
+            opacity: 0.8;
+        }
+
+        .chat-footer {
+            padding: 20px;
+            border-top: 2px solid #28a745;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(to top, #f8f9fa, #ffffff);
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+            position: relative;
+        }
+
+        .chat-footer input {
+            flex-grow: 1;
+            padding: 12px 20px;
+            border: 2px solid #28a745;
+            border-radius: 25px;
+            outline: none;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            background: #f0fff4;
+        }
+
+        .chat-footer input:focus {
+            border-color: #1E6F5C;
+            box-shadow: 0 0 8px rgba(40, 167, 69, 0.4);
+            background: #ffffff;
+        }
+
+        .chat-footer button {
+            background: linear-gradient(to right, #28a745, #50c878);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .chat-footer button:hover {
+            background: linear-gradient(to right, #1E6F5C, #28a745);
+            transform: scale(1.15);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .action-btn {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(to right, #e8f5e9, #f0fff4);
+            color: #28a745;
+            border: 2px solid #28a745;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .action-btn:hover {
+            background: linear-gradient(to right, #28a745, #50c878);
+            color: white;
+            transform: scale(1.15);
+            border-color: #1E6F5C;
+        }
+
+        .action-btn i {
+            font-size: 20px;
+        }
+
+        .emoji-btn {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(to right, #e8f5e9, #f0fff4);
+            color: #28a745;
+            border: 2px solid #28a745;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+        }
+
+        .emoji-btn:hover {
+            background: linear-gradient(to right, #28a745, #50c878);
+            color: white;
+            transform: scale(1.15);
+            border-color: #1E6F5C;
+        }
+
+        .emoji-picker {
+            position: absolute;
+            bottom: 70px;
+            left: 20px;
+            background: #ffffff;
+            border: 2px solid #28a745;
+            border-radius: 10px;
+            padding: 10px;
+            display: none;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+
+        .emoji-picker span {
+            font-size: 24px;
+            margin: 5px;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .emoji-picker span:hover {
+            transform: scale(1.2);
+        }
+
+        .loading {
+            text-align: center;
+            margin: 25px 0;
+            font-style: italic;
+            color: #28a745;
+            font-weight: 600;
+        }
+
+        #error-message {
+            color: #dc3545;
+            text-align: center;
+            margin: 25px 0;
+            display: none;
+            font-weight: 600;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main">
+        <div class="chat-container">
+            <div class="chat-header">
+                <button class="back-btn" title="Back to Consultations" onclick="window.location.href='<%= backUrl %>'">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <div class="chat-header-content">
+                    <% if (otherPartyProfileImage) { %>
+                        <img src="<%= otherPartyProfileImage %>" alt="<%= otherPartyName %>" class="rounded-circle" style="width: 40px; height: 40px; object-fit: cover;">
+                    <% } else { %>
+                        <div class="profile-placeholder"><%= otherPartyName ? otherPartyName.charAt(0).toUpperCase() : '?' %></div>
+                    <% } %>
+                    <h5><%= otherPartyName %></h5>
+                </div>
+                <div class="chat-actions">
+                    <button class="action-btn" title="Lab Reports " onclick="viewLabReports()">
+                        <i class="fas fa-clipboard-list"></i> <!-- Changed icon for viewing lab reports -->
+                    </button>
+                    <% if (role === 'dietitian') { %>
+                        <button class="action-btn" title="Video Conference" onclick="startVideoConference()">
+                            <i class="fas fa-video"></i>
+                        </button>
+                    <% } %>
+                    <% if (role === 'user') { %>
+                        <button class="action-btn" title="Submit Lab Report" onclick="submitLabReport()">
+                            <i class="fas fa-file-import"></i> <!-- Changed icon for submitting lab reports -->
+                        </button>
+                    <% } %>
+                </div>
+            </div>
+            <div class="chat-body" id="chatBody">
+                <div id="loading" class="loading">Loading messages...</div>
+                <div id="error-message"></div>
+            </div>
+            <div class="chat-footer">
+                <div class="emoji-picker" id="emojiPicker">
+                    <span onclick="addEmoji('😊')">😊</span>
+                    <span onclick="addEmoji('👍')">👍</span>
+                    <span onclick="addEmoji('❤️')">❤️</span>
+                    <span onclick="addEmoji('😂')">😂</span>
+                    <span onclick="addEmoji('😍')">😍</span>
+                    <span onclick="addEmoji('🙌')">🙌</span>
+                    <span onclick="addEmoji('😎')">😎</span>
+                    <span onclick="addEmoji('🍎')">🍎</span>
+                    <span onclick="addEmoji('🥗')">🥗</span>
+                    <span onclick="addEmoji('💪')">💪</span>
+                </div>
+                <button class="emoji-btn" title="Emojis" onclick="toggleEmojiPicker()">
+                    <i class="fas fa-smile"></i>
+                </button>
+                <input type="text" id="messageInput" placeholder="Type your message...">
+                <button id="sendMessage" title="Send">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    const userId = '<%= userId %>';
+    const role = '<%= role %>';
+    const otherPartyId = '<%= otherPartyId %>';
+    console.log('Session:', { userId, role, otherPartyId });
+
+    // Toggle emoji picker
+    function toggleEmojiPicker() {
+        const picker = document.getElementById('emojiPicker');
+        picker.style.display = picker.style.display === 'block' ? 'none' : 'block';
+    }
+
+    // Add emoji to input
+    function addEmoji(emoji) {
+        const input = document.getElementById('messageInput');
+        input.value += emoji;
+        input.focus();
+        toggleEmojiPicker();
+    }
+
+    // Function to convert URLs in text to clickable anchor tags
+    function linkify(text) {
+        const urlRegex = /(https?:\/\/[^\s<]+|www\.[^\s<]+)/g;
+        const parts = text.split(urlRegex);
+        const fragment = document.createDocumentFragment();
+
+        parts.forEach(part => {
+            if (part.match(urlRegex)) {
+                const a = document.createElement('a');
+                // Add https:// for URLs starting with www. if no protocol is specified
+                const href = part.startsWith('www.') ? `https://${part}` : part;
+                a.href = href;
+                a.target = '_blank';
+                a.rel = 'noopener noreferrer';
+                a.textContent = part;
+                fragment.appendChild(a);
+            } else {
+                const span = document.createElement('span');
+                span.textContent = part;
+                fragment.appendChild(span);
+            }
+        });
+
+        const container = document.createElement('div');
+        container.appendChild(fragment);
+        return container.innerHTML;
+    }
+
+    // Display messages (supports single message or array)
+    function displayMessages(messages, append = false) {
+        const chatBody = document.getElementById('chatBody');
+        const loading = document.getElementById('loading');
+        const errorMessage = document.getElementById('error-message');
+
+        if (!append) {
+            chatBody.innerHTML = '';
+            loading.style.display = 'none';
+            errorMessage.style.display = 'none';
+        }
+
+        if (!messages || (Array.isArray(messages) && messages.length === 0)) {
+            chatBody.innerHTML = '<div class="text-center">No messages yet</div>';
+            return;
+        }
+
+        const messagesArray = Array.isArray(messages) ? messages : [messages];
+        messagesArray.forEach(message => {
+            const isSent = message.senderId === userId;
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isSent ? 'sent' : 'received'} ${message.temporary ? 'temporary' : ''} ${message.failed ? 'failed' : ''}`;
+            messageDiv.dataset.messageId = message.tempId || message._id || '';
+            messageDiv.innerHTML = `
+                <div class="message-content">${linkify(message.content)}</div>
+                <div class="message-time">${new Date(message.createdAt).toLocaleTimeString()}</div>
+            `;
+            chatBody.appendChild(messageDiv);
+        });
+
+        chatBody.scrollTop = chatBody.scrollHeight;
+    }
+
+    // Fetch messages
+    async function fetchMessages() {
+        const loading = document.getElementById('loading');
+        const errorMessage = document.getElementById('error-message');
+        const endpoint = role === 'user' ? `/client-messages?otherPartyId=${otherPartyId}` : `/dietitian-messages?otherPartyId=${otherPartyId}`;
+
+        try {
+            loading.style.display = 'block';
+            errorMessage.style.display = 'none';
+
+            const response = await fetch(endpoint, {
+                headers: { 'Accept': 'application/json' }
+            });
+            if (!response.ok) {
+                throw new Error('Failed to fetch messages');
+            }
+            const messages = await response.json();
+            displayMessages(messages);
+        } catch (error) {
+            console.error('Error fetching messages:', error);
+            loading.style.display = 'none';
+            errorMessage.style.display = 'block';
+            errorMessage.textContent = 'Failed to load messages. Please try again.';
+        }
+    }
+
+    // Send message
+    async function sendMessage() {
+        const messageInput = document.getElementById('messageInput');
+        const content = messageInput.value.trim();
+        if (!content) return;
+
+        const tempId = `temp-${Date.now()}`;
+        const tempMessage = {
+            senderId: userId,
+            content,
+            createdAt: new Date(),
+            temporary: true,
+            tempId
+        };
+
+        // Display temporary message immediately
+        displayMessages(tempMessage, true);
+        messageInput.value = '';
+
+        try {
+            const endpoint = role === 'user' ? '/client-messages' : '/dietitian-messages';
+            const response = await fetch(endpoint, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    content,
+                    receiverId: otherPartyId
+                })
+            });
+            if (!response.ok) {
+                throw new Error('Failed to send message');
+            }
+
+            // Remove temporary styling after successful send
+            const tempMessageDiv = document.querySelector(`[data-message-id="${tempId}"]`);
+            if (tempMessageDiv) {
+                tempMessageDiv.classList.remove('temporary');
+                tempMessageDiv.dataset.messageId = '';
+            }
+        } catch (error) {
+            console.error('Error sending message:', error);
+            const tempMessageDiv = document.querySelector(`[data-message-id="${tempId}"]`);
+            if (tempMessageDiv) {
+                tempMessageDiv.classList.add('failed');
+                tempMessageDiv.classList.remove('temporary');
+            }
+            document.getElementById('error-message').style.display = 'block';
+            document.getElementById('error-message').textContent = 'Failed to send message. Please try again.';
+        }
+    }
+
+    // Function to start video conference
+    function startVideoConference() {
+        const role = '<%= role %>';
+        const otherPartyId = '<%= otherPartyId %>';
+        const otherPartyName = '<%= otherPartyName %>';
+        
+        // Generate a unique meeting ID
+        const meetingId = Math.random().toString(36).substring(2, 15);
+        
+        // Create Google Meet URL
+        const meetUrl = `https://meet.google.com/${meetingId}`;
+        
+        // Send the meeting link as a message
+        const messageInput = document.getElementById('messageInput');
+        messageInput.value = `Video Conference Link: ${meetUrl}`;
+        sendMessage();
+    }
+
+    function viewLabReports() {
+        const role = '<%= role %>';
+        const otherPartyId = '<%= otherPartyId %>';
+        
+        if (role === 'user') {
+            window.location.href = `/lab-reports/${otherPartyId}`;
+        } else {
+            window.location.href = `/view-lab-reports/${otherPartyId}`;
+        }
+    }
+
+    // Function to submit lab report
+    function submitLabReport() {
+        const otherPartyId = '<%= otherPartyId %>';
+        window.location.href = `/submit-lab-report/${otherPartyId}`;
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+        fetchMessages();
+        document.getElementById('sendMessage').addEventListener('click', sendMessage);
+        document.getElementById('messageInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') sendMessage();
+        });
+        document.addEventListener('click', (e) => {
+            const picker = document.getElementById('emojiPicker');
+            const emojiBtn = document.querySelector('.emoji-btn');
+            if (!picker.contains(e.target) && !emojiBtn.contains(e.target)) {
+                picker.style.display = 'none';
+            }
+        });
+    });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

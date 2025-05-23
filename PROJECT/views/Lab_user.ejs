@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Lab Report</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2E7D32;  /* Deep Green */
+            --secondary-color: #4CAF50;  /* Medium Green */
+            --accent-color: #FFA000;  /* Warm Orange */
+            --text-color: #2C3E50;  /* Dark Blue-Gray */
+            --light-bg: #F1F8E9;  /* Light Mint */
+            --border-color: #C8E6C9;  /* Pale Green */
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: var(--light-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .main {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(46, 125, 50, 0.1);
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .main::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+        }
+
+        .form-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .back-btn {
+            background: none;
+            border: none;
+            font-size: 20px;
+            color: var(--primary-color);
+            cursor: pointer;
+            margin-right: 15px;
+            padding: 8px;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background-color: var(--light-bg);
+            transform: scale(1.1);
+        }
+
+        .form-header h5 {
+            margin: 0;
+            color: var(--text-color);
+            font-size: 1.4em;
+            font-weight: 600;
+        }
+
+        .user-info {
+            background-color: var(--light-bg);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            border: 1px solid var(--border-color);
+            position: relative;
+            box-shadow: 0 2px 10px rgba(46, 125, 50, 0.05);
+        }
+
+        .user-info::before {
+            content: '\f007';
+            font-family: 'Font Awesome 5 Free';
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            background: white;
+            padding: 0 10px;
+            color: var(--primary-color);
+            font-size: 1.2em;
+        }
+
+        .user-info p {
+            margin: 8px 0;
+            color: var(--text-color);
+            display: flex;
+            align-items: center;
+        }
+
+        .user-info strong {
+            color: var(--primary-color);
+            margin-right: 10px;
+            min-width: 80px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-color);
+            font-weight: 600;
+            font-size: 1.1em;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group input[type="tel"],
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            background-color: white;
+        }
+
+        .form-group input[type="text"]:focus,
+        .form-group input[type="email"]:focus,
+        .form-group input[type="tel"]:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.1);
+        }
+
+        .form-group textarea {
+            height: 120px;
+            resize: vertical;
+        }
+
+        .file-upload {
+            border: 2px dashed var(--border-color);
+            padding: 25px;
+            text-align: center;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+            background-color: var(--light-bg);
+        }
+
+        .file-upload:hover {
+            border-color: var(--primary-color);
+            background-color: rgba(46, 125, 50, 0.05);
+            transform: translateY(-2px);
+        }
+
+        .file-upload input[type="file"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            background-color: white;
+            cursor: pointer;
+        }
+
+        .file-upload p {
+            margin: 10px 0 0;
+            color: var(--text-color);
+            font-weight: 500;
+        }
+
+        .file-upload::before {
+            content: '\f093';
+            font-family: 'Font Awesome 5 Free';
+            font-size: 24px;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .submit-btn {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(46, 125, 50, 0.2);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(46, 125, 50, 0.3);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            margin: 20px 0;
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+
+        #success-message,
+        #error-message {
+            display: none;
+            text-align: center;
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: 500;
+        }
+
+        #success-message {
+            background-color: #E8F5E9;
+            color: #2E7D32;
+            border: 1px solid #C8E6C9;
+        }
+
+        #error-message {
+            background-color: #FFEBEE;
+            color: #C62828;
+            border: 1px solid #FFCDD2;
+        }
+
+        input[type="checkbox"] {
+            margin-right: 8px;
+            transform: scale(1.2);
+            accent-color: var(--primary-color);
+        }
+
+        .health-concerns {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .health-concerns label {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            background-color: var(--light-bg);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+        }
+
+        .health-concerns label:hover {
+            background-color: rgba(46, 125, 50, 0.1);
+            border-color: var(--primary-color);
+        }
+
+        .report-section {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            background-color: var(--light-bg);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 10px rgba(46, 125, 50, 0.05);
+        }
+
+        .report-section.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .report-section h4 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            display: flex;
+            align-items: center;
+        }
+
+        .report-section h4 i {
+            margin-right: 8px;
+        }
+
+        .container,
+        .existing-reports,
+        .existing-reports h4,
+        .existing-reports h4 i,
+        .report,
+        .report h6,
+        .report-content,
+        .report-content p,
+        .report-content strong,
+        .report-actions,
+        .download-btn,
+        .download-btn:hover,
+        .download-btn i,
+        .no-reports,
+        #error-message-reports {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="main">
+        <div class="form-header">
+            <button class="back-btn" onclick="window.history.back()">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <h5>Submit Lab Report for <%= dietitianName %></h5>
+        </div>
+
+        <div class="user-info">
+            <p><strong>Name:</strong> <%= userData.name || 'N/A' %></p>
+            <p><strong>Email:</strong> <%= userData.email || 'N/A' %></p>
+            <p><strong>Phone:</strong> <%= userData.phone || 'N/A' %></p>
+            <p><strong>Address:</strong> <%= userData.address || 'N/A' %></p>
+            <p><strong>Age:</strong> <%= userData.age || 'N/A' %></p>
+            <p><strong>Gender:</strong> <%= userData.gender || 'N/A' %></p>
+        </div>
+
+        <form id="labReportForm" enctype="multipart/form-data">
+            <input type="hidden" name="dietitianId" value="<%= dietitianId %>">
+            <input type="hidden" name="name" value="<%= userData.name %>">
+            <input type="hidden" name="email" value="<%= userData.email %>">
+            <input type="hidden" name="phone" value="<%= userData.phone %>">
+            <input type="hidden" name="address" value="<%= userData.address %>">
+            <input type="hidden" name="age" value="<%= userData.age %>">
+            <input type="hidden" name="gender" value="<%= userData.gender %>">
+
+            <div class="form-group">
+                <label>Select Health Concerns</label>
+                <div class="health-concerns">
+                    <label>
+                        <input type="checkbox" name="healthConcerns" value="diabetes" onchange="toggleReportSection('diabetes')">
+                        <i class="fas fa-heartbeat"></i> Diabetes
+                    </label>
+                    <label>
+                        <input type="checkbox" name="healthConcerns" value="thyroid" onchange="toggleReportSection('thyroid')">
+                        <i class="fas fa-balance-scale"></i> Thyroid
+                    </label>
+                    <label>
+                        <input type="checkbox" name="healthConcerns" value="bloodPressure" onchange="toggleReportSection('bloodPressure')">
+                        <i class="fas fa-tachometer-alt"></i> Blood Pressure
+                    </label>
+                    <label>
+                        <input type="checkbox" name="healthConcerns" value="cardiac" onchange="toggleReportSection('cardiac')">
+                        <i class="fas fa-heart"></i> Cardiac
+                    </label>
+                    <label>
+                        <input type="checkbox" name="healthConcerns" value="hormonal" onchange="toggleReportSection('hormonal')">
+                        <i class="fas fa-dna"></i> Hormonal
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Additional Health Information</label>
+                <textarea name="additionalInfo" placeholder="Please provide any additional health information or concerns..."></textarea>
+            </div>
+
+            <!-- General Health Reports Section -->
+            <div class="report-section active" id="generalReports">
+                <h4><i class="fas fa-file-medical"></i> General Health Reports</h4>
+                <div class="file-upload">
+                    <input type="file" name="generalHealthReport" accept=".pdf,.jpg,.jpeg,.png">
+                    <p>General Health Report</p>
+                </div>
+                <div class="file-upload">
+                    <input type="file" name="bloodTestReport" accept=".pdf,.jpg,.jpeg,.png">
+                    <p>Blood Test Report</p>
+                </div>
+            </div>
+
+            <!-- Diabetes Reports Section -->
+            <div class="report-section" id="diabetesReports">
+                <h4><i class="fas fa-heartbeat"></i> Diabetes Reports</h4>
+                <div class="file-upload">
+                    <input type="file" name="diabetesReport" accept=".pdf,.jpg,.jpeg,.png">
+                    <p>Diabetes Report</p>
+                </div>
+                <div class="file-upload">
+                    <input type="file" name="bloodSugarReport" accept=".pdf,.jpg,.jpeg,.png">
+                    <p>Blood Sugar Report</p>
+                </div>
+            </div>
+
+            <!-- Thyroid Reports Section -->
+            <div class="report-section" id="thyroidReports">
+                <h4><i class="fas fa-balance-scale"></i> Thyroid Reports</h4>
+                <div class="file-upload">
+                    <input type="file" name="thyroidReport" accept=".pdf,.jpg,.jpeg,.png">
+                    <p>Thyroid Report</p>
+                </div>
+            </div>
+
+            <!-- Blood Pressure Reports Section -->
+            <div class="report-section" id="bloodPressureReports">
+                <h4><i class="fas fa-tachometer-alt"></i> Blood Pressure Reports</h4>
+                <div class="file-upload">
+                    <input type="file" name="bloodPressureReport" accept=".pdf,.jpg,.jpeg,.png">
+                    <p>Blood Pressure Report</p>
+                </div>
+                <div class="file-upload">
+                    <input type="file" name="cardiovascularReport" accept=".pdf,.jpg,.jpeg,.png">
+                    <p>Cardiovascular Report</p>
+                </div>
+            </div>
+
+            <!-- Cardiac Reports Section -->
+            <div class="report-section" id="cardiacReports">
+                <h4><i class="fas fa-heart"></i> Cardiac Reports</h4>
+                <div class="file-upload">
+                    <input type="file" name="cardiacHealthReport" accept=".pdf,.jpg,.jpeg,.png">
+                    <p>Cardiac Health Report</p>
+                </div>
+                <div class="file-upload">
+                    <input type="file" name="ecgReport" accept=".pdf,.jpg,.jpeg,.png">
+                    <p>ECG Report</p>
+                </div>
+            </div>
+
+            <!-- Hormonal Reports Section -->
+            <div class="report-section" id="hormonalReports">
+                <h4><i class="fas fa-dna"></i> Hormonal Reports</h4>
+                <div class="file-upload">
+                    <input type="file" name="hormonalProfileReport" accept=".pdf,.jpg,.jpeg,.png">
+                    <p>Hormonal Profile Report</p>
+                </div>
+                <div class="file-upload">
+                    <input type="file" name="endocrineReport" accept=".pdf,.jpg,.jpeg,.png">
+                    <p>Endocrine Report</p>
+                </div>
+            </div>
+
+            <button type="submit" class="submit-btn">Submit Report</button>
+        </form>
+
+        <div id="loading" class="loading">
+            <i class="fas fa-spinner fa-spin"></i> Submitting report...
+        </div>
+        <div id="success-message"></div>
+        <div id="error-message"></div>
+    </div>
+
+    <script>
+        function toggleReportSection(concern) {
+            console.log('Toggling section for:', concern);
+            const checkbox = document.querySelector(`input[name="healthConcerns"][value="${concern}"]`);
+            const section = document.getElementById(`${concern}Reports`);
+            
+            if (!section) {
+                console.error('Section not found:', concern);
+                return;
+            }
+
+            if (checkbox.checked) {
+                console.log('Showing section:', concern);
+                section.style.display = 'block';
+                section.classList.add('active');
+            } else {
+                console.log('Hiding section:', concern);
+                section.style.display = 'none';
+                section.classList.remove('active');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const checkboxes = document.querySelectorAll('input[name="healthConcerns"]');
+            checkboxes.forEach(checkbox => {
+                if (checkbox.checked) {
+                    toggleReportSection(checkbox.value);
+                }
+            });
+        });
+
+        document.querySelectorAll('.file-upload input[type="file"]').forEach(input => {
+            input.addEventListener('change', function(e) {
+                const fileName = e.target.files[0]?.name;
+                if (fileName) {
+                    this.parentElement.querySelector('p').textContent = fileName;
+                }
+            });
+        });
+
+        document.getElementById('labReportForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const loading = document.getElementById('loading');
+            const successMessage = document.getElementById('success-message');
+            const errorMessage = document.getElementById('error-message');
+            
+            loading.style.display = 'block';
+            successMessage.style.display = 'none';
+            errorMessage.style.display = 'none';
+
+            try {
+                const formData = new FormData(e.target);
+                const response = await fetch('/submit-medical-reports', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(result.error || 'Failed to submit report');
+                }
+
+                loading.style.display = 'none';
+                successMessage.style.display = 'block';
+                successMessage.textContent = 'Report submitted successfully!';
+                
+                setTimeout(() => {
+                    window.history.back();
+                }, 2000);
+            } catch (error) {
+                console.error('Error submitting report:', error);
+                loading.style.display = 'none';
+                errorMessage.style.display = 'block';
+                errorMessage.textContent = error.message || 'Failed to submit report. Please try again.';
+            }
+        });
+    </script>
+</body>
+</html>

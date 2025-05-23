@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Documents - Organization</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .upload-container {
+            width: 100%;
+            max-width: 650px;
+            padding: 20px;
+        }
+        .upload-form {
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 15px;
+            border: 3px solid #a3c293;
+        }
+        .upload-form:hover {
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+        }
+        h2 {
+            color: #2e7d32;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .form-label {
+            color: #388e3c;
+            font-weight: bold;
+        }
+        .upload-container .form-select {
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            background-color: #50c878;
+            color: white;
+            cursor: pointer;
+        }
+        .upload-container .form-select option {
+            background-color: #90ee90;
+            color: #333;
+        }
+        .upload-container .form-select option:hover {
+            background-color: #218838;
+            color: white;
+        }
+        .btn-success {
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 8px;
+            padding: 12px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+        .btn-success:hover {
+            background-color: #388e3c;
+        }
+        .form-control:disabled {
+            background-color: #e9ecef;
+            cursor: not-allowed;
+        }
+        .invalid-feedback {
+            color: #dc3545;
+            font-size: 0.875em;
+            margin-top: 5px;
+        }
+        .optional-msg {
+            color: #6c757d;
+            font-size: 0.875em;
+            margin-top: 5px;
+        }
+        #successMessage {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(76, 175, 80, 0.9);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            text-align: center;
+            width: 300px;
+            display: none;
+        }
+        #cross {
+            position: fixed;
+            top: 5px;
+            left: 10px;
+            line-height: 20px;
+            font-size: 40px;
+            border-radius: 100%;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Back Button -->
+<div id="cross" class="btn btn-outline-success" onclick="window.history.back();">
+    <i class="fa-solid fa-xmark"></i>
+</div>
+
+<div class="upload-container">
+    <form id="documentUploadForm" class="upload-form needs-validation"
+          method="POST" enctype="multipart/form-data"
+          onsubmit="return handleDocumentUpload(event)" novalidate
+          data-redirect="organization.html">
+        <h2>Upload Documents - Organization</h2>
+
+        <!-- Organization Logo (Required) -->
+        <div class="mb-4">
+            <label for="org_logo" class="form-label">Organization Logo (Image, max 20MB):</label>
+            <input id="org_logo" name="org_logo" type="file" class="form-control" accept=".jpg,.png,.jpeg" required />
+            <div class="invalid-feedback">Please upload your organization logo (Image, max 20MB).</div>
+        </div>
+
+        <!-- Organization Brochure (Optional) -->
+        <div class="mb-4">
+            <label for="org_brochure" class="form-label">Organization Brochure (PDF, max 20MB):</label>
+            <input id="org_brochure" name="org_brochure" type="file" class="form-control" accept=".pdf" />
+            <div class="invalid-feedback">Organization brochure file size exceeds 20MB.</div>
+            <div class="optional-msg">Optional: Upload organization brochure (PDF, max 20MB).</div>
+        </div>
+
+        <!-- Legal Registration Documents (Required) -->
+        <div class="mb-4">
+            <label for="legal_document_type" class="form-label">Legal Document Type:</label>
+            <select id="legal_document_type" class="form-select" required>
+                <option value="" disabled selected hidden>Select legal document type</option>
+                <option value="certificateOfIncorporation">Certificate of Incorporation</option>
+                <option value="articlesOfAssociation">Articles of Association</option>
+                <option value="memorandumOfAssociation">Memorandum of Association</option>
+            </select>
+            <div class="invalid-feedback">Please select a legal document type.</div>
+            <label for="legal_document" class="form-label mt-2">Legal Document (PDF, max 20MB):</label>
+            <input id="legal_document" name="legal_document" type="file" class="form-control" accept=".pdf" required disabled />
+            <div class="invalid-feedback">Please upload your legal document (PDF, max 20MB).</div>
+        </div>
+
+        <!-- Tax Identification Documents (Required) -->
+        <div class="mb-4">
+            <label for="tax_document_type" class="form-label">Tax Document Type:</label>
+            <select id="tax_document_type" class="form-select" required>
+                <option value="" disabled selected hidden>Select tax document type</option>
+                <option value="gstCertificate">GST Certificate</option>
+                <option value="panCard">PAN Card</option>
+                <option value="tinCertificate">TIN Certificate</option>
+            </select>
+            <div class="invalid-feedback">Please select a tax document type.</div>
+            <label for="tax_document" class="form-label mt-2">Tax Document (PDF, max 20MB):</label>
+            <input id="tax_document" name="tax_document" type="file" class="form-control" accept=".pdf" required disabled />
+            <div class="invalid-feedback">Please upload your tax document (PDF, max 20MB).</div>
+        </div>
+
+        <!-- Proof of Address (Optional) -->
+        <div class="mb-4">
+            <label for="address_proof_type" class="form-label">Proof of Address Type:</label>
+            <select id="address_proof_type" class="form-select">
+                <option value="" disabled selected hidden>Select proof of address type</option>
+                <option value="utilityBill">Utility Bill</option>
+                <option value="leaseAgreement">Lease Agreement</option>
+                <option value="propertyTaxReceipt">Property Tax Receipt</option>
+            </select>
+            <div class="optional-msg">Optional: Select proof of address type.</div>
+            <label for="address_proof" class="form-label mt-2">Proof of Address (PDF/Image, max 20MB):</label>
+            <input id="address_proof" name="address_proof" type="file" class="form-control" accept=".pdf,.jpg,.png" disabled />
+            <div class="invalid-feedback">Proof of address file size exceeds 20MB.</div>
+            <div class="optional-msg">Optional: Upload proof of address (PDF/Image, max 20MB).</div>
+        </div>
+
+        <!-- Business License (Required) -->
+        <div class="mb-4">
+            <label for="business_license_type" class="form-label">Business License Type:</label>
+            <select id="business_license_type" class="form-select" required>
+                <option value="" disabled selected hidden>Select business license type</option>
+                <option value="generalLicense">General Business License</option>
+                <option value="industrySpecificLicense">Industry-Specific License</option>
+            </select>
+            <div class="invalid-feedback">Please select a business license type.</div>
+            <label for="business_license" class="form-label mt-2">Business License (PDF, max 20MB):</label>
+            <input id="business_license" name="business_license" type="file" class="form-control" accept=".pdf" required disabled />
+            <div class="invalid-feedback">Please upload your business license (PDF, max 20MB).</div>
+        </div>
+
+        <!-- Identity Proof of Authorized Representative (Required) -->
+        <div class="mb-4">
+            <label for="authorized_rep_id_type" class="form-label">Identity Proof Type:</label>
+            <select id="authorized_rep_id_type" class="form-select" required>
+                <option value="" disabled selected hidden>Select identity proof type</option>
+                <option value="aadhaarCard">Aadhaar Card</option>
+                <option value="passport">Passport</option>
+                <option value="driversLicense">Driver's License</option>
+            </select>
+            <div class="invalid-feedback">Please select an identity proof type.</div>
+            <label for="authorized_rep_id" class="form-label mt-2">Identity Proof (PDF/Image, max 20MB):</label>
+            <input id="authorized_rep_id" name="authorized_rep_id" type="file" class="form-control" accept=".pdf,.jpg,.png" required disabled />
+            <div class="invalid-feedback">Please upload identity proof (PDF/Image, max 20MB).</div>
+        </div>
+
+        <!-- Bank Account Details (Optional) -->
+        <div class="mb-4">
+            <label for="bank_document_type" class="form-label">Bank Document Type:</label>
+            <select id="bank_document_type" class="form-select">
+                <option value="" disabled selected hidden>Select bank document type</option>
+                <option value="cancelledCheque">Cancelled Cheque</option>
+                <option value="bankStatement">Bank Statement</option>
+            </select>
+            <div class="optional-msg">Optional: Select bank document type.</div>
+            <label for="bank_document" class="form-label mt-2">Bank Document (PDF, max 20MB):</label>
+            <input id="bank_document" name="bank_document" type="file" class="form-control" accept=".pdf" disabled />
+            <div class="invalid-feedback">Bank document file size exceeds 20MB.</div>
+            <div class="optional-msg">Optional: Upload your bank document (PDF, max 20MB).</div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="d-grid">
+            <button type="submit" class="btn btn-success">Submit Documents</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    // Function to handle form submission
+    async function handleDocumentUpload(event) {
+        event.preventDefault();
+
+        // Enable all file inputs before submission
+        document.querySelectorAll('input[type="file"]').forEach(input => {
+            input.disabled = false;
+        });
+
+        // Reset validation state
+        resetValidation();
+
+        // Validate form fields
+        const isValid = validateForm();
+
+        if (isValid) {
+            // Create a FormData object
+            const formData = new FormData();
+
+            // Append file fields to the FormData object
+            formData.append('org_logo', document.getElementById('org_logo').files[0]);
+            
+            // Append optional fields only if they have values
+            if (document.getElementById('org_brochure').files[0]) {
+                formData.append('org_brochure', document.getElementById('org_brochure').files[0]);
+            }
+            
+            formData.append('legal_document', document.getElementById('legal_document').files[0]);
+            formData.append('tax_document', document.getElementById('tax_document').files[0]);
+            
+            if (document.getElementById('address_proof').files[0]) {
+                formData.append('address_proof', document.getElementById('address_proof').files[0]);
+            }
+            
+            formData.append('business_license', document.getElementById('business_license').files[0]);
+            formData.append('authorized_rep_id', document.getElementById('authorized_rep_id').files[0]);
+            
+            if (document.getElementById('bank_document').files[0]) {
+                formData.append('bank_document', document.getElementById('bank_document').files[0]);
+            }
+
+            try {
+                // Send the data to the server
+                const response = await fetch(`/organization-doc/upload`, {
+                    method: 'POST',
+                    body: formData,
+                    credentials: 'include' // Include cookies for session authentication
+                });
+                
+                if (response.ok) {
+                    alert("Documents Uploaded Successfully"); 
+                    setTimeout(() => {
+                        window.location.href = "/organization"; 
+                    }, 10); 
+                } else {
+                    const errorData = await response.json();
+                    alert(`Upload failed: ${errorData.message || 'Unknown error'}`);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred while uploading the documents. Please try again.');
+            }
+        }
+    }
+
+    // Function to reset validation state
+    function resetValidation() {
+        document.querySelectorAll('.is-invalid').forEach((el) => {
+            el.classList.remove('is-invalid');
+        });
+        document.querySelectorAll('.invalid-feedback').forEach((el) => {
+            el.style.display = 'none';
+        });
+    }
+
+    // Enable file inputs when dropdowns are selected
+    document.getElementById('legal_document_type').addEventListener('change', function() {
+        document.getElementById('legal_document').disabled = false;
+    });
+    document.getElementById('tax_document_type').addEventListener('change', function() {
+        document.getElementById('tax_document').disabled = false;
+    });
+    document.getElementById('address_proof_type').addEventListener('change', function() {
+        document.getElementById('address_proof').disabled = false;
+    });
+    document.getElementById('business_license_type').addEventListener('change', function() {
+        document.getElementById('business_license').disabled = false;
+    });
+    document.getElementById('authorized_rep_id_type').addEventListener('change', function() {
+        document.getElementById('authorized_rep_id').disabled = false;
+    });
+    document.getElementById('bank_document_type').addEventListener('change', function() {
+        document.getElementById('bank_document').disabled = false;
+    });
+
+    // Function to validate form fields
+    function validateForm() {
+        const maxFileSize = 20 * 1024 * 1024; // 20MB for all files
+
+        let isValid = true;
+
+        // Validate required fields
+        if (!document.getElementById('org_logo').files[0]) {
+            showInvalidFeedback(document.getElementById('org_logo'), "Please upload your organization logo.");
+            isValid = false;
+        } else if (document.getElementById('org_logo').files[0].size > maxFileSize) {
+            showInvalidFeedback(document.getElementById('org_logo'), "Organization logo file size exceeds 20MB.");
+            isValid = false;
+        }
+
+        // Validate optional org_brochure only if file is selected
+        if (document.getElementById('org_brochure').files[0] && 
+            document.getElementById('org_brochure').files[0].size > maxFileSize) {
+            showInvalidFeedback(document.getElementById('org_brochure'), "Organization brochure file size exceeds 20MB.");
+            isValid = false;
+        }
+
+        if (!document.getElementById('legal_document_type').value) {
+            showInvalidFeedback(document.getElementById('legal_document_type'), "Please select a legal document type.");
+            isValid = false;
+        } else if (!document.getElementById('legal_document').files[0]) {
+            showInvalidFeedback(document.getElementById('legal_document'), "Please upload your legal document.");
+            isValid = false;
+        } else if (document.getElementById('legal_document').files[0].size > maxFileSize) {
+            showInvalidFeedback(document.getElementById('legal_document'), "Legal document file size exceeds 20MB.");
+            isValid = false;
+        }
+
+        if (!document.getElementById('tax_document_type').value) {
+            showInvalidFeedback(document.getElementById('tax_document_type'), "Please select a tax document type.");
+            isValid = false;
+        } else if (!document.getElementById('tax_document').files[0]) {
+            showInvalidFeedback(document.getElementById('tax_document'), "Please upload your tax document.");
+            isValid = false;
+        } else if (document.getElementById('tax_document').files[0].size > maxFileSize) {
+            showInvalidFeedback(document.getElementById('tax_document'), "Tax document file size exceeds 20MB.");
+            isValid = false;
+        }
+
+        // Validate optional address proof only if type is selected
+        if (document.getElementById('address_proof_type').value) {
+            if (!document.getElementById('address_proof').files[0]) {
+                showInvalidFeedback(document.getElementById('address_proof'), "Please upload your proof of address.");
+                isValid = false;
+            } else if (document.getElementById('address_proof').files[0].size > maxFileSize) {
+                showInvalidFeedback(document.getElementById('address_proof'), "Proof of address file size exceeds 20MB.");
+                isValid = false;
+            }
+        }
+
+        if (!document.getElementById('business_license_type').value) {
+            showInvalidFeedback(document.getElementById('business_license_type'), "Please select a business license type.");
+            isValid = false;
+        } else if (!document.getElementById('business_license').files[0]) {
+            showInvalidFeedback(document.getElementById('business_license'), "Please upload your business license.");
+            isValid = false;
+        } else if (document.getElementById('business_license').files[0].size > maxFileSize) {
+            showInvalidFeedback(document.getElementById('business_license'), "Business license file size exceeds 20MB.");
+            isValid = false;
+        }
+
+        if (!document.getElementById('authorized_rep_id_type').value) {
+            showInvalidFeedback(document.getElementById('authorized_rep_id_type'), "Please select an identity proof type.");
+            isValid = false;
+        } else if (!document.getElementById('authorized_rep_id').files[0]) {
+            showInvalidFeedback(document.getElementById('authorized_rep_id'), "Please upload identity proof.");
+            isValid = false;
+        } else if (document.getElementById('authorized_rep_id').files[0].size > maxFileSize) {
+            showInvalidFeedback(document.getElementById('authorized_rep_id'), "Identity proof file size exceeds 20MB.");
+            isValid = false;
+        }
+
+        // Validate optional bank document only if type is selected
+        if (document.getElementById('bank_document_type').value) {
+            if (!document.getElementById('bank_document').files[0]) {
+                showInvalidFeedback(document.getElementById('bank_document'), "Please upload your bank document.");
+                isValid = false;
+            } else if (document.getElementById('bank_document').files[0].size > maxFileSize) {
+                showInvalidFeedback(document.getElementById('bank_document'), "Bank document file size exceeds 20MB.");
+                isValid = false;
+            }
+        }
+
+        return isValid;
+    }
+
+    // Function to display invalid feedback for a field
+    function showInvalidFeedback(field, message) {
+        const invalidFeedback = field.nextElementSibling;
+        while (invalidFeedback && !invalidFeedback.classList.contains('invalid-feedback')) {
+            invalidFeedback = invalidFeedback.nextElementSibling;
+        }
+        if (invalidFeedback && invalidFeedback.classList.contains('invalid-feedback')) {
+            invalidFeedback.textContent = message;
+            invalidFeedback.style.display = 'block';
+        }
+        field.classList.add('is-invalid');
+    }
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
+
+</body>
+</html>

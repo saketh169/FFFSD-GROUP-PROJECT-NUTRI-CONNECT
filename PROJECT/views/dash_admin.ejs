@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <style>
+        .logo {
+            display: flex;
+            align-items: center;
+            font-family: 'Poppins', sans-serif;
+            font-size: 24px;
+            font-weight: bold;
+            color: #1E6F5C;
+            text-decoration: none;
+            background-color: #D2F0C8;
+            width: auto;
+            height: 50px;
+            top: 2px;
+            position: sticky;
+            border-radius: 10px;
+            padding: 10px;
+        }
+        .logo .highlight {
+            color: #28B463;
+        }
+        .logo .icon-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: #28B463;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        .logo .icon {
+            font-size: 24px;
+            color: #FFFFFF;
+        }
+        .logo:hover .icon-container {
+            background-color: #1E6F5C;
+            transform: scale(1.1);
+            transition: all 0.3s ease;
+        }
+        .logo:hover {
+            color: #28B463;
+            transition: color 0.3s ease;
+        }
+        body {
+            background-color: #f8f9fa;
+        }
+        .navbar {
+            background-color: #28a745;
+        }
+        .sidebar {
+            background-color: #343a40;
+            color: white;
+            padding: 20px;
+        }
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .sidebar a:hover {
+            background-color: #28a745;
+        }
+        .main-content {
+            padding: 20px;
+        }
+        .card {
+            margin-bottom: 20px;
+            border: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .card-header {
+            background-color: #28a745;
+            color: white;
+            font-weight: bold;
+        }
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border: 5px solid #28a745;
+            border-radius: 50%;
+            object-fit: cover;
+            cursor: pointer;
+            background-color: #f0f0f0;
+        }
+        .badge {
+            font-size: 0.9em;
+        }
+        .btn-custom {
+            margin: 5px;
+        }
+        .contact-icon {
+            color: #1E90FF;
+            transition: color 0.3s ease;
+            margin-left: 10px;
+        }
+        .contact-icon:hover {
+            color: #00BFFF;
+        }
+        .address-text {
+            color: #1E90FF;
+            transition: color 0.3s ease;
+        }
+        .social-icons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .social-icons a {
+            color: #1E90FF;
+            transition: color 0.3s ease;
+        }
+        .social-icons a:hover {
+            color: #00BFFF;
+        }
+        .contact-section {
+            margin-top: 100px;
+            padding: 10px;
+            border: 4px solid #00BFFF;
+            border-radius: 10px;
+        }
+        .contact-section h3 {
+            margin-bottom: 20px;
+        }
+        .contact-section a:hover {
+            background-color: #007ACC;
+        }
+        .contact-footer {
+            display: none;
+            background-color: #343a40;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            position: relative;
+            top: 1780px;
+        }
+        @media (max-width: 768px) {
+            .social-icons {
+                flex-direction: row;
+                justify-content: center;
+                gap: 30px;
+            }
+            .main-content {
+                position: relative;
+                top: -200px;
+            }
+            .contact-section {
+                display: none;
+            }
+            .contact-footer {
+                display: block;
+            }
+        }
+        .profile-upload-container {
+            position: relative;
+            display: inline-block;
+        }
+        .profile-upload-btn {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: #28a745;
+            color: white;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .profile-upload-btn:hover {
+            background: #218838;
+        }
+        #profileUpload {
+            display: none;
+        }
+        .upload-text {
+            font-size: 12px;
+            margin-top: 5px;
+            color: #6c757d;
+        }
+        .large-profile-img {
+            max-width: 100%;
+            max-height: 80vh;
+            object-fit: contain;
+        }
+        /* Styles for Organization Listing */
+        .organization-table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .organization-table th, .organization-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        .organization-table th {
+            background-color: #2e7d32;
+            color: white;
+            font-size: 1.1em;
+        }
+        .organization-table tr:hover {
+            background-color: #c8e6c9;
+            cursor: pointer;
+        }
+        .status-pending {
+            color: #856404;
+            background-color: #fff3cd;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+        .status-verified {
+            color: #155724;
+            background-color: #d4edda;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+        .status-rejected {
+            color: #721c24;
+            background-color: #f8d7da;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+        .notification-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 2000;
+            max-width: 350px;
+        }
+        .notification {
+            padding: 15px 20px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            animation: slideIn 0.3s ease-out;
+            transition: all 0.3s ease;
+        }
+        .notification.success {
+            background-color: #4caf50;
+            border-left: 5px solid #388e3c;
+        }
+        .notification.error {
+            background-color: #e53935;
+            border-left: 5px solid #c62828;
+        }
+        .notification i {
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+        .notification-close {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 1.2em;
+            margin-left: 15px;
+        }
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        @keyframes slideOut {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+        }
+        /* Revenue Box Styles */
+        .revenue-box {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px;
+            background-color: #d4edda;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+        .revenue-box h3 {
+            margin: 0;
+            font-size: 1.2rem;
+            color: #444d53;
+        }
+        .revenue-box span {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #28a745;
+        }
+        /* Chart Styles */
+        .full-width-chart {
+            width: 100%;
+            max-width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <div class="logo">
+                <div class="icon-container">
+                    <i class="icon fas fa-leaf"></i>
+                </div>
+                <span>
+                    <span class="highlight">N</span>utri
+                    <span class="highlight">C</span>onnect
+                    <span>: Admin</span>
+                </span>
+            </div>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- Main Layout -->
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-3 col-lg-2 sidebar">
+                <h4>Menu</h4>
+                <a href="/admin"><i class="fas fa-home"></i> Home</a>
+                <a href="/verify_org"><i class="fas fa-shield-alt"></i> Verify Organization</a>
+                <a href="/queries"><i class="fas fa-database"></i> Queries</a>
+                <a href="/users"><i class="fas fa-users-cog"></i> User Management</a>
+                <a href="/analytics"><i class="fas fa-chart-bar"></i> Analytics</a>
+                <!-- Contact Section -->
+                <div class="contact-section">
+                    <h3>Contact Us :</h3>
+                    <p>
+                        Email :
+                        <a href="https://mail.google.com/mail/?view=cm&to=nutriconnect6@gmail.com" target="_blank">
+                            <i class="fa-solid fa-envelope fa-lg contact-icon"></i>
+                        </a>
+                    </p>
+                    <p>
+                        Phone :
+                        <a href="tel:+917075783143">
+                            <i class="fa-solid fa-phone fa-lg contact-icon"></i>
+                        </a>
+                    </p>
+                    <h3>Follow Us :</h3>
+                    <div class="social-icons">
+                        <a href="https://www.facebook.com/profile.php?id=61572485733709" target="_blank">
+                            <i class="fa-brands fa-facebook fa-xl"></i>
+                        </a>
+                        <a href="https://www.instagram.com/nutriconnect2025?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank">
+                            <i class="fa-brands fa-instagram fa-xl"></i>
+                        </a>
+                        <a href="https://x.com/NutriC21?t=ngy3BuReV6VcrXl3WXrCvg&s=09" target="_blank">
+                            <i class="fa-brands fa-x-twitter fa-xl"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/in/nutri-connect-a0b774349?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank">
+                            <i class="fa-brands fa-linkedin fa-xl"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- Contact Section as Footer -->
+            <div class="contact-footer">
+                <h3>Contact Us :</h3>
+                <p>
+                    Email :
+                    <a href="https://mail.google.com/mail/?view=cm&to=nutriconnect6@gmail.com" target="_blank">
+                        <i class="fa-solid fa-envelope fa-lg contact-icon"></i>
+                    </a>
+                </p>
+                <p>
+                    Phone :
+                    <a href="tel:+917075783143">
+                        <i class="fa-solid fa-phone fa-lg contact-icon"></i>
+                    </a>
+                </p>
+                <p>
+                    Address :
+                    <span class="address-text">Plot No. 45, Greenway Colony, 517681, India</span>
+                </p>
+                <h3>Follow Us :</h3>
+                <div class="social-icons">
+                    <a href="https://www.facebook.com/profile.php?id=61572485733709" target="_blank">
+                        <i class="fa-brands fa-facebook fa-xl"></i>
+                    </a>
+                    <a href="https://www.instagram.com/nutriconnect2025?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank">
+                        <i class="fa-brands fa-instagram fa-xl"></i>
+                    </a>
+                    <a href="https://x.com/NutriC21?t=ngy3BuReV6VcrXl3WXrCvg&s=09" target="_blank">
+                        <i class="fa-brands fa-x-twitter fa-xl"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/in/nutri-connect-a0b774349?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank">
+                        <i class="fa-brands fa-linkedin fa-xl"></i>
+                    </a>
+                </div>
+            </div>
+            <!-- Main Content -->
+            <div class="col-md-9 col-lg-10 main-content">
+                <h2>Welcome, <%= admin.name %>!</h2>
+                <!-- Admin Info & Quick Stats -->
+                <div class="row d-flex align-items-start">
+                    <!-- Admin Info -->
+                    <div class="col-md-4">
+                        <div class="card text-center pb-4">
+                            <div class="card-header">Admin Profile</div>
+                            <div class="card-body">
+                                <div class="profile-upload-container">
+                                    <img id="profileImage" 
+                                         src="<%= admin.profileImageBase64 != null ? admin.profileImageBase64 : 'https://encrypted-tbn0.gstatic.com/images?q=tbniq9GcS2TgOv9CMmsUzYKCcLGWPvqcpUk6HXp2mnww&s' %>" 
+                                         class="profile-img" 
+                                         alt="Admin Image"
+                                         data-bs-toggle="modal"
+                                         data-bs-target="#imageModal"
+                                         onerror="this.src='https://encrypted-tbn0.gstatic.com/images?q=tbniq9GcS2TgOv9CMmsUzYKCcLGWPvqcpUk6HXp2mnww&s'">
+                                    <label for="profileUpload" class="profile-upload-btn" title="Change photo">
+                                        <i class="fas fa-camera"></i>
+                                    </label>
+                                    <input type="file" id="profileUpload" accept="image/*">
+                                </div>
+                                <p class="upload-text">Click camera icon to update your profile photo</p>
+                                <h5 class="card-title mt-2"><%= admin.name %></h5>
+                                <p><strong>Email:</strong> <%= admin.email %></p>
+                                <p><strong>Phone:</strong> <%= admin.phone %></p>
+                                <p><strong>Role:</strong> Super Admin</p>
+                                <button class="btn btn-outline-primary btn-sm btn-custom" onclick="window.location.href='/admin_dash/edit-profile'">Edit Profile</button>
+                                <button class="btn btn-outline-secondary btn-sm btn-custom" onclick="window.location.href='/admin_dash/change-pass'">Change Password</button>
+                                <span class="badge bg-success">Active</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Quick Stats Section -->
+                    <div class="col-md-8 d-flex flex-column gap-3">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="card">
+                                    <div class="card-header">Total Clients</div>
+                                    <div class="card-body">
+                                        <h3 class="card-title" id="totalClients">0</h3>
+                                        <p class="card-text">Registered clients on the platform.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card">
+                                    <div class="card-header">Total Dietitians</div>
+                                    <div class="card-body">
+                                        <h3 class="card-title" id="totalDietitians">0</h3>
+                                        <p class="card-text">Registered dietitians on the platform.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card">
+                                    <div class="card-header">Active Plans</div>
+                                    <div class="card-body">
+                                        <h3 class="card-title" id="activePlans">0</h3>
+                                        <p class="card-text">Active diet plans on the platform.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">Revenue Overview</div>
+                            <div class="card-body">
+                                <div class="revenue-box">
+                                    <h3>Subscriptions Revenue (Yearly)</h3>
+                                    <span id="subscriptionsRevenue">₹0</span>
+                                </div>
+                                <div class="revenue-box">
+                                    <h3>Consultations Revenue (Yearly)</h3>
+                                    <span id="consultationsRevenue">₹0</span>
+                                </div>
+                                <div class="revenue-box">
+                                    <h3>Total Revenue</h3>
+                                    <span id="totalRevenue">₹0</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Chart Section -->
+                <div class="card">
+                    <div class="card-header">Platform Growth Statistics</div>
+                    <div class="card-body">
+                        <canvas id="growthChart" class="full-width-chart" height="200"></canvas>
+                    </div>
+                </div>
+                <!-- Organization Listing Section -->
+                <div class="card mt-4">
+                    <div class="card-header">Organization Listing</div>
+                    <div class="card-body">
+                        <table class="organization-table">
+                            <thead>
+                                <tr>
+                                    <th>Organization Name</th>
+                                    <th>Verification Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="organizations-table-body">
+                                <tr>
+                                    <td colspan="2" class="text-center">
+                                        <i class="fas fa-spinner fa-spin"></i> Loading organizations...
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Image Modal -->
+    <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="imageModalLabel">Profile Image</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <img id="largeProfileImage" src="" class="large-profile-img" alt="Large Profile Image">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Notification Container -->
+    <div class="notification-container" id="notification-container"></div>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Notification System
+        function showNotification(message, type = 'info', duration = 5000) {
+            const container = document.getElementById('notification-container');
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            
+            let icon;
+            switch(type) {
+                case 'success': icon = 'fas fa-check-circle'; break;
+                case 'error': icon = 'fas fa-exclamation-circle'; break;
+                default: icon = 'fas fa-info-circle';
+            }
+            
+            notification.innerHTML = `
+                <div>
+                    <i class="${icon}"></i>
+                    ${message}
+                </div>
+                <button class="notification-close" onclick="this.parentElement.style.animation='slideOut 0.3s ease-out';setTimeout(() => this.parentElement.remove(), 300)">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+            
+            container.appendChild(notification);
+            
+            if (duration > 0) {
+                setTimeout(() => {
+                    notification.style.animation = 'slideOut 0.3s ease-out';
+                    setTimeout(() => notification.remove(), 300);
+                }, duration);
+            }
+        }
+
+        // Function to generate last 7 months' labels (e.g., Nov 2024 to May 2025)
+        function getLast7Months() {
+            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            const labels = [];
+            const today = new Date('2025-05-16');
+            for (let i = 6; i >= 0; i--) {
+                const date = new Date(today.getFullYear(), today.getMonth() - i, 1);
+                labels.push(`${months[date.getMonth()]} ${date.getFullYear()}`);
+            }
+            return labels;
+        }
+
+        // Function to fetch user statistics
+        async function fetchUserStatistics() {
+            try {
+                const [usersResponse, dietitiansResponse, dietPlansResponse] = await Promise.all([
+                    fetch('/users-list', { credentials: 'include' }),
+                    fetch('/dietitian-list', { credentials: 'include' }),
+                    fetch('/active-diet-plans', { credentials: 'include' })
+                ]);
+
+                const usersData = await usersResponse.json();
+                const dietitiansData = await dietitiansResponse.json();
+                const dietPlansData = await dietPlansResponse.json();
+
+                if (!usersResponse.ok || !usersData.success) {
+                    throw new Error(usersData.message || 'Failed to fetch users');
+                }
+                if (!dietitiansResponse.ok || !dietitiansData.success) {
+                    throw new Error(dietitiansData.message || 'Failed to fetch dietitians');
+                }
+                if (!dietPlansResponse.ok || !dietPlansData.success) {
+                    throw new Error(dietPlansData.message || 'Failed to fetch active diet plans');
+                }
+
+                return {
+                    clients: usersData.data,
+                    dietitians: dietitiansData.data,
+                    activePlans: dietPlansData.data || 0
+                };
+            } catch (error) {
+                console.error('Error fetching user statistics:', error);
+                showNotification('Failed to fetch user statistics.', 'error');
+                return { clients: [], dietitians: [], activePlans: 0 };
+            }
+        }
+
+        // Function to fetch subscription data
+        async function fetchSubscriptions() {
+            try {
+                const response = await fetch('/subscriptions', { credentials: 'include' });
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.error || 'Failed to fetch subscriptions');
+                }
+
+                return data.filter(sub => sub.userId); // Exclude templates
+            } catch (error) {
+                console.error('Error fetching subscriptions:', error);
+                showNotification('Failed to fetch subscriptions.', 'error');
+                return [];
+            }
+        }
+
+        // Function to fetch consultation revenue
+        async function fetchConsultationRevenue() {
+            try {
+                const response = await fetch('/consultation-revenue', { credentials: 'include' });
+                const result = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(result.error || 'Failed to fetch consultation revenue');
+                }
+
+                return result.data || [];
+            } catch (error) {
+                console.error('Error fetching consultation revenue:', error);
+                showNotification('Failed to fetch consultation revenue.', 'error');
+                return [];
+            }
+        }
+
+        // Function to aggregate data by month
+        function aggregateDataByMonth(users, subscriptions, consultations) {
+            const months = getLast7Months();
+            const revenueData = new Array(7).fill(0);
+            const consultationRevenueData = new Array(7).fill(0);
+            const userData = new Array(7).fill(0);
+            const startDate = new Date('2024-11-01'); // Start from Nov 2024
+            const adminFeePercentage = 0.2;
+
+            // Aggregate users (clients + dietitians)
+            [...users.clients, ...users.dietitians].forEach(user => {
+                const created = new Date(user.createdAt);
+                if (created >= startDate) {
+                    const monthIndex = Math.floor((created.getMonth() - startDate.getMonth() + 12 * (created.getFullYear() - startDate.getFullYear())) % 12);
+                    if (monthIndex < 7) userData[monthIndex]++;
+                }
+            });
+
+            // Aggregate subscription revenue
+            subscriptions.forEach(sub => {
+                const created = new Date(sub.createdAt);
+                if (created >= startDate) {
+                    const monthIndex = Math.floor((created.getMonth() - startDate.getMonth() + 12 * (created.getFullYear() - startDate.getFullYear())) % 12);
+                    if (monthIndex < 7) revenueData[monthIndex] += sub.amount || 0;
+                }
+            });
+
+            // Aggregate consultation revenue
+            consultations.forEach(con => {
+                const created = new Date(con.date);
+                if (created >= startDate) {
+                    const monthIndex = Math.floor((created.getMonth() - startDate.getMonth() + 12 * (created.getFullYear() - startDate.getFullYear())) % 12);
+                    if (monthIndex < 7) consultationRevenueData[monthIndex] += (con.amount * adminFeePercentage) || 0;
+                }
+            });
+
+            return { revenueData, consultationRevenueData, userData };
+        }
+
+        // Function to calculate yearly revenue
+        async function calculateYearlyRevenue() {
+            try {
+                const [subscriptions, consultations] = await Promise.all([
+                    fetchSubscriptions(),
+                    fetchConsultationRevenue()
+                ]);
+
+                const yearStart = new Date(new Date().getFullYear(), 0, 1);
+                const nextYearStart = new Date(new Date().getFullYear() + 1, 0, 1);
+                const adminFeePercentage = 0.2;
+
+                const yearlySubscriptionRevenue = subscriptions
+                    .filter(sub => {
+                        const createdAt = new Date(sub.createdAt);
+                        return sub.amount && createdAt >= yearStart && createdAt < nextYearStart;
+                    })
+                    .reduce((sum, sub) => sum + (sub.amount || 0), 0);
+
+                const yearlyConsultationRevenue = consultations
+                    .filter(con => {
+                        const conDate = new Date(con.date);
+                        return con.amount && conDate.getFullYear() === new Date().getFullYear();
+                    })
+                    .reduce((sum, con) => sum + (con.amount * adminFeePercentage), 0);
+
+                const totalRevenue = yearlySubscriptionRevenue + yearlyConsultationRevenue;
+
+                return {
+                    subscriptionsRevenue: yearlySubscriptionRevenue,
+                    consultationsRevenue: yearlyConsultationRevenue,
+                    totalRevenue
+                };
+            } catch (error) {
+                console.error('Error calculating yearly revenue:', error);
+                showNotification('Failed to calculate revenue.', 'error');
+                return {
+                    subscriptionsRevenue: 0,
+                    consultationsRevenue: 0,
+                    totalRevenue: 0
+                };
+            }
+        }
+
+        // Function to fetch organizations
+        async function fetchOrganizations() {
+            try {
+                const response = await fetch('/organization-doc/organizations', {
+                    credentials: 'include'
+                });
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                const organizations = await response.json();
+                renderOrganizations(organizations);
+            } catch (error) {
+                console.error('Error fetching organizations:', error);
+                showNotification('Failed to load organizations. Please ensure you are logged in as an admin.', 'error');
+                const tbody = document.getElementById('organizations-table-body');
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="2" class="text-center text-danger">
+                            <i class="fas fa-exclamation-circle"></i> Failed to load organizations.
+                        </td>
+                    </tr>
+                `;
+            }
+        }
+
+        // Function to render organizations
+        function renderOrganizations(organizations) {
+            const tbody = document.getElementById('organizations-table-body');
+            tbody.innerHTML = '';
+
+            const statusClasses = {
+                'Not Received': 'status-pending',
+                'Received': 'status-pending',
+                'Verified': 'status-verified',
+                'Rejected': 'status-rejected'
+            };
+
+            if (organizations.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="2" class="text-center">
+                            No organizations found.
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            organizations.forEach(org => {
+                const verificationStatus = org.verificationStatus || {};
+                const overallStatus = verificationStatus.finalReport || 'Not Received';
+                const displayStatus = overallStatus === 'Not Received' ? 'Pending' : overallStatus;
+
+                const orgRow = `
+                    <tr>
+                        <td>${org.org_name || 'Unknown Organization'}</td>
+                        <td><span class="${statusClasses[overallStatus]}"><i class="fas fa-${overallStatus === 'Verified' ? 'check-circle' : overallStatus === 'Rejected' ? 'times-circle' : 'hourglass-half'}"></i> ${displayStatus}</span></td>
+                    </tr>
+                `;
+                tbody.insertAdjacentHTML('beforeend', orgRow);
+            });
+        }
+
+        // Function to initialize dashboard
+        async function initializeDashboard() {
+            const users = await fetchUserStatistics();
+            const subscriptions = await fetchSubscriptions();
+            const consultations = await fetchConsultationRevenue();
+            const revenue = await calculateYearlyRevenue();
+
+            // Update quick stats
+            document.getElementById('totalClients').textContent = users.clients.length;
+            document.getElementById('totalDietitians').textContent = users.dietitians.length;
+            document.getElementById('activePlans').textContent = users.activePlans;
+            document.getElementById('subscriptionsRevenue').textContent = `₹${revenue.subscriptionsRevenue.toFixed(2)}`;
+            document.getElementById('consultationsRevenue').textContent = `₹${revenue.consultationsRevenue.toFixed(2)}`;
+            document.getElementById('totalRevenue').textContent = `₹${revenue.totalRevenue.toFixed(2)}`;
+
+            console.log('Quick Stats:', {
+                totalClients: users.clients.length,
+                totalDietitians: users.dietitians.length,
+                activePlans: users.activePlans,
+                subscriptionsRevenue: revenue.subscriptionsRevenue,
+                consultationsRevenue: revenue.consultationsRevenue,
+                totalRevenue: revenue.totalRevenue
+            });
+
+            // Aggregate data for chart
+            const { revenueData, consultationRevenueData, userData } = aggregateDataByMonth(users, subscriptions, consultations);
+            console.log('Chart Data:', { revenueData, consultationRevenueData, userData });
+
+            // Initialize Chart
+            const ctx = document.getElementById('growthChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: getLast7Months(),
+                    datasets: [
+                        {
+                            label: 'Subscription Revenue (₹)',
+                            data: revenueData,
+                            backgroundColor: 'rgba(40, 167, 69, 0.2)',
+                            borderColor: 'rgba(40, 167, 69, 1)',
+                            borderWidth: 2,
+                            yAxisID: 'TODAY'
+                        },
+                        {
+                            label: 'Consultation Revenue (₹)',
+                            data: consultationRevenueData,
+                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderWidth: 2,
+                            yAxisID: 'TODAY'
+                        },
+                        {
+                            label: 'Total Users',
+                            data: userData,
+                            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                            borderColor: 'rgba(255, 99, 132, 1)',
+                            borderWidth: 2,
+                            yAxisID: 'y1'
+                        }
+                    ]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: { display: true, text: 'Revenue (₹)' },
+                            position: 'left'
+                        },
+                        y1: {
+                            beginAtZero: true,
+                            title: { display: true, text: 'Users' },
+                            position: 'right',
+                            grid: { drawOnChartArea: false }
+                        }
+                    },
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+
+            // Fetch and render organizations
+            await fetchOrganizations();
+        }
+
+        // Profile Photo Upload
+        document.getElementById('profileUpload').addEventListener('change', async (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = () => document.getElementById('profileImage').src = reader.result;
+            reader.readAsDataURL(file);
+            const formData = new FormData();
+            formData.append('profileImage', file);
+            try {
+                const res = await fetch('/uploadadmin', { method: 'POST', body: formData });
+                const data = await res.json();
+                if (data.success) {
+                    showNotification('Profile photo uploaded successfully!', 'success');
+                    window.location.reload();
+                } else {
+                    showNotification(`Upload failed: ${data.message || 'Unknown error'}`, 'error');
+                }
+            } catch (error) {
+                console.error('Upload error:', error);
+                showNotification('Upload error occurred.', 'error');
+            }
+        });
+
+        // Set modal image source
+        const imageModal = document.getElementById('imageModal');
+        imageModal.addEventListener('show.bs.modal', () => {
+            const profileImage = document.getElementById('profileImage');
+            const largeProfileImage = document.getElementById('largeProfileImage');
+            largeProfileImage.src = profileImage.src || 'https://via.placeholder.com/150?text=Default+Admin';
+        });
+
+        // Initialize dashboard on load
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('Initializing Admin Dashboard');
+            initializeDashboard();
+            console.log('Admin Dashboard Initialization Complete');
+        });
+    </script>
+</body>
+</html>

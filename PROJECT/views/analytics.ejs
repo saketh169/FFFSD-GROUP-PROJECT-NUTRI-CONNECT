@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics Dashboard - Nutri Connect</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-green: #28a745;
+            --light-green: #d4edda;
+            --dark-green: #218838;
+            --white: #fff;
+            --black: #444d53;
+            --gray: #f8f9fa;
+        }
+
+        * {
+            font-family: "Poppins", sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--light-green);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 20px 0;
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--black);
+        }
+
+        .logo .highlight {
+            color: #28B463;
+        }
+
+        .logo .icon-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: #28B463;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .logo .icon {
+            font-size: 24px;
+            color: #FFFFFF;
+        }
+
+        .logo:hover .icon-container {
+            background-color: #1E6F5C;
+            transform: scale(1.1);
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover {
+            color: #28B463;
+            transition: color 0.3s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            background-color: var(--white);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            border: 2px solid var(--primary-green);
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            color: var(--primary-green);
+            margin-bottom: 20px;
+        }
+
+        .card {
+            background: var(--white);
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .card h2 {
+            margin-top: 0;
+            color: var(--primary-green);
+        }
+
+        .card p {
+            margin: 10px 0;
+            font-size: 1.1rem;
+            color: var(--black);
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        .table th,
+        .table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--light-green);
+        }
+
+        .table th {
+            background-color: var(--primary-green);
+            color: var(--white);
+            border: 1px solid white;
+        }
+
+        .table th:nth-child(1),
+        .table td:nth-child(1) {
+            width: 70%;
+        }
+
+        .table th:nth-child(2),
+        .table td:nth-child(2) {
+            width: 30%;
+            text-align: right;
+        }
+
+        .table tr:hover {
+            background-color: var(--light-green);
+        }
+
+        .table tfoot {
+            font-weight: bold;
+        }
+
+        .subscription-table th:nth-child(1),
+        .subscription-table td:nth-child(1) {
+            width: 300px;
+        }
+
+        .subscription-table th:nth-child(2),
+        .subscription-table td:nth-child(2) {
+            width: 100px;
+        }
+
+        .subscription-table th:nth-child(3),
+        .subscription-table td:nth-child(3) {
+            width: 100px;
+        }
+
+        .btn {
+            padding: 8px 12px;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .btn-info {
+            background-color: var(--primary-green);
+            color: var(--white);
+            border: none;
+        }
+
+        .btn-info:hover {
+            background-color: var(--dark-green);
+            transform: translateY(-2px);
+        }
+
+        .details-dropdown {
+            background-color: var(--gray);
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 10px;
+            border: 1px solid var(--light-green);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            opacity: 0;
+            transform: translateY(-10px);
+            display: none;
+        }
+
+        .details-dropdown.show {
+            opacity: 1;
+            transform: translateY(0);
+            display: block;
+        }
+
+        .details-dropdown p {
+            margin: 5px 0;
+            font-size: 14px;
+            color: var(--black);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        #cross {
+            position: fixed;
+            top: 5px;
+            left: 10px;
+            line-height: 20px;
+            font-size: 40px;
+            border-radius: 100%;
+        }
+
+        .icon-revenue {
+            color: var(--primary-green);
+            margin-right: 10px;
+        }
+
+        .icon-users {
+            color: var(--primary-green);
+            margin-right: 10px;
+        }
+
+        .error-message {
+            color: red;
+            text-align: center;
+            margin: 10px 0;
+        }
+
+        .revenue-table {
+            margin-top: 15px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="cross" class="btn btn-outline-success" onclick="window.history.back();">
+        <i class="fa-solid fa-xmark"></i>
+    </div>
+
+    <div class="logo">
+        <div class="icon-container">
+            <i class="icon fas fa-leaf"></i>
+        </div>
+        <span>
+            <span class="highlight">N</span>utri
+            <span class="highlight">C</span>onnect
+        </span>
+    </div>
+
+    <div class="container">
+        <h1>Analytics Dashboard</h1>
+        <p id="errorMessage" class="error-message hidden"></p>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <h2><i class="fas fa-chart-line icon-revenue"></i> Revenue from Memberships</h2>
+                    <div class="revenue-table">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Period</th>
+                                    <th>Revenue</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Daily (Today)</td>
+                                    <td id="membershipDailyRevenue">₹0</td>
+                                </tr>
+                                <tr>
+                                    <td>Monthly (This Month)</td>
+                                    <td id="membershipMonthlyRevenue">₹0</td>
+                                </tr>
+                                <tr>
+                                    <td>Yearly (This Year)</td>
+                                    <td id="membershipYearlyRevenue">₹0</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card">
+                    <h2><i class="fas fa-users icon-users"></i> User Statistics</h2>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="revenue-table">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Metric</th>
+                                            <th>Count</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Total Users</td>
+                                            <td id="totalUsers">0</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Active Clients</td>
+                                            <td id="activeClients">0</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Active Dietitians</td>
+                                            <td id="activeDietitians">0</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="revenue-table">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Metric</th>
+                                            <th>Count</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Organizations</td>
+                                            <td id="verifyingOrganizations">0</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Active Dietitian Diet Plans</td>
+                                            <td id="activeDietPlans">0</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <h2><i class="fas fa-stethoscope icon-revenue"></i> Revenue from Consultations</h2>
+                    <div class="revenue-table">
+                        <h4>Daily Revenue</h4>
+                        <table class="table" id="dailyRevenueTable">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Revenue</th>
+                                </tr>
+                            </thead>
+                            <tbody id="dailyRevenueBody"></tbody>
+                            <tfoot>
+                                <tr>
+                                    <td>Total</td>
+                                    <td id="dailyRevenueTotal">₹0</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    <div class="revenue-table">
+                        <h4>Monthly Revenue</h4>
+                        <table class="table" id="monthlyRevenueTable">
+                            <thead>
+                                <tr>
+                                    <th>Month</th>
+                                    <th>Revenue</th>
+                                </tr>
+                            </thead>
+                            <tbody id="monthlyRevenueBody"></tbody>
+                            <tfoot>
+                                <tr>
+                                    <td>Total</td>
+                                    <td id="monthlyRevenueTotal">₹0</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    <div class="revenue-table">
+                        <h4>Yearly Revenue</h4>
+                        <table class="table" id="yearlyRevenueTable">
+                            <thead>
+                                <tr>
+                                    <th>Year</th>
+                                    <th>Revenue</th>
+                                </tr>
+                            </thead>
+                            <tbody id="yearlyRevenueBody"></tbody>
+                            <tfoot>
+                                <tr>
+                                    <td>Total</td>
+                                    <td id="yearlyRevenueTotal">₹0</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <h2><i class="fas fa-chart-bar icon-revenue"></i> Total Revenue</h2>
+                    <div class="revenue-table">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Period</th>
+                                    <th>Revenue</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Total</td>
+                                    <td id="totalRevenue">₹0</td>
+                                </tr>
+                                <tr>
+                                    <td>Monthly</td>
+                                    <td id="totalMonthlyRevenue">₹0</td>
+                                </tr>
+                                <tr>
+                                    <td>Yearly</td>
+                                    <td id="totalYearlyRevenue">₹0</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-list-alt"></i> Users and Their Subscription Plans</h2>
+            <table class="table subscription-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Start Date</th>
+                        <th class="text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="usersTableBody">
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Modified formatDate to handle invalid dates
+        function formatDate(date) {
+            if (!date) return 'N/A';
+            try {
+                const parsedDate = new Date(date);
+                if (isNaN(parsedDate.getTime())) return 'N/A';
+                return parsedDate.toISOString().split('T')[0];
+            } catch (error) {
+                console.warn(`Invalid date format: ${date}`);
+                return 'N/A';
+            }
+        }
+
+        function formatDisplayDate(date) {
+            return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+        }
+
+        function formatDisplayMonth(date) {
+            return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long' });
+        }
+
+        function showError(message) {
+            const errorMessage = document.getElementById('errorMessage');
+            errorMessage.textContent = message;
+            errorMessage.classList.remove('hidden');
+        }
+
+        function hideError() {
+            const errorMessage = document.getElementById('errorMessage');
+            errorMessage.textContent = '';
+            errorMessage.classList.add('hidden');
+        }
+
+        function getDateRanges() {
+            const today = new Date();
+            const sevenDaysAgo = new Date(today);
+            sevenDaysAgo.setDate(today.getDate() - 6);
+
+            const sixMonthsAgo = new Date(today);
+            sixMonthsAgo.setMonth(today.getMonth() - 5);
+            sixMonthsAgo.setDate(1);
+
+            const fourYearsAgo = new Date(today);
+            fourYearsAgo.setFullYear(today.getFullYear() - 3);
+            fourYearsAgo.setMonth(0);
+            fourYearsAgo.setDate(1);
+
+            const dailyDates = [];
+            for (let i = 0; i < 7; i++) {
+                const date = new Date(today);
+                date.setDate(today.getDate() - i);
+                dailyDates.push({
+                    date: formatDate(date),
+                    displayDate: formatDisplayDate(date)
+                });
+            }
+
+            const monthlyPeriods = [];
+            for (let i = 0; i < 6; i++) {
+                const date = new Date(today);
+                date.setMonth(today.getMonth() - i);
+                date.setDate(1);
+                monthlyPeriods.push({
+                    start: formatDate(date),
+                    displayMonth: formatDisplayMonth(date),
+                    year: date.getFullYear(),
+                    month: date.getMonth() + 1
+                });
+            }
+
+            const yearlyPeriods = [];
+            for (let i = 0; i < 4; i++) {
+                const year = today.getFullYear() - i;
+                yearlyPeriods.push({
+                    year,
+                    start: `${year}-01-01`,
+                    end: `${year}-12-31`
+                });
+            }
+
+            return {
+                daily: { start: sevenDaysAgo, end: today, dates: dailyDates },
+                monthly: { start: sixMonthsAgo, end: today, periods: monthlyPeriods },
+                yearly: { start: fourYearsAgo, end: today, periods: yearlyPeriods }
+            };
+        }
+
+        async function fetchUserStatistics() {
+            try {
+                const [usersResponse, dietitiansResponse, organizationsResponse, dietPlansResponse] = await Promise.all([
+                    fetch('/users-list', { credentials: 'include' }),
+                    fetch('/dietitian-list', { credentials: 'include' }),
+                    fetch('/verifying-organizations', { credentials: 'include' }),
+                    fetch('/active-diet-plans', { credentials: 'include' })
+                ]);
+
+                const usersData = await usersResponse.json();
+                const dietitiansData = await dietitiansResponse.json();
+                const organizationsData = await organizationsResponse.json();
+                const dietPlansData = await dietPlansResponse.json();
+
+                console.log('Raw Users Data from /users-list:', usersData);
+                console.log('Raw Dietitians Data from /dietitian-list:', dietitiansData);
+                console.log('Raw Verifying Organizations Data from /verifying-organizations:', organizationsData);
+                console.log('Raw Active Diet Plans Data from /active-diet-plans:', dietPlansData);
+
+                if (!usersResponse.ok || !usersData.success) {
+                    throw new Error(usersData.message || 'Failed to fetch users');
+                }
+                if (!dietitiansResponse.ok || !dietitiansData.success) {
+                    throw new Error(dietitiansData.message || 'Failed to fetch dietitians');
+                }
+                if (!organizationsResponse.ok || !organizationsData.success) {
+                    throw new Error(organizationsData.message || 'Failed to fetch organizations');
+                }
+                if (!dietPlansResponse.ok || !dietPlansData.success) {
+                    throw new Error(dietPlansData.message || 'Failed to fetch active diet plans');
+                }
+
+                const userStats = {
+                    totalRegistered: usersData.data.length + dietitiansData.data.length,
+                    totalUsers: usersData.data.length,
+                    totalDietitians: dietitiansData.data.length,
+                    verifyingOrganizations: organizationsData.data || 0,
+                    activeDietPlans: dietPlansData.data || 0
+                };
+                console.log('Processed User Statistics:', userStats);
+                return userStats;
+            } catch (error) {
+                showError(`Error fetching user statistics: ${error.message}`);
+                console.error('Error in fetchUserStatistics:', error);
+                return { totalRegistered: 0, totalUsers: 0, totalDietitians: 0, verifyingOrganizations: 0, activeDietPlans: 0 };
+            }
+        }
+
+        async function fetchSubscriptions() {
+            try {
+                const response = await fetch('/subscriptions', { credentials: 'include' });
+                const data = await response.json();
+
+                console.log('Raw Subscriptions Data from /subscriptions:', data);
+
+                if (!response.ok) {
+                    throw new Error(data.error || 'Failed to fetch subscriptions');
+                }
+
+                const userSubscriptions = data.filter(sub => sub.userId && sub.userId.name);
+                const formattedSubscriptions = userSubscriptions.map(sub => ({
+                    id: sub._id,
+                    name: sub.userId.name || 'Unknown',
+                    plan: sub.name || 'N/A',
+                    cycle: sub.billingType || 'N/A',
+                    startDate: formatDate(sub.createdAt),
+                    revenue: sub.amount || 0,
+                    paymentMethod: sub.paymentMethod || 'N/A',
+                    transactionId: sub.transactionId || 'N/A',
+                    expiresAt: formatDate(sub.expiresAt)
+                }));
+                console.log('Processed Subscriptions for Table:', formattedSubscriptions);
+                return formattedSubscriptions;
+            } catch (error) {
+                showError(`Error fetching subscriptions: ${error.message}`);
+                console.error('Error in fetchSubscriptions:', error);
+                return [];
+            }
+        }
+
+        async function fetchConsultationRevenue() {
+            try {
+                const response = await fetch('/consultation-revenue', { credentials: 'include' });
+                const result = await response.json();
+
+                console.log('Consultation Revenue Response:', result);
+
+                if (!response.ok) {
+                    throw new Error(result.error || 'Failed to fetch consultation revenue');
+                }
+
+                return result.data || [];
+            } catch (error) {
+                showError(`Error fetching consultation revenue: ${error.message}`);
+                console.error('Error in fetchConsultationRevenue:', error);
+                return [];
+            }
+        }
+
+        async function populateMembershipRevenue() {
+            try {
+                const response = await fetch('/subscriptions', { credentials: 'include' });
+                const data = await response.json();
+
+                console.log('Raw Subscriptions Data for Revenue from /subscriptions:', data);
+
+                if (!response.ok) {
+                    throw new Error(data.error || 'Failed to fetch subscriptions');
+                }
+
+                // Define date ranges in IST
+                const today = new Date();
+                today.setHours(0, 0, 0, 0); // Start of today
+                const tomorrow = new Date(today);
+                tomorrow.setDate(today.getDate() + 1); // Start of tomorrow
+
+                const monthStart = new Date(today.getFullYear(), today.getMonth(), 1); // Start of current month
+                const nextMonthStart = new Date(today.getFullYear(), today.getMonth() + 1, 1); // Start of next month
+
+                const yearStart = new Date(today.getFullYear(), 0, 1); // Start of current year
+                const nextYearStart = new Date(today.getFullYear() + 1, 0, 1); // Start of next year
+
+                const validSubscriptions = data.filter(sub => sub.userId && sub.status === 'success');
+
+                const dailyRevenue = validSubscriptions
+                    .filter(sub => {
+                        const createdAt = new Date(sub.createdAt);
+                        return createdAt >= today && createdAt < tomorrow;
+                    })
+                    .reduce((sum, sub) => sum + (sub.amount || 0), 0);
+
+                const monthlyRevenue = validSubscriptions
+                    .filter(sub => {
+                        const createdAt = new Date(sub.createdAt);
+                        return createdAt >= monthStart && createdAt < nextMonthStart;
+                    })
+                    .reduce((sum, sub) => sum + (sub.amount || 0), 0);
+
+                const yearlyRevenue = validSubscriptions
+                    .filter(sub => {
+                        const createdAt = new Date(sub.createdAt);
+                        return createdAt >= yearStart && createdAt < nextYearStart;
+                    })
+                    .reduce((sum, sub) => sum + (sub.amount || 0), 0);
+
+                console.log('Calculated Membership Revenues:', {
+                    dailyRevenue,
+                    monthlyRevenue,
+                    yearlyRevenue
+                });
+
+                document.getElementById('membershipDailyRevenue').textContent = `₹${dailyRevenue.toFixed(2)}`;
+                document.getElementById('membershipMonthlyRevenue').textContent = `₹${monthlyRevenue.toFixed(2)}`;
+                document.getElementById('membershipYearlyRevenue').textContent = `₹${yearlyRevenue.toFixed(2)}`;
+
+                return {
+                    daily: dailyRevenue,
+                    monthly: monthlyRevenue,
+                    yearly: yearlyRevenue
+                };
+            } catch (error) {
+                showError(`Error calculating membership revenue: ${error.message}`);
+                console.error('Error in populateMembershipRevenue:', error);
+                return { daily: 0, monthly: 0, yearly: 0 };
+            }
+        }
+
+        async function populateConsultationRevenue() {
+            try {
+                const consultations = await fetchConsultationRevenue();
+                const adminFeePercentage = 0.2;
+                const dateRanges = getDateRanges();
+
+                const dailyRevenues = dateRanges.daily.dates.map(day => {
+                    const revenue = consultations
+                        .filter(con => con.date === day.date)
+                        .reduce((sum, con) => sum + (con.amount * adminFeePercentage), 0);
+                    return { date: day.displayDate, revenue };
+                });
+                const dailyTotalRevenue = dailyRevenues.reduce((sum, day) => sum + day.revenue, 0);
+
+                const monthlyRevenues = dateRanges.monthly.periods.map(period => {
+                    const revenue = consultations
+                        .filter(con => {
+                            const conDate = new Date(con.date);
+                            return conDate.getFullYear() === period.year && (conDate.getMonth() + 1) === period.month;
+                        })
+                        .reduce((sum, con) => sum + (con.amount * adminFeePercentage), 0);
+                    return { month: period.displayMonth, revenue };
+                });
+                const monthlyTotalRevenue = monthlyRevenues.reduce((sum, period) => sum + period.revenue, 0);
+
+                const yearlyRevenues = dateRanges.yearly.periods.map(period => {
+                    const revenue = consultations
+                        .filter(con => {
+                            const conDate = new Date(con.date);
+                            return conDate.getFullYear() === period.year;
+                        })
+                        .reduce((sum, con) => sum + (con.amount * adminFeePercentage), 0);
+                    return { year: period.year, revenue };
+                });
+                const yearlyTotalRevenue = yearlyRevenues.reduce((sum, period) => sum + period.revenue, 0);
+
+                document.getElementById('dailyRevenueBody').innerHTML = dailyRevenues
+                    .map(day => `
+                        <tr>
+                            <td>${day.date}</td>
+                            <td>₹${day.revenue.toFixed(2)}</td>
+                        </tr>
+                    `).join('');
+                document.getElementById('dailyRevenueTotal').textContent = `₹${dailyTotalRevenue.toFixed(2)}`;
+
+                document.getElementById('monthlyRevenueBody').innerHTML = monthlyRevenues
+                    .map(period => `
+                        <tr>
+                            <td>${period.month}</td>
+                            <td>₹${period.revenue.toFixed(2)}</td>
+                        </tr>
+                    `).join('');
+                document.getElementById('monthlyRevenueTotal').textContent = `₹${monthlyTotalRevenue.toFixed(2)}`;
+
+                document.getElementById('yearlyRevenueBody').innerHTML = yearlyRevenues
+                    .map(period => `
+                        <tr>
+                            <td>${period.year}</td>
+                            <td>₹${period.revenue.toFixed(2)}</td>
+                        </tr>
+                    `).join('');
+                document.getElementById('yearlyRevenueTotal').textContent = `₹${yearlyTotalRevenue.toFixed(2)}`;
+
+                console.log('Calculated Consultation Revenues:', {
+                    dailyTotalRevenue,
+                    dailyRevenues,
+                    monthlyTotalRevenue,
+                    monthlyRevenues,
+                    yearlyTotalRevenue,
+                    yearlyRevenues,
+                    dateRanges: {
+                        daily: {
+                            start: formatDate(dateRanges.daily.start),
+                            end: formatDate(dateRanges.daily.end),
+                            dates: dateRanges.daily.dates
+                        },
+                        monthly: {
+                            start: formatDate(dateRanges.monthly.start),
+                            end: formatDate(dateRanges.monthly.end),
+                            periods: dateRanges.monthly.periods
+                        },
+                        yearly: {
+                            start: formatDate(dateRanges.yearly.start),
+                            end: formatDate(dateRanges.yearly.end),
+                            periods: dateRanges.yearly.periods
+                        }
+                    }
+                });
+
+                return {
+                    total: yearlyTotalRevenue,
+                    monthly: monthlyTotalRevenue,
+                    yearly: yearlyTotalRevenue
+                };
+            } catch (error) {
+                showError(`Error calculating consultation revenue: ${error.message}`);
+                console.error('Error in populateConsultationRevenue:', error);
+                return { total: 0, monthly: 0, yearly: 0 };
+            }
+        }
+
+        async function populateTotalRevenue() {
+            try {
+                const [membershipRevenue, consultationRevenue] = await Promise.all([
+                    populateMembershipRevenue(),
+                    populateConsultationRevenue()
+                ]);
+
+                const totalRevenue = membershipRevenue.yearly + consultationRevenue.total;
+                const totalMonthlyRevenue = membershipRevenue.monthly + consultationRevenue.monthly;
+                const totalYearlyRevenue = membershipRevenue.yearly + consultationRevenue.yearly;
+
+                console.log('Calculated Total Revenues:', {
+                    totalRevenue,
+                    totalMonthlyRevenue,
+                    totalYearlyRevenue
+                });
+
+                document.getElementById('totalRevenue').textContent = `₹${totalRevenue.toFixed(2)}`;
+                document.getElementById('totalMonthlyRevenue').textContent = `₹${totalMonthlyRevenue.toFixed(2)}`;
+                document.getElementById('totalYearlyRevenue').textContent = `₹${totalYearlyRevenue.toFixed(2)}`;
+            } catch (error) {
+                showError(`Error calculating total revenue: ${error.message}`);
+                console.error('Error in populateTotalRevenue:', error);
+            }
+        }
+
+        async function populateUserStatistics() {
+            const userData = await fetchUserStatistics();
+            document.getElementById('totalUsers').textContent = userData.totalRegistered;
+            document.getElementById('activeClients').textContent = userData.totalUsers;
+            document.getElementById('activeDietitians').textContent = userData.totalDietitians;
+            document.getElementById('verifyingOrganizations').textContent = userData.verifyingOrganizations;
+            document.getElementById('activeDietPlans').textContent = userData.activeDietPlans;
+            console.log('Updated User Statistics UI:', {
+                totalUsers: userData.totalRegistered,
+                activeClients: userData.totalUsers,
+                activeDietitians: userData.totalDietitians,
+                verifyingOrganizations: userData.verifyingOrganizations,
+                activeDietPlans: userData.activeDietPlans
+            });
+        }
+
+        async function populateUsersTable() {
+            const subscriptions = await fetchSubscriptions();
+            const usersTableBody = document.getElementById("usersTableBody");
+            usersTableBody.innerHTML = subscriptions.map(sub => `
+                <tr>
+                    <td>${sub.name}</td>
+                    <td>${sub.startDate}</td>
+                    <td class="text-end">
+                        <button class="btn btn-info" onclick="viewUserInfo('${sub.id}')"><i class="fas fa-eye"></i> View Details</button>
+                    </td>
+                </tr>
+                <tr id="userDetails${sub.id}" class="details-dropdown">
+                    <td colspan="3">
+                        <p><strong>Plan:</strong> ${sub.plan}</p>
+                        <p><strong>Billing Cycle:</strong> ${sub.cycle}</p>
+                        <p><strong>Revenue Generated:</strong> ₹${sub.revenue.toFixed(2)}</p>
+                        <p><strong>Mode of Payment:</strong> ${sub.paymentMethod}</p>
+                        <p><strong>Expire Date:</strong> ${sub.expiresAt}</p>
+                        <p><strong>Transaction ID:</strong> ${sub.transactionId}</p>
+                    </td>
+                </tr>
+            `).join("");
+            console.log('Updated Subscriptions Table UI:', subscriptions);
+        }
+
+        function viewUserInfo(id) {
+            const dropdown = document.getElementById(`userDetails${id}`);
+            dropdown.classList.toggle("show");
+            console.log('Toggled Details Dropdown for Subscription ID:', id);
+        }
+
+        document.addEventListener("DOMContentLoaded", async () => {
+            hideError();
+            console.log('Initializing Analytics Dashboard');
+            await Promise.all([
+                populateTotalRevenue(),
+                populateUserStatistics(),
+                populateUsersTable()
+            ]);
+            console.log('Dashboard Initialization Complete');
+        });
+    </script>
+</body>
+
+</html>

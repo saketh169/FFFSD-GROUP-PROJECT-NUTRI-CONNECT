@@ -1,0 +1,846 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+    <style>
+        :root {
+            --primary-green: #2E7D32;
+            --primary-hover: #1B5E20;
+            --success-color: #28a745;
+            --danger-color: #dc3545;
+            --warning-color: #ffc107;
+            --light-color: #f8f9fa;
+            --dark-color: #343a40;
+            --text-primary: #2d3748;
+            --text-secondary: #4a5568;
+            --text-muted: #718096;
+            --border-color: #e2e8f0;
+            --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f5f7fb;
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .app-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            position: relative;
+        }
+
+        .header h1 {
+            color: var(--primary-green);
+            font-weight: 600;
+            font-size: 2.25rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .header p {
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .back-btn {
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: var(--primary-green);
+            color: white;
+            width: 2.75rem;
+            height: 2.75rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            box-shadow: 0 2px 5px rgba(46, 125, 50, 0.3);
+        }
+
+        .back-btn:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+        }
+
+        .profile-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .profile-section-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--primary-green);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+        }
+
+        .profile-section-title i {
+            margin-right: 0.75rem;
+            font-size: 1.1rem;
+        }
+
+        .field-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .field-label {
+            display: block;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .field-display {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.75rem 1rem;
+            background: #f8fafc;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .field-display:hover {
+            border-color: var(--primary-green);
+            background: #f0fff4;
+        }
+
+        .field-value {
+            font-size: 1rem;
+            color: var(--text-primary);
+        }
+
+        .field-value.empty {
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        .edit-icon {
+            color: var(--primary-green);
+            opacity: 0;
+            transition: var(--transition);
+            font-size: 0.9rem;
+        }
+
+        .field-display:hover .edit-icon {
+            opacity: 1;
+        }
+
+        .field-input-container {
+            display: none;
+            margin-top: 0.5rem;
+        }
+
+        .field-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+            color: var(--text-primary);
+            transition: var(--transition);
+        }
+
+        .field-input:focus {
+            border-color: var(--primary-green);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.2);
+        }
+
+        .field-input.select {
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 0.75rem center;
+            background-size: 1rem;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-primary {
+            background: var(--primary-green);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-hover);
+            transform: translateY(-1px);
+            box-shadow: 0 2px 5px rgba(46, 125, 50, 0.3);
+        }
+
+        .btn-primary:disabled {
+            background: var(--text-muted);
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+        }
+
+        .btn-outline:hover {
+            background: #f8f9fa;
+            border-color: var(--text-muted);
+        }
+
+        .btn i {
+            margin-right: 0.4rem;
+            font-size: 0.9rem;
+        }
+
+        .notification-container {
+            position: fixed;
+            top: 1.5rem;
+            right: 1.5rem;
+            z-index: 2000;
+            max-width: 350px;
+        }
+
+        .notification {
+            padding: 1rem 1.25rem;
+            margin-bottom: 1rem;
+            border-radius: 8px;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            animation: slideIn 0.3s ease-out forwards;
+            transform: translateX(120%);
+        }
+
+        @keyframes slideIn {
+            to { transform: translateX(0); }
+        }
+
+        .notification.success {
+            background: var(--success-color);
+        }
+
+        .notification.error {
+            background: var(--danger-color);
+        }
+
+        .notification.warning {
+            background: var(--warning-color);
+            color: var(--dark-color);
+        }
+
+        .notification i {
+            margin-right: 0.75rem;
+            font-size: 1.1rem;
+        }
+
+        .notification-close {
+            background: none;
+            border: none;
+            color: inherit;
+            cursor: pointer;
+            margin-left: 1rem;
+            opacity: 0.8;
+        }
+
+        .notification-close:hover {
+            opacity: 1;
+        }
+
+        .saving-spinner {
+            animation: spin 1s linear infinite;
+            margin-left: 0.5rem;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .app-container {
+                margin: 1.25rem auto;
+                padding: 0 1rem;
+            }
+
+            .header h1 {
+                font-size: 1.75rem;
+                padding-top: 0.5rem;
+            }
+
+            .back-btn {
+                width: 2.5rem;
+                height: 2.5rem;
+                top: -0.25rem;
+            }
+
+            .profile-card {
+                padding: 1.5rem;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <header class="header">
+            <button class="back-btn" aria-label="Go back" onclick="window.location.href='/<%= role %>_dash'">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <h1>Edit Your Profile</h1>
+            <p>Update your personal information and manage your account details</p>
+        </header>
+
+        <div class="notification-container" id="notification-container"></div>
+
+        <main>
+            <section class="profile-card">
+                <h2 class="profile-section-title"><i class="fas fa-user-circle"></i> Personal Information</h2>
+                
+                <div class="field-group">
+                    <label class="field-label"><%= role === 'organization' ? 'Organization Name' : 'Full Name' %></label>
+                    <div class="field-display" onclick="startEditing('name')">
+                        <span class="field-value <%= !profile.name ? 'empty' : '' %>">
+                            <%= profile.name || (role === 'organization' ? 'Click to add your organization name' : 'Click to add your name') %>
+                        </span>
+                        <i class="fas fa-pencil-alt edit-icon"></i>
+                    </div>
+                    <div class="field-input-container" id="name-field">
+                        <input type="text" class="field-input" value="<%= profile.name || '' %>" placeholder="<%= role === 'organization' ? 'Enter your organization name' : 'Enter your full name' %>">
+                    </div>
+                </div>
+
+                <div class="field-group">
+                    <label class="field-label">Email Address</label>
+                    <div class="field-display" onclick="startEditing('email')">
+                        <span class="field-value <%= !profile.email ? 'empty' : '' %>">
+                            <%= profile.email || 'Click to add your email' %>
+                        </span>
+                        <i class="fas fa-pencil-alt edit-icon"></i>
+                    </div>
+                    <div class="field-input-container" id="email-field">
+                        <input type="email" class="field-input" value="<%= profile.email || '' %>" placeholder="Enter your email address">
+                    </div>
+                </div>
+
+                <div class="field-group">
+                    <label class="field-label">Phone Number</label>
+                    <div class="field-display" onclick="startEditing('phone')">
+                        <span class="field-value <%= !profile.phone ? 'empty' : '' %>">
+                            <%= profile.phone || 'Click to add your phone number' %>
+                        </span>
+                        <i class="fas fa-pencil-alt edit-icon"></i>
+                    </div>
+                    <div class="field-input-container" id="phone-field">
+                        <input type="tel" class="field-input" value="<%= profile.phone || '' %>" placeholder="Enter your phone number">
+                    </div>
+                </div>
+
+                <% if (role === 'user' || role === 'admin') { %>
+                <div class="field-group">
+                    <label class="field-label">Date of Birth</label>
+                    <div class="field-display" onclick="startEditing('dob')">
+                        <span class="field-value <%= !profile.dob ? 'empty' : '' %>">
+                            <%= profile.dob || 'Click to add your date of birth' %>
+                        </span>
+                        <i class="fas fa-pencil-alt edit-icon"></i>
+                    </div>
+                    <div class="field-input-container" id="dob-field">
+                        <input type="date" class="field-input" value="<%= profile.dob || '' %>">
+                    </div>
+                </div>
+
+                <div class="field-group">
+                    <label class="field-label">Gender</label>
+                    <div class="field-display" onclick="startEditing('gender')">
+                        <span class="field-value <%= !profile.gender ? 'empty' : '' %>">
+                            <%= profile.gender ? profile.gender.charAt(0).toUpperCase() + profile.gender.slice(1) : 'Click to select your gender' %>
+                        </span>
+                        <i class="fas fa-pencil-alt edit-icon"></i>
+                    </div>
+                    <div class="field-input-container" id="gender-field">
+                        <select class="field-input select">
+                            <option value="">Select gender</option>
+                            <option value="male" <%= profile.gender === 'male' ? 'selected' : '' %>>Male</option>
+                            <option value="female" <%= profile.gender === 'female' ? 'selected' : '' %>>Female</option>
+                            <option value="other" <%= profile.gender === 'other' ? 'selected' : '' %>>Other</option>
+                            <option value="prefer-not-to-say" <%= profile.gender === 'prefer-not-to-say' ? 'selected' : '' %>>Prefer not to say</option>
+                        </select>
+                    </div>
+                </div>
+                <% } %>
+            </section>
+
+            <section class="profile-card">
+                <h2 class="profile-section-title"><i class="fas fa-address-card"></i> Additional Information</h2>
+                
+                <% if (role !== 'dietitian') { %>
+                <div class="field-group">
+                    <label class="field-label">Address</label>
+                    <div class="field-display" onclick="startEditing('address')">
+                        <span class="field-value <%= !profile.address ? 'empty' : '' %>">
+                            <%= profile.address || 'Click to add your address' %>
+                        </span>
+                        <i class="fas fa-pencil-alt edit-icon"></i>
+                    </div>
+                    <div class="field-input-container" id="address-field">
+                        <input type="text" class="field-input" value="<%= profile.address || '' %>" placeholder="Enter your full address">
+                    </div>
+                </div>
+                <% } %>
+
+                <% if (role === 'user' || role === 'dietitian') { %>
+                <div class="field-group">
+                    <label class="field-label">Age</label>
+                    <div class="field-display" onclick="startEditing('age')">
+                        <span class="field-value <%= !profile.age ? 'empty' : '' %>">
+                            <%= profile.age || 'Click to add your age' %>
+                        </span>
+                        <i class="fas fa-pencil-alt edit-icon"></i>
+                    </div>
+                    <div class="field-input-container" id="age-field">
+                        <input type="number" class="field-input" value="<%= profile.age || '' %>" min="0" placeholder="Enter your age">
+                    </div>
+                </div>
+                <% } %>
+
+                <% if (role === 'admin') { %>
+                <div class="field-group">
+                    <label class="field-label">Admin Key</label>
+                    <div class="field-display" onclick="startEditing('admin_key')">
+                        <span class="field-value <%= !profile.admin_key ? 'empty' : '' %>">
+                            <%= profile.admin_key || 'Click to add your admin key' %>
+                        </span>
+                        <i class="fas fa-pencil-alt edit-icon"></i>
+                    </div>
+                    <div class="field-input-container" id="admin_key-field">
+                        <input type="text" class="field-input" value="<%= profile.admin_key || '' %>" placeholder="Enter your admin key">
+                    </div>
+                </div>
+                <% } %>
+
+                <% if (role === 'organization') { %>
+                <div class="field-group">
+                    <label class="field-label">Organization ID</label>
+                    <div class="field-display" onclick="startEditing('org_id')">
+                        <span class="field-value <%= !profile.org_id ? 'empty' : '' %>">
+                            <%= profile.org_id || 'Click to add your organization ID' %>
+                        </span>
+                        <i class="fas fa-pencil-alt edit-icon"></i>
+                    </div>
+                    <div class="field-input-container" id="org_id-field">
+                        <input type="text" class="field-input" value="<%= profile.org_id || '' %>" placeholder="Enter your organization ID">
+                    </div>
+                </div>
+                <% } %>
+
+                <% if (role === 'dietitian') { %>
+                <div class="field-group">
+                    <label class="field-label">Interested Field</label>
+                    <div class="field-display" onclick="startEditing('interestedField')">
+                        <span class="field-value <%= !profile.interestedField ? 'empty' : '' %>">
+                            <%= profile.interestedField || 'Click to add your interested field' %>
+                        </span>
+                        <i class="fas fa-pencil-alt edit-icon"></i>
+                    </div>
+                    <div class="field-input-container" id="interestedField-field">
+                        <input type="text" class="field-input" value="<%= profile.interestedField || '' %>" placeholder="Enter your interested field">
+                    </div>
+                </div>
+
+                <div class="field-group">
+                    <label class="field-label">Degree Type</label>
+                    <div class="field-display" onclick="startEditing('degreeType')">
+                        <span class="field-value <%= !profile.degreeType ? 'empty' : '' %>">
+                            <%= profile.degreeType || 'Click to add your degree type' %>
+                        </span>
+                        <i class="fas fa-pencil-alt edit-icon"></i>
+                    </div>
+                    <div class="field-input-container" id="degreeType-field">
+                        <input type="text" class="field-input" value="<%= profile.degreeType || '' %>" placeholder="Enter your degree type">
+                    </div>
+                </div>
+
+                <div class="field-group">
+                    <label class="field-label">License Issuer</label>
+                    <div class="field-display" onclick="startEditing('licenseIssuer')">
+                        <span class="field-value <%= !profile.licenseIssuer ? 'empty' : '' %>">
+                            <%= profile.licenseIssuer || 'Click to add your license issuer' %>
+                        </span>
+                        <i class="fas fa-pencil-alt edit-icon"></i>
+                    </div>
+                    <div class="field-input-container" id="licenseIssuer-field">
+                        <input type="text" class="field-input" value="<%= profile.licenseIssuer || '' %>" placeholder="Enter your license issuer">
+                    </div>
+                </div>
+
+                <div class="field-group">
+                    <label class="field-label">ID Proof Type</label>
+                    <div class="field-display" onclick="startEditing('idProofType')">
+                        <span class="field-value <%= !profile.idProofType ? 'empty' : '' %>">
+                            <%= profile.idProofType || 'Click to add your ID proof type' %>
+                        </span>
+                        <i class="fas fa-pencil-alt edit-icon"></i>
+                    </div>
+                    <div class="field-input-container" id="idProofType-field">
+                        <input type="text" class="field-input" value="<%= profile.idProofType || '' %>" placeholder="Enter your ID proof type">
+                    </div>
+                </div>
+
+                <div class="field-group">
+                    <label class="field-label">Specialization Domain</label>
+                    <div class="field-display" onclick="startEditing('specializationDomain')">
+                        <span class="field-value <%= !profile.specializationDomain ? 'empty' : '' %>">
+                            <%= profile.specializationDomain || 'Click to add your specialization domain' %>
+                        </span>
+                        <i class="fas fa-pencil-alt edit-icon"></i>
+                    </div>
+                    <div class="field-input-container" id="specializationDomain-field">
+                        <input type="text" class="field-input" value="<%= profile.specializationDomain || '' %>" placeholder="Enter your specialization domain">
+                    </div>
+                </div>
+                <% } %>
+            </section>
+
+            <div class="action-buttons">
+                <button class="btn btn-primary" id="save-all-btn" onclick="saveAllChanges()" disabled>
+                    <i class="fas fa-save"></i> Save All Changes
+                </button>
+                <button class="btn btn-outline" onclick="resetAllChanges()">
+                    <i class="fas fa-undo"></i> Reset All
+                </button>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Parse original profile data from server-side template
+        const role = "<%= role %>";
+        const originalProfile = {
+            name: "<%= profile.name || '' %>",
+            email: "<%= profile.email || '' %>",
+            phone: "<%= profile.phone || '' %>",
+            dob: "<%= profile.dob || '' %>",
+            gender: "<%= profile.gender || '' %>",
+            address: "<%= profile.address || '' %>",
+            age: "<%= profile.age || '' %>",
+            admin_key: "<%= profile.admin_key || '' %>",
+            org_id: "<%= profile.org_id || '' %>",
+            interestedField: "<%= profile.interestedField || '' %>",
+            degreeType: "<%= profile.degreeType || '' %>",
+            licenseIssuer: "<%= profile.licenseIssuer || '' %>",
+            idProofType: "<%= profile.idProofType || '' %>",
+            specializationDomain: "<%= profile.specializationDomain || '' %>"
+        };
+
+        let modifiedFields = {};
+        let isSaving = false;
+
+        // Show notification message
+        function showNotification(message, type = 'success', duration = 5000) {
+            const container = document.getElementById('notification-container');
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            
+            let icon = 'check-circle';
+            if (type === 'error') icon = 'exclamation-circle';
+            if (type === 'warning') icon = 'exclamation-triangle';
+            
+            notification.innerHTML = `
+                <div>
+                    <i class="fas fa-${icon}"></i>
+                    ${message}
+                </div>
+                <button class="notification-close" aria-label="Close notification">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+            
+            container.appendChild(notification);
+            
+            notification.querySelector('.notification-close').addEventListener('click', () => {
+                notification.remove();
+            });
+            
+            if (duration > 0) {
+                setTimeout(() => {
+                    notification.remove();
+                }, duration);
+            }
+        }
+
+        // Start editing a field
+        function startEditing(fieldName) {
+            document.querySelectorAll('.field-input-container').forEach(el => {
+                if (el.id !== `${fieldName}-field`) {
+                    el.style.display = 'none';
+                    const display = el.previousElementSibling;
+                    if (display) display.style.display = 'flex';
+                }
+            });
+            
+            const display = document.querySelector(`#${fieldName}-field`).previousElementSibling;
+            const editContainer = document.getElementById(`${fieldName}-field`);
+            
+            display.style.display = 'none';
+            editContainer.style.display = 'block';
+            
+            const input = editContainer.querySelector('.field-input');
+            if (input) {
+                input.focus();
+                
+                input.addEventListener('input', () => {
+                    const newValue = input.tagName === 'SELECT' ? input.value : input.value.trim();
+                    if (newValue !== originalProfile[fieldName]) {
+                        modifiedFields[fieldName] = newValue;
+                    } else {
+                        delete modifiedFields[fieldName];
+                    }
+                    document.getElementById('save-all-btn').disabled = Object.keys(modifiedFields).length === 0;
+                });
+                
+                input.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') {
+                        editContainer.style.display = 'none';
+                        display.style.display = 'flex';
+                    }
+                });
+            }
+        }
+
+        // Save all changes
+        async function saveAllChanges() {
+            if (Object.keys(modifiedFields).length === 0 || isSaving) return;
+            
+            isSaving = true;
+            const saveBtn = document.getElementById('save-all-btn');
+            saveBtn.disabled = true;
+            saveBtn.innerHTML = `<i class="fas fa-spinner saving-spinner"></i> Saving...`;
+            
+            // Validate required fields based on role
+            if (!modifiedFields.name && !originalProfile.name) {
+                showNotification(`${role === 'organization' ? 'Organization name' : 'Name'} is required`, 'error');
+                isSaving = false;
+                saveBtn.disabled = false;
+                saveBtn.innerHTML = `<i class="fas fa-save"></i> Save All Changes`;
+                return;
+            }
+            if (!modifiedFields.email && !originalProfile.email) {
+                showNotification('Email is required', 'error');
+                isSaving = false;
+                saveBtn.disabled = false;
+                saveBtn.innerHTML = `<i class="fas fa-save"></i> Save All Changes`;
+                return;
+            }
+            if (modifiedFields.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(modifiedFields.email)) {
+                showNotification('Please enter a valid email address', 'error');
+                isSaving = false;
+                saveBtn.disabled = false;
+                saveBtn.innerHTML = `<i class="fas fa-save"></i> Save All Changes`;
+                return;
+            }
+            if ((role === 'user' || role === 'admin' || role === 'organization') && !modifiedFields.phone && !originalProfile.phone) {
+                showNotification('Phone number is required', 'error');
+                isSaving = false;
+                saveBtn.disabled = false;
+                saveBtn.innerHTML = `<i class="fas fa-save"></i> Save All Changes`;
+                return;
+            }
+            if ((role === 'user' || role === 'admin' || role === 'organization') && !modifiedFields.address && !originalProfile.address) {
+                showNotification('Address is required', 'error');
+                isSaving = false;
+                saveBtn.disabled = false;
+                saveBtn.innerHTML = `<i class="fas fa-save"></i> Save All Changes`;
+                return;
+            }
+            if (role === 'user' && !modifiedFields.dob && !originalProfile.dob) {
+                showNotification('Date of birth is required', 'error');
+                isSaving = false;
+                saveBtn.disabled = false;
+                saveBtn.innerHTML = `<i class="fas fa-save"></i> Save All Changes`;
+                return;
+            }
+            if (role === 'user' && !modifiedFields.gender && !originalProfile.gender) {
+                showNotification('Gender is required', 'error');
+                isSaving = false;
+                saveBtn.disabled = false;
+                saveBtn.innerHTML = `<i class="fas fa-save"></i> Save All Changes`;
+                return;
+            }
+            if ((role === 'user' || role === 'dietitian') && !modifiedFields.age && !originalProfile.age) {
+                showNotification('Age is required', 'error');
+                isSaving = false;
+                saveBtn.disabled = false;
+                saveBtn.innerHTML = `<i class="fas fa-save"></i> Save All Changes`;
+                return;
+            }
+            if (role === 'admin' && !modifiedFields.admin_key && !originalProfile.admin_key) {
+                showNotification('Admin key is required', 'error');
+                isSaving = false;
+                saveBtn.disabled = false;
+                saveBtn.innerHTML = `<i class="fas fa-save"></i> Save All Changes`;
+                return;
+            }
+            if (role === 'organization' && !modifiedFields.org_id && !originalProfile.org_id) {
+                showNotification('Organization ID is required', 'error');
+                isSaving = false;
+                saveBtn.disabled = false;
+                saveBtn.innerHTML = `<i class="fas fa-save"></i> Save All Changes`;
+                return;
+            }
+            
+            try {
+                const response = await fetch(`/${role}_dash/update-profile`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(modifiedFields),
+                    credentials: 'include',
+                });
+                const data = await response.json();
+                
+                if (data.success) {
+                    for (const [fieldName, newValue] of Object.entries(modifiedFields)) {
+                        originalProfile[fieldName] = newValue;
+                        const display = document.querySelector(`#${fieldName}-field`).previousElementSibling;
+                        const displayValue = display.querySelector('.field-value');
+                        if (newValue) {
+                            if (fieldName === 'gender') {
+                                displayValue.textContent = newValue.charAt(0).toUpperCase() + newValue.slice(1);
+                            } else {
+                                displayValue.textContent = newValue;
+                            }
+                            displayValue.classList.remove('empty');
+                        } else {
+                            const placeholder = `Click to add your ${fieldName === 'org_id' ? 'organization ID' : fieldName === 'admin_key' ? 'admin key' : fieldName.replace(/([A-Z])/g, ' $1').toLowerCase()}`;
+                            displayValue.textContent = placeholder;
+                            displayValue.classList.add('empty');
+                        }
+                    }
+                    modifiedFields = {};
+                    showNotification('Profile updated successfully!', 'success');
+                    saveBtn.disabled = true;
+                } else {
+                    showNotification(data.message || 'Failed to save changes', 'error');
+                }
+            } catch (error) {
+                showNotification('Failed to save changes. Please try again.', 'error');
+                console.error('Error saving profile:', error);
+            } finally {
+                isSaving = false;
+                saveBtn.innerHTML = `<i class="fas fa-save"></i> Save All Changes`;
+                saveBtn.disabled = Object.keys(modifiedFields).length === 0;
+            }
+        }
+
+        // Reset all changes
+        function resetAllChanges() {
+            if (Object.keys(modifiedFields).length === 0) return;
+            
+            for (const fieldName of Object.keys(modifiedFields)) {
+                const editContainer = document.getElementById(`${fieldName}-field`);
+                const input = editContainer.querySelector('.field-input');
+                const display = editContainer.previousElementSibling;
+                const displayValue = display.querySelector('.field-value');
+                
+                input.value = originalProfile[fieldName] || '';
+                if (originalProfile[fieldName]) {
+                    if (fieldName === 'gender') {
+                        displayValue.textContent = originalProfile[fieldName].charAt(0).toUpperCase() + originalProfile[fieldName].slice(1);
+                    } else {
+                        displayValue.textContent = originalProfile[fieldName];
+                    }
+                    displayValue.classList.remove('empty');
+                } else {
+                    const placeholder = `Click to add your ${fieldName === 'org_id' ? 'organization ID' : fieldName === 'admin_key' ? 'admin key' : fieldName.replace(/([A-Z])/g, ' $1').toLowerCase()}`;
+                    displayValue.textContent = placeholder;
+                    displayValue.classList.add('empty');
+                }
+                
+                editContainer.style.display = 'none';
+                display.style.display = 'flex';
+            }
+            
+            modifiedFields = {};
+            document.getElementById('save-all-btn').disabled = true;
+            showNotification('All changes have been reset', 'warning');
+        }
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', () => {
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('.field-display') && !e.target.closest('.field-input-container')) {
+                    document.querySelectorAll('.field-input-container').forEach(el => {
+                        el.style.display = 'none';
+                        const display = el.previousElementSibling;
+                        if (display) display.style.display = 'flex';
+                    });
+                }
+            });
+            
+            document.querySelectorAll('.field-value').forEach(el => {
+                if (!el.textContent.trim() || el.textContent.trim().startsWith('Click to add')) {
+                    const fieldName = el.closest('.field-group').querySelector('.field-label').textContent.toLowerCase().replace(/ /g, '-').replace('organization-name', 'name').replace('organization-id', 'org_id').replace('admin-key', 'admin_key');
+                    el.textContent = `Click to add your ${fieldName === 'org_id' ? 'organization ID' : fieldName === 'admin_key' ? 'admin key' : fieldName.replace('-', ' ')}`;
+                    el.classList.add('empty');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+   
+    <!-- Chart.js -->
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <style>
+        .logo {
+            display: flex;
+            align-items: center;
+            font-family: 'Poppins', sans-serif;
+            font-size: 24px;
+            font-weight: bold;
+            color: #1E6F5C;
+            text-decoration: none;
+            background-color: #D2F0C8;
+            width: auto;
+            height: 50px;
+            top: 2px;
+            position: sticky;
+            border-radius: 10px;
+            padding: 10px;
+        }
+        .logo .highlight {
+            color: #28B463;
+        }
+        .logo .icon-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: #28B463;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        .logo .icon {
+            font-size: 24px;
+            color: #FFFFFF;
+        }
+        .logo:hover .icon-container {
+            background-color: #1E6F5C;
+            transform: scale(1.1);
+            transition: all 0.3s ease;
+        }
+        .logo:hover {
+            color: #28B463;
+            transition: color 0.3s ease;
+        }
+        body {
+            background-color: #f8f9fa;
+        }
+        .navbar {
+            background-color: #28a745;
+        }
+        .sidebar {
+            background-color: #343a40;
+            color: white;
+            padding: 20px;
+        }
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .sidebar a:hover {
+            background-color: #28a745;
+        }
+        @media(max-width:992px) {
+            .sidebar{
+                height:auto;
+            }
+        }
+        .main-content {
+            padding: 20px;
+        }
+        .card {
+            margin-bottom: 20px;
+            border: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .card-header {
+            background-color: #28a745;
+            color: white;
+            font-weight: bold;
+        }
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border: 5px solid #28a745;
+            border-radius: 50%;
+            object-fit: cover;
+            cursor: pointer;
+        }
+        .badge {
+            font-size: 0.9em;
+        }
+        .btn-custom {
+            margin: 5px;
+        }
+        .contact-icon {
+            color: #1E90FF;
+            transition: color 0.3s ease;
+            margin-left: 10px;
+        }
+        .contact-icon:hover {
+            color: #00BFFF;
+        }
+        .address-text {
+            color: #1E90FF;
+            transition: color 0.3s ease;
+        }
+        .social-icons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .social-icons a {
+            color: #1E90FF;
+            transition: color 0.3s ease;
+        }
+        .social-icons a:hover {
+            color: #00BFFF;
+        }
+        .contact-section {
+            margin-top: 100px;
+            padding: 10px;
+            border:4px solid #00BFFF;
+            border-radius: 10px;
+        }
+        .contact-section h3{
+            margin-bottom: 20px;
+        }
+        .contact-section a:hover{
+            background-color: #007ACC;
+        }
+        .contact-footer {
+            display: none;
+            position: relative;
+            top:1850px;
+            background-color: #343a40;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        @media (max-width: 768px) {
+            .social-icons {
+                flex-direction: row;
+                justify-content: center;
+                gap: 30px;
+            }
+            .main-content{
+               position: relative;
+               top:-220px;
+            }
+            .contact-section {
+                display: none;
+            }
+            .contact-footer {
+                display: block;
+            }
+        }
+        .profile-upload-container {
+            position: relative;
+            display: inline-block;
+        }
+        .profile-upload-btn {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: #28a745;
+            color: white;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .profile-upload-btn:hover {
+            background: #218838;
+        }
+        #profileUpload {
+            display: none;
+        }
+        .upload-text {
+            font-size: 12px;
+            margin-top: 5px;
+            color: #6c757d;
+        }
+        .large-profile-img {
+            max-width: 100%;
+            max-height: 80vh;
+            object-fit: contain;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <div class="logo">
+                <div class="icon-container">
+                    <i class="icon fas fa-leaf"></i>
+                </div>
+                <span>
+                    <span class="highlight">N</span>utri 
+                    <span class="highlight">C</span>onnect
+                    <span>: User</span>
+                </span>
+            </div>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- Main Layout -->
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-3 col-lg-2 sidebar">
+                <h4>Menu</h4>
+                <a href="/user"><i class="fas fa-home"></i> Home</a>
+                <a href="/user-guide"><i class="fas fa-book"></i> Guide</a>
+                <a href="/user-consultations"> <i class="fas fa-user-clock"></i> Appointments </a>
+                <a href="/pricing"><i class="fas fa-crown"></i> Pricing </a>
+                <a href="/blog"><i class="fas fa-blog"></i> Blog</a>
+                <a href="/user-meal-plans"><i class="fas fa-utensils"></i> Meal Plans</a>
+                <a href="/user-schedule"><i class="fas fa-calendar-check"></i> My Schedule</a>
+                <!-- Contact Section -->
+                <div class="contact-section">
+                    <h3>Contact Us :</h3>
+                    <p>
+                        Email :
+                        <a href="https://mail.google.com/mail/?view=cm&to=nutriconnect6@gmail.com" target="_blank">
+                            <i class="fa-solid fa-envelope fa-lg contact-icon"></i>
+                        </a>
+                    </p>
+                    <p>
+                        Phone :
+                        <a href="tel:+917075783143">
+                            <i class="fa-solid fa-phone fa-lg contact-icon"></i>
+                        </a>
+                    </p>
+                    <h3>Follow Us :</h3>
+                    <div class="social-icons">
+                        <a href="https://www.facebook.com/profile.php?id=61572485733709" target="_blank">
+                            <i class="fa-brands fa-facebook fa-xl"></i>
+                        </a>
+                        <a href="https://www.instagram.com/nutriconnect2025?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank">
+                            <i class="fa-brands fa-instagram fa-xl"></i>
+                        </a>
+                        <a href="https://x.com/NutriC21?t=ngy3BuReV6VcrXl3WXrCvg&s=09" target="_blank">
+                            <i class="fa-brands fa-x-twitter fa-xl"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/in/nutri-connect-a0b774349?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank">
+                            <i class="fa-brands fa-linkedin fa-xl"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- Contact Section as Footer -->
+            <div class="contact-footer">
+                <h3>Contact Us :</h3>
+                <p>
+                    Email :
+                    <a href="https://mail.google.com/mail/?view=cm&to=nutriconnect6@gmail.com" target="_blank">
+                        <i class="fa-solid fa-envelope fa-lg contact-icon"></i>
+                    </a>
+                </p>
+                <p>
+                    Phone :
+                    <a href="tel:+917075783143">
+                        <i class="fa-solid fa-phone fa-lg contact-icon"></i>
+                    </a>
+                </p>
+                <p>
+                    Address :
+                    <span class="address-text">Plot No. 45, Greenway Colony, 517681, India</span>
+                </p>
+                <h3>Follow Us :</h3>
+                <div class="social-icons">
+                    <a href="https://www.facebook.com/profile.php?id=61572485733709" target="_blank">
+                        <i class="fa-brands fa-facebook fa-xl"></i>
+                    </a>
+                    <a href="https://www.instagram.com/nutriconnect2025?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank">
+                        <i class="fa-brands fa-instagram fa-xl"></i>
+                    </a>
+                    <a href="https://x.com/NutriC21?t=ngy3BuReV6VcrXl3WXrCvg&s=09" target="_blank">
+                        <i class="fa-brands fa-x-twitter fa-xl"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/in/nutri-connect-a0b774349?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank">
+                        <i class="fa-brands fa-linkedin fa-xl"></i>
+                    </a>
+                </div>
+            </div>
+            <!-- Main Content -->
+            <div class="col-md-9 col-lg-10 main-content">
+                <h2>Welcome, <%= user.name %>!</h2>
+                <div class="row">
+                    <!-- User Info -->
+                    <div class="col-md-4">
+                        <div class="card text-center">
+                            <div class="card-header">User Profile</div>
+                            <div class="card-body">
+                                <div class="profile-upload-container">
+                                    <img id="profileImage" 
+                                         src="<%= user.profileImageBase64 ? user.profileImageBase64 : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2TgOv9CMmsUzYKCcLGWPvqcpUk6HXp2mnww&s' %>" 
+                                         class="profile-img" 
+                                         alt="User Image"
+                                         data-bs-toggle="modal"
+                                         data-bs-target="#imageModal"
+                                         onerror="this.src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2TgOv9CMmsUzYKCcLGWPvqcpUk6HXp2mnww&s'">
+                                    <label for="profileUpload" class="profile-upload-btn" title="Change photo">
+                                        <i class="fas fa-camera"></i>
+                                    </label>
+                                    <input type="file" id="profileUpload" accept="image/*">
+                                </div>
+                                <p class="upload-text">Click camera icon to update your profile photo</p>
+                                <h5 class="card-title mt-2"><%= user.name %></h5>
+                                <p><strong>Age:</strong> <%= user.age %></p>
+                                <p><strong>Email:</strong> <%= user.email %></p>
+                                <p><strong>Phone:</strong> <%= user.phone %></p>
+                                <p><strong>Address:</strong> <%= user.address %></p>
+                                <button class="btn btn-outline-primary btn-sm btn-custom" onclick="window.location.href='/user_dash/edit-profile'">Edit Profile</button>
+                                <button class="btn btn-outline-secondary btn-sm btn-custom" onclick="window.location.href='/user_dash/change-pass'">Change Password</button>
+                                <span class="badge bg-success">Active</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Progress Tracking -->
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-header">Your Progress</div>
+                            <div class="card-body">
+                                <canvas id="progressChart" width="200" height="100"></canvas>
+                                <p id="weightText">Weight: Loading...</p>
+                                <p id="goalText">Goal: Loading...</p>
+                                <p id="waterText">Water Intake: Loading...</p>
+                                <button class="btn btn-outline-success btn-sm btn-custom" onclick="window.location.href='/user-progress'">Update Progress</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Quick Actions -->
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-header">Quick Actions</div>
+                            <div class="card-body">
+                                <button class="btn btn-warning w-100 mb-2 btn-custom" onclick="window.location.href='/dietitian-profiles'">Book Consultation</button>
+                                <button class="btn btn-info w-100 mb-2" onclick="window.location.href='/user-consultations'">My Dietitians</button>
+                                <button class="btn btn-primary w-100 mb-2 btn-custom" onclick="window.location.href='/user-meal-plans'">View Diet Plan</button>
+                                <button class="btn btn-danger w-100 btn-custom" onclick="window.location.href='/'">Log Out</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Recent Activities -->
+                <div class="card mt-4">
+                    <div class="card-header">Recent Activities</div>
+                    <div class="card-body">
+                        <ul class="list-group" id="recentActivities">
+                            <!-- Activities will be dynamically populated by JavaScript -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Image Modal -->
+    <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="imageModalLabel">Profile Image</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <img id="largeProfileImage" src="" class="large-profile-img" alt="Large Profile Image">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Initialize Progress Chart and Recent Activities
+        function initProgressChart() {
+            const weightText = document.getElementById('weightText');
+            const goalText = document.getElementById('goalText');
+            const waterText = document.getElementById('waterText');
+            const recentActivities = document.getElementById('recentActivities');
+            const ctx = document.getElementById('progressChart')?.getContext('2d');
+
+            if (!ctx || typeof Chart === 'undefined') {
+                console.error('Chart.js is not loaded or canvas is missing.');
+                weightText.textContent = 'Weight: N/A';
+                goalText.textContent = 'Goal: N/A';
+                waterText.textContent = 'Water Intake: N/A';
+                recentActivities.innerHTML = '<li class="list-group-item">No progress data available</li>';
+                return;
+            }
+
+            let progressData = [];
+            try {
+                progressData = JSON.parse('<%- JSON.stringify(progressData || []) %>');
+            } catch (e) {
+                console.error('Error parsing data:', e);
+                weightText.textContent = 'Weight: N/A';
+                goalText.textContent = 'Goal: N/A';
+                waterText.textContent = 'Water Intake: N/A';
+                recentActivities.innerHTML = '<li class="list-group-item">Error loading progress data</li>';
+                return;
+            }
+
+            if (progressData.length) {
+                // Update text with latest entry
+                weightText.textContent = `Weight: ${progressData[0].weight} kg`;
+                goalText.textContent = `Goal: ${progressData[0].goal}`;
+                waterText.textContent = `Water Intake: ${progressData[0].waterIntake} L/day`;
+
+                // Populate Recent Activities (up to 4 latest entries)
+                const recentEntries = progressData.slice(0, 4);
+                recentActivities.innerHTML = recentEntries.map(entry => `
+                    <li class="list-group-item">
+                        Updated on ${new Date(entry.createdAt).toLocaleDateString('en-US')}: 
+                        Weight: ${entry.weight} kg, Goal: ${entry.goal}, Water Intake: ${entry.waterIntake} L/day
+                    </li>
+                `).join('');
+            } else {
+                weightText.textContent = 'Weight: N/A';
+                goalText.textContent = 'Goal: N/A';
+                waterText.textContent = 'Water Intake: N/A';
+                recentActivities.innerHTML = '<li class="list-group-item">No progress data available</li>';
+            }
+
+            // Initialize Chart
+            if (progressData.length) {
+                const weightLabels = progressData.slice(-10).map(entry => new Date(entry.createdAt).toLocaleDateString('en-US'));
+                const weightValues = progressData.slice(-10).map(entry => entry.weight);
+
+                new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: weightLabels,
+                        datasets: [{
+                            label: 'Weight (kg)',
+                            data: weightValues,
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderWidth: 2,
+                            fill: false
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: false,
+                                suggestedMin: Math.min(...weightValues) - 5,
+                                suggestedMax: Math.max(...weightValues) + 5
+                            }
+                        }
+                    }
+                });
+            } else {
+                new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: ['No Data'],
+                        datasets: [{
+                            label: 'Weight (kg)',
+                            data: [0],
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderWidth: 2,
+                            fill: false
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: false,
+                                suggestedMin: 0,
+                                suggestedMax: 100
+                            }
+                        }
+                    }
+                });
+            }
+        }
+
+        // Load progress chart and other data on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            if (document.getElementById('progressChart')) {
+                initProgressChart();
+            }
+
+            // Profile Photo Upload
+            document.getElementById('profileUpload').addEventListener('change', async (e) => {
+                const file = e.target.files[0];
+                if (!file) return;
+
+                // Preview image
+                const reader = new FileReader();
+                reader.onload = () => document.getElementById('profileImage').src = reader.result;
+                reader.readAsDataURL(file);
+
+                // Upload to backend
+                const formData = new FormData();
+                formData.append('profileImage', file);
+                try {
+                    const res = await fetch('/uploaduser', { method: 'POST', body: formData });
+                    const data = await res.json();
+                    if (data.success) {
+                        alert('Profile photo uploaded successfully!');
+                        window.location.reload();
+                    } else {
+                        alert(`Upload failed: ${data.message || 'Unknown error'}`);
+                    }
+                } catch (error) {
+                    console.error('Upload error:', error);
+                    alert('Upload error occurred.');
+                }
+            });
+
+            // Set modal image source when modal is shown
+            const imageModal = document.getElementById('imageModal');
+            imageModal.addEventListener('show.bs.modal', () => {
+                const profileImage = document.getElementById('profileImage');
+                const largeProfileImage = document.getElementById('largeProfileImage');
+                largeProfileImage.src = profileImage.src;
+            });
+        });
+    </script>
+</body>
+</html>

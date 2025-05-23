@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meal Plan Generator</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        :root {
+            --primary-color: #2e7d32;
+            --secondary-color: #007bff;
+            --accent-color: #f5f5f5;
+            --text-color: #212121;
+            --border-radius: 12px;
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Roboto', 'Arial', sans-serif;
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            color: var(--text-color);
+            margin: 0;
+            padding: 30px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px;
+            background: #ffffff;
+            border-radius: var(--border-radius);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+            border: 3px solid var(--primary-color);
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        h2 {
+            font-size: 2rem;
+            color: var(--text-color);
+            text-align: center;
+            margin: 40px 0 20px;
+        }
+
+        h4 {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin: 20px 0 10px;
+        }
+
+        p {
+            text-align: center;
+            color: #616161;
+            font-size: 1.15rem;
+            margin-bottom: 30px;
+        }
+
+        .back-button button {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            background: var(--secondary-color);
+            color: #fff;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .back-button button:hover {
+            background: #0056b3;
+            transform: translateY(-2px);
+        }
+
+        .toggle-options {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .toggle-btn {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 30px;
+            border: none;
+            border-radius: 8px;
+            background: var(--accent-color);
+            color: var(--text-color);
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .toggle-btn.active {
+            background: var(--secondary-color);
+            color: #fff;
+        }
+
+        .toggle-btn:hover {
+            background: #0056b3;
+            color: #fff;
+            transform: translateY(-2px);
+        }
+
+        .diet-options {
+            display: grid;
+            grid-template-rows: auto auto;
+            gap: 20px;
+            margin: 30px auto;
+            width: 1000px;
+            justify-content: center;
+            align-content: center;
+            align-items: center;
+        }
+
+        .diet-options-row {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(180px, 1fr));
+            gap: 40px;
+            justify-items: center;
+        }
+
+        .diet-options-row:nth-child(2) {
+            grid-template-columns: repeat(4, minmax(180px, 1fr));
+            justify-self: center;
+        }
+
+        .diet-option {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 16px;
+            border: none;
+            border-radius: 8px;
+            background: var(--accent-color);
+            color: var(--text-color);
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+            width: 180px;
+            box-sizing: border-box;
+            border: 1px solid #bdbdbd;
+        }
+
+        .diet-option.selected {
+            background: var(--primary-color);
+            color: #fff;
+            border-color: var(--primary-color);
+        }
+
+        .diet-option:hover {
+            background: #388e3c;
+            color: #fff;
+            transform: translateY(-2px);
+            border-color: #388e3c;
+        }
+
+        .input-group {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin: 25px 0;
+            flex-wrap: wrap;
+        }
+
+        .input-group span {
+            font-size: 1.1rem;
+            color: var(--text-color);
+        }
+
+        input[type="number"], select {
+            padding: 12px;
+            border: 1px solid #bdbdbd;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="number"]:focus, select:focus {
+            border-color: var(--primary-color);
+            outline: none;
+        }
+
+        input[type="number"] {
+            width: 140px;
+        }
+
+        select {
+            width: 140px;
+        }
+
+        .macros {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 30px 0;
+            padding: 25px;
+            background: var(--accent-color);
+            border-radius: var(--border-radius);
+        }
+
+        .macros span {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 20px;
+            border-radius: 8px;
+            background: #fff;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .macros span:hover {
+            background: var(--secondary-color);
+            color: #fff;
+            transform: translateY(-2px);
+        }
+
+        .generate-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            width: 100%;
+            max-width: 400px;
+            margin: 30px auto;
+            padding: 16px;
+            border: none;
+            border-radius: 8px;
+            background: var(--primary-color);
+            color: #fff;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .generate-btn:hover {
+            background: #1b5e20;
+            transform: translateY(-2px);
+        }
+
+        #meal-plan {
+            margin-top: 40px;
+            padding: 25px;
+            background: var(--accent-color);
+            border-radius: var(--border-radius);
+        }
+
+        .loading-spinner {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.3rem;
+            color: var(--text-color);
+        }
+
+        #meal-plan-content {
+            display: grid;
+            gap: 25px;
+        }
+
+        .meal-card {
+            display: flex;
+            align-items: center;
+            padding: 25px;
+            background: #fff;
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+        }
+
+        .meal-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        }
+
+        .meal-card img {
+            width: 110px;
+            height: 110px;
+            border-radius: 8px;
+            margin-right: 25px;
+            object-fit: cover;
+        }
+
+        .meal-card h3 {
+            margin: 0;
+            font-size: 1.4rem;
+            color: var(--text-color);
+        }
+
+        .meal-card p {
+            margin: 10px 0;
+            color: #616161;
+            font-size: 1rem;
+            text-align: left;
+        }
+
+        i {
+            font-size: 1.2rem;
+        }
+
+        .toggle-btn i, .diet-option i, .generate-btn i, .macros i {
+            font-size: 1.5rem;
+        }
+
+        /* Modal styles */
+        .modal-content {
+            border-radius: var(--border-radius);
+            border: 2px solid var(--primary-color);
+        }
+
+        .modal-header {
+            background: var(--primary-color);
+            color: #fff;
+            border-top-left-radius: var(--border-radius);
+            border-top-right-radius: var(--border-radius);
+        }
+
+        .modal-body {
+            font-size: 1.1rem;
+            color: var(--text-color);
+        }
+
+        .modal-footer .btn-secondary {
+            background: var(--secondary-color);
+            border: none;
+            transition: var(--transition);
+        }
+
+        .modal-footer .btn-secondary:hover {
+            background: #0056b3;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 20px;
+            }
+
+            .container {
+                padding: 25px;
+            }
+
+            .diet-options {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto;
+                width: 100%;
+            }
+
+            .diet-options-row {
+                grid-template-columns: 1fr;
+            }
+
+            .diet-options-row:nth-child(2) {
+                grid-template-columns: 1fr;
+            }
+
+            .diet-option {
+                width: 100%;
+                max-width: 180px;
+                margin: 0 auto;
+            }
+
+            .macros {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .meal-card {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .meal-card img {
+                margin: 0 0 20px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="back-button">
+            <button onclick="history.back()"><i class="fas fa-arrow-left"></i> Back</button>
+        </div>
+
+        <h1>Personalized Meal Plan Generator</h1>
+        <p>Customize your diet and generate a tailored meal plan effortlessly.</p>
+
+        <div class="toggle-options">
+            <button id="ai-toggle" class="toggle-btn active" onclick="toggleMode('ai')">
+                <i class="fas fa-robot"></i> AI-Generated
+            </button>
+            <button id="dietitian-toggle" class="toggle-btn" onclick="toggleMode('dietitian')">
+                <i class="fas fa-user-md"></i> Dietitian-Generated
+            </button>
+        </div>
+
+        <div class="diet-options">
+            <div class="diet-options-row">
+                <div class="diet-option selected" onclick="selectDiet(this)">
+                    <i class="fas fa-utensils"></i> Anything
+                </div>
+                <div class="diet-option" onclick="selectDiet(this)">
+                    <i class="fas fa-bacon"></i> Keto
+                </div>
+                <div class="diet-option" onclick="selectDiet(this)">
+                    <i class="fas fa-fish"></i> Mediterranean
+                </div>
+                <div class="diet-option" onclick="selectDiet(this)">
+                    <i class="fas fa-drumstick-bite"></i> Paleo
+                </div>
+            </div>
+            <div class="diet-options-row">
+                <div class="diet-option" onclick="selectDiet(this)">
+                    <i class="fas fa-carrot"></i> Vegan
+                </div>
+                <div class="diet-option" onclick="selectDiet(this)">
+                    <i class="fas fa-carrot"></i> Vegetarian
+                </div>
+                <div class="diet-option" onclick="selectDiet(this)">
+                    <i class="fas fa-seedling"></i> Low-Carb
+                </div>
+                <div class="diet-option" onclick="selectDiet(this)">
+                    <i class="fas fa-bread-slice"></i> Gluten-Free
+                </div>
+            </div>
+        </div>
+
+        <div class="input-group">
+            <label for="calories-lower"><i class="fas fa-fire"></i> Calorie Range:</label>
+            <input type="number" id="calories-lower" value="1500" min="1000" max="5000" placeholder="Lower"> kcal
+            <span>to</span>
+            <input type="number" id="calories-upper" value="2500" min="1000" max="5000" placeholder="Upper"> kcal
+        </div>
+
+        <div class="input-group">
+            <label for="meals"><i class="fas fa-utensil-spoon"></i> Meals per Day:</label>
+            <select id="meals">
+                <option value="2">2 meals</option>
+                <option value="3" selected>3 meals</option>
+                <option value="4">4 meals</option>
+                <option value="5">5 meals</option>
+            </select>
+        </div>
+
+        <div class="macros">
+            <span><i class="fas fa-bread-slice"></i> Min 90g Carbs</span>
+            <span><i class="fas fa-cheese"></i> Min 40g Fat</span>
+            <span><i class="fas fa-dumbbell"></i> Min 90g Protein</span>
+        </div>
+
+        <button id="generate-plan-btn" class="generate-btn" onclick="generatePlan()">
+            <i class="fas fa-magic"></i> Generate Meal Plan
+        </button>
+
+        <h2>Your Meal Plan</h2>
+        <div id="meal-plan">
+            <div class="loading-spinner" id="loading-spinner">
+                <i class="fas fa-spinner fa-spin"></i> Generating your meal plan...
+            </div>
+            <div id="meal-plan-content"></div>
+        </div>
+
+        <!-- Error Modal -->
+        <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" id="errorModalMessage">
+                        An error occurred while generating your meal plan.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/meal_user.js"></script>
+    <script>
+        let currentMode = "ai";
+
+        // Default dietitian plan
+        const defaultDietitianPlan = {
+            dietitianName: "Dr. General Nutritionist",
+            meals: [
+                { name: "Breakfast: Whole grain toast with avocado and a boiled egg (400 cal)", image: "https://images.unsplash.com/photo-1482049016688-2d3e1b311543" },
+                { name: "Lunch: Grilled chicken salad with mixed greens and olive oil dressing (500 cal)", image: "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398" },
+                { name: "Snack: A handful of mixed nuts and a piece of fruit (200 cal)", image: "https://images.unsplash.com/photo-1494390248081-4e521a5940db" },
+                { name: "Dinner: Grilled fish with quinoa and steamed vegetables (600 cal)", image: "https://images.unsplash.com/photo-1516108317508-a6a405209d56" }
+            ]
+        };
+
+        function toggleMode(mode) {
+            currentMode = mode;
+            document.querySelectorAll(".toggle-btn").forEach(btn => btn.classList.remove("active"));
+            document.getElementById(`${mode}-toggle`).classList.add("active");
+        }
+
+        function selectDiet(element) {
+            document.querySelectorAll(".diet-option").forEach(opt => opt.classList.remove("selected"));
+            element.classList.add("selected");
+        }
+
+        function getCalorieRanges(lower, upper) {
+            lower = Number(lower);
+            upper = Number(upper);
+            if (!mealPlans["Anything"]) return [];
+            const ranges = [];
+            for (const range of Object.keys(mealPlans["Anything"])) {
+                const [min, max] = range.split("-").map(Number);
+                if (max >= lower && min <= upper) {
+                    ranges.push(range);
+                }
+            }
+            return ranges;
+        }
+
+        async function generatePlan() {
+            const dietElement = document.querySelector(".diet-option.selected");
+            if (!dietElement) {
+                showErrorModal("Please select a diet option.");
+                return;
+            }
+            const diet = dietElement.textContent.trim();
+            const lowerCalories = document.getElementById("calories-lower").value;
+            const upperCalories = document.getElementById("calories-upper").value;
+            const meals = Number(document.getElementById("meals").value);
+            const mealPlanDiv = document.getElementById("meal-plan-content");
+            const loadingSpinner = document.getElementById("loading-spinner");
+
+            // Validate calorie inputs
+            if (!lowerCalories || !upperCalories || Number(lowerCalories) > Number(upperCalories)) {
+                showErrorModal("Please ensure the lower calorie range is less than or equal to the upper range and both are valid.");
+                return;
+            }
+
+            // Default AI meal plan
+            const defaultAIMealPlan = [
+                { name: "Breakfast: Avocado toast with poached egg (650 cal)", image: "https://images.unsplash.com/photo-1482049016688-2d3e1b311543" },
+                { name: "Lunch: Chickpea and spinach curry with rice (690 cal)", image: "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398" },
+                { name: "Dinner: Mushroom risotto with parmesan (670 cal)", image: "https://images.unsplash.com/photo-1516108317508-a6a405209d56" }
+            ].slice(0, meals);
+
+            loadingSpinner.style.display = "flex";
+            mealPlanDiv.innerHTML = "";
+
+            try {
+                let mealText = "";
+                if (currentMode === "ai") {
+                    const calorieRanges = getCalorieRanges(lowerCalories, upperCalories);
+                    if (calorieRanges.length > 0 && mealPlans[diet]) {
+                        // Select a random calorie range
+                        const randomRange = calorieRanges[Math.floor(Math.random() * calorieRanges.length)];
+                        mealText = `<h3>Your AI-Generated Meal Plan:</h3><h4>Calorie Range: ${randomRange}</h4>`;
+                        
+                        // Check if meal plan exists for the selected range and number of meals
+                        if (mealPlans[diet][randomRange] && mealPlans[diet][randomRange][meals]) {
+                            mealPlans[diet][randomRange][meals].forEach((meal, index) => {
+                                mealText += `
+                                    <div class="meal-card">
+                                        <img src="${meal.image}" alt="${meal.name}">
+                                        <div>
+                                            <h3>Meal ${index + 1}</h3>
+                                            <p>${meal.name}</p>
+                                        </div>
+                                    </div>
+                                `;
+                            });
+                        } else {
+                            // Fallback to default AI meal plan
+                            mealText = `<h3>Default AI-Generated Meal Plan:</h3>`;
+                            defaultAIMealPlan.forEach((meal, index) => {
+                                mealText += `
+                                    <div class="meal-card">
+                                        <img src="${meal.image}" alt="${meal.name}">
+                                        <div>
+                                            <h3>Meal ${index + 1}</h3>
+                                            <p>${meal.name}</p>
+                                        </div>
+                                    </div>
+                                `;
+                            });
+                        }
+                    } else {
+                        // Fallback to default AI meal plan
+                        mealText = `<h3>Default AI-Generated Meal Plan:</h3>`;
+                        defaultAIMealPlan.forEach((meal, index) => {
+                            mealText += `
+                                <div class="meal-card">
+                                    <img src="${meal.image}" alt="${meal.name}">
+                                    <div>
+                                        <h3>Meal ${index + 1}</h3>
+                                        <p>${meal.name}</p>
+                                    </div>
+                                </div>
+                            `;
+                        });
+                    }
+                } else {
+                    // Dietitian-Generated Mode: Fetch from backend
+                    const date = new Date().toISOString().split('T')[0]; // Current date
+                    const response = await fetch(`/fetch-plans?dietType=${encodeURIComponent(diet)}&minCalories=${lowerCalories}&maxCalories=${upperCalories}&mealCount=${meals}&date=${date}`);
+                    if (!response.ok) {
+                        const errorData = await response.json().catch(() => ({}));
+                        throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
+                    }
+                    const data = await response.json();
+                    if (!data.success) throw new Error(data.message || "Failed to fetch plans");
+
+                    let selectedPlan;
+                    if (data.plans && data.plans.length > 0) {
+                        // Select a random plan from the fetched plans
+                        selectedPlan = data.plans[Math.floor(Math.random() * data.plans.length)];
+                    } else {
+                        // Use default dietitian plan if no plans are found
+                        selectedPlan = defaultDietitianPlan;
+                    }
+
+                    // Add heading and calorie range, keep dietitian name in h3
+                    mealText = `<h3>Your Dietitian-Generated Meal Plan:</h3><h4>Calorie Range: ${lowerCalories}-${upperCalories}</h4>`;
+                    mealText += `<h3>Dietitian: ${selectedPlan.dietitianName}</h3>`;
+                    const selectedMeals = selectedPlan.meals.slice(0, meals);
+                    selectedMeals.forEach((meal, index) => {
+                        const imageSrc = meal.image || "https://via.placeholder.com/110?text=No+Image";
+                        mealText += `
+                            <div class="meal-card">
+                                <img src="${imageSrc}" alt="${meal.name}">
+                                <div>
+                                    <h3>Meal ${index + 1}</h3>
+                                    <p>${meal.name}</p>
+                                </div>
+                            </div>
+                        `;
+                    });
+                }
+
+                loadingSpinner.style.display = "none";
+                mealPlanDiv.innerHTML = mealText;
+            } catch (error) {
+                console.error("Error generating meal plan:", error);
+                loadingSpinner.style.display = "none";
+                showErrorModal(error.message);
+            }
+        }
+
+        function showErrorModal(message) {
+            const modalMessage = document.getElementById("errorModalMessage");
+            modalMessage.textContent = message;
+            const modal = new bootstrap.Modal(document.getElementById("errorModal"));
+            modal.show();
+        }
+    </script>
+</body>
+</html>

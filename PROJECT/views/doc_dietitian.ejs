@@ -1,0 +1,430 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Documents - Dietitian</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+<style>
+    body {
+        background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+    }
+    .upload-container {
+        width: 100%;
+        max-width: 650px;
+        padding: 20px;
+    }
+    .upload-form {
+        background: #ffffff;
+        padding: 30px;
+        border-radius: 15px;
+        border: 3px solid #a3c293;
+    }
+    .upload-form:hover {
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+    }
+    h2 {
+        color: #2e7d32;
+        font-weight: bold;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+    .form-label {
+        color: #388e3c;
+        font-weight: bold;
+    }
+    .upload-container .form-select {
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        padding: 10px;
+        background-color: #50c878;
+        color: white;
+        cursor: pointer;
+    }
+    .upload-container .form-select option {
+        background-color: #90ee90;
+        color: #333;
+    }
+    .upload-container .form-select option:hover {
+        background-color: #218838;
+        color: white;
+    }
+    .btn-success {
+        background-color: #4CAF50;
+        border: none;
+        border-radius: 8px;
+        padding: 12px;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+    }
+    .btn-success:hover {
+        background-color: #388e3c;
+    }
+    .form-control:disabled {
+        background-color: #e9ecef;
+        cursor: not-allowed;
+    }
+    .invalid-feedback {
+        color: #dc3545;
+        font-size: 0.875em;
+        margin-top: 5px;
+    }
+    .optional-msg {
+        color: #6c757d;
+        font-size: 0.875em;
+        margin-top: 5px;
+    }
+    #successMessage {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: rgba(76, 175, 80, 0.9);
+        color: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+        text-align: center;
+        width: 300px;
+        display: none;
+    }
+    #cross {
+        position: fixed;
+        top: 5px;
+        left: 10px;
+        line-height: 20px;
+        font-size: 40px;
+        border-radius: 100%;
+    }
+    </style>  
+</head>
+<body>
+
+<!-- Back Button -->
+<div id="cross" class="btn btn-outline-success" onclick="window.history.back();">
+    <i class="fa-solid fa-xmark"></i>
+</div>
+
+    <div class="upload-container">
+        <form id="documentUploadForm" class="upload-form needs-validation"
+              method="POST" enctype="multipart/form-data"
+              onsubmit="return handleDocumentUpload(event)" novalidate
+              data-redirect="organization.html">
+
+            <h2>Upload Documents</h2>
+
+            <!-- Interested Field -->
+            <div class="mb-4">
+                <label for="interestedField" class="form-label">Interested In:</label>
+                <select id="interestedField" class="form-select" required>
+                    <option value="" disabled selected hidden>Select your role</option>
+                    <option value="weight_loss_gain">Weight Loss/Gain</option>
+                    <option value="diabetes_thyroid_management">Diabetes/Thyroid Management</option>
+                    <option value="cardiac_health">Cardiac Health</option>
+                    <option value="women_health">Women Health</option>
+                    <option value="skin_hair_care">Skin and Hair Care</option>
+                    <option value="gut_digestive_health">Gut/Digestive Health</option>
+                </select>
+                <div class="invalid-feedback">Please select an option.</div>
+            </div>
+
+            <!-- Resume Field -->
+            <div class="mb-4">
+                <label for="resume" class="form-label">Resume (PDF, max 5MB):</label>
+                <input id="resume" type="file" class="form-control" accept=".pdf" required disabled />
+                <div class="invalid-feedback">Please upload your resume (PDF, max 5MB).</div>
+            </div>
+
+            <!-- Degree Certificate Field -->
+            <div class="mb-4">
+                <label for="degreeType" class="form-label">Degree Type:</label>
+                <select id="degreeType" class="form-select" required>
+                    <option value="" disabled selected hidden>Select your degree</option>
+                    <option value="bsc">B.Sc. in Nutrition/Dietetics</option>
+                    <option value="msc">M.Sc. in Nutrition/Dietetics</option>
+                    <option value="food_science">B.Sc./M.Sc. in Food Science</option>
+                    <option value="other">Other</option>
+                </select>
+                <div class="invalid-feedback">Please select your degree type.</div>
+                <label for="degreeCertificate" class="form-label mt-2">Degree Certificate (PDF, max 5MB):</label>
+                <input id="degreeCertificate" type="file" class="form-control" accept=".pdf" required disabled />
+                <div class="invalid-feedback">Please upload your degree certificate (PDF, max 5MB).</div>
+            </div>
+
+            <!-- License Document Field -->
+            <div class="mb-4">
+                <label for="licenseIssuer" class="form-label">License Issued By:</label>
+                <select id="licenseIssuer" class="form-select" required>
+                    <option value="" disabled selected hidden>Select license issuer</option>
+                    <option value="ida">Indian Dietetic Association (IDA)</option>
+                    <option value="cdr">Commission on Dietetic Registration (U.S.)</option>
+                    <option value="other">Other</option>
+                </select>
+                <div class="invalid-feedback">Please select the license issuer.</div>
+                <label for="licenseDocument" class="form-label mt-2">License Document (PDF, max 5MB):</label>
+                <input id="licenseDocument" type="file" class="form-control" accept=".pdf" required disabled />
+                <div class="invalid-feedback">Please upload your license document (PDF, max 5MB).</div>
+            </div>
+
+            <!-- ID Proof Field -->
+            <div class="mb-4">
+                <label for="idProofType" class="form-label">Government ID Proof Type:</label>
+                <select id="idProofType" class="form-select" required>
+                    <option value="" disabled selected hidden>Select ID proof type</option>
+                    <option value="passport">Passport</option>
+                    <option value="aadhaar">Aadhaar Card</option>
+                    <option value="driver_license">Driver's License</option>
+                    <option value="other">Other</option>
+                </select>
+                <div class="invalid-feedback">Please select your ID proof type.</div>
+                <label for="idProof" class="form-label mt-2">Government ID Proof (PDF/Image, max 2MB):</label>
+                <input id="idProof" type="file" class="form-control" accept=".pdf,.jpg,.png" required disabled />
+                <div class="invalid-feedback">Please upload your ID proof (PDF/Image, max 2MB).</div>
+            </div>
+
+            <!-- Experience Certificates Field (Optional) -->
+            <div class="mb-4">
+                <label for="experienceCertificates" class="form-label">Experience Certificates (PDF, max 5MB):</label>
+                <input id="experienceCertificates" type="file" class="form-control" accept=".pdf" />
+                <div class="invalid-feedback">Experience certificates file size exceeds 5MB.</div>
+                <div class="optional-msg">Optional: Upload experience certificates (PDF, max 5MB).</div>
+            </div>
+
+            <!-- Specialization Certifications Field (Optional) -->
+            <div class="mb-4">
+                <label for="specializationDomain" class="form-label">Specialization Domain:</label>
+                <select id="specializationDomain" class="form-select">
+                    <option value="" disabled selected hidden>Select specialization domain</option>
+                    <option value="sports_nutrition">Sports Nutrition</option>
+                    <option value="pediatric_nutrition">Pediatric Nutrition</option>
+                    <option value="weight_management">Weight Management</option>
+                    <option value="other">Other</option>
+                </select>
+                <div class="optional-msg">Optional: Select specialization domain.</div>
+                <label for="specializationCertifications" class="form-label mt-2">Specialization Certifications (PDF, max 5MB):</label>
+                <input id="specializationCertifications" type="file" class="form-control" accept=".pdf" />
+                <div class="invalid-feedback">Specialization Certifications file size exceeds 5MB.</div>
+                <div class="optional-msg">Optional: Upload specialization certifications (PDF, max 5MB).</div>
+            </div>
+
+            <!-- Internship Completion Certificate Field (Optional) -->
+            <div class="mb-4">
+                <label for="internshipCertificate" class="form-label">Internship Completion Certificate (PDF, max 5MB):</label>
+                <input id="internshipCertificate" type="file" class="form-control" accept=".pdf" />
+                <div class="invalid-feedback">Internship Completion Certificate file size exceeds 5MB.</div>
+                <div class="optional-msg">Optional: Upload internship completion certificate (PDF, max 5MB).</div>
+            </div>
+
+            <!-- Research Papers/Publications Field (Optional) -->
+            <div class="mb-4">
+                <label for="researchPapers" class="form-label">Research Papers/Publications (PDF, max 5MB):</label>
+                <input id="researchPapers" type="file" class="form-control" accept=".pdf" />
+                <div class="invalid-feedback">Research papers file size exceeds 5MB.</div>
+                <div class="optional-msg">Optional: Upload research papers/publications (PDF, max 5MB).</div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="d-grid">
+                <button type="submit" class="btn btn-success">Submit Documents</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- <script src="/js/port.js"></script> -->
+
+    <script>
+    
+    async function handleDocumentUpload(event) {
+        event.preventDefault();
+
+        // Enable all file inputs before submission
+        document.querySelectorAll('input[type="file"]').forEach(input => {
+            input.disabled = false;
+        });
+
+        // Reset validation state
+        resetValidation();
+
+        // Validate form fields
+        const isValid = validateForm();
+
+        if (isValid) {
+            // Create a FormData object
+            const formData = new FormData();
+
+            // Append all form data to the FormData object
+            formData.append('interestedField', document.getElementById('interestedField').value);
+            formData.append('resume', document.getElementById('resume').files[0]);
+            formData.append('degreeType', document.getElementById('degreeType').value);
+            formData.append('degreeCertificate', document.getElementById('degreeCertificate').files[0]);
+            formData.append('licenseIssuer', document.getElementById('licenseIssuer').value);
+            formData.append('licenseDocument', document.getElementById('licenseDocument').files[0]);
+            formData.append('idProofType', document.getElementById('idProofType').value);
+            formData.append('idProof', document.getElementById('idProof').files[0]);
+            formData.append('experienceCertificates', document.getElementById('experienceCertificates').files[0]);
+            formData.append('specializationDomain', document.getElementById('specializationDomain').value);
+            formData.append('specializationCertifications', document.getElementById('specializationCertifications').files[0]);
+            formData.append('internshipCertificate', document.getElementById('internshipCertificate').files[0]);
+            formData.append('researchPapers', document.getElementById('researchPapers').files[0]);
+
+            try {
+            // Send the data to the server
+            const response = await fetch(`/dietitian-doc/upload`, {
+                // `http://localhost:${PORT}/dietitian-doc/upload`
+                method: 'POST',
+                body: formData, // Use FormData directly
+            });
+
+            if (response.ok) {
+                alert("Documents Uploaded Successfully"); 
+                setTimeout(() => {
+                    window.location.href = "/dietitian"; 
+                }, 10); 
+            }
+              
+            else {
+                alert("Upload failed!");
+            }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred while uploading the documents. Please try again.');
+            }
+        }
+    }
+
+        // Function to reset validation state
+        function resetValidation() {
+            document.querySelectorAll('.is-invalid').forEach((el) => {
+                el.classList.remove('is-invalid');
+            });
+            document.querySelectorAll('.invalid-feedback').forEach((el) => {
+                el.style.display = 'none';
+            });
+        }
+
+        // Function to validate form fields
+        function validateForm() {
+            const maxResumeSize = 5 * 1024 * 1024; // 5MB
+            const maxDegreeCertificateSize = 5 * 1024 * 1024; // 5MB
+            const maxLicenseDocumentSize = 5 * 1024 * 1024; // 5MB
+            const maxIdProofSize = 2 * 1024 * 1024; // 2MB
+            const maxExperienceCertificatesSize = 5 * 1024 * 1024; // 5MB
+            const maxSpecializationCertificationsSize = 5 * 1024 * 1024; // 5MB
+            const maxInternshipCertificateSize = 5 * 1024 * 1024; // 5MB
+            const maxResearchPapersSize = 5 * 1024 * 1024; // 5MB
+
+            let isValid = true;
+
+            // Validate required fields
+            if (!document.getElementById('interestedField').value) {
+                showInvalidFeedback(document.getElementById('interestedField'), "Please select your role.");
+                isValid = false;
+            }
+            if (!document.getElementById('resume').files[0]) {
+                showInvalidFeedback(document.getElementById('resume'), "Please upload your resume.");
+                isValid = false;
+            }
+            if (!document.getElementById('degreeType').value) {
+                showInvalidFeedback(document.getElementById('degreeType'), "Please select your degree type.");
+                isValid = false;
+            }
+            if (!document.getElementById('degreeCertificate').files[0]) {
+                showInvalidFeedback(document.getElementById('degreeCertificate'), "Please upload your degree certificate.");
+                isValid = false;
+            }
+            if (!document.getElementById('licenseIssuer').value) {
+                showInvalidFeedback(document.getElementById('licenseIssuer'), "Please select the license issuer.");
+                isValid = false;
+            }
+            if (!document.getElementById('licenseDocument').files[0]) {
+                showInvalidFeedback(document.getElementById('licenseDocument'), "Please upload your license document.");
+                isValid = false;
+            }
+            if (!document.getElementById('idProofType').value) {
+                showInvalidFeedback(document.getElementById('idProofType'), "Please select your ID proof type.");
+                isValid = false;
+            }
+            if (!document.getElementById('idProof').files[0]) {
+                showInvalidFeedback(document.getElementById('idProof'), "Please upload your ID proof.");
+                isValid = false;
+            }
+
+            // Validate file sizes for non-optional fields
+            if (document.getElementById('resume').files[0] && document.getElementById('resume').files[0].size > maxResumeSize) {
+                showInvalidFeedback(document.getElementById('resume'), "Resume file size exceeds 5MB.");
+                isValid = false;
+            }
+            if (document.getElementById('degreeCertificate').files[0] && document.getElementById('degreeCertificate').files[0].size > maxDegreeCertificateSize) {
+                showInvalidFeedback(document.getElementById('degreeCertificate'), "Degree certificate file size exceeds 5MB.");
+                isValid = false;
+            }
+            if (document.getElementById('licenseDocument').files[0] && document.getElementById('licenseDocument').files[0].size > maxLicenseDocumentSize) {
+                showInvalidFeedback(document.getElementById('licenseDocument'), "License document file size exceeds 5MB.");
+                isValid = false;
+            }
+            if (document.getElementById('idProof').files[0] && document.getElementById('idProof').files[0].size > maxIdProofSize) {
+                showInvalidFeedback(document.getElementById('idProof'), "ID proof file size exceeds 2MB.");
+                isValid = false;
+            }
+
+            // Validate file sizes for optional fields (only if a file is uploaded)
+            if (document.getElementById('experienceCertificates').files[0] && document.getElementById('experienceCertificates').files[0].size > maxExperienceCertificatesSize) {
+                showInvalidFeedback(document.getElementById('experienceCertificates'), "Experience certificates file size exceeds 5MB.");
+                isValid = false;
+            }
+            if (document.getElementById('specializationCertifications').files[0] && document.getElementById('specializationCertifications').files[0].size > maxSpecializationCertificationsSize) {
+                showInvalidFeedback(document.getElementById('specializationCertifications'), "Specialization certifications file size exceeds 5MB.");
+                isValid = false;
+            }
+            if (document.getElementById('internshipCertificate').files[0] && document.getElementById('internshipCertificate').files[0].size > maxInternshipCertificateSize) {
+                showInvalidFeedback(document.getElementById('internshipCertificate'), "Internship certificate file size exceeds 5MB.");
+                isValid = false;
+            }
+            if (document.getElementById('researchPapers').files[0] && document.getElementById('researchPapers').files[0].size > maxResearchPapersSize) {
+                showInvalidFeedback(document.getElementById('researchPapers'), "Research papers file size exceeds 5MB.");
+                isValid = false;
+            }
+
+            return isValid;
+        }
+
+        // Function to display invalid feedback for a field
+        function showInvalidFeedback(field, message) {
+            const invalidFeedback = field.nextElementSibling;
+            if (invalidFeedback && invalidFeedback.classList.contains('invalid-feedback')) {
+                invalidFeedback.textContent = message;
+                invalidFeedback.style.display = 'block';
+            }
+            field.classList.add('is-invalid');
+        }
+
+        // Enable file inputs when their respective dropdowns are selected
+        document.getElementById('interestedField').addEventListener('change', function() {
+            document.getElementById('resume').disabled = false;
+        });
+        document.getElementById('degreeType').addEventListener('change', function() {
+            document.getElementById('degreeCertificate').disabled = false;
+        });
+        document.getElementById('licenseIssuer').addEventListener('change', function() {
+            document.getElementById('licenseDocument').disabled = false;
+        });
+        document.getElementById('idProofType').addEventListener('change', function() {
+            document.getElementById('idProof').disabled = false;
+        });
+    </script>
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
+</body>
+</html>

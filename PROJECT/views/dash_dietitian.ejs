@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dietitian Dashboard</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <style>
+        .logo {
+            display: flex;
+            align-items: center;
+            font-family: 'Poppins', sans-serif;
+            font-size: 24px;
+            font-weight: bold;
+            color: #1E6F5C;
+            text-decoration: none;
+            background-color: #D2F0C8;
+            width: auto;
+            height: 50px;
+            top: 2px;
+            position: sticky;
+            border-radius: 10px;
+            padding: 10px;
+        }
+        .logo .highlight {
+            color: #28B463;
+        }
+        .logo .icon-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: #28B463;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        .logo .icon {
+            font-size: 24px;
+            color: #FFFFFF;
+        }
+        .logo:hover .icon-container {
+            background-color: #1E6F5C;
+            transform: scale(1.1);
+            transition: all 0.3s ease;
+        }
+        .logo:hover {
+            color: #28B463;
+            transition: color 0.3s ease;
+        }
+        body {
+            background-color: #f8f9fa;
+        }
+        .navbar {
+            background-color: #28a745;
+        }
+        .sidebar {
+            background-color: #343a40;
+            color: white;
+            padding: 20px;
+        }
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .sidebar a:hover {
+            background-color: #28a745;
+        }
+        @media(max-width: 992px) {
+            .sidebar {
+                height: auto;
+            }
+        }
+        .main-content {
+            padding: 20px;
+        }
+        .card {
+            margin-bottom: 20px;
+            border: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .card-header {
+            background-color: #28a745;
+            color: white;
+            font-weight: bold;
+        }
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border: 5px solid #28a745;
+            border-radius: 50%;
+            object-fit: cover;
+            cursor: pointer;
+            background-color: #f0f0f0;
+        }
+        .badge {
+            font-size: 0.9em;
+        }
+        .btn-custom {
+            margin: 5px;
+        }
+        .contact-icon {
+            color: #1E90FF;
+            transition: color 0.3s ease;
+            margin-left: 10px;
+        }
+        .contact-icon:hover {
+            color: #00BFFF;
+        }
+        .address-text {
+            color: #1E90FF;
+            transition: color 0.3s ease;
+        }
+        .social-icons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .social-icons a {
+            color: #1E90FF;
+            transition: color 0.3s ease;
+        }
+        .social-icons a:hover {
+            color: #00BFFF;
+        }
+        .contact-section {
+            margin-top: 100px;
+            padding: 10px;
+            border: 4px solid #00BFFF;
+            border-radius: 10px;
+        }
+        .contact-section h3 {
+            margin-bottom: 20px;
+        }
+        .contact-section a:hover {
+            background-color: #007ACC;
+        }
+        .contact-footer {
+            display: none;
+            position: relative;
+            top: 1700px;
+            background-color: #343a40;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        .verification-status {
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+            font-weight: bold;
+            
+        }
+        .verified {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .pending {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+        .rejected {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        .profile-upload-container {
+            position: relative;
+            display: inline-block;
+        }
+        .profile-upload-btn {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: #28a745;
+            color: white;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .profile-upload-btn:hover {
+            background: #218838;
+        }
+        #profileUpload {
+            display: none;
+        }
+        .upload-text {
+            font-size: 12px;
+            margin-top: 5px;
+            color: #6c757d;
+        }
+        .large-profile-img {
+            max-width: 100%;
+            max-height: 80vh;
+            object-fit: contain;
+        }
+        @media (max-width: 768px) {
+            .social-icons {
+                flex-direction: row;
+                justify-content: center;
+                gap: 30px;
+            }
+            .main-content {
+                position: relative;
+                top: -220px;
+            }
+            .contact-section {
+                display: none;
+            }
+            .contact-footer {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <div class="logo">
+                <div class="icon-container">
+                    <i class="icon fas fa-leaf"></i>
+                </div>
+                <span>
+                    <span class="highlight">N</span>utri
+                    <span class="highlight">C</span>onnect
+                    <span>: Dietitian</span>
+                </span>
+            </div>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- Main Layout -->
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-3 col-lg-2 sidebar">
+                <h4>Menu</h4>
+                <a href="/dietitian"><i class="fas fa-home"></i> Home</a>
+                <a href="/dietitian-guide"><i class="fas fa-book"></i> Guide</a>
+                <a href="/dietitian-consultations"><i class="fas fa-user-clock"></i> Appointments</a>
+                <a href="/dietitian-schedule"><i class="fas fa-calendar-check"></i> My Schedule</a>
+                <a href="/blog"><i class="fas fa-blog"></i> Blog</a>
+                <a href="/dietitian-meal-plans"><i class="fas fa-utensils"></i> Meal Plans</a>
+                <a href="/recieved_diet"><i class="fas fa-shield-check"></i> My Verification Status</a>
+                <!-- Contact Section -->
+                <div class="contact-section">
+                    <h3>Contact Us :</h3>
+                    <p>
+                        Email :
+                        <a href="https://mail.google.com/mail/?view=cm&to=nutriconnect6@gmail.com" target="_blank">
+                            <i class="fa-solid fa-envelope fa-lg contact-icon"></i>
+                        </a>
+                    </p>
+                    <p>
+                        Phone :
+                        <a href="tel:+917075783143">
+                            <i class="fa-solid fa-phone fa-lg contact-icon"></i>
+                        </a>
+                    </p>
+                    <h3>Follow Us :</h3>
+                    <div class="social-icons">
+                        <a href="https://www.facebook.com/profile.php?id=61572485733709" target="_blank">
+                            <i class="fa-brands fa-facebook fa-xl"></i>
+                        </a>
+                        <a href="https://www.instagram.com/nutriconnect2025?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank">
+                            <i class="fa-brands fa-instagram fa-xl"></i>
+                        </a>
+                        <a href="https://x.com/NutriC21?t=ngy3BuReV6VcrXl3WXrCvg&s=09" target="_blank">
+                            <i class="fa-brands fa-x-twitter fa-xl"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/in/nutri-connect-a0b774349?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank">
+                            <i class="fa-brands fa-linkedin fa-xl"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- Contact Section as Footer -->
+            <div class="contact-footer">
+                <h3>Contact Us :</h3>
+                <p>
+                    Email :
+                    <a href="https://mail.google.com/mail/?view=cm&to=nutriconnect6@gmail.com" target="_blank">
+                        <i class="fa-solid fa-envelope fa-lg contact-icon"></i>
+                    </a>
+                </p>
+                <p>
+                    Phone :
+                    <a href="tel:+917075783143">
+                        <i class="fa-solid fa-phone fa-lg contact-icon"></i>
+                    </p>
+                <p>
+                    Address :
+                    <span class="address-text">Plot No. 45, Greenway Colony, 517681, India</span>
+                </p>
+                <h3>Follow Us :</h3>
+                <div class="social-icons">
+                    <a href="https://www.facebook.com/profile.php?id=61572485733709" target="_blank">
+                        <i class="fa-brands fa-facebook fa-xl"></i>
+                    </a>
+                    <a href="https://www.instagram.com/nutriconnect2025?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank">
+                        <i class="fa-brands fa-instagram fa-xl"></i>
+                    </a>
+                    <a href="https://x.com/NutriC21?t=ngy3BuReV6VcrXl3WXrCvg&s=09" target="_blank">
+                        <i class="fa-brands fa-x-twitter fa-xl"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/in/nutri-connect-a0b774349?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank">
+                        <i class="fa-brands fa-linkedin fa-xl"></i>
+                    </a>
+                </div>
+            </div>
+            <!-- Main Content -->
+            <div class="col-md-9 col-lg-10 main-content">
+                <h2>Welcome, <%= dietitian.name %>!</h2>
+                <div class="row">
+                    <!-- Dietitian Info -->
+                    <div class="col-md-4">
+                        <div class="card text-center">
+                            <div class="card-header">Dietitian Profile</div>
+                            <div class="card-body">
+                                <div class="profile-upload-container">
+                                    <img id="profileImage" 
+                                         src="<%= dietitian.profileImageBase64 != null ? dietitian.profileImageBase64 : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2TgOv9CMmsUzYKCcLGWPvqcpUk6HXp2mnww&s' %>" 
+                                         class="profile-img" 
+                                         alt="Dietitian Image"
+                                         data-bs-toggle="modal"
+                                         data-bs-target="#imageModal"
+                                         onerror="this.src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2TgOv9CMmsUzYKCcLGWPvqcpUk6HXp2mnww&s'">
+                                    <label for="profileUpload" class="profile-upload-btn" title="Change photo">
+                                        <i class="fas fa-camera"></i>
+                                    </label>
+                                    <input type="file" id="profileUpload" accept="image/*">
+                                </div>
+                                <p class="upload-text">Click camera icon to update your profile photo</p>
+                                <h5 class="card-title mt-2"><%= dietitian.name %></h5>
+                                <p><strong>Age:</strong> <%= dietitian.age %></p>
+                                <p><strong>Email:</strong> <%= dietitian.email %></p>
+                                <p><strong>Contact:</strong> <%= dietitian.phone %></p>
+                                <button class="btn btn-outline-primary btn-sm btn-custom" onclick="window.location.href='/dietitian_dash/edit-profile'">Edit Profile</button>
+                                <button class="btn btn-outline-secondary btn-sm btn-custom" onclick="window.location.href='/dietitian_dash/change-pass'">Change Password</button>
+                                <span class="badge bg-success">Active</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Document Verification Status -->
+                    <div class="col-md-4">
+                        <div class="card" style="height: 320px;">
+                            <div class="card-header">Document Verification</div>
+                            <div class="card-body" id="verificationSection">
+                                <div class="verification-status pending">
+                                    <i class="fas fa-spinner fa-spin"></i> Checking verification status...
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Quick Actions -->
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-header">Quick Actions</div>
+                            <div class="card-body">
+                                <button class="btn btn-primary w-100 mb-2" onclick="window.location.href='/recieved_diet'">View Verification Status</button>
+                                <button class="btn btn-warning w-100 mb-2" onclick="window.location.href='/dietitian-consultations'">My Clients</button>
+                                <button class="btn btn-info w-100 mb-2" onclick="window.location.href='/dietitian-meal-plans'">Create Meal Plan</button>
+                                <button class="btn btn-danger w-100" onclick="window.location.href='/'">Log Out</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Notifications -->
+                <div class="card mt-4">
+                    <div class="card-header">Notifications</div>
+                    <div class="card-body">
+                        <ul class="list-group">
+                            <li class="list-group-item">You have a new client request.</li>
+                            <li class="list-group-item">Your appointment with [Client Name] is scheduled for tomorrow.</li>
+                            <li class="list-group-item">Your documents have been successfully verified.</li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Recent Activities -->
+                <div class="card mt-4">
+                    <div class="card-header">Recent Activities</div>
+                    <div class="card-body">
+                        <ul class="list-group">
+                            <li class="list-group-item">Logged in today at 10:00 AM</li>
+                            <li class="list-group-item">Created a new meal plan for [Client Name]</li>
+                            <li class="list-group-item">Uploaded new certification documents</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Image Modal -->
+    <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="imageModalLabel">Profile Image</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <img id="largeProfileImage" src="" class="large-profile-img" alt="Large Profile Image">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Fetch Verification Status on Page Load
+        document.addEventListener('DOMContentLoaded', async () => {
+            const verificationSection = document.getElementById('verificationSection');
+            try {
+                const response = await fetch('/dietitian-doc/check-status', { method: 'GET' });
+                const data = await response.json();
+                
+                if (data.success) {
+                    const finalReportStatus = data.finalReportStatus; // Now using finalReportStatus
+                    let htmlContent = '';
+
+                    if (finalReportStatus === 'Not Received' || finalReportStatus === 'Received') {
+                        htmlContent = `
+                            <div class="verification-status pending">
+                                <i class="fas fa-spinner fa-spin"></i> Verification in Progress
+                            </div>
+                            <p class="mt-3">Your documents are under review by Nutri Connect.</p>
+                            <p class="text-muted mb-2">
+                                Final report status: ${finalReportStatus}
+                            </p>
+                        `;
+                    } else if (finalReportStatus === 'Verified') {
+                        htmlContent = `
+                            <div class="verification-status verified">
+                                <i class="fas fa-check-circle"></i> Verified
+                            </div>
+                            <p class="mt-3">Your documents have been verified by Nutri Connect.</p>
+                            <p class="text-muted mb-2">
+                                Provide additional details to complete your dietitian profile and Start your Consultation Journey.
+                            </p>
+                            <button class="btn btn-outline-success btn-md" onclick="window.location.href='/dietitian-setup'">
+                                Proceed to Dietitian Setup
+                            </button>
+                        `;
+                    } else if (finalReportStatus === 'Rejected') {
+                        htmlContent = `
+                            <div class="verification-status rejected">
+                                <i class="fas fa-times-circle"></i> Rejected
+                            </div>
+                            <p class="mt-3">Your application has been rejected, view the reason in the final report.</p>
+                            <p class="text-muted mb-2">
+                                Please review and resubmit your documents.
+                            </p>
+                            <button class="btn btn-outline-danger btn-md" onclick="window.location.href='/recieved_diet'">
+                                View Verification Status
+                            </button>
+                        `;
+                    } else {
+                        htmlContent = `
+                            <div class="verification-status rejected">
+                                <i class="fas fa-exclamation-circle"></i> Unknown Status
+                            </div>
+                            <p class="mt-3">Received an unexpected status: ${finalReportStatus}</p>
+                        `;
+                    }
+
+                    verificationSection.innerHTML = htmlContent;
+                } else {
+                    verificationSection.innerHTML = `
+                        <div class="verification-status rejected">
+                            <i class="fas fa-exclamation-circle"></i> Error
+                        </div>
+                        <p class="mt-3">Failed to load final report status: ${data.message || 'Unknown error'}</p>
+                    `;
+                }
+            } catch (error) {
+                console.error('Error fetching final report status:', error);
+                verificationSection.innerHTML = `
+                    <div class="verification-status rejected">
+                        <i class="fas fa-exclamation-circle"></i> Error
+                    </div>
+                    <p class="mt-3">An error occurred while checking final report status.</p>
+                `;
+            }
+        });
+
+        // Profile Photo Upload
+        document.getElementById('profileUpload').addEventListener('change', async (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            // Preview image
+            const reader = new FileReader();
+            reader.onload = () => document.getElementById('profileImage').src = reader.result;
+            reader.readAsDataURL(file);
+            // Upload to backend
+            const formData = new FormData();
+            formData.append('profileImage', file);
+            try {
+                const res = await fetch('/uploaddietitian', { method: 'POST', body: formData });
+                const data = await res.json();
+                if (data.success) {
+                    alert('Profile photo uploaded successfully!');
+                    window.location.reload(); // Reload to fetch new base64 image
+                } else {
+                    alert(`Upload failed: ${data.message || 'Unknown error'}`);
+                }
+            } catch (error) {
+                console.error('Upload error:', error);
+                alert('Upload error occurred.');
+            }
+        });
+
+        // Set modal image source when modal is shown
+        const imageModal = document.getElementById('imageModal');
+        imageModal.addEventListener('show.bs.modal', () => {
+            const profileImage = document.getElementById('profileImage');
+            const largeProfileImage = document.getElementById('largeProfileImage');
+            largeProfileImage.src = profileImage.src || 'https://via.placeholder.com/150?text=Default+Dietitian';
+        });
+    </script>
+</body>
+</html>

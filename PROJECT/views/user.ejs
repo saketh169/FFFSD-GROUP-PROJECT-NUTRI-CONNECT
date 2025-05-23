@@ -1,0 +1,1251 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="/css/user.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+    <title> User Home Page</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+     <!-- Google Font: Poppins -->
+     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap" rel="stylesheet">
+     </head>
+     <style>
+      
+       
+         .logo {
+             display: flex;
+             align-items: center;
+             font-family: 'Poppins', sans-serif;
+             font-size: 24px;
+             font-weight: bold;
+             position: absolute;
+             left:50px;
+             color: #1E6F5C; 
+         }
+ 
+         .logo .highlight {
+             color: #28B463;
+         }
+ 
+         .logo .icon-container {
+             display: flex;
+             align-items: center;
+             justify-content: center;
+             width: 40px; /* Circle size */
+             height: 40px; /* Circle size */
+             background-color: #28B463; /* Darker green circle */
+             border-radius: 50%; /* Make it circular */
+             margin-right: 10px; /* Space between icon and text */
+         }
+ 
+         .logo .icon {
+             font-size: 24px; /* Icon size */
+             color: #FFFFFF; /* White icon */
+         }
+ 
+         /* Hover effect */
+         .logo:hover .icon-container {
+             background-color: #1E6F5C; /* Darker green on hover */
+             transform: scale(1.1); /* Slightly enlarge circle */
+             transition: all 0.3s ease;
+         }
+ 
+         .logo:hover {
+             color: #28B463; /* Brighter green on hover */
+             transition: color 0.3s ease;
+         }
+     </style>
+     <body>
+ 
+    <header class="top">
+      <div class="top1">
+        <!-- Logo Container -->
+    <div class="logo">
+     
+      <div class="icon-container">
+          <i class="icon fas fa-leaf"></i>
+      </div>
+      <span>
+          <span class="highlight">N</span>utri 
+          <span class="highlight">C</span>onnect
+      </span>
+  </div>
+
+        <div
+          id="profile"
+          onclick="window.location.href='/user_dash'"
+          class="btn btn-outline-success"
+        >
+          <b>PROFILE</b>
+          <div>
+            <i class="fa-regular fa-user"></i>
+          </div>
+        </div>
+      </div>
+     
+      <!-- Full-Width Navbar with Toggler -->
+      <div class="container-fluid navbar-container">
+        <nav id="nav-bar" class="navbar navbar-expand-lg navbar-light">
+          <div class="container">
+      
+            <!-- Toggler Button -->
+            <button
+              id="toggler"
+              class="navbar-toggler"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarNav"
+              style="border: 3px solid #28a745"
+            >
+              <span class="navbar-toggler-icon"></span>
+            </button>
+      
+            <!-- Navbar Items -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav mx-auto">
+                <li class="nav-item active-page" >
+                  <a class="nav-link " href=" /user">HOME</a>
+                </li>
+                <li class="nav-item" >
+                  <a class="nav-link " href="/user-guide">GUIDE</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/dietitian-profiles" >DIETITIAN PROFILES</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/user-consultations" >APPOINTMENTS</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/user-schedule"> SCHEDULE</a>
+                </li> 
+                <li class="nav-item">
+                  <a class="nav-link" href="/blog">BLOG</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/pricing">PRICING</a>
+                </li>
+               
+              </ul>
+            </div>
+
+            <a  id="chatbot" href="/chatbot" title="chatbot">
+              <i class="fas fa-robot"></i>
+            </a>
+      
+            <!-- Contact Us Icon -->
+            <a id="contact"  href="/contact" title="Contact us">
+              <i class="fa-solid fa-phone-volume"></i>
+            </a>
+          </div>
+         
+        </nav>
+      
+      </div>
+    </header>
+
+    <main>
+      <div class="ads">
+        <div class="ad" id="ad-1"></div>
+        <div class="ad" id="ad-2"></div>
+        <div class="ad" id="ad-3"></div>
+        <div class="ad" id="ad-4"></div>
+        <div class="ad" id="ad-5"></div>
+        <div class="ad" id="ad-6"></div>
+      </div>
+
+      <div class="dots-container">
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </div>
+     
+      <section class="welcome-section user-section">
+        <div class="container welcome">
+          <div class="row align-items-center justify-content-end">
+                <div class="col-lg-6">
+                    <h1 class="display-4 fw-bold text-orange mb-4" >Welcome, User</h1>
+                    <p class="lead mb-4">
+                        Join Nutri Connect to receive personalized nutrition plans, track your health goals, and connect with professional dietitians. Take control of your well-being and embark on a healthier journey today.
+                    </p>
+                    <a href="/user_dash" class="btn btn-orange btn-lg">Go to Dashboard</a>
+                </div>
+                <div class="col-lg-6">
+                    <img src="https://media.istockphoto.com/id/1411854870/vector/diet-plan-concept.jpg?s=612x612&w=0&k=20&c=rqCudWc8UXQYyteZ3JgG2lKce_iJ_7mltXVfvO5BEo4=" 
+                         alt="User Health Journey" class="img-fluid rounded user-img" />
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <style>
+      
+        .user-section {
+            position: relative;
+            top: 300px;
+            height: auto;
+            width: 100%;
+            padding: 50px 0;
+             background: #f9f9f9;
+            /*border: 5px double #ff8000;
+            border-radius: 20px; */
+            margin: 50px auto;
+            
+        }
+       
+        .text-orange {
+            color: #ff8000;
+        }
+    
+        .btn-orange {
+            background-color: #ff8000;
+            border-color: #ff8000;
+            color: #fff;
+            border-radius: 30px;
+            transition: all 0.3s ease-in-out;
+        }
+    
+        .btn-orange:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 10px rgba(255, 128, 0, 0.5);
+        }
+    </style>
+
+    <style>
+
+      .user-guide-section {
+          position: relative;
+          top: 450px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap:50px;
+          width: 100%;
+          margin: 50px auto;
+          padding: 40px;
+           background: #f9f9f9;
+         /* border-radius: 15px;
+          border: 6px double #4CAF50;*/
+          
+      }
+      
+  
+      .user-guide-section .content {
+          flex: 1;
+          padding-right: 40px;
+      }
+      .user-guide-section h2 {
+          color: #4CAF50;
+          margin-bottom: 20px;
+          font-size: 50px; /* Increased font size */
+          font-weight: bold;
+         
+      }
+
+      .user-guide-section p {
+          line-height: 1.8;
+          color: #555;
+          margin-bottom: 20px;
+          font-size: 18px; /* Increased font size */
+      }
+      .user-guide-section ul {
+          list-style-type: none;
+          padding: 0;
+      }
+      .user-guide-section ul li {
+          margin-bottom: 10px;
+          padding-left: 20px;
+          position: relative;
+          font-size: 18px; /* Increased font size */
+          color: #555;
+      }
+      .user-guide-section ul li::before {
+          content: "•";
+          color: #4CAF50;
+          font-size: 24px; /* Increased bullet size */
+          position: absolute;
+          left: 0;
+          top: -2px;
+      }
+      .guide-button {
+          padding: 14px 28px;
+          font-size: 18px; /* Increased font size */
+          color: #fff;
+          background-color: #4CAF50;
+          border: none;
+          border-radius: 8px;
+          cursor: pointer;
+          transition: background-color 0.3s ease, transform 0.2s ease;
+          font-weight: bold;
+          
+      }
+      .guide-button:hover {
+          background-color: #45a049;
+          transform: translateY(-2px);
+      }
+      .user-guide-section .image-container {
+          flex: 1;
+          text-align: right;
+          border-radius: 15px;
+          overflow: hidden;
+          
+          
+      }
+      .user-guide-section .image-container img {
+          height: auto;
+          display: block;
+        
+      }
+  </style>
+
+  <div class="user-guide-section">
+
+       <!-- Image Section -->
+       <div class="image-container">
+        <img src="https://media.istockphoto.com/id/1439477915/vector/website-under-construction-tiny-people-build-update-structure-of-site-create-content.jpg?s=612x612&w=0&k=20&c=7el8OkeFrJGsRjXZXezKLKsAcOC86sX_Iw_RJ8O_N_U=" alt="User Guide Image">
+    </div>
+
+      <!-- Content Section -->
+      <div class="content">
+          <h2>User Guide</h2>
+          <p>
+              Our User Guide is designed to help you make the most of our platform. Whether you're new to the system or looking for advanced tips, this guide has everything you need:
+          </p>
+          <ul>
+              <li>Step-by-step instructions for setting up your profile.</li>
+              <li>How to track your meals and fitness goals.</li>
+              <li>Tips for connecting with dietitians and nutritionists.</li>
+              <li>Frequently asked questions and troubleshooting.</li>
+          </ul>
+          <button class="guide-button" onclick="window.location.href ='/user-guide'">Go to User Guide</button>
+      </div> 
+  </div>
+ 
+
+<style>
+  .section-diet-programs{
+    /*border: 6px double #28a745;
+    border-radius: 10px;*/
+    position: relative;
+    top:650px;
+    width: 100%;
+    margin: 50px auto;
+     background: #f9f9f9;
+  }
+  .diet-title {
+    margin-top: 50px;
+    text-align: center;
+    color: #2e8b57;
+  }
+  .diet-container {
+    margin-top: 50px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    flex-direction: row;
+  }
+  .card {
+    border: 6px double #28a745;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    height: 300px;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+  }
+  .card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+  .card-icon {
+    font-size: 3rem;
+    color: #2e8b57;
+    text-align: center;
+    margin-bottom: 10px;
+    position: relative;
+  }
+  .card-title {
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: #2e8b57;
+    text-align: center;
+    position: relative;
+  }
+  .card-description {
+    font-size: 1rem;
+    color: #555;
+    text-align: center;
+    position: relative;
+  }
+  .book-consultation {
+    text-align: center;
+    margin: 20px 0;
+  }
+  .book-consultation button {
+    background-color: #2e8b57;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: background-color 0.3s ease;
+  }
+  .book-consultation button:hover {
+    background-color: #228b22;
+  }
+  .click-message {
+    text-align: center;
+    font-size: 20px;
+    color: #287047;
+    margin-top: 10px;
+  }
+
+  .card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+    .card::before {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 0;
+        background-color: rgba(46, 139, 87, 0.5);
+        transition: height 0.3s ease;
+      
+    }
+    .card:hover::before {
+        height: 100%;
+    }
+
+</style>
+
+
+  <section class="section-diet-programs">
+    <h2 class="diet-title">DIET SERVICES/PROGRAMS</h2>
+    <div class="diet-container">
+      <!-- Weight Management Card -->
+      <div class="card" onclick="window.location.href='/weight-management'">
+        <div class="card-icon"><i class="fa-solid fa-weight-scale"></i></div>
+        <div class="card-title">Weight Loss/Gain Management</div>
+        <div class="card-description">
+          Achieve your ideal weight with expert-designed diet plans tailored to your body type, lifestyle, and goals.
+        </div>
+      </div>
+
+      <!-- Diabetes/Thyroid Card -->
+      <div class="card" onclick="window.location.href='/diabetes-thyroid'">
+        <div class="card-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+        <div class="card-title">Diabetes/Thyroid Care</div>
+        <div class="card-description">
+          Manage diabetes or thyroid conditions with meal plans focusing on blood sugar control and hormone balance.
+        </div>
+      </div>
+
+      <!-- Cardiac Health Card -->
+      <div class="card" onclick="window.location.href='/cardiac-health'">
+        <div class="card-icon"><i class="fa-solid fa-heart-circle-bolt"></i></div>
+        <div class="card-title">Cardiac Health</div>
+        <div class="card-description">
+          Improve heart health with targeted diet plans that help control cholesterol and manage hypertension.
+        </div>
+      </div>
+
+      <!-- Women's Health Card -->
+      <div class="card" onclick="window.location.href='/womens-health'">
+        <div class="card-icon"><i class="fa-solid fa-venus-double"></i></div>
+        <div class="card-title">Women's Health</div>
+        <div class="card-description">
+          Nutrition plans for PCOS, pregnancy, and menopause to support women's health at every stage.
+        </div>
+      </div>
+
+      <!-- Skin & Hair Card -->
+      <div class="card" onclick="window.location.href='/skin-hair'">
+        <div class="card-icon"><i class="fa-solid fa-spa"></i></div>
+        <div class="card-title">Skin & Hair Care</div>
+        <div class="card-description">
+          Enhance skin glow and hair strength with nutrient-rich diets designed to promote beauty from within.
+        </div>
+      </div>
+
+      <!-- Gut Health Card -->
+      <div class="card" onclick="window.location.href='/gut-health'">
+        <div class="card-icon"><i class="fa-solid fa-seedling"></i></div>
+        <div class="card-title">Gut/Digestive Health</div>
+        <div class="card-description">
+          Improve digestion, reduce bloating, and boost gut health with balanced meals and probiotics.
+        </div>
+      </div>
+    </div>
+
+    <div class="book-consultation">
+      <button onclick="window.location.href='/dietitian-profiles'">Book Consultation</button>
+      <p class="click-message">"Click any program above or this button to connect with expert dietitians"</p>
+    </div>
+  </section>
+
+    <style>
+      .appointments-container {
+          position: relative;
+          top: 850px;
+          display: flex;
+          align-items: center;
+          justify-content: space-around;
+          background: #f9f9f9;
+          padding: 10px;
+          width: 100%;
+          border-radius: 15px;
+      }
+  
+      .appointments-container img {
+          width: 500px;
+          border-radius: 15px;
+          transition: 0.3s;
+      }
+  
+      .appointments-container .content-section {
+          max-width: 450px;
+      }
+  
+      .appointments-container h1 {
+          font-size: 2.5em;
+          font-weight: bold;
+          color: #1e8449;
+      }
+  
+      .appointments-container p {
+          font-size: 1.1em;
+          line-height: 1.6;
+      }
+  
+      .appointments-container .cta-button {
+          padding: 12px 30px;
+          font-size: 1.2em;
+          color: white;
+          background: #27ae60;
+          border: none;
+          border-radius: 8px;
+          cursor: pointer;
+          transition: 0.3s;
+      }
+  
+      .appointments-container .cta-button:hover {
+          background: #1b5e20;
+          transform: scale(1.02);
+      }
+  
+      @media (max-width: 992px) {
+          .appointments-container {
+              flex-direction: column;
+              text-align: center;
+              padding: 30px;
+          }
+          .appointments-container img {
+              width: 100%;
+              max-width: 500px;
+          }
+      }
+  </style>
+  
+  <div class="appointments-container">
+      <div class="content-section">
+          <h1>Appointments</h1>
+          <p>Manage all your appointments with your <b>dietitian</b> in one place. You can <b>schedule, view, and track</b> upcoming sessions, chat with your dietitian, and securely <b>upload medical reports</b> to receive tailored guidance.</p>
+          <button class="cta-button" onclick="window.location.href='/user-consultations'">View Appointments</button>
+      </div>
+      <img src="https://img.freepik.com/free-vector/diet-concept-illustration_114360-5133.jpg?ga=GA1.1.1284045158.1715777278&semt=ais_hybrid" alt="Appointments">
+  </div>
+    
+   
+  <style>
+  .blog-container {
+    position: relative;
+    top: 1000px;
+     background: #f9f9f9;
+   /* border-radius: 20px;
+    border-top: 6px solid #28a745;
+    border-bottom: 6px solid #28a745; */
+    width: 100%;
+    margin: 50px auto;
+    padding: 20px;
+   
+   
+}
+.blog-container h1 {
+   font-size: 40px;
+   text-align: center;
+   color: #2e7d32;
+   margin-bottom: 20px;
+}
+.blog-grid {
+   display: flex;
+   gap: 20px;
+   justify-content: space-between;
+}
+.blog-card {
+   background-color: #fff;
+   border-radius: 10px;
+   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+   width: calc(33.33% - 20px);
+   overflow: hidden;
+   transition: transform 0.3s ease, box-shadow 0.3s ease;
+   border-top: 6px solid #28a745;
+   border-bottom: 6px solid #28a745;
+}
+.blog-card:hover {
+   transform: translateY(-10px);
+   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+.blog-card img {
+   width: 100%;
+   height: 200px;
+   object-fit: cover;
+   border-bottom: 2px solid #c8e6c9;
+}
+.blog-content {
+   padding: 15px;
+}
+.blog-content h2 {
+   margin: 0;
+   color: #388e3c;
+   font-size: 1.2em;
+}
+.blog-content p {
+   color: #555;
+   font-size: 0.9em;
+   line-height: 1.5;
+}
+.blog-content .author {
+   color: #888;
+   font-size: 0.8em;
+   margin-top: 10px;
+}
+.blog-content .date {
+   color: #888;
+   font-size: 0.8em;
+}
+.blog-button {
+   text-align: center;
+   margin-top: 40px;
+}
+.blog-button button {
+   background-color: #388e3c;
+   color: #fff;
+   border: none;
+   padding: 13px 30px;
+   border-radius: 5px;
+   font-size: 1em;
+   cursor: pointer;
+   transition: background-color 0.3s ease, transform 0.2s ease;
+}
+.blog-button button:hover {
+   background-color: #45a049;
+   transform: translateY(-2px);
+}
+.message-box {
+   margin-top: 40px;
+   height: 50px;
+   background-color: #fff;
+   border-radius: 10px;
+   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+   text-align: center;
+   border: 6px solid #28a745;
+}
+.message-box h2 {
+   margin-top: 0;
+   color: #2e7d32;
+}
+.message-box p {
+   color: #555;
+}
+.fancy-text {
+   font-family: 'Poppins', sans-serif;
+   font-weight: bold;
+   font-size: 28px;
+   color: #2c7a2c;
+   text-align: center;
+   text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+</style>
+
+<div class="blog-container">
+ <h1>Our Blog</h1>
+ <div class="blog-grid">
+     <% blogs.forEach(blog => { %>
+         <div class="blog-card" onclick="window.location.href='/blog/<%= blog._id %>'" tabindex="0" onkeypress="if(event.key === 'Enter') window.location.href='/blog/<%= blog._id %>'">
+             <img src="<%= blog.images && blog.images.length > 0 ? blog.images[0] : '/images/default-blog.jpg' %>" alt="<%= blog.title %>" loading="lazy">
+             <div class="blog-content">
+                 <h2><%= blog.title %></h2>
+                 <p><%= blog.content.replace(/(<([^>]+)>)/gi, "").substring(0, 100) %>...</p>
+                 <p class="author"><%= blog.authorName %></p>
+                 <p class="date"><%= new Date(blog.createdAt).toLocaleDateString() %> - 5 min read</p>
+             </div>
+         </div>
+     <% }) %>
+ </div>
+ <div class="blog-button">
+     <button onclick="window.location.href='/blog'">Post Your Own Blog</button>
+ </div>
+ <div class="message-box">
+     <h2 class="fancy-text">✨ Share Your Health Tips with the Community 🥗💡🍎</h2>
+ </div>
+</div>
+
+  <style>
+       
+    .pricing-container {
+        position:relative;
+        top:1150px;
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        background: #f9f9f9;
+        padding: 50px;
+        width: 100%;
+        border-radius: 15px;
+        
+    }
+    .pricing-container img {
+        width: 500px;
+        border-radius: 15px;
+        transition: 0.3s;
+    }
+    .pricing-container  img:hover {
+        transform: scale(1.02);
+    }
+    .pricing-container  .content-section {
+        max-width: 450px;
+    }
+    .pricing-container  h1 {
+        font-size: 2.5em;
+        font-weight: bold;
+        color: #2e7d32;
+    }
+    .pricing-container  p {
+        font-size: 1.1em;
+        line-height: 1.6;
+        
+    }
+    .pricing-container  .cta-button {
+        padding: 12px 30px;
+        font-size: 1.2em;
+        color: white;
+        background: #2e7d32;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+    .pricing-container  .cta-button:hover {
+        background: #1b5e20;
+        transform: scale(1.02);
+    }
+    @media (max-width: 992px) {
+        .pricing-container {
+            flex-direction: column;
+            text-align: center;
+            padding: 30px;
+        }
+        .pricing-container img {
+            width:500px;
+        }
+    }
+</style>
+
+<div class="pricing-container">
+    <img src="https://videoigniter.com/wp-content/uploads/2024/02/How-Much-Does-Animation-Cost.jpg" alt="Healthy Life">
+    <div class="content-section">
+        <h1>Nutri Connect Plans</h1>
+        <p>Nutri Connect provides tailored plans designed to fit your lifestyle. Whether you choose our <strong>Basic</strong>, <strong>Premium</strong>, or <strong>Ultimate</strong> plan, you’ll enjoy expert guidance and support. Opt for a <strong>monthly</strong> or <strong>yearly</strong> subscription and take the first step toward a healthier, happier you today!</p>
+        <button class="cta-button" onclick="window.location.href='/pricing'">Explore Plans</button>
+    </div>
+</div>
+
+     
+      <!-- FAQS Section -->
+<section id="FAQs" class="faqs-section container">
+  <h2 class="section-title" style="margin-bottom:40px;">Users Frequently Asked Questions</h2>
+  <div class="accordion" id="faqAccordion">
+    <div class="faq" >
+      <div class="accordion-item" >
+        <h3 class="accordion-header" id="faqOne">
+          <button
+            class="accordion-button"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#collapseOne"
+            aria-expanded="false"
+            aria-controls="collapseOne"
+          >
+            How do I create an account on Nutri Connect?
+          </button>
+        </h3>
+        <div
+          id="collapseOne"
+          class="accordion-collapse collapse show"
+          aria-labelledby="faqOne"
+          data-bs-parent="#faqAccordion"
+        >
+          <div class="accordion-body">
+            You can sign up by clicking the 'Sign Up' button on the homepage and following the registration process.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="faq">
+      <div class="accordion-item">
+        <h3 class="accordion-header" id="faqTwo">
+          <button
+            class="accordion-button collapsed"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#collapseTwo"
+            aria-expanded="false"
+            aria-controls="collapseTwo"
+          >
+            How do I track my nutrition and progress?
+          </button>
+        </h3>
+        
+        <div
+          id="collapseThree"
+          class="accordion-collapse collapse"
+          aria-labelledby="faqThree"
+          data-bs-parent="#faqAccordion"
+        >
+          <div class="accordion-body">
+            Yes, Nutri Connect allows you to personalize your diet plan based on your dietary preferences, allergies, and health goals.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="faq">
+      <div class="accordion-item">
+        <h3 class="accordion-header" id="faqFour">
+          <button
+            class="accordion-button collapsed"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#collapseFour"
+            aria-expanded="false"
+            aria-controls="collapseFour"
+          >
+            How do I book a consultation with a dietitian?
+          </button>
+        </h3>
+        <div
+          id="collapseFour"
+          class="accordion-collapse collapse"
+          aria-labelledby="faqFour"
+          data-bs-parent="#faqAccordion"
+        >
+          <div class="accordion-body">
+            You can book a consultation by selecting a dietitian from our directory and choosing a suitable time slot for a video or chat session.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="faq">
+      <div class="accordion-item">
+        <h3 class="accordion-header" id="faqFive">
+          <button
+            class="accordion-button collapsed"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#collapseFive"
+            aria-expanded="false"
+            aria-controls="collapseFive"
+          >
+            Is Nutri Connect suitable for all dietary needs?
+          </button>
+        </h3>
+        <div
+          id="collapseFive"
+          class="accordion-collapse collapse"
+          aria-labelledby="faqFive"
+          data-bs-parent="#faqAccordion"
+        >
+          <div class="accordion-body">
+            Yes, Nutri Connect supports various dietary needs, including vegetarian, vegan, gluten-free, and keto diets, among others.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+    </main>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
+            <div class="logo">
+              <div class="icon-container">
+                  <i class="icon fas fa-leaf"></i>
+              </div>
+              <span>
+                  <span class="highlight">N</span>utri 
+                  <span class="highlight">C</span>onnect
+              </span>
+            </div>
+            <p class="footer-about">
+              NutriConnect helps you find certified dietitians and nutrition experts 
+              to achieve your health goals through personalized nutrition plans.
+            </p>
+            <div class="social-links">
+              <a href="https://www.facebook.com/profile.php?id=61572485733709" target="_blank" class="social-link" aria-label="Facebook">
+                <i class="fab fa-facebook-f"></i>
+              </a>
+              <a href="https://www.instagram.com/nutriconnect2025" target="_blank" class="social-link" aria-label="Instagram">
+                <i class="fab fa-instagram"></i>
+              </a>
+              <a href="https://x.com/NutriC21" target="_blank" class="social-link" aria-label="Twitter">
+                <i class="fab fa-twitter"></i>
+              </a>
+              <a href="https://www.linkedin.com/in/nutri-connect-a0b774349" target="_blank" class="social-link" aria-label="LinkedIn">
+                <i class="fab fa-linkedin-in"></i>
+              </a>
+            </div>
+          </div>
+          
+          <div class="col-lg-2 col-md-6 mb-4 mb-lg-0">
+            <h5 class="footer-title">Quick Links</h5>
+            <ul class="footer-links">
+              <li><a href="/user"><i class="fas fa-chevron-right"></i> Home</a></li>
+              <li><a href="/dietitian-profiles"><i class="fas fa-chevron-right"></i> Find Dietitians</a></li>
+              <li><a href="/user-guide"><i class="fas fa-chevron-right"></i> How It Works</a></li>
+              <li><a href="/blog"><i class="fas fa-chevron-right"></i> Nutrition Blog</a></li>
+              <li><a href="/pricing"><i class="fas fa-chevron-right"></i> Pricing Plans</a></li>
+              <li><a href="/contact"><i class="fas fa-chevron-right"></i> Contact Support</a></li>
+            </ul>
+          </div>
+          
+          <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+            <h5 class="footer-title">Services</h5>
+            <ul class="footer-links">
+              
+                <li><a href="/weight-management"><i class="fas fa-chevron-right"></i> Weight Management</a></li>
+                <li><a href="/diabetes-thyroid"><i class="fas fa-chevron-right"></i> Diabetes/Thyroid</a></li>
+                <li><a href="/cardiac-health"><i class="fas fa-chevron-right"></i> Cardiac Health</a></li>
+                <li><a href="/womens-health"><i class="fas fa-chevron-right"></i> Women's Health</a></li>
+                <li><a href="/skin-hair"><i class="fas fa-chevron-right"></i> Skin & Hair Care</a></li>
+                <li><a href="/gut-health"><i class="fas fa-chevron-right"></i> Gut Health</a></li>
+              
+            </ul>
+          </div>
+          
+          <div class="col-lg-3 col-md-6">
+            <h5 class="footer-title">Contact Info</h5>
+            <ul class="footer-contact-info">
+              <li>
+                <i class="fas fa-map-marker-alt"></i>
+                <span>Plot No. 45, Greenway Colony, 517681, India</span>
+              </li>
+              <li>
+                <i class="fas fa-phone-alt"></i>
+                <a href="tel:+917075783143">+91 70757 83143</a>
+              </li>
+              <li>
+                <i class="fas fa-envelope"></i>
+                <a href="mailto:nutriconnect6@gmail.com">support@nutriconnect6@gmail.com</a>
+              </li>
+              <li>
+                <i class="fas fa-clock"></i>
+                <span>Mon-Fri: 9AM - 9PM</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <div class="container">
+          <div class="row align-items-center">
+            <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+              <p class="copyright mb-0">&copy; 2025 NutriConnect. All rights reserved.</p>
+            </div>
+            <div class="col-md-6 text-center text-md-end">
+              <ul class="footer-menu">
+
+                <li><a href="/terms_conditions">Terms of Service</a></li>
+                <li><a href="/privacy-policy">Privacy Policy</a></li>
+               
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+    
+    <style>
+   
+    .footer-about {
+      color: #F0E68C;
+      margin-top: 100px;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+    
+    .footer-title {
+      color: #FFFFFF;
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+      position: relative;
+      padding-bottom: 10px;
+      font-weight: 600;
+    }
+    
+    .footer-title::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 50px;
+      height: 2px;
+      background-color: #50c878;
+    }
+    
+    .footer-links {
+      list-style: none;
+      padding: 0;
+    }
+    
+    .footer-links li {
+      margin-bottom: 12px;
+    }
+    
+    .footer-links a {
+      color: #F0E68C;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .footer-links a:hover {
+      color: #FFD700;
+      padding-left: 5px;
+    }
+    
+    .footer-links i {
+      font-size: 0.8rem;
+    }
+    
+    .footer-contact-info {
+      list-style: none;
+      padding: 0;
+    }
+    
+    .footer-contact-info li {
+      margin-bottom: 15px;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      line-height: 1.5;
+    }
+    
+    .footer-contact-info i {
+      margin-top: 3px;
+      color: #50c878;
+    }
+    
+    .footer-contact-info a {
+      color: #1E90FF;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    
+    .footer-contact-info a:hover {
+      color: #00BFFF;
+    }
+    
+    .footer-bottom {
+      background-color: rgba(0, 0, 0, 0.2);
+      padding: 20px 0;
+      margin-top: 60px;
+    }
+    
+    .copyright {
+      color: rgba(255, 255, 255, 0.7);
+      margin: 0;
+    }
+    
+    .footer-menu {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+    
+    .footer-menu li {
+      display: inline-block;
+    }
+    
+    .footer-menu a {
+      color: #F0E68C;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    
+    .footer-menu a:hover {
+      color: #FFD700;
+    }
+    
+    /* Logo Styles */
+    .footer .logo {
+      display: flex;
+      align-items: center;
+      font-size: 24px;
+      font-weight: bold;
+      color:white;
+      margin-bottom: 20px;
+      margin-left:50px;
+    }
+    
+   .footer .logo .highlight {
+      color: #28B463;
+    }
+    
+   .footer .logo .icon-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background-color: #28B463;
+      border-radius: 50%;
+     
+    }
+    
+   .footer .logo .icon {
+      font-size: 24px;
+      color: #FFFFFF;
+    }
+    
+    .footer .logo:hover .icon-container {
+      background-color: #1E6F5C;
+      transform: scale(1.1);
+      transition: all 0.3s ease;
+      
+    }
+    
+    .footer.logo:hover {
+      color: #28B463;
+      transition: color 0.3s ease;
+    }
+    
+    /* Social Links */
+    .social-links {
+      display: flex;
+      gap: 15px;
+      margin-top: 20px;
+    }
+    
+    .social-link {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: #f8f9fa;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #28a745;
+      transition: all 0.3s ease;
+    }
+    
+    .social-link:hover {
+      background-color: #28a745;
+      color: white;
+      transform: translateY(-3px);
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 992px) {
+      .footer-menu {
+        justify-content: flex-end;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .footer-menu {
+        justify-content: center;
+      }
+      
+      .copyright,
+      .footer-menu {
+        text-align: center;
+      }
+      
+      .footer-menu {
+        margin-top: 10px;
+      }
+    }
+    </style>
+
+    <style>
+      .footer {
+        position: relative;
+        top:1500px;
+        left:0px;
+        height:auto;
+        width:100%;
+        width: 100%;
+        background: linear-gradient(135deg, #232F3E 0%, #2c3e50 100%);
+        color: white;
+        padding: 60px 0 0;
+        position: relative;
+        overflow: hidden;
+      }
+
+    </style>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
+  
+    <script>
+      let slideIndex = 0;
+      let totalAds = document.getElementsByClassName("ad").length;
+      let dots = document.getElementsByClassName("dot");
+
+      function showSlides() {
+        for (let i = 0; i < dots.length; i++) {
+          dots[i].classList.remove("active");
+        }
+        dots[slideIndex].classList.add("active");
+
+        slideIndex++;
+        if (slideIndex >= totalAds) {
+          slideIndex = 0;
+        }
+
+        setTimeout(showSlides, 5000);
+      }
+
+      showSlides();
+    </script>
+
+   
+  </body>
+</html>

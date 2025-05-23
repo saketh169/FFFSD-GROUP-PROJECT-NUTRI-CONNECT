@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab Reports | NutriConnect</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            color: rgb(51, 51, 51);
+            line-height: 1.6;
+            margin: 0;
+            background-color: #e8f5e9;
+        }
+
+        .main {
+            width: 100%;
+            padding: 30px 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .reports-container {
+            background: linear-gradient(135deg, #ffffff, #f0fff4);
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(40, 167, 69, 0.15);
+            width: 1300px;
+            margin: 20px auto;
+            margin-top: 10px;
+            border: 2px solid #28a745;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+            margin-bottom: 50px;
+        }
+
+        .reports-container:hover {
+            transform: translateY(-5px);
+        }
+
+        .reports-header {
+            background: linear-gradient(to right, #28a745, #50c878);
+            color: white;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 3px solid #1E6F5C;
+            position: relative;
+            z-index: 1;
+            padding-left: 100px;
+        }
+
+        .back-btn {
+            position: absolute;
+            left: 20px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(to right, #e8f5e9, #f0fff4);
+            color: #28a745;
+            border: 2px solid #28a745;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+        }
+
+        .back-btn:hover {
+            background: linear-gradient(to right, #28a745, #50c878);
+            color: white;
+            transform: scale(1.15);
+            border-color: #1E6F5C;
+        }
+
+        .back-btn i {
+            font-size: 18px;
+        }
+
+        .reports-header h5 {
+            margin: 0;
+            font-weight: 700;
+            font-size: 1.5rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .reports-body {
+            max-height: 450px;
+            overflow-y: auto;
+            padding: 25px;
+            background: url('https://www.transparenttextures.com/patterns/food.png') repeat;
+            background-size: 100px;
+            position: relative;
+        }
+
+        .reports-body::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .reports-body::-webkit-scrollbar-track {
+            background: #e8f5e9;
+            border-radius: 10px;
+        }
+
+        .reports-body::-webkit-scrollbar-thumb {
+            background: #28a745;
+            border-radius: 10px;
+        }
+
+        .reports-body::-webkit-scrollbar-thumb:hover {
+            background: #1E6F5C;
+        }
+
+        .report {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #28a745;
+            border-radius: 10px;
+            background: #f0fff4;
+        }
+
+        .report h6 {
+            margin: 0 0 10px;
+            font-weight: bold;
+            color: #28a745;
+        }
+
+        .report p {
+            margin: 5px 0;
+        }
+
+        .report a {
+            color: #007bff;
+            text-decoration: underline;
+        }
+
+        .report a:hover {
+            color: #0056b3;
+        }
+
+        .file-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 10px 0;
+            padding: 8px 12px;
+            background-color: #e8f5e9;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .file-link:hover {
+            background-color: #c8e6c9;
+            transform: translateX(5px);
+        }
+
+        .file-link i {
+            color: #2E7D32;
+            font-size: 1.2em;
+        }
+
+        .file-link a {
+            color: #2E7D32;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .file-link a:hover {
+            text-decoration: underline;
+        }
+
+        .file-name {
+            flex-grow: 1;
+            color: #2E7D32;
+            font-weight: 500;
+        }
+
+        .view-btn {
+            background: none;
+            border: none;
+            color: #007bff;
+            cursor: pointer;
+            padding: 0;
+            margin-right: 10px;
+        }
+
+        .view-btn:hover {
+            text-decoration: underline;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 75%;
+            max-width: 1000px;
+            border-radius: 10px;
+            position: relative;
+        }
+
+        .close-modal {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close-modal:hover {
+            color: black;
+        }
+
+        .pdf-viewer {
+            width: 100%;
+            height: 600px;
+            border: none;
+        }
+
+        .loading {
+            text-align: center;
+            margin: 25px 0;
+            font-style: italic;
+            color: #28a745;
+            font-weight: 600;
+        }
+
+        #error-message {
+            color: #dc3545;
+            text-align: center;
+            margin: 25px 0;
+            display: none;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="main">
+        <div class="reports-container">
+            <div class="reports-header">
+                <button class="back-btn" title="Back to Chat" onclick="window.location.href='/chat_dietitian/<%= userId %>'">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <h5>Lab Reports - <%= userName || 'User' %></h5>
+            </div>
+            <div class="reports-body" id="reportsBody">
+                <div id="loading" class="loading">Loading lab reports...</div>
+                <div id="error-message"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="pdfModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">×</span>
+            <iframe id="pdfViewer" class="pdf-viewer"></iframe>
+        </div>
+    </div>
+
+    <script>
+        const dietitianId = '<%= dietitianId %>';
+        const userId = '<%= userId %>';
+
+        const modal = document.getElementById('pdfModal');
+        const pdfViewer = document.getElementById('pdfViewer');
+        const closeModal = document.querySelector('.close-modal');
+
+        closeModal.onclick = function() {
+            modal.style.display = "none";
+            pdfViewer.src = "";
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+                pdfViewer.src = "";
+            }
+        }
+
+        function viewReport(reportId, fieldName) {
+            const url = `/view-report-dietitian/${reportId}/${fieldName}`;
+            pdfViewer.src = url;
+            modal.style.display = "block";
+        }
+
+        async function fetchLabReports() {
+            const loading = document.getElementById('loading');
+            const errorMessage = document.getElementById('error-message');
+            const reportsBody = document.getElementById('reportsBody');
+
+            try {
+                loading.style.display = 'block';
+                errorMessage.style.display = 'none';
+
+                const response = await fetch(`/booking/lab-report/dietitian?otherPartyId=${userId}`, {
+                    headers: { 'Accept': 'application/json' }
+                });
+                if (!response.ok) {
+                    throw new Error('Failed to fetch lab reports');
+                }
+                const reports = await response.json();
+
+                if (!reports || reports.length === 0) {
+                    reportsBody.innerHTML = '<div class="text-center">No lab reports submitted yet</div>';
+                    return;
+                }
+
+                reportsBody.innerHTML = '';
+                reports.forEach(report => {
+                    const reportDiv = document.createElement('div');
+                    reportDiv.className = 'report';
+                    let html = `<h6>Submitted on ${new Date(report.createdAt).toLocaleString()}</h6>`;
+
+                    const fields = [
+                        { key: 'name', label: 'Name' },
+                        { key: 'gender', label: 'Gender' },
+                        { key: 'address', label: 'Address' },
+                        { key: 'phone', label: 'Phone' },
+                        { key: 'email', label: 'Email' },
+                        { key: 'age', label: 'Age' },
+                        { key: 'healthConcerns', label: 'Health Concerns' },
+                        { key: 'additionalInfo', label: 'Additional Information' }
+                    ];
+
+                    fields.forEach(field => {
+                        if (report[field.key] && report[field.key] !== '') {
+                            if (field.key === 'healthConcerns' && Array.isArray(report[field.key])) {
+                                html += `<p><strong>${field.label}:</strong> ${report[field.key].join(', ')}</p>`;
+                            } else {
+                                html += `<p><strong>${field.label}:</strong> ${report[field.key]}</p>`;
+                            }
+                        }
+                    });
+
+                    let hasFiles = false;
+                    const fileHtml = Object.entries(report)
+                        .filter(([key, value]) => key.endsWith('Report') && value?.data)
+                        .map(([key, value]) => {
+                            hasFiles = true;
+                            const label = key
+                                .replace(/([A-Z])/g, ' $1')
+                                .replace(/^./, str => str.toUpperCase());
+                            return `
+                                <div class="file-link">
+                                    <i class="fas fa-file-medical"></i>
+                                    <span class="file-name">${label}</span>
+                                    <button class="view-btn" onclick="viewReport('${report._id}', '${key}')">
+                                        <i class="fas fa-eye"></i> View
+                                    </button>
+                                    <a href="/download-report-dietitian/${report._id}/${key}" 
+                                       download="${value.filename || label}">
+                                        <i class="fas fa-download"></i> Download
+                                    </a>
+                                </div>`;
+                        })
+                        .join('');
+
+                    html += fileHtml;
+
+                    if (!hasFiles) {
+                        html += '<p class="text-muted">No files attached to this report</p>';
+                    }
+
+                    reportDiv.innerHTML = html;
+                    reportsBody.appendChild(reportDiv);
+                });
+
+                reportsBody.scrollTop = reportsBody.scrollHeight;
+            } catch (error) {
+                console.error('Error fetching lab reports:', error);
+                loading.style.display = 'none';
+                errorMessage.style.display = 'block';
+                errorMessage.textContent = 'Failed to load lab reports. Please try again.';
+            } finally {
+                loading.style.display = 'none';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchLabReports();
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

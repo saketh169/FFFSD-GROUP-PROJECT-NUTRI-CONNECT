@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nutrition Plan Features</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+            margin: 0;
+            padding: 20px;
+        }
+        .heading {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .container {
+            background: #fff;
+            padding: 30px;
+            border-radius: 15px;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            animation: fadeIn 1s ease-in-out;
+            margin-bottom: 20px;
+        }
+        .box {
+            padding: 15px;
+            border-bottom: 1px solid #e0e0e0;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+        .box:before {
+            content: "\f00c";
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900;
+            color: #4CAF50;
+            margin-right: 10px;
+        }
+        .box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        .box:last-child {
+            border-bottom: none;
+        }
+        .button-container {
+            margin-top: 25px;
+        }
+        .pay-button {
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 600;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+        .pay-button:hover {
+            background: linear-gradient(135deg, #45a049, #4CAF50);
+            transform: scale(1.05);
+        }
+        .price {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #4CAF50;
+            margin-bottom: 20px;
+        }
+        .billing-badge {
+            display: inline-block;
+            background-color: #f8f9fa;
+            color: #4CAF50;
+            font-size: 0.8rem;
+            padding: 5px 10px;
+            border-radius: 20px;
+            margin-bottom: 15px;
+            border: 1px solid #4CAF50;
+        }
+        .savings-text {
+            font-size: 0.9rem;
+            color: #dc3545;
+            margin-top: 5px;
+            font-weight: 500;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        #cross {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            font-size: 30px;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            z-index: 1000;
+        }
+        @media (max-width: 768px) {
+            .heading {
+                font-size: 2rem;
+            }
+            .container {
+                padding: 20px;
+            }
+            .box {
+                padding: 12px;
+                text-align: left;
+            }
+            .pay-button {
+                width: 100%;
+                padding: 12px 20px;
+            }
+        }
+        @media (max-width: 480px) {
+            .heading {
+                font-size: 1.7rem;
+            }
+            .price {
+                font-size: 1.3rem;
+            }
+            .container {
+                padding: 15px;
+            }
+            body {
+                padding: 10px;
+            }
+            .box {
+                padding: 10px;
+                font-size: 0.9rem;
+            }
+        }
+        .loading {
+            position: relative;
+            pointer-events: none;
+        }
+        .loading:after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            top: 50%;
+            right: 20px;
+            margin-top: -10px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin {
+            to {transform: rotate(360deg);}
+        }
+    </style>
+</head>
+<body>
+    <div id="cross" class="btn btn-outline-success" onclick="window.history.back();">
+        <i class="fa-solid fa-arrow-left"></i>
+    </div>
+    <h2 class="heading" id="planHeading">Nutrition Plan</h2>
+    <div class="container" id="planContainer">
+    </div>
+    <div class="button-container">
+        <button class="pay-button" id="payButton">Pay Amount</button>
+    </div>
+    <script>
+        function getQueryParams() {
+            const params = {};
+            window.location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m, key, value) {
+                params[key] = decodeURIComponent(value);
+            });
+            return params;
+        }
+        const params = getQueryParams();
+        const planType = params.plan; // Plan type (basic, premium, ultimate)
+        const billingType = params.billing; // Billing type (monthly, yearly)
+        const amount = params.amount || calculateAmount(planType, billingType);
+        
+        function calculateAmount(plan, billing) {
+            const prices = {
+                basic: { monthly: '299', yearly: '999' },
+                premium: { monthly: '599', yearly: '1999' },
+                ultimate: { monthly: '899', yearly: '2999' }
+            };
+            return prices[plan]?.[billing] || '0';
+        }
+
+        const plans = {
+            basic: {
+                heading: "Basic Plan",
+                price: billingType === "yearly" ? "₹999/year" : "₹299/month",
+                monthlyCost: billingType === "yearly" ? "₹83/month" : "₹299/month",
+                features: [
+                    "Up to 4 daily dietitian consultations.",
+                    "Generate up to 4 meal plans daily.",
+                    "Access to blog posting.",
+                    "Personalized contact support.",
+                    "Admin contact support."
+                ]
+            },
+            premium: {
+                heading: "Premium Plan",
+                price: billingType === "yearly" ? "₹1999/year" : "₹599/month",
+                monthlyCost: billingType === "yearly" ? "₹167/month" : "₹599/month",
+                features: [
+                    "Up to 6 daily dietitian consultations.",
+                    "Generate up to 20 meal plans daily.",
+                    "Access to blog posting.",
+                    "Personalized contact support.",
+                    "Admin contact support."
+                ]
+            },
+            ultimate: {
+                heading: "Ultimate Plan",
+                price: billingType === "yearly" ? "₹2999/year" : "₹899/month",
+                monthlyCost: billingType === "yearly" ? "₹250/month" : "₹899/month",
+                features: [
+                    "Up to 8 daily dietitian consultations.",
+                    "Generate unlimited meal plans daily.",
+                    "Access to blog posting.",
+                    "Personalized contact support.",
+                    "Admin contact support."
+                ]
+            }
+        };
+        function renderPlan(planType) {
+            const plan = plans[planType];
+            if (plan) {
+                document.getElementById('planHeading').textContent = plan.heading;
+                const container = document.getElementById('planContainer');
+                
+                let savingsText = '';
+                if (billingType === "yearly") {
+                    const monthlyCost = parseInt(plans[planType].monthlyCost.replace(/[^\d]/g, '')) * 12;
+                    const yearlyCost = parseInt(plan.price.replace(/[^\d]/g, ''));
+                    const savings = ((monthlyCost - yearlyCost) / monthlyCost) * 100;
+                    if (savings > 0) {
+                        savingsText = `<div class="savings-text">Save ${Math.round(savings)}% with annual billing</div>`;
+                    }
+                }
+                
+                container.innerHTML = `
+                    <div class="billing-badge">${billingType === "yearly" ? "Annual Billing" : "Monthly Billing"}</div>
+                    <div class="price">${plan.price}</div>
+                    ${billingType === "yearly" ? `<div style="font-size: 0.9rem; color: #666;">Only ${plan.monthlyCost} billed annually</div>` : ''}
+                    ${savingsText}
+                    ${plan.features.map(feature => `<div class="box">${feature}</div>`).join('')}
+                `;
+            } else {
+                document.getElementById('planHeading').textContent = "Plan Not Found";
+                document.getElementById('planContainer').innerHTML = "<div class='box'>The requested plan does not exist.</div>";
+            }
+        }
+        renderPlan(planType);
+        document.getElementById('payButton').addEventListener('click', (e) => {
+            const button = e.target;
+            button.classList.add('loading');
+            button.textContent = 'Processing...';
+            
+            setTimeout(() => {
+                window.location.href = `/payment?plan=${planType}&billing=${billingType}&amount=${amount}&plan_name=${encodeURIComponent(plans[planType].heading)}&source=pricing_plan`;
+            }, 800);
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                document.getElementById('planContainer').classList.add('animate__animated', 'animate__fadeInUp');
+                document.getElementById('payButton').classList.add('animate__animated', 'animate__fadeInUp');
+            }, 200);
+        });
+    </script>
+</body>
+</html>

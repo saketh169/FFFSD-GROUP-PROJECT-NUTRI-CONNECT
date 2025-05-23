@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <title>My Dietitians | NutriConnect</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            color: rgb(51, 51, 51);
+            line-height: 1.6;
+            margin: 0px;
+            background-color: #e8f5e9;
+        }
+
+        .top {
+            position: fixed;
+            top: 0;
+            height: 130px;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .top1 {
+            box-shadow: rgba(0, 0, 0, 0.6) 0px 2px 5px;
+            position: fixed;
+            left: 0;
+            right: 0;
+            height: 60px;
+            width: 100%;
+            background-color: #D2F0C8;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-family: 'Poppins', sans-serif;
+            font-size: 24px;
+            font-weight: bold;
+            position: absolute;
+            left: 50px;
+            color: #1E6F5C;
+        }
+
+        .logo .highlight {
+            color: #28B463;
+        }
+
+        .logo .icon-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: #28B463;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .logo .icon {
+            font-size: 24px;
+            color: #FFFFFF;
+        }
+
+        .logo:hover .icon-container {
+            background-color: #1E6F5C;
+            transform: scale(1.1);
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover {
+            color: #28B463;
+            transition: color 0.3s ease;
+        }
+
+        #profile {
+            position: fixed;
+            width: 150px;
+            height: 45px;
+            right: 30px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 7px;
+        }
+
+        #profile i {
+            margin: 5px;
+        }
+
+        #profile div {
+            border: 2px solid;
+            border-radius: 50%;
+            padding: 5px;
+        }
+
+        #profile:hover div {
+            border: 2px solid white;
+        }
+
+        #nav-bar {
+            z-index: 1002;
+            position: fixed;
+            top: 60px;
+            left: 0;
+            width: 100%;
+            height: 50px;
+            background-color: #50c878;
+            border-bottom: 2px solid #28a745;
+        }
+
+        .navbar-nav .nav-link {
+            font-weight: bold;
+            font-size: 16px;
+            transition: all 0.3s ease-in-out;
+            padding: 10px 15px;
+            border-radius: 5px;
+        }
+
+        .navbar-nav .nav-link:hover {
+            background-color: rgba(20, 133, 52, 1);
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+            color: white !important;
+        }
+
+        .navbar-nav .nav-item.active .nav-link {
+            background-color: rgba(40, 167, 69, 0.8);
+            color: white;
+        }
+
+        .navbar-nav {
+            margin-left: 200px;
+            width: 80%;
+            justify-content: space-between;
+        }
+
+        .active-page a {
+            font-weight: bold;
+            background-color: #46b06c;
+            border: 3px solid #28a745;
+            color: white !important;
+            border-radius: 15%;
+        }
+
+        @media (max-width: 992px) {
+            .logo {
+                margin-right: 270px;
+            }
+
+            #toggler {
+                margin-top: -5px;
+                position: fixed;
+                left: 30px;
+                top: 70px;
+            }
+
+            .navbar-nav .nav-item {
+                margin: 0px;
+                text-align: center;
+                background-color: #98Fb98;
+            }
+
+            .navbar-nav {
+                margin-top: 54px;
+                width: 100%;
+            }
+        }
+
+        .main {
+            position: relative;
+            top: 0;
+            width: 100%;
+            margin-top: 120px;
+            padding: 30px 0;
+        }
+
+        .card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+        }
+
+        .card-header {
+            background-color: white;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            padding: 20px 25px;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .card-title {
+            font-weight: 600;
+            color: #2c3e50;
+            margin: 0;
+        }
+
+        .table-responsive {
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .table {
+            margin-bottom: 0;
+        }
+
+        .table thead th {
+            background-color: #28a745 !important;
+            color: white;
+            font-weight: 500;
+            border: none;
+            padding: 15px 20px;
+            vertical-align: middle;
+        }
+
+        .table tbody tr {
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .table tbody tr:hover {
+            background-color: rgba(40, 167, 69, 0.1);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .table tbody td {
+            padding: 15px 20px;
+            vertical-align: middle;
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .profile-placeholder {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #28a745;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .action-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(40, 167, 69, 0.1);
+            color: #28a745;
+            border: none;
+            transition: all 0.3s ease;
+            margin-right: 8px;
+        }
+
+        .action-btn:hover {
+            background-color: #28a745;
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .action-btn i {
+            font-size: 14px;
+        }
+
+        .loading {
+            text-align: center;
+            margin: 20px 0;
+            font-style: italic;
+        }
+
+        #error-message {
+            color: red;
+            text-align: center;
+            margin: 20px 0;
+            display: none;
+        }
+
+        .fixed-button {
+            background-color: #28a745;
+            color: white;
+            height: 45px;
+            padding: 10px;
+            border-radius: 5px;
+            outline: 2px solid #46b06c;
+            display: inline-block;
+            position: fixed;
+            top: 61.5px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .fixed-button:hover {
+            background-color: #218838;
+            transform: scale(1.1);
+        }
+
+        .fixed-button i {
+            font-size: 24px;
+            color: #f8f8f8;
+        }
+
+        #contact {
+            right: 20px;
+        }
+
+        #chatbot {
+            right: 80px;
+        }
+
+     
+    </style>
+</head>
+<body>
+    <header class="top">
+        <div class="top1">
+            <div class="logo">
+                <div class="icon-container">
+                    <i class="icon fas fa-leaf"></i>
+                </div>
+                <span>
+                    <span class="highlight">N</span>utri
+                    <span class="highlight">C</span>onnect
+                </span>
+            </div>
+            <div id="profile" onclick="window.location.href='/user_dash'" class="btn btn-outline-success">
+                <b>PROFILE</b>
+                <div>
+                    <i class="fa-regular fa-user"></i>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid navbar-container">
+            <nav id="nav-bar" class="navbar navbar-expand-lg navbar-light">
+                <div class="container">
+                    <button id="toggler" class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" style="border: 3px solid #28a745">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav mx-auto">
+                            <li class="nav-item">
+                                <a class="nav-link" href="/user">HOME</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/user-guide">GUIDE</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/dietitian-profiles">DIETITIAN PROFILES</a>
+                            </li>
+                            <li class="nav-item active-page">
+                                <a class="nav-link" href="/user-consultations">APPOINTMENTS</a>
+                            </li>
+                             <li class="nav-item">
+                                <a class="nav-link" href="/user-schedule"> SCHEDULE</a>
+                            </li> 
+                            <li class="nav-item">
+                                <a class="nav-link" href="/blog">BLOG</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/pricing">PRICING</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <a id="chatbot" class="fixed-button" href="/chatbot" title="Chatbot">
+                        <i class="fas fa-robot"></i>
+                    </a>
+                    <a id="contact" class="fixed-button" href="/contact" title="Contact us">
+                        <i class="fa-solid fa-phone-volume"></i>
+                    </a>
+                </div>
+            </nav>
+        </div>
+    </header>
+    <main class="main">
+        <div class="container">
+            <div class="card">
+                <div class="card-header">
+                    <div class="header-content">
+                        <h5 class="card-title">My Dietitians</h5>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table" id="dietitiansTable">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Profile</th>
+                                <th>Name</th>
+                                <th>Specialization</th>
+                                <th>Booked Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="dietitiansTableBody">
+                            <!-- Dietitians will be populated here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div id="error-message"></div>
+            <div id="loading" class="loading">Loading dietitians...</div>
+        </div>
+    </main>
+
+    <style>
+     
+        .footer-about {
+          color: #F0E68C;
+          margin-top: 100px;
+          margin-bottom: 20px;
+          line-height: 1.6;
+        }
+        
+        .footer-title {
+          color: #FFFFFF;
+          font-size: 1.2rem;
+          margin-bottom: 20px;
+          position: relative;
+          padding-bottom: 10px;
+          font-weight: 600;
+        }
+        
+        .footer-title::after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 50px;
+          height: 2px;
+          background-color: #50c878;
+        }
+        
+        .footer-links {
+          list-style: none;
+          padding: 0;
+        }
+        
+        .footer-links li {
+          margin-bottom: 12px;
+        }
+        
+        .footer-links a {
+          color: #F0E68C;
+          text-decoration: none;
+          transition: all 0.3s ease;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+        }
+        
+        .footer-links a:hover {
+          color: #FFD700;
+          padding-left: 5px;
+        }
+        
+        .footer-links i {
+          font-size: 0.8rem;
+        }
+        
+        .footer-contact-info {
+          list-style: none;
+          padding: 0;
+        }
+        
+        .footer-contact-info li {
+          margin-bottom: 15px;
+          display: flex;
+          align-items: flex-start;
+          gap: 10px;
+          line-height: 1.5;
+        }
+        
+        .footer-contact-info i {
+          margin-top: 3px;
+          color: #50c878;
+        }
+        
+        .footer-contact-info a {
+          color: #1E90FF;
+          text-decoration: none;
+          transition: color 0.3s ease;
+        }
+        
+        .footer-contact-info a:hover {
+          color: #00BFFF;
+        }
+        
+        .footer-bottom {
+          background-color: rgba(0, 0, 0, 0.2);
+          padding: 20px 0;
+          margin-top: 60px;
+        }
+        
+        .copyright {
+          color: rgba(255, 255, 255, 0.7);
+          margin: 0;
+        }
+        
+        .footer-menu {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+          display: flex;
+          justify-content: center;
+          gap: 20px;
+        }
+        
+        .footer-menu li {
+          display: inline-block;
+        }
+        
+        .footer-menu a {
+          color: #F0E68C;
+          text-decoration: none;
+          transition: color 0.3s ease;
+        }
+        
+        .footer-menu a:hover {
+          color: #FFD700;
+        }
+        
+        /* Logo Styles */
+        .footer .logo {
+          display: flex;
+          align-items: center;
+          font-size: 24px;
+          font-weight: bold;
+          color:white;
+          margin-bottom: 20px;
+          margin-left:50px;
+        }
+        
+       .footer .logo .highlight {
+          color: #28B463;
+        }
+        
+       .footer .logo .icon-container {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 40px;
+          height: 40px;
+          background-color: #28B463;
+          border-radius: 50%;
+         
+        }
+        
+       .footer .logo .icon {
+          font-size: 24px;
+          color: #FFFFFF;
+        }
+        
+        .footer .logo:hover .icon-container {
+          background-color: #1E6F5C;
+          transform: scale(1.1);
+          transition: all 0.3s ease;
+          
+        }
+        
+        .footer.logo:hover {
+          color: #28B463;
+          transition: color 0.3s ease;
+        }
+        
+        /* Social Links */
+        .social-links {
+          display: flex;
+          gap: 15px;
+          margin-top: 20px;
+        }
+        
+        .social-link {
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          background-color: #f8f9fa;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: #28a745;
+          transition: all 0.3s ease;
+        }
+        
+        .social-link:hover {
+          background-color: #28a745;
+          color: white;
+          transform: translateY(-3px);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+          .footer-menu {
+            justify-content: flex-end;
+          }
+        }
+        
+        @media (max-width: 768px) {
+          .footer-menu {
+            justify-content: center;
+          }
+          
+          .copyright,
+          .footer-menu {
+            text-align: center;
+          }
+          
+          .footer-menu {
+            margin-top: 10px;
+          }
+        }
+        </style>
+    
+        <style>
+          .footer {
+            position: relative;
+            top:100px;
+            left:0px;
+            height:auto;
+            width:100%;
+            width: 100%;
+            background: linear-gradient(135deg, #232F3E 0%, #2c3e50 100%);
+            color: white;
+            padding: 60px 0 0;
+            position: relative;
+            overflow: hidden;
+          }
+    
+        </style>
+
+    <footer class="footer">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
+              <div class="logo">
+                <div class="icon-container">
+                    <i class="icon fas fa-leaf"></i>
+                </div>
+                <span>
+                    <span class="highlight">N</span>utri 
+                    <span class="highlight">C</span>onnect
+                </span>
+              </div>
+              <p class="footer-about">
+                NutriConnect helps you find certified dietitians and nutrition experts 
+                to achieve your health goals through personalized nutrition plans.
+              </p>
+              <div class="social-links">
+                <a href="https://www.facebook.com/profile.php?id=61572485733709" target="_blank" class="social-link" aria-label="Facebook">
+                  <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="https://www.instagram.com/nutriconnect2025" target="_blank" class="social-link" aria-label="Instagram">
+                  <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://x.com/NutriC21" target="_blank" class="social-link" aria-label="Twitter">
+                  <i class="fab fa-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/in/nutri-connect-a0b774349" target="_blank" class="social-link" aria-label="LinkedIn">
+                  <i class="fab fa-linkedin-in"></i>
+                </a>
+              </div>
+            </div>
+            
+            <div class="col-lg-2 col-md-6 mb-4 mb-lg-0">
+              <h5 class="footer-title">Quick Links</h5>
+              <ul class="footer-links">
+                <li><a href="/user"><i class="fas fa-chevron-right"></i> Home</a></li>
+                <li><a href="/dietitian-profiles"><i class="fas fa-chevron-right"></i> Find Dietitians</a></li>
+                <li><a href="/user-guide"><i class="fas fa-chevron-right"></i> How It Works</a></li>
+                <li><a href="/blog"><i class="fas fa-chevron-right"></i> Nutrition Blog</a></li>
+                <li><a href="/pricing"><i class="fas fa-chevron-right"></i> Pricing Plans</a></li>
+                <li><a href="/contact"><i class="fas fa-chevron-right"></i> Contact Support</a></li>
+              </ul>
+            </div>
+            
+            <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+              <h5 class="footer-title">Services</h5>
+              <ul class="footer-links">
+                
+                  <li><a href="/weight-management"><i class="fas fa-chevron-right"></i> Weight Management</a></li>
+                  <li><a href="/diabetes-thyroid"><i class="fas fa-chevron-right"></i> Diabetes/Thyroid</a></li>
+                  <li><a href="/cardiac-health"><i class="fas fa-chevron-right"></i> Cardiac Health</a></li>
+                  <li><a href="/womens-health"><i class="fas fa-chevron-right"></i> Women's Health</a></li>
+                  <li><a href="/skin-hair"><i class="fas fa-chevron-right"></i> Skin & Hair Care</a></li>
+                  <li><a href="/gut-health"><i class="fas fa-chevron-right"></i> Gut Health</a></li>
+                
+              </ul>
+            </div>
+            
+            <div class="col-lg-3 col-md-6">
+              <h5 class="footer-title">Contact Info</h5>
+              <ul class="footer-contact-info">
+                <li>
+                  <i class="fas fa-map-marker-alt"></i>
+                  <span>Plot No. 45, Greenway Colony, 517681, India</span>
+                </li>
+                <li>
+                  <i class="fas fa-phone-alt"></i>
+                  <a href="tel:+917075783143">+91 70757 83143</a>
+                </li>
+                <li>
+                  <i class="fas fa-envelope"></i>
+                  <a href="mailto:nutriconnect6@gmail.com">support@nutriconnect6@gmail.com</a>
+                </li>
+                <li>
+                  <i class="fas fa-clock"></i>
+                  <span>Mon-Fri: 9AM - 9PM</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        
+        <div class="footer-bottom">
+          <div class="container">
+            <div class="row align-items-center">
+              <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                <p class="copyright mb-0">&copy; 2025 NutriConnect. All rights reserved.</p>
+              </div>
+              <div class="col-md-6 text-center text-md-end">
+                <ul class="footer-menu">
+  
+                  <li><a href="/terms_conditions">Terms of Service</a></li>
+                  <li><a href="/privacy-policy">Privacy Policy</a></li>
+                 
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </footer>
+      
+     
+
+    <script>
+        // Retry fetch with delay
+        async function fetchWithRetry(url, options, retries = 3, delay = 1000) {
+            for (let i = 0; i < retries; i++) {
+                try {
+                    const response = await fetch(url, options);
+                    if (!response.ok && response.status >= 500) {
+                        throw new Error(`Server error: ${response.status}`);
+                    }
+                    return response;
+                } catch (error) {
+                    if (i < retries - 1) {
+                        console.warn(`Retry ${i + 1}/${retries} for ${url}: ${error.message}`);
+                        await new Promise(resolve => setTimeout(resolve, delay));
+                        continue;
+                    }
+                    throw error;
+                }
+            }
+        }
+
+        // Function to fetch and display booked dietitians
+        async function fetchBookedDietitians() {
+            const tableBody = document.getElementById('dietitiansTableBody');
+            tableBody.innerHTML = '';
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('error-message').style.display = 'none';
+
+            try {
+                const response = await fetchWithRetry('/bookings/client-dietitians', {
+                    method: 'GET',
+                    credentials: 'include',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (!response.ok) {
+                    if (response.status === 401) {
+                        window.location.href = '/roles_signin';
+                        return;
+                    }
+                    throw new Error('Failed to fetch dietitians');
+                }
+
+                const dietitians = await response.json();
+                document.getElementById('loading').style.display = 'none';
+                
+                if (!dietitians || dietitians.length === 0) {
+                    tableBody.innerHTML = '<tr><td colspan="6" class="text-center">No dietitians found</td></tr>';
+                    return;
+                }
+                
+                dietitians.forEach((dietitian, index) => {
+                    const row = document.createElement('tr');
+                    row.onclick = () => openChat(dietitian._id);
+                    const formattedDate = dietitian.date ? new Date(dietitian.date).toLocaleDateString('en-GB', {
+                        day: '2-digit',
+                        month: 'short',
+                        year: 'numeric'
+                    }) : 'N/A';
+                    const firstLetter = dietitian.name ? dietitian.name.charAt(0).toUpperCase() : '?';
+                    row.innerHTML = `
+                        <td>${index + 1}</td>
+                        <td>
+                            ${dietitian.profileImage ? 
+                                `<img src="${dietitian.profileImage}" 
+                                      alt="${dietitian.name}" 
+                                      class="rounded-circle"
+                                      style="width: 50px; height: 50px; object-fit: cover;">` :
+                                `<div class="profile-placeholder">${firstLetter}</div>`
+                            }
+                        </td>
+                        <td>${dietitian.name}</td>
+                        <td>${dietitian.specialization || 'N/A'}</td>
+                        <td>${formattedDate}</td>
+                        <td>
+                            <button class="action-btn" title="Chat" onclick="event.stopPropagation(); openChat('${dietitian._id}')">
+                                <i class="fas fa-comment"></i>
+                            </button>
+                        </td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            } catch (error) {
+                console.error('Error fetching booked dietitians:', error);
+                document.getElementById('loading').style.display = 'none';
+                tableBody.innerHTML = '<tr><td colspan="6" class="text-center text-danger">Failed to load dietitians. Please try again later.</td></tr>';
+            }
+        }
+
+        // Function to initiate chat
+        function openChat(dietitianId) {
+            window.location.href = `/chat_user/${dietitianId}`;
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', fetchBookedDietitians);
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

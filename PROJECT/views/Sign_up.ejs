@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Common Sign-up Page</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+    
+    <link rel="stylesheet" href="/css/Sign_up.css">
+  
+    <style>
+
+
+    </style>
+  </head>
+  <body>
+    <!-- Back Button -->
+    <div id="cross" class="btn btn-outline-success" onclick="onclick=window.history.back();">
+      <i class="fa-solid fa-xmark"></i>
+    </div>
+
+    <!-- Sign-up Section -->
+    <section id="get-started">
+      <div class="container min-vh-100 d-flex justify-content-center align-items-center">
+        <div class="card p-4 shadow-lg" style="max-width: 500px; width: 100%">
+          <h2 class="text-center mb-4"><b>GET STARTED</b></h2>
+
+          <!-- User Sign-up Form -->
+          <form id="userSignupForm" class="signup-form user needs-validation"  data-redirect="/user"  novalidate>
+              <div class="mb-3">
+              <label for="userName" class="form-label">Full Name:</label>
+              <input id="userName" type="text" class="form-control" placeholder="Enter Full Name" required minlength="5" maxlength="50" />
+              <div class="invalid-feedback">Full Name must be between 5 and 50 characters.</div>
+            </div>
+
+            <div class="mb-3">
+              <label for="userEmail" class="form-label">Email:</label>
+              <input id="userEmail" type="email" class="form-control" placeholder="Enter Email" required minlength="10" maxlength="50" />
+              <div class="invalid-feedback">Please Enter a Valid Email between 10 and 50 characters.</div>
+            </div>
+
+            <div class="mb-3">
+              <label for="userPassword" class="form-label">Password:</label>
+              <input id="userPassword" type="password" class="form-control" placeholder="Create Password" required minlength="6" maxlength="20" />
+              <div class="invalid-feedback">Password must be between 6 and 20 characters.</div>
+            </div>
+
+            <div class="mb-3">
+              <label for="userPhone" class="form-label">Phone Number:</label>
+              <input id="userPhone" type="tel" class="form-control" placeholder="Enter Phone Number" pattern="[0-9]{10}" required minlength="10" maxlength="10" />
+              <div class="invalid-feedback">Enter a valid 10-digit phone number.</div>
+            </div>
+
+            <div class="mb-3">
+              <label for="userDob" class="form-label">Date of Birth:</label>
+              <input id="userDob" type="date" class="form-control" required />
+              <div class="invalid-feedback" id="userDobFeedback">Please enter a valid date of birth.</div>
+          </div>
+          
+         
+            <div class="mb-3">
+              <label class="form-label">Gender:</label>
+              <div class="d-flex gap-3">
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="userGender" value="male" required />
+                  <label class="form-check-label">Male</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="userGender" value="female" />
+                  <label class="form-check-label">Female</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="userGender" value="other" />
+                  <label class="form-check-label">Other</label>
+                </div>
+              </div>
+              <div class="invalid-feedback">Please select your gender.</div>
+            </div>
+
+            <div class="mb-3">
+              <label for="userAddress" class="form-label">Address:</label>
+              <textarea id="userAddress" class="form-control" rows="3" placeholder="Enter Address" required minlength="5" maxlength="200"></textarea>
+              <div class="invalid-feedback">Address must be between 5 and 200 characters.</div>
+            </div>
+
+            <div class="d-grid">
+              <button type="submit" class="btn btn-primary">Get Started</button>
+            </div>
+          </form>
+
+         <!-- Dietitian Sign-up Form -->
+        <form id="dietitianSignupForm" class="signup-form dietitian needs-validation" data-redirect="/doc_dietitian" novalidate>
+          <!-- Full Name -->
+          <div class="mb-3">
+              <label for="dietitianName" class="form-label">Full Name:</label>
+              <input id="dietitianName" type="text" class="form-control" placeholder="Enter Full Name" required minlength="3" maxlength="50" />
+              <div class="invalid-feedback">Please enter your full name (3-50 characters).</div>
+          </div>
+
+          <!-- Email -->
+          <div class="mb-3">
+              <label for="dietitianEmail" class="form-label">Email:</label>
+              <input id="dietitianEmail" type="email" class="form-control" placeholder="Enter Email" required minlength="5" maxlength="50" />
+              <div class="invalid-feedback">Please Enter a Valid Email between 10 and 50 characters.</div>
+          </div>
+
+          <!-- Password -->
+          <div class="mb-3">
+              <label for="dietitianPassword" class="form-label">Password:</label>
+              <input id="dietitianPassword" type="password" class="form-control" placeholder="Enter Password" required minlength="8" maxlength="20" />
+              <div class="invalid-feedback">Password must be 8-20 characters.</div>
+          </div>
+
+          <!-- Age -->
+          <div class="mb-3">
+              <label for="dietitianAge" class="form-label">Age:</label>
+              <input id="dietitianAge" type="number" class="form-control" placeholder="Enter Age" required min="18" />
+              <div class="invalid-feedback" id="dietitianAgeFeedback">Please enter a valid age (minimum 18).</div>
+          </div>   
+
+          <!-- Phone Number -->
+          <div class="mb-3">
+              <label for="dietitianPhone" class="form-label">Phone Number:</label>
+              <input id="dietitianPhone" type="tel" class="form-control" placeholder="Enter Phone Number" required pattern="[0-9]{10}" />
+              <div class="invalid-feedback">Please enter a valid 10-digit phone number.</div>
+          </div>
+
+          <!-- License Number -->
+          <div class="mb-3">
+              <label for="dietitianLicenseNumber" class="form-label">License Number:</label>
+              <input id="dietitianLicenseNumber" type="text" class="form-control" placeholder="Enter License Number" required minlength="5" maxlength="20" />
+              <div class="invalid-feedback">License number must be 5-20 characters.</div>
+          </div>
+
+          <!-- Submit Button -->
+          <div class="d-grid">
+              <button type="submit" class="btn btn-primary">Upload Documents</button>
+          </div>
+
+          </form>
+
+         
+          <!-- Admin Sign-up Form -->
+          <form id="adminSignupForm" class="signup-form admin needs-validation" data-redirect="/admin"  novalidate>
+            <div class="mb-3">
+              <label for="adminName" class="form-label">Full Name:</label>
+              <input id="adminName" type="text" class="form-control" placeholder="Enter Full Name" required minlength="5" maxlength="50" />
+              <div class="invalid-feedback">Full Name must be between 5 and 50 characters.</div>
+            </div>
+  
+            <div class="mb-3">
+              <label for="adminEmail" class="form-label">Email:</label>
+              <input id="adminEmail" type="email" class="form-control" placeholder="Enter Email"  required minlength="10" maxlength="50" />
+              <div class="invalid-feedback">Please Enter a Valid Email between 10 and 50 characters.</div>
+            </div>
+
+            <div class="mb-3">
+              <label for="adminPassword" class="form-label">Password:</label>
+              <input id="adminPassword" type="password" class="form-control" placeholder="Create Password" required minlength="6" maxlength="20" />
+              <div class="invalid-feedback">Password must be between 6 and 20 characters.</div>
+            </div>
+
+            <div class="mb-3">
+              <label for="adminKey" class="form-label">Admin Key:</label>
+              <input id="adminKey" type="password" class="form-control" placeholder="Enter Admin Key" required minlength="5" maxlength="20" />
+              <div class="invalid-feedback">Admin key must be between 5 and 20 characters.</div>
+            </div>
+
+            <div class="mb-3">
+              <label for="adminPhone" class="form-label">Phone Number:</label>
+              <input id="adminPhone" type="tel" class="form-control" placeholder="Enter Phone Number" pattern="[0-9]{10}" required minlength="10" maxlength="10" />
+              <div class="invalid-feedback">Enter a valid 10-digit phone number.</div>
+            </div>
+
+            <div class="mb-3">
+              <label for="adminDob" class="form-label">Date of Birth:</label>
+              <input id="adminDob" type="date" class="form-control" required />
+              <div class="invalid-feedback">Please select your date of birth.</div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Gender:</label>
+              <div class="d-flex gap-3">
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="adminGender" value="male" required />
+                  <label class="form-check-label">Male</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="adminGender" value="female" />
+                  <label class="form-check-label">Female</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="adminGender" value="other" />
+                  <label class="form-check-label">Other</label>
+                </div>
+              </div>
+              <div class="invalid-feedback">Please select your gender.</div>
+            </div>
+
+            <div class="mb-3">
+              <label for="adminAddress" class="form-label">Address:</label>
+              <textarea id="adminAddress" class="form-control" rows="3" placeholder="Enter Address"  required minlength="5" maxlength="200"></textarea>
+              <div class="invalid-feedback">Address must be between 5 and 200 characters.</div>
+            </div>
+
+            <div class="d-grid">
+              <button type="submit" class="btn btn-primary">Get Started</button>
+            </div>
+          </form>
+
+          <!-- Organization Sign-up Form -->
+          <form id="orgSignupForm" class="signup-form organization needs-validation" data-redirect="/doc_organization"  novalidate>
+            <!-- Organization Name -->
+            <div class="mb-3">
+                <label for="orgName" class="form-label">Organization Name:</label>
+                <input id="orgName" type="text" class="form-control" placeholder="Enter Organization Name" required minlength="3" maxlength="50" />
+                <div class="invalid-feedback">Organization name must be between 3 and 50 characters.</div>
+            </div>
+
+            <!-- Email -->
+            <div class="mb-3">
+                <label for="orgEmail" class="form-label">Email:</label>
+                <input id="orgEmail" type="email" class="form-control" placeholder="Enter Email" required minlength="10" maxlength="50" />
+                <div class="invalid-feedback">Please Enter a Valid Email  between 10 and 50 characters</div>
+            </div>
+
+            <!-- Password -->
+            <div class="mb-3">
+                <label for="orgPassword" class="form-label">Password:</label>
+                <input id="orgPassword" type="password" class="form-control" placeholder="Create Password" required minlength="6" maxlength="20" />
+                <div class="invalid-feedback">Password must be between 6 and 20 characters.</div>
+            </div>
+
+            <!-- Phone Number -->
+            <div class="mb-3">
+                <label for="orgPhone" class="form-label">Phone Number:</label>
+                <input id="orgPhone" type="tel" class="form-control" placeholder="Enter Phone Number" pattern="[0-9]{10}" required minlength="10" maxlength="10" />
+                <div class="invalid-feedback">Enter a valid 10-digit phone number.</div>
+            </div>
+
+            <!-- Address -->
+            <div class="mb-3">
+                <label for="orgAddress" class="form-label">Address:</label>
+                <textarea id="orgAddress" class="form-control" rows="3" placeholder="Enter Address" pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" required minlength="5" maxlength="200"></textarea>
+                <div class="invalid-feedback">Address must be between 5 and 200 characters.</div>
+            </div>
+
+            <!-- Organization ID -->
+            <div class="mb-3">
+                <label for="orgVerificationId" class="form-label">Organization ID:</label>
+                <input id="orgVerificationId" type="text" class="form-control" placeholder="Enter Organization ID" required minlength="5" maxlength="20" />
+                <div class="invalid-feedback">Organization ID must be between 5 and 20 characters.</div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="d-grid">
+                <button type="submit" class="btn btn-primary">Upload Documents</button>
+            </div>
+          </form>
+    </section>
+  
+   
+    <!-- JavaScript for Role-Based Form Display -->
+    <script>
+        // Function to get query parameters from the URL
+        const getQueryParams = () => {
+          const params = {};
+          window.location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi, (str, key, value) => {
+            params[key] = value;
+          });
+          return params;
+        };
+
+        
+        // Function to show the form based on the role
+        const showFormBasedOnRole = (role) => {
+          const forms = document.querySelectorAll('.signup-form');
+          forms.forEach(form => form.style.display = 'none'); // Hide all forms
+
+          const formToShow = document.querySelector(`.signup-form.${role}`);
+          if (formToShow) formToShow.style.display = 'block'; // Show the selected form
+        };
+
+        // Get the role from the URL and show the appropriate form
+        const { role } = getQueryParams();
+        showFormBasedOnRole(role);
+
+      
+        document.addEventListener('DOMContentLoaded', () => {
+          // User Form: Date of Birth Validation
+          const userDobInput = document.getElementById("userDob");
+          const userDobFeedback = document.getElementById("userDobFeedback");
+        
+          if (userDobInput && userDobFeedback) {
+            userDobInput.addEventListener("input", function () {
+              const dobValue = new Date(userDobInput.value);
+              const today = new Date();
+              const minAgeDate = new Date();
+              minAgeDate.setFullYear(today.getFullYear() - 10); // Minimum age is 10
+        
+              if (!userDobInput.value) {
+                userDobFeedback.textContent = "Please enter a valid date of birth.";
+              } else if (dobValue > minAgeDate) {
+                userDobFeedback.textContent = "You must be at least 10 years old.";
+              } else {
+                userDobFeedback.textContent = "";
+              }
+        
+              userDobInput.setCustomValidity(userDobFeedback.textContent);
+            });
+          }
+        
+          // Dietitian Form: Age Validation
+          const dietitianAgeInput = document.getElementById("dietitianAge");
+          const dietitianAgeFeedback = document.getElementById("dietitianAgeFeedback");
+        
+          if (dietitianAgeInput && dietitianAgeFeedback) {
+            dietitianAgeInput.addEventListener("input", function () {
+              const age = parseInt(dietitianAgeInput.value, 10);
+        
+              if (!dietitianAgeInput.value) {
+                dietitianAgeFeedback.textContent = "Please enter your age.";
+              } else if (age < 18) {
+                dietitianAgeFeedback.textContent = "Age must be at least 18.";
+              } else {
+                dietitianAgeFeedback.textContent = "";
+              }
+        
+              dietitianAgeInput.setCustomValidity(dietitianAgeFeedback.textContent);
+            });
+          }
+        });
+  
+     
+      document.addEventListener('DOMContentLoaded', () => {
+        
+        const forms = document.querySelectorAll('.signup-form');
+    
+        forms.forEach(form => {
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+    
+                if (!form.checkValidity()) {
+                    form.classList.add('was-validated');
+                    return;
+                }
+    
+                let formData = {};
+                let endpoint = '';
+    
+                if (form.id === 'dietitianSignupForm') {
+                    formData = {
+                        name: document.getElementById('dietitianName').value,
+                        email: document.getElementById('dietitianEmail').value,
+                        password: document.getElementById('dietitianPassword').value,
+                        age: document.getElementById('dietitianAge').value,
+                        phone: document.getElementById('dietitianPhone').value,
+                        licenseNumber: document.getElementById('dietitianLicenseNumber').value
+                    };
+                    endpoint = `/signup/dietitian`;
+                } 
+                else if (form.id === 'adminSignupForm') {
+                    formData = {
+                        name: document.getElementById('adminName').value,
+                        email: document.getElementById('adminEmail').value,
+                        password: document.getElementById('adminPassword').value,
+                        adminKey: document.getElementById('adminKey').value,
+                        phone: document.getElementById('adminPhone').value,
+                        dob: document.getElementById('adminDob').value,
+                        gender: document.querySelector('input[name="adminGender"]:checked')?.value || "",
+                        address: document.getElementById('adminAddress').value
+                    };
+                    endpoint = `/signup/admin`;
+                } 
+                else if (form.id === 'orgSignupForm') {
+
+                    formData = {
+                        org_name: document.getElementById('orgName').value,
+                        email: document.getElementById('orgEmail').value,
+                        password: document.getElementById('orgPassword').value,
+                        phone: document.getElementById('orgPhone').value,
+                        address: document.getElementById('orgAddress').value,
+                        org_id: document.getElementById('orgVerificationId').value
+                    };
+                    endpoint = `/signup/organization`;
+                }
+                else if (form.id === 'userSignupForm') {
+
+                
+                    formData = {
+                        name: document.getElementById('userName').value,
+                        email: document.getElementById('userEmail').value,
+                        password: document.getElementById('userPassword').value,
+                        phone: document.getElementById('userPhone').value,
+                        dob: document.getElementById('userDob').value,
+                        gender: document.querySelector('input[name="userGender"]:checked')?.value || "",
+                        address: document.getElementById('userAddress').value
+                    };
+                    endpoint = `/signup/user`;
+                }
+    
+                console.log('Submitting form data:', formData);
+    
+                try {
+                    const response = await fetch(endpoint, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(formData),
+                    });
+    
+                    const result = await response.json();
+    
+                    if (result.success) {
+                        alert('Sign-up successful!');
+                        if (form.dataset.redirect) {
+                            window.location.href = form.dataset.redirect;
+                        }
+                    } else {
+                        alert(result.message || 'Sign-up failed. Please try again.');
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert('An error occurred. Please try again.');
+                }
+            });
+        });
+    });
+    
+    
+    </script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+  </body>
+</html>

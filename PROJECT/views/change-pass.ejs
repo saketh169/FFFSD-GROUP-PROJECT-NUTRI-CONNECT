@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Change Password</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+    <style>
+        :root {
+            --primary-green: #2E7D32;
+            --primary-light: #6ABF69;
+            --primary-dark: #1B5E20;
+            --accent-green: #8BC34A;
+            --background-light: #F5F9F5;
+            --card-bg: #FFFFFF;
+            --text-dark: #333333;
+            --text-secondary: #555555;
+            --text-muted: #777777;
+            --border-color: #E0E0E0;
+            --error-color: #D32F2F;
+            --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background-light);
+            color: var(--text-dark);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 1rem;
+        }
+
+        .password-container {
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            padding: 2.5rem;
+            width: 100%;
+            max-width: 500px;
+            border: 1px solid var(--border-color);
+            animation: fadeIn 0.4s ease-out;
+            position: relative;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .header h2 {
+            color: var(--primary-dark);
+            font-weight: 600;
+            font-size: 1.75rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .input-group {
+            position: relative;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            padding-right: 2.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+            color: var(--text-dark);
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-green);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.2);
+        }
+
+        .form-control:disabled {
+            background-color: #f0f0f0;
+            cursor: not-allowed;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .password-strength {
+            height: 4px;
+            background: #e0e0e0;
+            border-radius: 2px;
+            margin-top: 0.5rem;
+            overflow: hidden;
+        }
+
+        .strength-meter {
+            height: 100%;
+            width: 0%;
+            background: var(--error-color);
+            transition: width 0.3s ease;
+        }
+
+        .password-hints {
+            margin-top: 0.5rem;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .password-hints ul {
+            padding-left: 1.25rem;
+            margin: 0.25rem 0;
+        }
+
+        .password-hints li {
+            margin-bottom: 0.25rem;
+        }
+
+        .password-hints li.valid {
+            color: var(--primary-green);
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .btn-primary {
+            background: var(--primary-green);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 2px 5px rgba(46, 125, 50, 0.3);
+        }
+
+        .btn-primary:disabled {
+            background: var(--text-muted);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .back-link {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background: var(--primary-green);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .back-link:hover {
+            background: var(--primary-dark);
+            transform: scale(1.1);
+        }
+
+        .back-link i {
+            font-size: 1.2rem;
+        }
+
+        .error-message {
+            color: var(--error-color);
+            font-size: 0.9rem;
+            margin-top: 0.25rem;
+            display: none;
+        }
+
+        .notification-container {
+            position: fixed;
+            top: 1.5rem;
+            right: 1.5rem;
+            z-index: 2000;
+            max-width: 350px;
+        }
+
+        .notification {
+            padding: 1rem 1.25rem;
+            margin-bottom: 1rem;
+            border-radius: 8px;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            animation: slideIn 0.3s ease-out forwards;
+            transform: translateX(120%);
+        }
+
+        @keyframes slideIn {
+            to { transform: translateX(0); }
+        }
+
+        .notification.success {
+            background: var(--primary-green);
+        }
+
+        .notification.error {
+            background: var(--error-color);
+        }
+
+        .notification i {
+            margin-right: 0.75rem;
+            font-size: 1.1rem;
+        }
+
+        .notification-close {
+            background: none;
+            border: none;
+            color: inherit;
+            cursor: pointer;
+            margin-left: 1rem;
+            opacity: 0.8;
+        }
+
+        .notification-close:hover {
+            opacity: 1;
+        }
+
+        .saving-spinner {
+            animation: spin 1s linear infinite;
+            margin-left: 0.5rem;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 576px) {
+            .password-container {
+                padding: 1.5rem;
+            }
+            
+            .header h2 {
+                font-size: 1.5rem;
+            }
+
+            .back-link {
+                width: 36px;
+                height: 36px;
+            }
+
+            .back-link i {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="password-container">
+        <a href="/<%= role %>_dash" class="back-link">
+            <i class="fas fa-arrow-left"></i>
+        </a>
+        <div class="header">
+            <h2>Change Password</h2>
+            <p>Secure your account with a new password</p>
+        </div>
+
+        <div class="notification-container" id="notification-container"></div>
+
+        <form id="changePasswordForm">
+            <div class="form-group">
+                <label for="currentPassword">Current Password</label>
+                <div class="input-group">
+                    <input type="password" class="form-control" id="currentPassword" name="currentPassword" required>
+                    <button type="button" class="toggle-password" aria-label="Toggle password visibility">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </div>
+                <div class="error-message" id="currentPasswordError"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="newPassword">New Password</label>
+                <div class="input-group">
+                    <input type="password" class="form-control" id="newPassword" name="newPassword" required disabled>
+                    <button type="button" class="toggle-password" aria-label="Toggle password visibility">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </div>
+                <div class="password-strength">
+                    <div class="strength-meter" id="strengthMeter"></div>
+                </div>
+                <div class="password-hints">
+                    <p>Password must contain:</p>
+                    <ul>
+                        <li id="lengthHint">At least 8 characters</li>
+                    </ul>
+                </div>
+                <div class="error-message" id="newPasswordError"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="confirmPassword">Confirm New Password</label>
+                <div class="input-group">
+                    <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required disabled>
+                    <button type="button" class="toggle-password" aria-label="Toggle password visibility">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </div>
+                <div class="error-message" id="confirmPasswordError"></div>
+            </div>
+
+            <button type="submit" class="btn btn-primary" id="submitBtn" disabled>
+                <i class="fas fa-key"></i> Change Password
+            </button>
+        </form>
+    </div>
+
+    <script>
+        // DOM Elements
+        const form = document.getElementById('changePasswordForm');
+        const currentPasswordInput = document.getElementById('currentPassword');
+        const newPasswordInput = document.getElementById('newPassword');
+        const confirmPasswordInput = document.getElementById('confirmPassword');
+        const submitBtn = document.getElementById('submitBtn');
+        const strengthMeter = document.getElementById('strengthMeter');
+        const togglePasswordButtons = document.querySelectorAll('.toggle-password');
+        const notificationContainer = document.getElementById('notification-container');
+
+        // Password requirements
+        const requirements = {
+            length: 8
+        };
+
+        // Show notification
+        function showNotification(message, type = 'success', duration = 5000) {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            
+            notification.innerHTML = `
+                <div>
+                    <i class="fas fa-${type === 'success' ? 'check' : 'exclamation'}-circle"></i>
+                    ${message}
+                </div>
+                <button class="notification-close" aria-label="Close notification">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+            
+            notificationContainer.appendChild(notification);
+            
+            notification.querySelector('.notification-close').addEventListener('click', () => {
+                notification.remove();
+            });
+            
+            if (duration > 0) {
+                setTimeout(() => {
+                    notification.remove();
+                }, duration);
+            }
+        }
+
+        // Toggle password visibility
+        togglePasswordButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const input = button.parentElement.querySelector('input');
+                const icon = button.querySelector('i');
+                
+                if (input.type === 'password') {
+                    input.type = 'text';
+                    icon.classList.replace('fa-eye', 'fa-eye-slash');
+                } else {
+                    input.type = 'password';
+                    icon.classList.replace('fa-eye-slash', 'fa-eye');
+                }
+            });
+        });
+
+        // Verify current password
+        async function verifyCurrentPassword() {
+            const currentPassword = currentPasswordInput.value;
+            if (!currentPassword.trim()) {
+                document.getElementById('currentPasswordError').textContent = 'Current password is required';
+                document.getElementById('currentPasswordError').style.display = 'block';
+                return false;
+            }
+
+            try {
+                const response = await fetch('/<%= role %>_dash/verify-pass', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ currentPassword }),
+                });
+
+                if (response.ok) {
+                    document.getElementById('currentPasswordError').style.display = 'none';
+                    showNotification('Current password verified!', 'success', 3000);
+                    return true;
+                } else {
+                    const error = await response.json();
+                    document.getElementById('currentPasswordError').textContent = error.message || 'Invalid current password';
+                    document.getElementById('currentPasswordError').style.display = 'block';
+                    return false;
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('currentPasswordError').textContent = 'An error occurred. Please try again.';
+                document.getElementById('currentPasswordError').style.display = 'block';
+                return false;
+            }
+        }
+
+        // Enable new password fields after verification on Enter key press
+        currentPasswordInput.addEventListener('keypress', async (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                const isVerified = await verifyCurrentPassword();
+                if (isVerified) {
+                    newPasswordInput.disabled = false;
+                    confirmPasswordInput.disabled = false;
+                    submitBtn.disabled = false;
+                } else {
+                    newPasswordInput.disabled = true;
+                    confirmPasswordInput.disabled = true;
+                    submitBtn.disabled = true;
+                }
+            }
+        });
+
+        // Check password strength
+        newPasswordInput.addEventListener('input', () => {
+            const password = newPasswordInput.value;
+            const lengthHint = document.getElementById('lengthHint');
+            
+            // Check length requirement
+            const isLengthValid = password.length >= requirements.length;
+            
+            // Update hint
+            if (isLengthValid) {
+                lengthHint.classList.add('valid');
+            } else {
+                lengthHint.classList.remove('valid');
+            }
+            
+            // Update strength meter
+            const strength = isLengthValid ? 100 : (password.length / requirements.length) * 100;
+            strengthMeter.style.width = `${strength}%`;
+            
+            // Change color based on strength
+            strengthMeter.style.backgroundColor = isLengthValid ? 'var(--primary-green)' : 'var(--error-color)';
+        });
+
+        // Validate form
+        function validateForm() {
+            let isValid = true;
+            
+            // Reset error messages
+            document.querySelectorAll('.error-message').forEach(el => {
+                el.style.display = 'none';
+            });
+            
+            // Validate current password
+            if (!currentPasswordInput.value.trim()) {
+                document.getElementById('currentPasswordError').textContent = 'Current password is required';
+                document.getElementById('currentPasswordError').style.display = 'block';
+                isValid = false;
+            }
+            
+            // Validate new password
+            const password = newPasswordInput.value;
+            if (!password) {
+                document.getElementById('newPasswordError').textContent = 'New password is required';
+                document.getElementById('newPasswordError').style.display = 'block';
+                isValid = false;
+            } else if (password.length < requirements.length) {
+                document.getElementById('newPasswordError').textContent = `Password must be at least ${requirements.length} characters`;
+                document.getElementById('newPasswordError').style.display = 'block';
+                isValid = false;
+            }
+            
+            // Validate confirm password
+            if (!confirmPasswordInput.value.trim()) {
+                document.getElementById('confirmPasswordError').textContent = 'Please confirm your new password';
+                document.getElementById('confirmPasswordError').style.display = 'block';
+                isValid = false;
+            } else if (confirmPasswordInput.value !== newPasswordInput.value) {
+                document.getElementById('confirmPasswordError').textContent = 'Passwords do not match';
+                document.getElementById('confirmPasswordError').style.display = 'block';
+                isValid = false;
+            }
+            
+            return isValid;
+        }
+
+        // Form submission
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            if (!validateForm()) return;
+            
+            const currentPassword = currentPasswordInput.value;
+            const newPassword = newPasswordInput.value;
+            const confirmPassword = confirmPasswordInput.value;
+            
+            // Disable button and show loading state
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = `<i class="fas fa-spinner saving-spinner"></i> Changing Password...`;
+            
+            try {
+                const response = await fetch('/<%= role %>_dash/update-pass', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ currentPassword, newPassword, confirmPassword }),
+                });
+                
+                if (response.ok) {
+                    showNotification('Password changed successfully!', 'success');
+                    
+                    // Reset form
+                    form.reset();
+                    strengthMeter.style.width = '0%';
+                    document.querySelectorAll('.password-hints li').forEach(li => {
+                        li.classList.remove('valid');
+                    });
+                    newPasswordInput.disabled = true;
+                    confirmPasswordInput.disabled = true;
+                    submitBtn.disabled = true;
+                } else {
+                    const error = await response.json();
+                    showNotification(error.message || 'Failed to change password', 'error');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showNotification('An error occurred. Please try again.', 'error');
+            } finally {
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = `<i class="fas fa-key"></i> Change Password`;
+            }
+        });
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', () => {
+            currentPasswordInput.focus();
+        });
+    </script>
+</body>
+</html>

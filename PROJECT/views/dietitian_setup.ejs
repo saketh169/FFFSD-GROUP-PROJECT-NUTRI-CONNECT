@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Complete Profile</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    /* General Styles */
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      background-color: #ffffff;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      width: 800px;
+      padding: 30px;
+      animation: fadeIn 0.5s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h1 {
+      color: #2e8b57;
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    h2 {
+      color: #2e8b57;
+      margin-bottom: 20px;
+      font-size: 24px;
+      font-weight: 600;
+    }
+
+    .form-container {
+      display: none;
+    }
+
+    .form-container.active {
+      display: block;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      color: #2e8b57;
+      font-weight: bold;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    input[type="email"],
+    input[type="password"],
+    textarea {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
+      box-sizing: border-box;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    input[type="text"]:focus,
+    input[type="number"]:focus,
+    input[type="email"]:focus,
+    input[type="password"]:focus,
+    textarea:focus {
+      border-color: #2e8b57;
+      box-shadow: 0 0 8px rgba(46, 139, 87, 0.3);
+      outline: none;
+    }
+
+    textarea {
+      resize: vertical;
+      height: 120px;
+    }
+
+    .button-container {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 30px;
+    }
+
+    button {
+      background-color: #2e8b57;
+      color: #ffffff;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    button:hover {
+      background-color: #3cb371;
+      transform: translateY(-2px);
+    }
+
+    button[type="submit"] {
+      background-color: #228b22;
+    }
+
+    button[type="submit"]:hover {
+      background-color: #2e8b57;
+    }
+
+    #cross {
+        position: fixed;
+        top: 5px;
+        left: 10px;
+        line-height: 20px;
+        font-size: 40px;
+        border-radius: 100%;
+    }
+
+    .error-message {
+      color: #dc3545;
+      font-size: 14px;
+      margin-top: -15px;
+      margin-bottom: 15px;
+    }
+
+    .item-container {
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 20px;
+      background-color: #f9f9f9;
+    }
+
+    .item-container .form-group {
+      margin-bottom: 15px;
+    }
+
+    .add-button {
+      background-color: #2e8b57;
+      margin-bottom: 20px;
+    }
+
+    .remove-button {
+      background-color: #dc3545;
+      margin-top: 10px;
+    }
+
+    .remove-button:hover {
+      background-color: #c82333;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Back Button -->
+<div id="cross" class="btn btn-outline-success" onclick="window.history.back();">
+    <i class="fa-solid fa-xmark"></i>
+</div>
+
+<div class="container">
+  <h1>Complete Profile</h1>
+  
+  <!-- Form 1: Dietitian Details -->
+  <div id="form1" class="form-container active">
+    <h2>Dietitian Details</h2>
+    <form id="dietitianForm">
+      <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" placeholder="e.g., John Doe" required>
+        <div id="nameError" class="error-message"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" placeholder="e.g., john@example.com" required>
+        <div id="emailError" class="error-message"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="age">Age:</label>
+        <input type="number" id="age" name="age" placeholder="e.g., 30" required min="0">
+        <div id="ageError" class="error-message"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="phone">Phone:</label>
+        <input type="text" id="phone" name="phone" placeholder="e.g., +1234567890" required>
+        <div id="phoneError" class="error-message"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="specializationDomain">Specialization Domain:</label>
+        <input type="text" id="specializationDomain" name="specializationDomain" placeholder="e.g., Pediatric Nutrition">
+        <div id="specializationDomainError" class="error-message"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="specialization">Specializations (comma-separated):</label>
+        <input type="text" id="specialization" name="specialization" placeholder="e.g., Diabetes, Weight Loss" required>
+        <div id="specializationError" class="error-message"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="experience">Experience (years):</label>
+        <input type="number" id="experience" name="experience" placeholder="e.g., 5" required min="0">
+        <div id="experienceError" class="error-message"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="fees">Fees:</label>
+        <input type="number" id="fees" name="fees" placeholder="e.g., 100" required min="0">
+        <div id="feesError" class="error-message"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="languages">Languages (comma-separated):</label>
+        <input type="text" id="languages" name="languages" placeholder="e.g., English, Spanish" required>
+        <div id="languagesError" class="error-message"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="location">Location:</label>
+        <input type="text" id="location" name="location" placeholder="e.g., New York" required>
+        <div id="locationError" class="error-message"></div>
+      </div>
+
+      <div class="form-group checkbox-group">
+        <label>Consultation Mode:</label>
+        <div>
+          <input type="checkbox" id="online" name="online"> Online
+          <input type="checkbox" id="offline" name="offline"> Offline
+        </div>
+        <div id="modeError" class="error-message"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="about">About:</label>
+        <textarea id="about" name="about" placeholder="Brief description about yourself"></textarea>
+        <div id="aboutError" class="error-message"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="education">Education (comma-separated):</label>
+        <input type="text" id="education" name="education" placeholder="e.g., BS Nutrition, MS Dietetics" required>
+        <div id="educationError" class="error-message"></div>
+      </div>
+
+      <div class="button-container">
+        <button type="button" id="nextButton">Next</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Form 2: Professional Details -->
+  <div id="form2" class="form-container">
+    <h2>Professional Details</h2>
+    <form id="dietitianInfoForm">
+      <div class="form-group">
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title" placeholder="e.g., Registered Dietitian" required>
+        <div id="titleError" class="error-message"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="description">Description:</label>
+        <textarea id="description" name="description" placeholder="Detailed professional background" required></textarea>
+        <div id="descriptionError" class="error-message"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="specialties">Specialties (comma-separated):</label>
+        <input type="text" id="specialties" name="specialties" placeholder="e.g., Clinical Nutrition, Wellness" required>
+        <div id="specialtiesError" class="error-message"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="infoEducation">Education (comma-separated):</label>
+        <input type="text" id="infoEducation" name="infoEducation" placeholder="e.g., PhD Nutrition, RD Certification" required>
+        <div id="infoEducationError" class="error-message"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="expertise">Expertise (comma-separated):</label>
+        <input type="text" id="expertise" name="expertise" placeholder="e.g., Meal Planning, Nutritional Counseling" required>
+        <div id="expertiseError" class="error-message"></div>
+      </div>
+
+      <!-- Certifications -->
+      <div class="form-group">
+        <label>Certifications:</label>
+        <button type="button" class="add-button" onclick="addCertification()">Add Certification</button>
+        <div id="certificationsContainer"></div>
+        <div id="certificationsError" class="error-message"></div>
+      </div>
+
+      <!-- Awards -->
+      <div class="form-group">
+        <label>Awards:</label>
+        <button type="button" class="add-button" onclick="addAward()">Add Award</button>
+        <div id="awardsContainer"></div>
+        <div id="awardsError" class="error-message"></div>
+      </div>
+
+      <!-- Publications -->
+      <div class="form-group">
+        <label>Publications:</label>
+        <button type="button" class="add-button" onclick="addPublication()">Add Publication</button>
+        <div id="publicationsContainer"></div>
+        <div id="publicationsError" class="error-message"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="infoLanguages">Languages (comma-separated):</label>
+        <input type="text" id="infoLanguages" name="infoLanguages" placeholder="e.g., French, German" required>
+        <div id="infoLanguagesError" class="error-message"></div>
+      </div>
+
+      <!-- Consultation Types -->
+      <div class="form-group">
+        <label>Consultation Types:</label>
+        <button type="button" class="add-button" onclick="addConsultationType()">Add Consultation Type</button>
+        <div id="consultationTypesContainer"></div>
+        <div id="consultationTypesError" class="error-message"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="workingDays">Working Days (comma-separated):</label>
+        <input type="text" id="workingDays" name="workingDays" placeholder="e.g., Monday, Tuesday" required>
+        <div id="workingDaysError" class="error-message"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="workingHoursStart">Working Hours Start:</label>
+        <input type="text" id="workingHoursStart" name="workingHoursStart" placeholder="e.g., 09:00" required>
+        <div id="workingHoursStartError" class="error-message"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="workingHoursEnd">Working Hours End:</label>
+        <input type="text" id="workingHoursEnd" name="workingHoursEnd" placeholder="e.g., 17:00" required>
+        <div id="workingHoursEndError" class="error-message"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="linkedin">LinkedIn URL:</label>
+        <input type="text" id="linkedin" name="linkedin" placeholder="e.g., https://linkedin.com/in/username">
+        <div id="linkedinError" class="error-message"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="twitter">Twitter URL:</label>
+        <input type="text" id="twitter" name="twitter" placeholder="e.g., https://twitter.com/username">
+        <div id="twitterError" class="error-message"></div>
+      </div>
+
+      <div class="button-container">
+        <button type="button" id="prevButton">Previous</button>
+        <button type="submit">Submit</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+  // JavaScript to handle form navigation and submission
+  const form1 = document.getElementById('form1');
+  const form2 = document.getElementById('form2');
+  const nextButton = document.getElementById('nextButton');
+  const prevButton = document.getElementById('prevButton');
+
+  // Validation functions
+  function validateEmail(email) {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
+  }
+
+  function validatePhone(phone) {
+    const re = /^\+?[1-9]\d{1,14}$/;
+    return re.test(phone);
+  }
+
+  function validateTimeFormat(time) {
+    const re = /^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/;
+    return re.test(time);
+  }
+
+  // Dynamic form field addition
+  let certificationCount = 0;
+  let awardCount = 0;
+  let publicationCount = 0;
+  let consultationTypeCount = 0;
+
+  function addCertification() {
+    certificationCount++;
+    const container = document.getElementById('certificationsContainer');
+    const div = document.createElement('div');
+    div.className = 'item-container';
+    div.id = `certification-${certificationCount}`;
+    div.innerHTML = `
+      <div class="form-group">
+        <label>Name:</label>
+        <input type="text" name="certification-name-${certificationCount}" placeholder="e.g., Registered Dietitian" required>
+        <div class="error-message" id="certification-name-${certificationCount}-error"></div>
+      </div>
+      <div class="form-group">
+        <label>Year:</label>
+        <input type="number" name="certification-year-${certificationCount}" placeholder="e.g., 2020" required min="1900" max="${new Date().getFullYear()}">
+        <div class="error-message" id="certification-year-${certificationCount}-error"></div>
+      </div>
+      <div class="form-group">
+        <label>Issuer:</label>
+        <input type="text" name="certification-issuer-${certificationCount}" placeholder="e.g., CDR" required>
+        <div class="error-message" id="certification-issuer-${certificationCount}-error"></div>
+      </div>
+      <button type="button" class="remove-button" onclick="removeItem('certification-${certificationCount}')">Remove</button>
+    `;
+    container.appendChild(div);
+  }
+
+  function addAward() {
+    awardCount++;
+    const container = document.getElementById('awardsContainer');
+    const div = document.createElement('div');
+    div.className = 'item-container';
+    div.id = `award-${awardCount}`;
+    div.innerHTML = `
+      <div class="form-group">
+        <label>Name:</label>
+        <input type="text" name="award-name-${awardCount}" placeholder="e.g., Best Dietitian" required>
+        <div class="error-message" id="award-name-${awardCount}-error"></div>
+      </div>
+      <div class="form-group">
+        <label>Year:</label>
+        <input type="number" name="award-year-${awardCount}" placeholder="e.g., 2022" required min="1900" max="${new Date().getFullYear()}">
+        <div class="error-message" id="award-year-${awardCount}-error"></div>
+      </div>
+      <div class="form-group">
+        <label>Description:</label>
+        <input type="text" name="award-description-${awardCount}" placeholder="e.g., Award for excellence" required>
+        <div class="error-message" id="award-description-${awardCount}-error"></div>
+      </div>
+      <button type="button" class="remove-button" onclick="removeItem('award-${awardCount}')">Remove</button>
+    `;
+    container.appendChild(div);
+  }
+
+  function addPublication() {
+    publicationCount++;
+    const container = document.getElementById('publicationsContainer');
+    const div = document.createElement('div');
+    div.className = 'item-container';
+    div.id = `publication-${publicationCount}`;
+    div.innerHTML = `
+      <div class="form-group">
+        <label>Title:</label>
+        <input type="text" name="publication-title-${publicationCount}" placeholder="e.g., Nutrition Study" required>
+        <div class="error-message" id="publication-title-${publicationCount}-error"></div>
+      </div>
+      <div class="form-group">
+        <label>Year:</label>
+        <input type="number" name="publication-year-${publicationCount}" placeholder="e.g., 2021" required min="1900" max="${new Date().getFullYear()}">
+        <div class="error-message" id="publication-year-${publicationCount}-error"></div>
+      </div>
+      <div class="form-group">
+        <label>Link:</label>
+        <input type="text" name="publication-link-${publicationCount}" placeholder="e.g., http://example.com" required>
+        <div class="error-message" id="publication-link-${publicationCount}-error"></div>
+      </div>
+      <button type="button" class="remove-button" onclick="removeItem('publication-${publicationCount}')">Remove</button>
+    `;
+    container.appendChild(div);
+  }
+
+  function addConsultationType() {
+    consultationTypeCount++;
+    const container = document.getElementById('consultationTypesContainer');
+    const div = document.createElement('div');
+    div.className = 'item-container';
+    div.id = `consultationType-${consultationTypeCount}`;
+    div.innerHTML = `
+      <div class="form-group">
+        <label>Type:</label>
+        <input type="text" name="consultation-type-${consultationTypeCount}" placeholder="e.g., Initial" required>
+        <div class="error-message" id="consultation-type-${consultationTypeCount}-error"></div>
+      </div>
+      <div class="form-group">
+        <label>Duration (minutes):</label>
+        <input type="number" name="consultation-duration-${consultationTypeCount}" placeholder="e.g., 60" required min="1">
+        <div class="error-message" id="consultation-duration-${consultationTypeCount}-error"></div>
+      </div>
+      <div class="form-group">
+        <label>Fee:</label>
+        <input type="number" name="consultation-fee-${consultationTypeCount}" placeholder="e.g., 100" required min="0">
+        <div class="error-message" id="consultation-fee-${consultationTypeCount}-error"></div>
+      </div>
+      <button type="button" class="remove-button" onclick="removeItem('consultationType-${consultationTypeCount}')">Remove</button>
+    `;
+    container.appendChild(div);
+  }
+
+  function removeItem(id) {
+    const element = document.getElementById(id);
+    if (element) {
+      element.remove();
+    }
+  }
+
+  // Form 1 validation and submission
+  nextButton.addEventListener('click', async () => {
+    const formData = {
+      name: document.getElementById('name').value.trim(),
+      email: document.getElementById('email').value.trim(),
+      age: parseInt(document.getElementById('age').value),
+      phone: document.getElementById('phone').value.trim(),
+      specializationDomain: document.getElementById('specializationDomain').value.trim(),
+      specialization: document.getElementById('specialization').value.trim(),
+      experience: parseInt(document.getElementById('experience').value),
+      fees: parseInt(document.getElementById('fees').value),
+      languages: document.getElementById('languages').value.trim(),
+      location: document.getElementById('location').value.trim(),
+      online: document.getElementById('online').checked,
+      offline: document.getElementById('offline').checked,
+      about: document.getElementById('about').value.trim(),
+      education: document.getElementById('education').value.trim()
+    };
+
+    let isValid = true;
+
+    // Reset error messages
+    document.querySelectorAll('.error-message').forEach(el => el.textContent = '');
+
+    // Validate required fields
+    if (!formData.name) {
+      document.getElementById('nameError').textContent = 'Name is required';
+      isValid = false;
+    }
+    if (!formData.email) {
+      document.getElementById('emailError').textContent = 'Email is required';
+      isValid = false;
+    } else if (!validateEmail(formData.email)) {
+      document.getElementById('emailError').textContent = 'Invalid email format';
+      isValid = false;
+    }
+    if (!formData.age || isNaN(formData.age) || formData.age < 18) {
+      document.getElementById('ageError').textContent = 'Valid age (18 or older) is required';
+      isValid = false;
+    }
+    if (!formData.phone) {
+      document.getElementById('phoneError').textContent = 'Phone is required';
+      isValid = false;
+    } else if (!validatePhone(formData.phone)) {
+      document.getElementById('phoneError').textContent = 'Invalid phone number format';
+      isValid = false;
+    }
+    if (!formData.specialization) {
+      document.getElementById('specializationError').textContent = 'Specializations are required';
+      isValid = false;
+    }
+    if (!formData.experience || isNaN(formData.experience) || formData.experience < 0) {
+      document.getElementById('experienceError').textContent = 'Valid experience is required';
+      isValid = false;
+    }
+    if (!formData.fees || isNaN(formData.fees) || formData.fees < 0) {
+      document.getElementById('feesError').textContent = 'Valid fees are required';
+      isValid = false;
+    }
+    if (!formData.languages) {
+      document.getElementById('languagesError').textContent = 'Languages are required';
+      isValid = false;
+    }
+    if (!formData.location) {
+      document.getElementById('locationError').textContent = 'Location is required';
+      isValid = false;
+    }
+    if (!formData.online && !formData.offline) {
+      document.getElementById('modeError').textContent = 'At least one consultation mode must be selected';
+      isValid = false;
+    }
+    if (!formData.education) {
+      document.getElementById('educationError').textContent = 'Education is required';
+      isValid = false;
+    }
+
+    if (!isValid) return;
+
+    try {
+      const response = await fetch('/dietitians-info1', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        form1.classList.remove('active');
+        form2.classList.add('active');
+      } else {
+        alert('Failed to submit dietitian details.');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('An error occurred while submitting dietitian details.');
+    }
+  });
+
+  // Previous button handler
+  prevButton.addEventListener('click', () => {
+    form2.classList.remove('active');
+    form1.classList.add('active');
+  });
+
+  // Form 2 validation and submission
+  document.getElementById('dietitianInfoForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    // Collect certifications
+    const certifications = [];
+    for (let i = 1; i <= certificationCount; i++) {
+      if (document.getElementById(`certification-${i}`)) {
+        const name = document.querySelector(`[name="certification-name-${i}"]`).value.trim();
+        const year = parseInt(document.querySelector(`[name="certification-year-${i}"]`).value);
+        const issuer = document.querySelector(`[name="certification-issuer-${i}"]`).value.trim();
+        certifications.push({ name, year, issuer });
+      }
+    }
+
+    // Collect awards
+    const awards = [];
+    for (let i = 1; i <= awardCount; i++) {
+      if (document.getElementById(`award-${i}`)) {
+        const name = document.querySelector(`[name="award-name-${i}"]`).value.trim();
+        const year = parseInt(document.querySelector(`[name="award-year-${i}"]`).value);
+        const description = document.querySelector(`[name="award-description-${i}"]`).value.trim();
+        awards.push({ name, year, description });
+      }
+    }
+
+    // Collect publications
+    const publications = [];
+    for (let i = 1; i <= publicationCount; i++) {
+      if (document.getElementById(`publication-${i}`)) {
+        const title = document.querySelector(`[name="publication-title-${i}"]`).value.trim();
+        const year = parseInt(document.querySelector(`[name="publication-year-${i}"]`).value);
+        const link = document.querySelector(`[name="publication-link-${i}"]`).value.trim();
+        publications.push({ title, year, link });
+      }
+    }
+
+    // Collect consultation types
+    const consultationTypes = [];
+    for (let i = 1; i <= consultationTypeCount; i++) {
+      if (document.getElementById(`consultationType-${i}`)) {
+        const type = document.querySelector(`[name="consultation-type-${i}"]`).value.trim();
+        const duration = parseInt(document.querySelector(`[name="consultation-duration-${i}"]`).value);
+        const fee = parseInt(document.querySelector(`[name="consultation-fee-${i}"]`).value);
+        consultationTypes.push({ type, duration, fee });
+      }
+    }
+
+    const formData = {
+      title: document.getElementById('title').value.trim(),
+      description: document.getElementById('description').value.trim(),
+      specialties: document.getElementById('specialties').value.trim(),
+      infoEducation: document.getElementById('infoEducation').value.trim(),
+      expertise: document.getElementById('expertise').value.trim(),
+      certifications,
+      awards,
+      publications,
+      infoLanguages: document.getElementById('infoLanguages').value.trim(),
+      consultationTypes,
+      workingDays: document.getElementById('workingDays').value.trim(),
+      workingHoursStart: document.getElementById('workingHoursStart').value.trim(),
+      workingHoursEnd: document.getElementById('workingHoursEnd').value.trim(),
+      linkedin: document.getElementById('linkedin').value.trim(),
+      twitter: document.getElementById('twitter').value.trim()
+    };
+
+    let isValid = true;
+
+    // Reset error messages
+    document.querySelectorAll('.error-message').forEach(el => el.textContent = '');
+
+    // Validate required fields
+    if (!formData.title) {
+      document.getElementById('titleError').textContent = 'Title is required';
+      isValid = false;
+    }
+    if (!formData.description) {
+      document.getElementById('descriptionError').textContent = 'Description is required';
+      isValid = false;
+    }
+    if (!formData.specialties) {
+      document.getElementById('specialtiesError').textContent = 'Specialties are required';
+      isValid = false;
+    }
+    if (!formData.infoEducation) {
+      document.getElementById('infoEducationError').textContent = 'Education is required';
+      isValid = false;
+    }
+    if (!formData.expertise) {
+      document.getElementById('expertiseError').textContent = 'Expertise is required';
+      isValid = false;
+    }
+    if (!formData.infoLanguages) {
+      document.getElementById('infoLanguagesError').textContent = 'Languages are required';
+      isValid = false;
+    }
+    if (!formData.workingDays) {
+      document.getElementById('workingDaysError').textContent = 'Working days are required';
+      isValid = false;
+    }
+    if (!formData.workingHoursStart) {
+      document.getElementById('workingHoursStartError').textContent = 'Working hours start is required';
+      isValid = false;
+    } else if (!validateTimeFormat(formData.workingHoursStart)) {
+      document.getElementById('workingHoursStartError').textContent = 'Invalid time format (HH:MM)';
+      isValid = false;
+    }
+    if (!formData.workingHoursEnd) {
+      document.getElementById('workingHoursEndError').textContent = 'Working hours end is required';
+      isValid = false;
+    } else if (!validateTimeFormat(formData.workingHoursEnd)) {
+      document.getElementById('workingHoursEndError').textContent = 'Invalid time format (HH:MM)';
+      isValid = false;
+    }
+
+    // Validate certifications
+    certifications.forEach((cert, index) => {
+      const i = index + 1;
+      if (!cert.name) {
+        document.getElementById(`certification-name-${i}-error`).textContent = 'Name is required';
+        isValid = false;
+      }
+      if (!cert.year || isNaN(cert.year) || cert.year < 1900 || cert.year > new Date().getFullYear()) {
+        document.getElementById(`certification-year-${i}-error`).textContent = `Valid year (1900-${new Date().getFullYear()}) is required`;
+        isValid = false;
+      }
+      if (!cert.issuer) {
+        document.getElementById(`certification-issuer-${i}-error`).textContent = 'Issuer is required';
+        isValid = false;
+      }
+    });
+
+    // Validate awards
+    awards.forEach((award, index) => {
+      const i = index + 1;
+      if (!award.name) {
+        document.getElementById(`award-name-${i}-error`).textContent = 'Name is required';
+        isValid = false;
+      }
+      if (!award.year || isNaN(award.year) || award.year < 1900 || award.year > new Date().getFullYear()) {
+        document.getElementById(`award-year-${i}-error`).textContent = `Valid year (1900-${new Date().getFullYear()}) is required`;
+        isValid = false;
+      }
+      if (!award.description) {
+        document.getElementById(`award-description-${i}-error`).textContent = 'Description is required';
+        isValid = false;
+      }
+    });
+
+    // Validate publications
+    publications.forEach((pub, index) => {
+      const i = index + 1;
+      if (!pub.title) {
+        document.getElementById(`publication-title-${i}-error`).textContent = 'Title is required';
+        isValid = false;
+      }
+      if (!pub.year || isNaN(pub.year) || pub.year < 1900 || pub.year > new Date().getFullYear()) {
+        document.getElementById(`publication-year-${i}-error`).textContent = `Valid year (1900-${new Date().getFullYear()}) is required`;
+        isValid = false;
+      }
+      if (!pub.link) {
+        document.getElementById(`publication-link-${i}-error`).textContent = 'Link is required';
+        isValid = false;
+      }
+    });
+
+    // Validate consultation types
+    consultationTypes.forEach((ct, index) => {
+      const i = index + 1;
+      if (!ct.type) {
+        document.getElementById(`consultation-type-${i}-error`).textContent = 'Type is required';
+        isValid = false;
+      }
+      if (!ct.duration || isNaN(ct.duration) || ct.duration < 1) {
+        document.getElementById(`consultation-duration-${i}-error`).textContent = 'Valid duration (1 or more minutes) is required';
+        isValid = false;
+      }
+      if (!ct.fee || isNaN(ct.fee) || ct.fee < 0) {
+        document.getElementById(`consultation-fee-${i}-error`).textContent = 'Valid fee (0 or more) is required';
+        isValid = false;
+      }
+    });
+
+    if (!isValid) return;
+
+    try {
+      const response = await fetch('/dietitians-info2', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        alert('Professional details submitted successfully!');
+        window.location.href = '/dietitian_dash';
+      } else {
+        alert('Failed to submit professional details.');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('An error occurred while submitting professional details.');
+    }
+  });
+</script>
+</body>
+</html>

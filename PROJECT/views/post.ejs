@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Post a Blog</title>
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+
+    <!-- Quill CSS -->
+    <link
+      href="https://cdn.quilljs.com/1.3.6/quill.snow.css"
+      rel="stylesheet"
+    />
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+    
+      body {
+        font-family: 'Poppins', sans-serif;
+        background: linear-gradient(to right, #d4fc79, #96e6a1);
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden;
+      }
+    
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+    
+      ::-webkit-scrollbar-thumb {
+        background-color: #28a745;
+        border-radius: 8px;
+      }
+    
+      .container {
+        max-width: 850px;
+        background: #ffffff;
+        margin: 50px auto;
+        padding: 30px 35px;
+        border-radius: 15px;
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+        animation: fadeInUp 0.5s ease-in-out;
+        transition: background 0.3s ease;
+      }
+    
+      h2 {
+        text-align: center;
+        color: #28a745;
+        margin-bottom: 25px;
+        font-weight: 600;
+      }
+    
+      label {
+        font-weight: 500;
+        margin-top: 15px;
+        display: block;
+        color: #333;
+        transition: color 0.2s ease;
+      }
+    
+      input,
+      select {
+        width: 100%;
+        padding: 12px 14px;
+        margin-top: 5px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-size: 15px;
+        transition: all 0.25s ease;
+      }
+    
+      input:focus,
+      select:focus {
+        outline: none;
+        border-color: #28a745;
+        box-shadow: 0 0 0 4px rgba(40, 167, 69, 0.15);
+        background-color: #f9fff9;
+      }
+    
+      #editor {
+        height: 250px;
+        margin-top: 10px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background-color: #fff;
+        transition: box-shadow 0.3s ease;
+      }
+    
+      #editor:focus-within {
+        box-shadow: 0 0 0 4px rgba(40, 167, 69, 0.15);
+      }
+    
+      .image-preview-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        margin-top: 15px;
+      }
+    
+      .image-preview-wrapper {
+        position: relative;
+        width: 150px;
+        height: 150px;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+    
+      .image-preview {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    
+      .remove-image {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        background: rgba(255, 0, 0, 0.7);
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 25px;
+        height: 25px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+    
+      .remove-image:hover {
+        background: rgba(255, 0, 0, 0.9);
+        transform: scale(1.1);
+      }
+    
+      .submit-btn {
+        background: linear-gradient(to right, #28a745, #218838);
+        color: white;
+        padding: 14px 20px;
+        font-size: 17px;
+        border: none;
+        border-radius: 8px;
+        margin-top: 30px;
+        cursor: pointer;
+        width: 100%;
+        transition: background 0.3s ease, transform 0.2s ease;
+        font-weight: 500;
+        letter-spacing: 0.5px;
+      }
+    
+      .submit-btn:hover {
+        background: linear-gradient(to right, #218838, #1c7c32);
+        transform: translateY(-2px);
+      }
+    
+     
+      .theme-weight-loss {
+        background: #ffeaea !important;
+      }
+    
+      .theme-healthy-eating {
+        background: #eaffea !important;
+      }
+    
+      .theme-fitness {
+        background: #eaf4ff !important;
+      }
+    
+      .theme-motivation {
+        background: #fff3e6 !important;
+      }
+    
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: scale(0.98);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+    
+      @media (max-width: 768px) {
+        .container {
+          margin: 20px;
+          padding: 20px;
+        }
+    
+        h2 {
+          font-size: 22px;
+        }
+    
+        .submit-btn {
+          font-size: 15px;
+          padding: 12px;
+        }
+    
+        #cross {
+          font-size: 28px;
+        }
+        
+        .image-preview-wrapper {
+          width: 120px;
+          height: 120px;
+        }
+      }
+      #cross {
+        position: fixed;
+        top: 5px;
+        left: 10px;
+        line-height: 20px;
+        font-size: 40px;
+        border-radius: 100%;
+    }
+    </style>
+  </head>
+  <body>
+    <!-- Back Button -->
+
+    <div id="cross" class="btn btn-outline-success" onclick="window.history.back();">
+        <i class="fa-solid fa-xmark"></i>
+    </div>
+    
+
+    <div class="container">
+      <h2>Post a Blog</h2>
+
+      <form
+        action="/blog-submit"
+        method="POST"
+        enctype="multipart/form-data"
+        onsubmit="return handleSubmit()"
+      >
+        <label for="themeSelector">Select Blog Theme:</label>
+        <select id="themeSelector" name="theme">
+          <option value="">Default</option>
+          <option value="Weight Loss Tips">Weight Loss Tips</option>
+          <option value="Healthy Eating">Healthy Eating</option>
+          <option value="Fitness And Exercise">Fitness And Exercise</option>
+          <option value="Mindset and Motivation">Mindset and Motivation</option>
+          <option value="Recipes And Meal Planning">
+            Recipes And Meal Planning
+          </option>
+        </select>
+
+        <label for="blogTitle">Blog Title:</label>
+        <input
+          type="text"
+          id="blogTitle"
+          name="title"
+          placeholder="Enter blog title..."
+          required
+        />
+
+        <label for="blogContent">Blog Content:</label>
+        <div id="editor"></div>
+        <input type="hidden" name="content" id="hiddenContent" />
+
+        <label for="imageUpload">Upload Images (Max 5):</label>
+        <input 
+          type="file" 
+          id="imageUpload" 
+          name="images" 
+          accept="image/*" 
+          multiple
+          onchange="previewImages()"
+        />
+        
+        <div class="image-preview-container" id="imagePreviewContainer"></div>
+        
+        <label for="imageUrls">Or add image URLs (one per line):</label>
+        <textarea 
+          id="imageUrls" 
+          name="imageUrls" 
+          rows="3" 
+          placeholder="https://example.com/image1.jpg"
+          class="form-control"
+        ></textarea>
+
+        <button class="submit-btn" type="submit">Post Blog</button>
+      </form>
+    </div>
+
+    <!-- Quill JS -->
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+
+    <script>
+      const quill = new Quill("#editor", {
+        theme: "snow",
+        placeholder: "Write your blog content here...",
+        modules: {
+          toolbar: [
+            [{ header: [1, 2, 3, false] }],
+            ["bold", "italic", "underline"],
+            ["blockquote", "code-block"],
+            [{ list: "ordered" }, { list: "bullet" }],
+            ["link", "image"],
+            ["clean"]
+          ]
+        }
+      });
+
+      function handleSubmit() {
+        const html = quill.root.innerHTML;
+        document.getElementById("hiddenContent").value = html;
+        return true;
+      }
+
+      function previewImages() {
+        const files = document.getElementById('imageUpload').files;
+        const previewContainer = document.getElementById('imagePreviewContainer');
+        previewContainer.innerHTML = '';
+        
+        if (files.length > 5) {
+          alert('You can upload a maximum of 5 images');
+          document.getElementById('imageUpload').value = '';
+          return;
+        }
+        
+        for (let i = 0; i < files.length; i++) {
+          const reader = new FileReader();
+          reader.onload = function(e) {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'image-preview-wrapper';
+            
+            const img = document.createElement('img');
+            img.src = e.target.result;
+            img.className = 'image-preview';
+            
+            const removeBtn = document.createElement('button');
+            removeBtn.className = 'remove-image';
+            removeBtn.innerHTML = '×';
+            removeBtn.onclick = function() {
+              wrapper.remove();
+              updateFileInput();
+            };
+            
+            wrapper.appendChild(img);
+            wrapper.appendChild(removeBtn);
+            previewContainer.appendChild(wrapper);
+          }
+          reader.readAsDataURL(files[i]);
+        }
+      }
+      
+      function updateFileInput() {
+        const previewContainer = document.getElementById('imagePreviewContainer');
+        const fileInput = document.getElementById('imageUpload');
+        const dataTransfer = new DataTransfer();
+        
+        // Get remaining previews and add their files back to the input
+        const remainingPreviews = previewContainer.querySelectorAll('.image-preview-wrapper');
+        const files = Array.from(fileInput.files);
+        
+        remainingPreviews.forEach(preview => {
+          const index = Array.from(previewContainer.children).indexOf(preview);
+          if (index >= 0) {
+            dataTransfer.items.add(files[index]);
+          }
+        });
+        
+        fileInput.files = dataTransfer.files;
+      }
+
+      document.getElementById("themeSelector").addEventListener("change", function () {
+        const container = document.querySelector(".container");
+        container.classList.remove(
+          "theme-weight-loss",
+          "theme-healthy-eating",
+          "theme-fitness",
+          "theme-motivation"
+        );
+    
+        switch (this.value) {
+          case "Weight Loss Tips":
+            container.classList.add("theme-weight-loss");
+            break;
+          case "Healthy Eating":
+            container.classList.add("theme-healthy-eating");
+            break;
+          case "Fitness And Exercise":
+            container.classList.add("theme-fitness");
+            break;
+          case "Mindset and Motivation":
+            container.classList.add("theme-motivation");
+            break;
+        }
+      });
+    </script>
+  </body>
+</html>

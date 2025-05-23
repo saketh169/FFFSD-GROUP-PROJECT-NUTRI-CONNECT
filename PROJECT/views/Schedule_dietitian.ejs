@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nutri Connect - Weekly Appointments</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #28B463; /* Main green */
+            --secondary-color: #1E6F5C; /* Dark green */
+            --accent-color: #50c878; /* Medium green */
+            --warning-color: #81C784; /* Light green */
+            --light-bg: #D2F0C8; /* Very light green */
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+        }
+        
+        /* Header */
+        .title-section {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 10;
+        }
+        
+        .title-section h1 {
+            margin: 0;
+            font-size: 28px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .title-section h1 i {
+            font-size: 32px;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 220px;
+            background: white;
+            padding: 20px 10px;
+            height: calc(100vh - 72px);
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.08);
+            position: sticky;
+            top: 72px;
+            overflow-y: auto;
+        }
+        
+        .sidebar .day {
+            padding: 15px;
+            margin: 8px 0;
+            cursor: pointer;
+            color: #555;
+            border-radius: 8px;
+            text-align: left;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: white;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .sidebar .day:hover {
+            background: #f1fff5;
+            transform: translateX(3px);
+            border-color: var(--primary-color);
+        }
+        
+        .sidebar .day.active {
+            background: #e8f5e9;
+            font-weight: 600;
+            color: var(--primary-color);
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        .sidebar .day i {
+            font-size: 18px;
+            width: 24px;
+            text-align: center;
+        }
+        
+        .sidebar .date {
+            font-size: 12px;
+            color: #777;
+            margin-top: 3px;
+        }
+
+        /* Content */
+        .content {
+            flex: 1;
+            padding: 25px;
+            background-color: #f5f7fa;
+        }
+        
+        .day-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .day-title {
+            color: var(--primary-color);
+            font-size: 22px;
+            font-weight: 600;
+        }
+        
+        .day-date {
+            color: #666;
+            font-size: 16px;
+        }
+        
+        .appointments-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .appointment-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            padding: 20px;
+            transition: all 0.3s ease;
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        .appointment-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+        }
+        
+        .appointment-card.workshop {
+            border-left-color: var(--warning-color);
+        }
+        
+        .appointment-card.consultation {
+            border-left-color: var(--primary-color);
+        }
+        
+        .appointment-card.group {
+            border-left-color: var(--accent-color);
+        }
+        
+        .appointment-card.followup {
+            border-left-color: #F44336; /* Keep red for follow-ups */
+        }
+        
+        .appointment-time {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .appointment-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .appointment-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            color: #888;
+        }
+        
+        .appointment-mode {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 3px 8px;
+            border-radius: 12px;
+            background: #e8f5e9;
+            color: var(--primary-color);
+        }
+        
+        .appointment-mode.online {
+            background: #e6f4ea;
+            color: var(--secondary-color);
+        }
+        
+        .appointment-fees {
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .no-appointments {
+            text-align: center;
+            padding: 40px;
+            color: #888;
+            font-size: 16px;
+        }
+        
+        #cross {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            font-size: 30px;
+            color: white;
+            z-index: 100;
+            background: rgba(255,255,255,0.2);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+        
+        #cross:hover {
+            background: rgba(255,255,255,0.3);
+            transform: scale(1.1);
+        }
+        
+        .client-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px dashed #eee;
+        }
+        
+        .client-avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .client-name {
+            font-size: 13px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <!-- Back Button -->
+    <div id="cross" onclick="window.history.back();">
+        <i class="fa-solid fa-arrow-left"></i>
+    </div>
+   
+    <!-- Header -->
+    <div class="title-section">
+        <h1><i class="fas fa-calendar-alt"></i> Weekly Schedule - <%- dietitianName %></h1>
+    </div>
+
+    <div class="d-flex flex-grow-1">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <!-- Days will be populated by JavaScript -->
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <div class="day-header">
+                <h2 class="day-title"></h2>
+                <div class="day-date"></div>
+            </div>
+            
+            <div class="appointments-container" id="appointments-container">
+                <!-- Appointment cards will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Font Awesome -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
+    
+    <script>
+        // Pass the server-side data to client-side JavaScript
+        const bookingsByDay = JSON.parse('<%- JSON.stringify(bookingsByDay || {}) %>');
+
+        // Function to generate dates from today to a week after
+        function generateWeekDates() {
+            const today = new Date();
+            const weekDates = {};
+            const days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+            
+            for (let i = 0; i < 7; i++) {
+                const date = new Date(today);
+                date.setDate(today.getDate() + i); // Today to 6 days after
+                const dayKey = date.toISOString().split('T')[0]; // YYYY-MM-DD
+                const dayName = days[date.getDay()].toLowerCase();
+                weekDates[dayName] = {
+                    name: dayName,
+                    date: date.toLocaleDateString('en-US', { 
+                        weekday: 'long', 
+                        month: 'long', 
+                        day: 'numeric',
+                        year: 'numeric'
+                    }),
+                    shortDate: date.toLocaleDateString('en-US', { 
+                        month: 'short', 
+                        day: 'numeric'
+                    }),
+                    dateObj: date,
+                    fullDateKey: dayKey // Store YYYY-MM-DD for bookings
+                };
+            }
+
+            return weekDates;
+        }
+
+        // Function to render the sidebar with days
+        function renderSidebar() {
+            const sidebar = document.querySelector('.sidebar');
+            sidebar.innerHTML = '';
+            
+            const weekDates = generateWeekDates();
+            const sortedDays = Object.entries(weekDates)
+                .sort((a, b) => a[1].dateObj - b[1].dateObj);
+            
+            sortedDays.forEach(([dayKey, dayInfo]) => {
+                const dayElement = document.createElement('div');
+                dayElement.className = 'day';
+                dayElement.setAttribute('onclick', `showAppointments('${dayKey}')`);
+                
+                const today = new Date();
+                if (dayInfo.dateObj.toDateString() === today.toDateString()) {
+                    dayElement.classList.add('active');
+                }
+                
+                let iconClass;
+                switch(dayKey) {
+                    case 'sunday': iconClass = 'fa-bed'; break;
+                    case 'monday': iconClass = 'fa-sun'; break;
+                    case 'tuesday': iconClass = 'fa-cloud'; break;
+                    case 'wednesday': iconClass = 'fa-umbrella'; break;
+                    case 'thursday': iconClass = 'fa-cloud-sun'; break;
+                    case 'friday': iconClass = 'fa-moon'; break;
+                    case 'saturday': iconClass = 'fa-star'; break;
+                }
+                
+                dayElement.innerHTML = `
+                    <i class="fas ${iconClass}"></i>
+                    <div>
+                        <div>${dayInfo.name}</div>
+                        <div class="date">${dayInfo.shortDate}</div>
+                    </div>
+                `;
+                
+                sidebar.appendChild(dayElement);
+            });
+        }
+
+        // Function to render appointments for a specific day
+        function renderAppointments(day) {
+            const container = document.getElementById('appointments-container');
+            const dayTitle = document.querySelector('.day-title');
+            const dayDate = document.querySelector('.day-date');
+            
+            const weekDates = generateWeekDates();
+            const dayInfo = weekDates[day];
+            dayTitle.textContent = dayInfo.name.charAt(0).toUpperCase() + dayInfo.name.slice(1);
+            dayDate.textContent = dayInfo.date;
+            
+            const dayAppointments = bookingsByDay[dayInfo.fullDateKey] || [];
+            
+            container.innerHTML = '';
+            
+            if (dayAppointments.length === 0) {
+                container.innerHTML = `
+                    <div class="no-appointments">
+                        <i class="fas fa-calendar-check fa-3x mb-3" style="color: #aaa;"></i>
+                        <h4>No Appointments</h4>
+                        <p>You have no appointments scheduled for this day.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            dayAppointments.sort((a, b) => {
+                return convertTimeTo24Hour(a.time) - convertTimeTo24Hour(b.time);
+            });
+            
+            dayAppointments.forEach(appointment => {
+                const appointmentCard = document.createElement('div');
+                appointmentCard.className = `appointment-card ${appointment.consultationType.toLowerCase()}`;
+                
+                appointmentCard.innerHTML = `
+                    <div class="appointment-time">
+                        <i class="far fa-clock"></i>
+                        ${appointment.time || 'N/A'}
+                    </div>
+                    <div class="appointment-title">${appointment.consultationType} Consultation</div>
+                    <div class="client-info">
+                        ${appointment.profileImage ? 
+                            `<img src="${appointment.profileImage}" alt="${appointment.clientName}" class="client-avatar">` :
+                            `<div class="client-avatar">${appointment.clientName.charAt(0)}</div>`
+                        }
+                        <span class="client-name">${appointment.clientName}</span>
+                    </div>
+                `;
+                
+                container.appendChild(appointmentCard);
+            });
+        }
+
+        // Helper function to convert time to 24-hour format for sorting
+        function convertTimeTo24Hour(time) {
+            if (!time) return 0;
+            const [timePart, modifier] = time.split(' ');
+            if (!timePart || !modifier) return 0;
+            let [hours, minutes] = timePart.split(':');
+            
+            hours = parseInt(hours, 10);
+            minutes = parseInt(minutes, 10) || 0;
+            
+            if (hours === 12) {
+                hours = 0;
+            }
+            
+            if (modifier.toUpperCase() === 'PM') {
+                hours += 12;
+            }
+            
+            return hours * 100 + minutes;
+        }
+
+        // Function to show appointments for a specific day
+        function showAppointments(day) {
+            document.querySelectorAll('.sidebar .day').forEach(div => div.classList.remove('active'));
+            const dayElement = document.querySelector(`.sidebar .day[onclick="showAppointments('${day}')"]`);
+            if (dayElement) {
+                dayElement.classList.add('active');
+            }
+            renderAppointments(day);
+        }
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', () => {
+            renderSidebar();
+            
+            const today = new Date();
+            const todayDayName = today.toLocaleDateString('en-US', { weekday: 'long' }).toLowerCase();
+            
+            renderAppointments(todayDayName);
+        });
+    </script>
+</body>
+</html>

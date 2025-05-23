@@ -1,0 +1,1343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Method</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+        }
+
+        .payment-container {
+            border: 1px solid #ddd;
+            padding: 30px;
+            width: 100%;
+            max-width: 600px;
+            border-radius: 12px;
+            background: white;
+            box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .payment-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0px 12px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .payment-container h3 {
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #333;
+            text-align: center;
+        }
+
+        .payment-option {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border-radius: 8px;
+            background: #f9f9f9;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 1px solid transparent;
+        }
+
+        .payment-option:hover {
+            background: #f1f1f1;
+            transform: translateX(5px);
+            border-color: #ddd;
+        }
+
+        .payment-option.active {
+            background: #e9f7ef;
+            border-color: #28a745;
+        }
+
+        .payment-option input {
+            margin-right: 15px;
+            cursor: pointer;
+        }
+
+        .payment-option label {
+            font-size: 16px;
+            color: #555;
+            cursor: pointer;
+            flex-grow: 1;
+        }
+
+        .payment-option .payment-icons {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .payment-option .payment-icons img {
+            height: 20px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .banking-box,
+        .upi-box,
+        .emi-box {
+            background: #fef9f4;
+            padding: 15px;
+            margin-left: 30px;
+            border-radius: 8px;
+            margin-top: 10px;
+            display: none;
+            animation: fadeIn 0.5s ease;
+            border: 1px solid #eee;
+        }
+
+        .dropdown {
+            padding: 10px;
+            margin-top: 10px;
+            width: 100%;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+            background-color: white;
+        }
+
+        .button {
+            background: linear-gradient(135deg, #28a745, #218838);
+            border: none;
+            padding: 15px;
+            cursor: pointer;
+            border-radius: 8px;
+            width: 100%;
+            margin-top: 20px;
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .button:hover {
+            background: linear-gradient(135deg, #218838, #1e7e34);
+            transform: scale(1.02);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .button:disabled {
+            background: #cccccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .verify-button {
+            padding: 10px 15px;
+            border-radius: 6px;
+            background: #fff3cd;
+            border: 1px solid #ffeeba;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            margin-left: 10px;
+        }
+
+        .verify-button:hover {
+            background: #ffe08a;
+        }
+
+        .small-text {
+            font-size: 12px;
+            color: #777;
+            margin-top: 10px;
+            line-height: 1.4;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+            margin-top: 8px;
+        }
+
+        .upi-actions {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+            gap: 10px;
+        }
+
+        .scan-button {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 8px 12px;
+            background: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .scan-button:hover {
+            background: #e9ecef;
+        }
+
+        .upi-apps {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+
+        .upi-app {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            object-fit: contain;
+            border: 1px solid #eee;
+            padding: 5px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .upi-app:hover {
+            transform: scale(1.1);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .modal-content {
+            border-radius: 12px;
+        }
+
+        .scanner-container {
+            width: 100%;
+            height: 300px;
+            background: #f1f1f1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .scanner-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #666;
+        }
+
+        .scanner-placeholder i {
+            font-size: 50px;
+            margin-bottom: 15px;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        #cross {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            font-size: 30px;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            z-index: 1000;
+        }
+
+        .amount-display {
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #333;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .card-details {
+            display: none;
+            margin-left: 30px;
+            margin-top: 10px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .card-details .input-row {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .card-details .input-field {
+            flex: 1;
+        }
+
+        .card-details .input-field.small {
+            max-width: 100px;
+        }
+
+        .emi-options {
+            margin-top: 10px;
+        }
+
+        .emi-option {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .error-message {
+            color: #dc3545;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .success-animation {
+            margin: 20px auto;
+            text-align: center;
+        }
+
+        .checkmark {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: block;
+            stroke-width: 2;
+            stroke: #4bb71b;
+            stroke-miterlimit: 10;
+            box-shadow: inset 0px 0px 0px #4bb71b;
+            animation: fill .4s ease-in-out .4s forwards, scale .3s ease-in-out .9s both;
+            margin: 0 auto;
+        }
+
+        .checkmark__check {
+            transform-origin: 50% 50%;
+            stroke-dasharray: 48;
+            stroke-dashoffset: 48;
+            animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
+        }
+
+        @keyframes stroke {
+            100% {
+                stroke-dashoffset: 0;
+            }
+        }
+
+        @keyframes scale {
+            0%, 100% {
+                transform: none;
+            }
+            50% {
+                transform: scale3d(1.1, 1.1, 1);
+            }
+        }
+
+        @keyframes fill {
+            100% {
+                box-shadow: inset 0px 0px 0px 30px #4bb71b;
+            }
+        }
+
+        .failure-animation {
+            margin: 20px auto;
+            text-align: center;
+        }
+
+        .crossmark {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: block;
+            stroke-width: 6;
+            stroke: #ff6b6b;
+            stroke-miterlimit: 10;
+            margin: 0 auto;
+            box-shadow: inset 0px 0px 0px #ff6b6b;
+            animation: fill-red .4s ease-in-out .4s forwards, scale .3s ease-in-out .9s both;
+        }
+
+        .crossmark__circle {
+            stroke-dasharray: 166;
+            stroke-dashoffset: 166;
+            stroke-width: 2;
+            stroke-miterlimit: 10;
+            stroke: #ff6b6b;
+            fill: none;
+            animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+        }
+
+        .crossmark__path {
+            stroke-dasharray: 48;
+            stroke-dashoffset: 48;
+            transform-origin: 50% 50%;
+            animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
+        }
+
+        @keyframes fill-red {
+            100% {
+                box-shadow: inset 0px 0px 0px 30px #ff6b6b;
+            }
+        }
+
+        .upi-selected {
+            transform: scale(1.2);
+            border: 2px solid #4CAF50;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.16);
+        }
+
+        .custom-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1050;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .custom-modal-content {
+            background-color: #fff;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .custom-modal-header {
+            background-color: rgba(255, 193, 7, 0.1);
+            padding: 15px;
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .custom-modal-header h5 {
+            margin: 0;
+            font-size: 1.25rem;
+            font-weight: 500;
+        }
+
+        .custom-modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #6c757d;
+        }
+
+        .custom-modal-close:hover {
+            color: #343a40;
+        }
+
+        .custom-modal-body {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .custom-modal-body i {
+            font-size: 3rem;
+            color: #ffc107;
+            margin-bottom: 15px;
+        }
+
+        .custom-modal-body p {
+            margin: 10px 0;
+            color: #6c757d;
+        }
+
+        .custom-modal-footer {
+            padding: 15px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            border-bottom-left-radius: 12px;
+            border-bottom-right-radius: 12px;
+        }
+
+        .custom-modal-footer button {
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .custom-modal-footer .btn-secondary {
+            background-color: #fff;
+            border: 1px solid #ced4da;
+            color: #212529;
+        }
+
+        .custom-modal-footer .btn-secondary:hover {
+            background-color: #e9ecef;
+        }
+
+        .custom-modal-footer .btn-primary {
+            background-color: #007bff;
+            border: none;
+            color: #fff;
+        }
+
+        .custom-modal-footer .btn-primary:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div id="cross" class="btn btn-outline-success" onclick="window.history.back();">
+        <i class="fa-solid fa-arrow-left"></i>
+    </div>
+    <div class="payment-container">
+        <h3>Payment Method</h3>
+        <div class="amount-display" id="amount-display">
+            Amount to be Paid: <span id="amount"></span>
+            <div id="subscription-details" class="small-text text-center mt-1"></div>
+        </div>
+
+        <!-- Credit/Debit Card Option -->
+        <div class="payment-option" id="credit-card-option">
+            <input type="radio" name="payment" id="credit-card" value="Credit/Debit Card">
+            <label for="credit-card QUERY_ID="credit-card">Credit or Debit Card</label>
+            <div class="payment-icons">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png" alt="Visa">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Mastercard-logo.png" alt="MasterCard">
+                <img src="https://www.pngplay.com/wp-content/uploads/5/American-Express-Logo-Download-Free-PNG.png" alt="American Express">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/4/4d/Maestro_logo.png" alt="Maestro">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Rupay-Logo.png/1280px-Rupay-Logo.png" alt="RuPay">
+            </div>
+        </div>
+        <div class="card-details" id="card-details">
+            <input type="text" class="input-field" id="card-number" placeholder="Card Number" maxlength="19">
+            <div class="error-message" id="card-number-error">Please enter a valid 16-digit card number</div>
+            <input type="text" class="input-field" id="card-name" placeholder="Name on Card">
+            <div class="error-message" id="card-name-error">Please enter the name on card</div>
+            <div class="input-row">
+                <input type="text" class="input-field small" id="card-expiry" placeholder="MM/YY" maxlength="5">
+                <input type="text" class="input-field small" id="card-cvv" placeholder="CVV" maxlength="4">
+            </div>
+            <div class="error-message" id="card-expiry-error">Please enter valid expiry date</div>
+            <div class="error-message" id="card-cvv-error">Please enter valid CVV</div>
+        </div>
+
+        <!-- Net Banking Option -->
+        <div class="payment-option" id="net-banking-option">
+            <input type="radio" name="payment" id="net-banking" value="Net Banking">
+            <label for="net-banking">Net Banking</label>
+            <div class="banking-box">
+                <select class="dropdown" id="bank-select">
+                    <option value="">Select your bank</option>
+                    <option value="SBI">State Bank of India</option>
+                    <option value="HDFC">HDFC Bank</option>
+                    <option value="ICICI">ICICI Bank</option>
+                    <option value="AXIS">Axis Bank</option>
+                    <option value="BOB">Bank of Baroda</option>
+                    <option value="PNB">Punjab National Bank</option>
+                </select>
+                <div class="error-message" id="bank-error">Please select your bank</div>
+            </div>
+        </div>
+
+        <!-- UPI Option -->
+        <div class="payment-option" id="upi-option">
+            <input type="radio" name="payment" id="upi" value="UPI">
+            <label for="upi"><strong>UPI Payment</strong> <span class="badge bg-success" style="font-size: 0.7rem;">Fastest & Secure</span></label>
+        </div>
+        <div class="upi-box" id="upi-box">
+            <p><i class="fas fa-info-circle text-primary"></i> Enter your UPI ID or scan QR code for instant payment</p>
+            <input type="text" class="input-field" id="upi-id" placeholder="example@upi">
+            <div class="error-message" id="upi-error">Please enter a valid UPI ID</div>
+            <div class="upi-actions">
+                <button class="verify-button" id="verify-upi">
+                    <i class="fas fa-check-circle"></i> Verify
+                </button>
+                <div class="scan-button" data-bs-toggle="modal" data-bs-target="#scannerModal">
+                    <i class="fas fa-qrcode"></i> Scan QR
+                </div>
+                <div class="scan-button" data-bs-toggle="modal" data-bs-target="#qrGeneratorModal">
+                    <i class="fas fa-share-alt"></i> Show My QR
+                </div>
+            </div>
+            <p class="small-text">The UPI ID should be in the format of name@bank or mobile@upi</p>
+            <div class="upi-apps">
+                <img src="https://static.vecteezy.com/system/resources/previews/021/672/632/original/google-pay-logo-transparent-free-png.png" alt="Google Pay" class="upi-app" data-upi-app="gpay">
+                <img src="https://th.bing.com/th/id/OIP.N9ZO77K0OJICNnUp2wUiiQHaHa?rs=1&pid=ImgDetMain" alt="PhonePe" class="upi-app" data-upi-app="phonepe">
+                <img src="https://logosmarken.com/wp-content/uploads/2020/11/Paytm-Logo.png" alt="Paytm" class="upi-app" data-upi-app="paytm">
+                <img src="https://th.bing.com/th/id/OIP.jHcBrwClOVO8nEiSWhTMhQHaB3?rs=1&pid=ImgDetMain" alt="BHIM" class="upi-app" data-upi-app="bhim">
+                <img src="https://th.bing.com/th/id/OIP.xr-ZstKXMMrgpHjkhI_kngHaE7?rs=1&pid=ImgDetMain" alt="Amazon Pay" class="upi-app" data-upi-app="amazonpay">
+                <img src="https://th.bing.com/th/id/OIP.fwvp7iLwKbhDm71avPNlTgHaEK?rs=1&pid=ImgDetMain" alt="WhatsApp Pay" class="upi-app" data-upi-app="whatsapp">
+                <img src="https://cdn-icons-png.flaticon.com/512/825/825510.png" alt="Other UPI Apps" class="upi-app" data-upi-app="other">
+            </div>
+            <div class="upi-benefits mt-3 p-2 rounded" style="background-color: #f8f9fa; border-left: 3px solid #4CAF50;">
+                <p class="mb-1"><strong>UPI Benefits:</strong></p>
+                <ul class="mb-0 ps-3" style="font-size: 0.8rem;">
+                    <li>Instant transfers directly from your bank account</li>
+                    <li>Zero transaction fees & secure payments</li>
+                    <li>Works 24/7 with all major Indian banks</li>
+                    <li>Quick refunds in case of payment failures</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- EMI Option -->
+        <div class="payment-option" id="emi-option">
+            <input type="radio" name="payment" id="emi" value="EMI">
+            <label for="emi">EMI</label>
+            <div class="emi-box">
+                <select class="dropdown" id="emi-select">
+                    <option value="">Select EMI Option</option>
+                    <option value="3months">3 Months (No Cost EMI)</option>
+                    <option value="6months">6 Months (Interest: 12%)</option>
+                    <option value="9months">9 Months (Interest: 15%)</option>
+                    <option value="12months">12 Months (Interest: 18%)</option>
+                </select>
+                <div class="emi-options" id="emi-options"></div>
+                <div class="error-message" id="emi-error">Please select an EMI option</div>
+            </div>
+        </div>
+
+        <button class="button" id="proceed-button" disabled>Proceed to Payment</button>
+    </div>
+
+    <!-- QR Scanner Modal -->
+    <div class="modal fade" id="scannerModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Scan UPI QR Code</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="scanner-container">
+                        <div class="scanner-placeholder">
+                            <i class="fas fa-qrcode"></i>
+                            <p>Point your camera at the QR code</p>
+                        </div>
+                    </div>
+                    <p class="small-text text-center">Or <a href="#" id="manual-upi-entry">enter UPI ID manually</a></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="confirm-scan">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- QR Generator Modal -->
+    <div class="modal fade" id="qrGeneratorModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Pay using this QR Code</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <div id="qrcode-container" class="d-flex justify-content-center align-items-center flex-column">
+                        <div id="qrcode" class="mb-3" style="padding: 10px; border: 1px solid #ddd; display: inline-block;"></div>
+                        <div class="mt-2">
+                            <p class="mb-1"><strong>Amount:</strong> <span id="qr-amount"></span></p>
+                            <p class="mb-0"><small>Scan with any UPI app to pay</small></p>
+                        </div>
+                    </div>
+                    <div class="mt-3">
+                        <button class="btn btn-outline-success btn-sm" id="download-qr">
+                            <i class="fas fa-download"></i> Download QR
+                        </button>
+                        <button class="btn btn-outline-primary btn-sm" id="share-qr">
+                            <i class="fas fa-share-alt"></i> Share
+                        </button>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <p class="small-text w-100 text-center mb-0">This QR code is valid for the next 15 minutes</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="modal fade" id="successModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body text-center p-4">
+                    <div class="success-animation">
+                        <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                            <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
+                            <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                        </svg>
+                    </div>
+                    <h4 class="mt-3">Payment Successful!</h4>
+                    <p class="text-muted">Thank you for your payment. Your subscription is now active.</p>
+                    <p class="mb-0">Transaction ID: <span id="transaction-id" class="fw-bold"></span></p>
+                    <div class="mt-4">
+                        <button type="button" class="btn btn-success px-4" id="go-to-user_dash">Go to Dashboard</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Failure Modal -->
+    <div class="modal fade" id="failureModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body text-center p-4">
+                    <div class="failure-animation">
+                        <svg class="crossmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                            <circle class="crossmark__circle" cx="26" cy="26" r="25" fill="none"/>
+                            <path class="crossmark__path" fill="none" d="M16 16 36 36 M36 16 16 36"/>
+                        </svg>
+                    </div>
+                    <h4 class="mt-3">Payment Failed</h4>
+                    <p class="text-muted" id="failure-message">There was an issue processing your payment. Please try again.</p>
+                    <div class="mt-4">
+                        <button type="button" class="btn btn-outline-secondary me-2" data-bs-dismiss="modal">Go Back</button>
+                        <button type="button" class="btn btn-primary" id="retry-payment">Try Again</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Duplicate Subscription Modal -->
+    <div class="custom-modal" id="duplicateSubscriptionModal">
+        <div class="custom-modal-content">
+            <div class="custom-modal-header">
+                <h5>Active Subscription Detected</h5>
+                <button class="custom-modal-close" id="duplicate-close-btn">×</button>
+            </div>
+            <div class="custom-modal-body">
+                <i class="fas fa-exclamation-circle"></i>
+                <p>You currently have an active subscription: <strong id="active-subscription-name"></strong></p>
+                <p>It is valid until <strong id="subscription-expiry"></strong>.</p>
+                <p class="text-muted">To purchase a new subscription, please wait until your current subscription expires.</p>
+            </div>
+            <div class="custom-modal-footer">
+                <button class="btn-secondary" id="duplicate-close-btn-footer">Close</button>
+                <button class="btn-primary" id="duplicate-dashboard-btn">Go to Dashboard</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Track input interaction state for other fields (not card number)
+            const inputInteractionState = {
+                'card-name': false,
+                'card-expiry': false,
+                'card-cvv': false,
+                'bank-select': false,
+                'upi-id': false,
+                'emi-select': false
+            };
+
+            // Store subscription data from initial fetch
+            let cachedSubscription = null;
+
+            // Map roles to dashboard routes
+            const dashboardRoutes = {
+                user: '/user_dash',
+                dietitian: '/dash_dietitian',
+                admin: '/dash_admin',
+                organization: '/dash_organization'
+            };
+
+            // Get query parameters
+            function getQueryParams() {
+                const params = {};
+                window.location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi, (m, key, value) => {
+                    params[key] = decodeURIComponent(value);
+                });
+                return params;
+            }
+
+            // Check session and user subscription
+            async function checkUserSubscription() {
+                try {
+                    const response = await fetch('/check-user-subscription', { credentials: 'include' });
+                    if (response.status === 401) {
+                        console.warn('User not authenticated, redirecting to login');
+                        window.location.href = '/roles_signin';
+                        return { canProceed: false, data: null };
+                    }
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    const data = await response.json();
+                    if (data.hasActiveSubscription) {
+                        const modal = document.getElementById('duplicateSubscriptionModal');
+                        document.getElementById('active-subscription-name').textContent = data.subscription.name;
+                        document.getElementById('subscription-expiry').textContent = new Date(data.subscription.expiresAt).toLocaleDateString();
+                        modal.style.display = 'flex';
+                        // Disable form elements except modal buttons and cross
+                        document.querySelectorAll('input, select, button:not(#cross, #duplicate-close-btn, #duplicate-close-btn-footer, #duplicate-dashboard-btn)').forEach(el => el.disabled = true);
+                        return { canProceed: false, data };
+                    }
+                    return { canProceed: true, data };
+                } catch (error) {
+                    console.error('Error checking subscription:', error);
+                    return { canProceed: true, data: null }; // Allow payment to proceed on error
+                }
+            }
+
+            // Fetch subscription details by name
+            async function fetchSubscriptionDetails(planName) {
+                try {
+                    const response = await fetch(`/subscriptions/name/${encodeURIComponent(planName)}`, { credentials: 'include' });
+                    if (response.status === 404) {
+                        return null;
+                    }
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    return await response.json();
+                } catch (error) {
+                    console.error('Error fetching subscription:', error);
+                    return null;
+                }
+            }
+
+            // Display amount and subscription details
+            async function displayAmount() {
+                const params = getQueryParams();
+                const planName = params.plan;
+                const amount = params.amount || '0.00';
+                const billing = params.billing || 'monthly';
+                const planNameDisplay = params.plan_name || planName || 'Unknown Subscription';
+
+                cachedSubscription = planName ? await fetchSubscriptionDetails(planName) : null;
+
+                if (cachedSubscription) {
+                    document.getElementById("amount").textContent = `₹${cachedSubscription.amount}`;
+                    document.getElementById("subscription-details").innerHTML = `
+                        <span class="badge bg-light text-dark">${cachedSubscription.name}</span>
+                        <span class="badge bg-info text-white">${cachedSubscription.billingType === 'yearly' ? 'Annual Billing' : 'Monthly Billing'}</span>
+                    `;
+                    calculateEMIOptions(parseFloat(cachedSubscription.amount));
+                } else {
+                    document.getElementById("amount").textContent = `₹${amount}`;
+                    document.getElementById("subscription-details").innerHTML = `
+                        <span class="badge bg-light text-dark">${planNameDisplay}</span>
+                        <span class="badge bg-info text-white">${billing === 'yearly' ? 'Annual Billing' : 'Monthly Billing'}</span>
+                    `;
+                    calculateEMIOptions(parseFloat(amount));
+                }
+            }
+
+            // Calculate EMI options
+            function calculateEMIOptions(amount) {
+                const emiOptions = [
+                    { months: 3, interest: 0, label: "3 Months (No Cost EMI)" },
+                    { months: 6, interest: 12, label: "6 Months (12% interest)" },
+                    { months: 9, interest: 15, label: "9 Months (15% interest)" },
+                    { months: 12, interest: 18, label: "12 Months (18% interest)" }
+                ];
+
+                const emiOptionsContainer = document.getElementById('emi-options');
+                emiOptionsContainer.innerHTML = '';
+
+                emiOptions.forEach(option => {
+                    const totalAmount = amount + (amount * option.interest / 100);
+                    const monthlyPayment = totalAmount / option.months;
+                    const optionElement = document.createElement('div');
+                    optionElement.className = 'emi-option';
+                    optionElement.innerHTML = `
+                        <span>${option.label}</span>
+                        <span>₹${monthlyPayment.toFixed(2)}/mo</span>
+                    `;
+                    emiOptionsContainer.appendChild(optionElement);
+                });
+            }
+
+            // Toggle payment method details
+            function togglePaymentDetails() {
+                const selectedOption = document.querySelector('input[name="payment"]:checked');
+                if (!selectedOption) return;
+
+                document.querySelectorAll('.card-details, .banking-box, .upi-box, .emi-box').forEach(el => {
+                    el.style.display = 'none';
+                });
+                document.querySelectorAll('.payment-option').forEach(el => {
+                    el.classList.remove('active');
+                });
+
+                selectedOption.closest('.payment-option').classList.add('active');
+
+                switch(selectedOption.id) {
+                    case 'credit-card':
+                        document.getElementById('card-details').style.display = 'block';
+                        break;
+                    case 'net-banking':
+                        document.querySelector('.banking-box').style.display = 'block';
+                        break;
+                    case 'upi':
+                        document.getElementById('upi-box').style.display = 'block';
+                        break;
+                    case 'emi':
+                        document.querySelector('.emi-box').style.display = 'block';
+                        break;
+                }
+
+                validateForm();
+            }
+
+            // Validate the entire form
+            function validateForm() {
+                const selectedOption = document.querySelector('input[name="payment"]:checked');
+                if (!selectedOption) {
+                    document.getElementById('proceed-button').disabled = true;
+                    return false;
+                }
+
+                let isValid = true;
+
+                switch(selectedOption.id) {
+                    case 'credit-card':
+                        isValid = validateCardDetails();
+                        break;
+                    case 'net-banking':
+                        isValid = validateBankSelection();
+                        break;
+                    case 'upi':
+                        isValid = validateUPI();
+                        break;
+                    case 'emi':
+                        isValid = validateEMI();
+                        break;
+                }
+
+                document.getElementById('proceed-button').disabled = !isValid;
+                return isValid;
+            }
+
+            // Validate card details
+            function validateCardDetails() {
+                let isValid = true;
+                const cardNumber = document.getElementById('card-number').value.replace(/\s/g, ''); // Remove spaces
+                // Only validate if card number has a value
+                if (cardNumber) {
+                    if (cardNumber.length !== 16 || !/^\d+$/.test(cardNumber)) {
+                        document.getElementById('card-number-error').style.display = 'block';
+                        isValid = false;
+                    } else {
+                        document.getElementById('card-number-error').style.display = 'none';
+                    }
+                } else {
+                    document.getElementById('card-number-error').style.display = 'none';
+                }
+
+                const cardName = document.getElementById('card-name').value.trim();
+                if (inputInteractionState['card-name'] && !cardName) {
+                    document.getElementById('card-name-error').style.display = 'block';
+                    isValid = false;
+                } else {
+                    document.getElementById('card-name-error').style.display = 'none';
+                }
+
+                const expiry = document.getElementById('card-expiry').value;
+                if (inputInteractionState['card-expiry'] && (!expiry || !/^(0[1-9]|1[0-2])\/?([0-9]{2})$/.test(expiry))) {
+                    document.getElementById('card-expiry-error').style.display = 'block';
+                    isValid = false;
+                } else {
+                    document.getElementById('card-expiry-error').style.display = 'none';
+                }
+
+                const cvv = document.getElementById('card-cvv').value;
+                if (inputInteractionState['card-cvv'] && (!cvv || cvv.length < 3 || cvv.length > 4)) {
+                    document.getElementById('card-cvv-error').style.display = 'block';
+                    isValid = false;
+                } else {
+                    document.getElementById('card-cvv-error').style.display = 'none';
+                }
+
+                return isValid;
+            }
+
+            // Validate bank selection
+            function validateBankSelection() {
+                const bank = document.getElementById('bank-select').value;
+                if (inputInteractionState['bank-select'] && !bank) {
+                    document.getElementById('bank-error').style.display = 'block';
+                    return false;
+                } else {
+                    document.getElementById('bank-error').style.display = 'none';
+                    return true;
+                }
+            }
+
+            // Validate UPI ID
+            function validateUPI() {
+                const upiId = document.getElementById('upi-id').value.trim();
+                const upiRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9]+$/;
+                if (inputInteractionState['upi-id'] && (!upiId || !upiRegex.test(upiId))) {
+                    document.getElementById('upi-error').style.display = 'block';
+                    return false;
+                } else {
+                    document.getElementById('upi-error').style.display = 'none';
+                    return true;
+                }
+            }
+
+            // Validate EMI selection
+            function validateEMI() {
+                const emi = document.getElementById('emi-select').value;
+                if (inputInteractionState['emi-select'] && !emi) {
+                    document.getElementById('emi-error').style.display = 'block';
+                    return false;
+                } else {
+                    document.getElementById('emi-error').style.display = 'none';
+                    return true;
+                }
+            }
+
+            // Format card number with spaces
+            function formatCardNumber(input) {
+                let value = input.value.replace(/\D/g, '').slice(0, 16); // Remove non-digits, limit to 16 digits
+                let formatted = '';
+                for (let i = 0; i < value.length; i++) {
+                    if (i > 0 && i % 4 === 0) formatted += ' ';
+                    formatted += value[i];
+                }
+                input.value = formatted;
+                // Removed validateForm() to prevent validation while typing
+            }
+
+            // Format expiry date
+            function formatExpiryDate(input) {
+                let value = input.value.replace(/\D/g, '');
+                if (value.length > 2) {
+                    value = value.substring(0, 2) + '/' + value.substring(2, 4);
+                }
+                input.value = value;
+                inputInteractionState['card-expiry'] = true;
+                validateForm();
+            }
+
+            // Handle UPI app selection
+            function handleUPIAppSelection(app) {
+                let upiId = document.getElementById('upi-id');
+                document.querySelectorAll('.upi-app').forEach(appIcon => appIcon.classList.remove('upi-selected'));
+                event.target.classList.add('upi-selected');
+                switch(app) {
+                    case 'gpay': upiId.placeholder = 'example@okaxis or example@okicici'; break;
+                    case 'phonepe': upiId.placeholder = 'example@ybl'; break;
+                    case 'paytm': upiId.placeholder = 'example@paytm'; break;
+                    case 'bhim': upiId.placeholder = 'mobile@upi'; break;
+                    case 'amazonpay': upiId.placeholder = 'example@apl'; break;
+                    case 'whatsapp': upiId.placeholder = 'example@fbpay'; break;
+                    case 'other': upiId.placeholder = 'example@upi'; break;
+                }
+                upiId.focus();
+            }
+
+            // Verify UPI ID
+            function verifyUPI() {
+                inputInteractionState['upi-id'] = true;
+                if (validateUPI()) {
+                    const verifyButton = document.getElementById('verify-upi');
+                    const originalText = verifyButton.innerHTML;
+                    verifyButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Verifying...';
+                    verifyButton.disabled = true;
+                    setTimeout(() => {
+                        verifyButton.innerHTML = '<i class="fas fa-check-circle"></i> Verified';
+                        verifyButton.classList.remove('verify-button');
+                        verifyButton.classList.add('btn', 'btn-success', 'btn-sm');
+                        setTimeout(() => {
+                            verifyButton.innerHTML = originalText;
+                            verifyButton.disabled = false;
+                            verifyButton.classList.remove('btn', 'btn-success', 'btn-sm');
+                            verifyButton.classList.add('verify-button');
+                        }, 3000);
+                    }, 1500);
+                }
+            }
+
+            // Generate QR code
+            function generateQRCode() {
+                const amount = document.getElementById('amount').textContent.replace('₹', '');
+                document.getElementById('qr-amount').textContent = '₹' + amount;
+                const qrCodeContainer = document.getElementById('qrcode');
+                qrCodeContainer.innerHTML = `
+                    <div style="width: 200px; height: 200px; background-color: #f5f5f5; display: flex; justify-content: center; align-items: center; flex-direction: column;">
+                        <i class="fas fa-qrcode" style="font-size: 100px; color: #4CAF50;"></i>
+                        <div style="font-size: 12px; margin-top: 10px; text-align: center;">
+                            Demo QR Code<br>
+                            Amount: ₹${amount}
+                        </div>
+                    </div>
+                `;
+            }
+
+            // Proceed to payment
+            async function proceedToPayment() {
+                if (!validateForm()) return;
+
+                const params = getQueryParams();
+                const planName = params.plan;
+                const amount = parseFloat(params.amount) || 0;
+                const billing = params.billing || 'monthly';
+                const selectedPaymentMethod = document.querySelector('input[name="payment"]:checked').value;
+
+                let paymentData;
+
+                if (cachedSubscription) {
+                    paymentData = {
+                        subscriptionId: cachedSubscription._id,
+                        amount: cachedSubscription.amount,
+                        paymentMethod: selectedPaymentMethod
+                    };
+                } else {
+                    if (!params.amount || !params.billing) {
+                        document.getElementById('failure-message').textContent = 'Missing required payment details';
+                        const failureModal = new bootstrap.Modal(document.getElementById('failureModal'));
+                        failureModal.show();
+                        return;
+                    }
+                    paymentData = {
+                        name: params.plan_name || planName || 'Custom Plan',
+                        billingType: billing,
+                        amount,
+                        paymentMethod: selectedPaymentMethod
+                    };
+                }
+
+                let paymentDetails = {};
+                switch(selectedPaymentMethod) {
+                    case 'Credit/Debit Card':
+                        paymentDetails = {
+                            cardNumber: document.getElementById('card-number').value.replace(/\s/g, ''), // Clean card number
+                            cardName: document.getElementById('card-name').value.trim(),
+                            expiry: document.getElementById('card-expiry').value,
+                            cvv: document.getElementById('card-cvv').value
+                        };
+                        break;
+                    case 'Net Banking':
+                        paymentDetails = {
+                            bank: document.getElementById('bank-select').value
+                        };
+                        break;
+                    case 'UPI':
+                        paymentDetails = {
+                            upiId: document.getElementById('upi-id').value.trim()
+                        };
+                        break;
+                    case 'EMI':
+                        paymentDetails = {
+                            emiOption: document.getElementById('emi-select').value
+                        };
+                        break;
+                }
+
+                paymentData.paymentDetails = paymentDetails;
+
+                const button = document.getElementById('proceed-button');
+                button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+                button.disabled = true;
+
+                try {
+                    const response = await fetch('/payments', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(paymentData),
+                        credentials: 'include'
+                    });
+
+                    const data = await response.json();
+
+                    if (data.success) {
+                        document.getElementById('transaction-id').textContent = data.transactionId;
+                        const successModal = new bootstrap.Modal(document.getElementById('successModal'));
+                        successModal.show();
+                    } else {
+                        document.getElementById('failure-message').textContent = data.message || 'Payment processing failed';
+                        const failureModal = new bootstrap.Modal(document.getElementById('failureModal'));
+                        failureModal.show();
+                        if (data.message && data.message.includes('active subscription')) {
+                            const modal = document.getElementById('duplicateSubscriptionModal');
+                            modal.style.display = 'flex';
+                        }
+                    }
+                } catch (error) {
+                    console.error('Payment error:', error);
+                    document.getElementById('failure-message').textContent = 'An unexpected error occurred. Please try again.';
+                    const failureModal = new bootstrap.Modal(document.getElementById('failureModal'));
+                    failureModal.show();
+                } finally {
+                    button.innerHTML = 'Proceed to Payment';
+                    button.disabled = false;
+                }
+                validateForm();
+            }
+
+            // Initialize event listeners
+            function initEventListeners() {
+                document.querySelectorAll('input[name="payment"]').forEach(radio => {
+                    radio.addEventListener('change', togglePaymentDetails);
+                });
+
+                document.getElementById('card-number').addEventListener('input', function() {
+                    formatCardNumber(this);
+                });
+
+                // Add blur event listener for card number validation
+                document.getElementById('card-number').addEventListener('blur', function() {
+                    validateForm();
+                });
+
+                document.getElementById('card-expiry').addEventListener('input', function() {
+                    formatExpiryDate(this);
+                });
+
+                document.getElementById('card-name').addEventListener('input', function() {
+                    inputInteractionState['card-name'] = true;
+                    validateForm();
+                });
+
+                document.getElementById('card-cvv').addEventListener('input', function() {
+                    inputInteractionState['card-cvv'] = true;
+                    validateForm();
+                });
+
+                document.getElementById('bank-select').addEventListener('change', function() {
+                    inputInteractionState['bank-select'] = true;
+                    validateForm();
+                });
+
+                document.getElementById('upi-id').addEventListener('input', function() {
+                    inputInteractionState['upi-id'] = true;
+                    validateForm();
+                });
+
+                document.getElementById('verify-upi').addEventListener('click', verifyUPI);
+
+                document.getElementById('emi-select').addEventListener('change', function() {
+                    inputInteractionState['emi-select'] = true;
+                    validateForm();
+                });
+
+                document.querySelectorAll('.upi-app').forEach(app => {
+                    app.addEventListener('click', function() {
+                        handleUPIAppSelection(this.dataset.upiApp);
+                    });
+                });
+
+                document.getElementById('manual-upi-entry').addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const modal = bootstrap.Modal.getInstance(document.getElementById('scannerModal'));
+                    modal.hide();
+                    document.getElementById('upi').click();
+                    document.getElementById('upi-id').focus();
+                });
+
+                document.getElementById('proceed-button').addEventListener('click', proceedToPayment);
+
+                const qrModal = document.getElementById('qrGeneratorModal');
+                qrModal.addEventListener('show.bs.modal', generateQRCode);
+
+                document.getElementById('download-qr').addEventListener('click', function() {
+                    alert('QR Code download simulation: QR code would be downloaded as an image file');
+                });
+
+                document.getElementById('share-qr').addEventListener('click', function() {
+                    if (navigator.share) {
+                        navigator.share({
+                            title: 'Payment QR Code',
+                            text: 'Scan this QR code to pay',
+                            url: window.location.href
+                        }).catch((error) => console.error('Sharing failed:', error));
+                    } else {
+                        alert('Web Share API not supported in your browser');
+                    }
+                });
+
+                document.getElementById('go-to-user_dash').addEventListener('click', function() {
+                    const modal = bootstrap.Modal.getInstance(document.getElementById('successModal'));
+                    modal.hide();
+                    window.location.href = '/user_dash';
+                });
+
+                document.getElementById('retry-payment').addEventListener('click', function() {
+                    bootstrap.Modal.getInstance(document.getElementById('failureModal')).hide();
+                    setTimeout(proceedToPayment, 300);
+                });
+
+                // Modal handlers for Duplicate Subscription Modal
+                function closeDuplicateModal() {
+                    const modal = document.getElementById('duplicateSubscriptionModal');
+                    modal.style.display = 'none';
+                    // Re-enable form elements
+                    document.querySelectorAll('input, select, button:not(#cross)').forEach(el => el.disabled = false);
+                    window.location.href = '/user';
+                }
+
+                function goToDashboard() {
+                    const modal = document.getElementById('duplicateSubscriptionModal');
+                    modal.style.display = 'none';
+                    // Re-enable form elements
+                    document.querySelectorAll('input, select, button:not(#cross)').forEach(el => el.disabled = false);
+                    window.location.href = '/user_dash';
+                }
+
+                document.getElementById('duplicate-close-btn').addEventListener('click', closeDuplicateModal);
+                document.getElementById('duplicate-close-btn-footer').addEventListener('click', closeDuplicateModal);
+                document.getElementById('duplicate-dashboard-btn').addEventListener('click', goToDashboard);
+            }
+
+            // Initialize
+            async function init() {
+                const { canProceed } = await checkUserSubscription();
+                if (canProceed) {
+                    await displayAmount();
+                    togglePaymentDetails();
+                }
+                initEventListeners();
+            }
+
+            init().catch(error => {
+                console.error('Initialization error:', error);
+                document.getElementById('failure-message').textContent = 'Failed to initialize payment page. Please try again.';
+                const failureModal = new bootstrap.Modal(document.getElementById('failureModal'));
+                failureModal.show();
+            });
+        });
+    </script>
+</body>
+</html>

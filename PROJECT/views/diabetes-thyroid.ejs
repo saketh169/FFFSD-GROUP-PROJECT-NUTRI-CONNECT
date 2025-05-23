@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diabetes & Thyroid Care Specialists</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="/css/dietitian_profiles.css">
+  </head>
+  
+  <style>
+    .logo {
+      display: flex;
+      align-items: center;
+      font-family: 'Poppins', sans-serif;
+      font-size: 24px;
+      font-weight: bold;
+      position: absolute;
+      left: 50px;
+      color: #1E6F5C; 
+    }
+
+    .logo .highlight {
+      color: #28B463;
+    }
+
+    .logo .icon-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background-color: #28B463;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+
+    .logo .icon {
+      font-size: 24px;
+      color: #FFFFFF;
+    }
+
+    .logo:hover .icon-container {
+      background-color: #1E6F5C;
+      transform: scale(1.1);
+      transition: all 0.3s ease;
+    }
+
+    .logo:hover {
+      color: #28B463;
+      transition: color 0.3s ease;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      color: rgb(51, 51, 51);
+      line-height: 1.6;
+      margin: 0px;
+      background-color: #e8f5e9;
+    }
+
+    .top {
+      position: fixed;
+      top: 0;
+      height: 130px;
+      width: 100%;
+      z-index: 1;
+    }
+
+    .top1 {
+      box-shadow: rgba(0, 0, 0, 0.6) 0px 2px 5px;
+      position: fixed;
+      left: 0;
+      right: 0;
+      height: 60px;
+      width: 100%;
+      background-color: #D2F0C8;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+
+    #profile {
+      position: fixed;
+      width: 150px;
+      height: 45px;
+      right: 30px;
+      border-radius: 5px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 7px;
+    }
+
+    #profile i {
+      margin: 5px;
+    }
+
+    #profile div {
+      border: 2px solid;
+      border-radius: 50%;
+      padding: 5px;
+    }
+
+    #profile:hover div {
+      border: 2px solid white;
+    }
+
+    #nav-bar {
+      z-index: 1000;
+      position: fixed;
+      top: 60px;
+      left: 0;
+      width: 100%;
+      height: 50px;
+      background-color: #50c878;
+      border-bottom: 2px solid #28a745;
+    }
+
+    .navbar-nav .nav-link {
+      font-weight: bold;
+      font-size: 16px;
+      transition: all 0.3s ease-in-out;
+      padding: 10px 15px;
+      border-radius: 5px;
+    }
+
+    .navbar-nav .nav-link:hover {
+      background-color: rgba(20, 133, 52, 1);
+      box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+      transform: translateY(-2px);
+      color: white !important;
+    }
+
+    .navbar-nav .nav-item.active .nav-link {
+      background-color: rgba(40, 167, 69, 0.8);
+      color: white;
+    }
+
+    .navbar-nav {
+      margin-left: 200px;
+      width: 70%;
+      justify-content: space-between;
+    }
+
+    #contact {
+      background-color: #28a745;
+      color: white;
+      height: 45px;
+      padding: 10px;
+      border-radius: 5px;
+      outline: 2px solid #46b06c;
+      display: inline-block;
+      transition: background-color 0.3s ease;
+      position: fixed;
+      right: 20px;
+      top: 61.5px;
+      box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    #contact:hover {
+      background-color: #218838;
+      transform: scale(1.1);
+    }
+
+    #contact i {
+      font-size: 22px;
+      color: #f8f8f8;
+    }
+
+    #chatbot {
+      background-color: #28a745;
+      color: white;
+      height: 45px;
+      padding: 10px;
+      border-radius: 5px;
+      outline: 2px solid #46b06c;
+      display: inline-block;
+      transition: background-color 0.3s ease;
+      position: fixed;
+      right: 100px;
+      top: 61.5px;
+      box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    #chatbot:hover {
+      background-color: #218838;
+      transform: scale(1.1);
+    }
+
+    #chatbot i {
+      font-size: 24px;
+      color: #f8f8f8;
+    }
+
+    .active-page a {
+      font-weight: bold;
+      background-color: #46b06c;
+      border: 3px solid #28a745;
+      color: white !important;
+      border-radius: 15%;
+    }
+
+    @media (max-width: 992px) {
+      .logo {
+        margin-right: 270px;
+      }
+
+      #toggler {
+        margin-top: -5px;
+        position: fixed;
+        left: 30px;
+        top: 70px;
+      }
+
+      .navbar-nav .nav-item {
+        margin: 0px;
+        text-align: center;
+        background-color: #98Fb98;
+      }
+
+      .navbar-nav {
+        margin-top: 54px;
+        width: 100%;
+      }
+    }
+
+    .main {
+      width: 100%;
+    }
+
+    .footer {
+      position: relative;
+      top: 150px;
+      left: 0px;
+      height: auto;
+      width: 100%;
+      background: linear-gradient(135deg, #232F3E 0%, #2c3e50 100%);
+      color: white;
+      padding: 60px 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .footer-about {
+      color: #F0E68C;
+      margin-top: 100px;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+
+    .footer-title {
+      color: #FFFFFF;
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+      position: relative;
+      padding-bottom: 10px;
+      font-weight: 600;
+    }
+
+    .footer-title::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 50px;
+      height: 2px;
+      background-color: #50c878;
+    }
+
+    .footer-links {
+      list-style: none;
+      padding: 0;
+    }
+
+    .footer-links li {
+      margin-bottom: 12px;
+    }
+
+    .footer-links a {
+      color: #F0E68C;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .footer-links a:hover {
+      color: #FFD700;
+      padding-left: 5px;
+    }
+
+    .footer-links i {
+      font-size: 0.8rem;
+    }
+
+    .footer-contact-info {
+      list-style: none;
+      padding: 0;
+    }
+
+    .footer-contact-info li {
+      margin-bottom: 15px;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      line-height: 1.5;
+    }
+
+    .footer-contact-info i {
+      margin-top: 3px;
+      color: #50c878;
+    }
+
+    .footer-contact-info a {
+      color: #1E90FF;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .footer-contact-info a:hover {
+      color: #00BFFF;
+    }
+
+    .footer-bottom {
+      background-color: rgba(0, 0, 0, 0.2);
+      padding: 20px 0;
+      margin-top: 60px;
+    }
+
+    .copyright {
+      color: rgba(255, 255, 255, 0.7);
+      margin: 0;
+    }
+
+    .footer-menu {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .footer-menu li {
+      display: inline-block;
+    }
+
+    .footer-menu a {
+      color: #F0E68C;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .footer-menu a:hover {
+      color: #FFD700;
+    }
+
+    .footer .logo {
+      display: flex;
+      align-items: center;
+      font-size: 24px;
+      font-weight: bold;
+      color: white;
+      margin-bottom: 20px;
+      margin-left: 50px;
+    }
+
+    .footer .logo .highlight {
+      color: #28B463;
+    }
+
+    .footer .logo .icon-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background-color: #28B463;
+      border-radius: 50%;
+    }
+
+    .footer .logo .icon {
+      font-size: 24px;
+      color: #FFFFFF;
+    }
+
+    .footer .logo:hover .icon-container {
+      background-color: #1E6F5C;
+      transform: scale(1.1);
+      transition: all 0.3s ease;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .social-link {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: #f8f9fa;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #28a745;
+      transition: all 0.3s ease;
+    }
+
+    .social-link:hover {
+      background-color: #28a745;
+      color: white;
+      transform: translateY(-3px);
+    }
+
+    @media (max-width: 992px) {
+      .footer-menu {
+        justify-content: flex-end;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .footer-menu {
+        justify-content: center;
+      }
+
+      .copyright,
+      .footer-menu {
+        text-align: center;
+      }
+
+      .footer-menu {
+        margin-top: 10px;
+      }
+    }
+
+    .cancel-button {
+      background-color: #dc3545;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: background-color 0.3s ease;
+    }
+
+    .cancel-button:hover {
+      background-color: #c82333;
+    }
+
+    .booking-error {
+      color: #dc3545;
+      margin-top: 10px;
+      font-size: 0.9em;
+    }
+
+    .back-button {
+      font-size: 17px;
+      padding: 6px 12px;
+      border: none;
+      background: #e8f5e9; /* Soft green background */
+      color: #2e7d32; /* Dark green text */
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .back-button:hover {
+      background: #c8e6c9; /* Slightly darker green on hover */
+    }
+  </style>
+
+  <body>
+    <header class="top">
+      <div class="top1">
+        <div class="logo">
+          <div class="icon-container">
+            <i class="icon fas fa-leaf"></i>
+          </div>
+          <span>
+            <span class="highlight">N</span>utri 
+            <span class="highlight">C</span>onnect
+          </span>
+        </div>
+        <div
+          id="profile"
+          onclick="location.href='/user_dash'"
+          class="btn btn-outline-success"
+        >
+          <b>PROFILE</b>
+          <div>
+            <i class="fa-regular fa-user"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="container-fluid navbar-container">
+        <nav id="nav-bar" class="navbar navbar-expand-lg navbar-light">
+          <div class="container">
+            <button
+              id="toggler"
+              class="navbar-toggler"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarNav"
+              style="border: 3px solid #28a745"
+            >
+              <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav mx-auto">
+                <li class="nav-item">
+                  <a class="nav-link" href="/user">HOME</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/user-guide">GUIDE</a>
+                </li>
+                <li class="nav-item active-page">
+                  <a class="nav-link" href="/dietitian-profiles" >DIETITIAN PROFILES</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/user-consultations">APPOINTMENTS</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/blog">BLOG</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/pricing">PRICING</a>
+                </li>
+              </ul>
+            </div>
+
+            <a id="chatbot" href="/chatbot" title="chatbot">
+              <i class="fas fa-robot"></i>
+            </a>
+
+            <a id="contact" href="/contact">
+              <i class="fa-solid fa-phone-volume"></i>
+            </a>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <main class="main">
+      <aside class="filters-sidebar">
+        <h2>Filters</h2>
+        <div class="filter-group">
+          <h3>Specialization</h3>
+          <div class="checkbox-group">
+            <label class="checkbox-item">
+              <input type="checkbox" name="specialization" value="Type 2 Diabetes" onchange="applyFilters()"> Type 2 Diabetes
+            </label>
+            <label class="checkbox-item">
+              <input type="checkbox" name="specialization" value="Type 1 Diabetes" onchange="applyFilters()"> Type 1 Diabetes
+            </label>
+            <label class="checkbox-item">
+              <input type="checkbox" name="specialization" value="Hypothyroidism" onchange="applyFilters()"> Hypothyroidism
+            </label>
+            <label class="checkbox-item">
+              <input type="checkbox" name="specialization" value="Hyperthyroidism" onchange="applyFilters()"> Hyperthyroidism
+            </label>
+          </div>
+        </div>
+        <div class="filter-group">
+          <h3>Mode of Visit</h3>
+          <div class="checkbox-group">
+            <label class="checkbox-item">
+              <input type="checkbox" name="mode" value="online" onchange="applyFilters()"> Online
+            </label>
+            <label class="checkbox-item">
+              <input type="checkbox" name="mode" value="offline" onchange="applyFilters()"> Offline
+            </label>
+          </div>
+        </div>
+        <div class="filter-group">
+          <h3>Experience</h3>
+          <div class="checkbox-group">
+            <label class="checkbox-item">
+              <input type="checkbox" name="experience" value="1" onchange="applyFilters()"> 1+ years
+            </label>
+            <label class="checkbox-item">
+              <input type="checkbox" name="experience" value="3" onchange="applyFilters()"> 3+ years
+            </label>
+            <label class="checkbox-item">
+              <input type="checkbox" name="experience" value="5" onchange="applyFilters()"> 5+ years
+            </label>
+            <label class="checkbox-item">
+              <input type="checkbox" name="experience" value="7" onchange="applyFilters()"> 7+ years
+            </label>
+          </div>
+        </div>
+        <div class="filter-group">
+          <h3>Fees (In rupees)</h3>
+          <div class="checkbox-group">
+            <label class="checkbox-item">
+              <input type="checkbox" name="fees" value="500" onchange="applyFilters()"> Under 500
+            </label>
+            <label class="checkbox-item">
+              <input type="checkbox" name="fees" value="1000" onchange="applyFilters()"> Under 1000
+            </label>
+            <label class="checkbox-item">
+              <input type="checkbox" name="fees" value="2000" onchange="applyFilters()"> Under 2000
+            </label>
+          </div>
+        </div>
+        <div class="filter-group">
+          <h3>Language</h3>
+          <div class="checkbox-group">
+            <label class="checkbox-item">
+              <input type="checkbox" name="language" value="English" onchange="applyFilters()"> English
+            </label>
+            <label class="checkbox-item">
+              <input type="checkbox" name="language" value="Hindi" onchange="applyFilters()"> Hindi
+            </label>
+            <label class="checkbox-item">
+              <input type="checkbox" name="language" value="Telugu" onchange="applyFilters()"> Telugu
+            </label>
+            <label class="checkbox-item">
+              <input type="checkbox" name="language" value="Tamil" onchange="applyFilters()"> Tamil
+            </label>
+          </div>
+        </div>
+        <div class="filter-group">
+          <h3>Rating</h3>
+          <div class="checkbox-group">
+            <label class="checkbox-item">
+              <input type="checkbox" name="rating" value="5" onchange="applyFilters()"> 5 Stars
+            </label>
+            <label class="checkbox-item">
+              <input type="checkbox" name="rating" value="4" onchange="applyFilters()"> 4 Stars & above
+            </label>
+            <label class="checkbox-item">
+              <input type="checkbox" name="rating" value="3" onchange="applyFilters()"> 3 Stars & above
+            </label>
+          </div>
+        </div>
+        <button class="filter-apply" id="clearFilters" onclick="clearFilters()">Clear Filters</button>
+      </aside>
+      <section class="search-section">
+        <h1>Find a Diabetes & Thyroid Care Specialist</h1>
+        <div class="search-bar">
+          <input type="text" placeholder="Enter your city" id="locationInput" oninput="applyFilters()">
+          <button id="searchButton">Search</button>
+        </div>
+        <div class="nutritionist-list" id="nutritionistList"></div>
+      </section>
+      <aside class="booking-sidebar" id="bookingSidebar">
+        <button class="back-button" onclick="hideBookingSidebar()">← Back</button>
+        <h2>Book Your Consultation</h2>
+        <label for="date">Select Date:</label>
+        <input type="date" id="date" class="date-input">
+        <label for="consultationType">Consultation Type:</label>
+        <select id="consultationType" name="consultationType" required aria-label="Select consultation type">
+          <option value="Online">Online</option>
+          <option value="In-person">In-person</option>
+        </select>
+        <div class="time-slots">
+          <h3 id="morning-label">Morning (8:00 AM - 12:00 PM)</h3>
+          <div class="slot-buttons" id="morningSlots"></div>
+          <h3 id="afternoon-label">Afternoon (12:00 PM - 4:00 PM)</h3>
+          <div class="slot-buttons" id="afternoonSlots"></div>
+          <h3 id="evening-label">Evening (4:00 PM - 5:00 PM)</h3>
+          <div class="slot-buttons" id="eveningSlots"></div>
+        </div>
+        <div id="sidebarMessage" class="sidebar-message hidden"></div>
+        <button class="confirm-button" id="confirmBooking" style="margin-bottom: 50px;">Book Consultation Now</button>
+        <div id="confirmation" class="hidden"></div>
+      </aside>
+    </main>
+
+    <div id="notification" class="notification">
+      <div class="notification-icon">✓</div>
+      <div class="notification-text">Your consultation has been booked successfully!</div>
+      <button class="notification-close" onclick="hideNotification()">x</button>
+    </div>
+
+    <div id="paymentModal" class="modal hidden">
+      <div class="modal-content">
+        <span class="close-modal">×</span>
+        <h2>Complete Payment</h2>
+        <div class="payment-summary">
+          <p><strong>Amount:</strong> ₹<span id="paymentAmount"></span></p>
+          <p><strong>Dietitian:</strong> <span id="dietitianName"></span></p>
+          <p><strong>Date:</strong> <span id="appointmentDate"></span></p>
+          <p><strong>Time:</strong> <span id="appointmentTime"></span></p>
+          <p><strong>Type:</strong> <span id="consultationTypeDisplay"></span></p>
+        </div>
+        <form id="paymentForm">
+          <div class="form-group">
+            <label for="paymentMethod">Payment Method</label>
+            <select id="paymentMethod" name="paymentMethod" required aria-label="Select payment method">
+              <option value="" disabled selected>Select a payment method</option>
+              <option value="Credit Card">Credit Card</option>
+              <option value="UPI">UPI</option>
+              <option value="PayPal">PayPal</option>
+            </select>
+          </div>
+          <div id="paymentDetails" class="payment-details hidden"></div>
+          <div id="formErrors" class="form-errors hidden"></div>
+          <div class="form-actions">
+            <button type="button" id="cancelPayment" class="btn btn-secondary">Cancel</button>
+            <button type="submit" id="proceedPayment" class="btn btn-primary">Confirm Payment</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
+            <div class="logo">
+              <div class="icon-container">
+                <i class="icon fas fa-leaf"></i>
+              </div>
+              <span>
+                <span class="highlight">N</span>utri 
+                <span class="highlight">C</span>onnect
+              </span>
+            </div>
+            <p class="footer-about">
+              NutriConnect helps you find certified dietitians and nutrition experts 
+              to achieve your health goals through personalized nutrition plans.
+            </p>
+            <div class="social-links">
+              <a href="https://www.facebook.com/profile.php?id=61572485733709" target="_blank" class="social-link" aria-label="Facebook">
+                <i class="fab fa-facebook-f"></i>
+              </a>
+              <a href="https://www.instagram.com/nutriconnect2025" target="_blank" class="social-link" aria-label="Instagram">
+                <i class="fab fa-instagram"></i>
+              </a>
+              <a href="https://x.com/NutriC21" target="_blank" class="social-link" aria-label="Twitter">
+                <i class="fab fa-twitter"></i>
+              </a>
+              <a href="https://www.linkedin.com/in/nutri-connect-a0b774349" target="_blank" class="social-link" aria-label="LinkedIn">
+                <i class="fab fa-linkedin-in"></i>
+              </a>
+            </div>
+          </div>
+          <div class="col-lg-2 col-md-6 mb-4 mb-lg-0">
+            <h5 class="footer-title">Quick Links</h5>
+            <ul class="footer-links">
+              <li><a href="/user"><i class="fas fa-chevron-right"></i> Home</a></li>
+              <li><a href="/dietitian-profiles"><i class="fas fa-chevron-right"></i> Find Dietitians</a></li>
+              <li><a href="/user-guide"><i class="fas fa-chevron-right"></i> How It Works</a></li>
+              <li><a href="/blog"><i class="fas fa-chevron-right"></i> Nutrition Blog</a></li>
+              <li><a href="/pricing"><i class="fas fa-chevron-right"></i> Pricing Plans</a></li>
+              <li><a href="/contact"><i class="fas fa-chevron-right"></i> Contact Support</a></li>
+            </ul>
+          </div>
+          <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+            <h5 class="footer-title">Services</h5>
+            <ul class="footer-links">
+              <li><a href="/weight-management"><i class="fas fa-chevron-right"></i> Weight Management</a></li>
+              <li><a href="/diabetes-thyroid"><i class="fas fa-chevron-right"></i> Diabetes/Thyroid</a></li>
+              <li><a href="/cardiac-health"><i class="fas fa-chevron-right"></i> Cardiac Health</a></li>
+              <li><a href="/womens-health"><i class="fas fa-chevron-right"></i> Women's Health</a></li>
+              <li><a href="/skin-hair"><i class="fas fa-chevron-right"></i> Skin & Hair Care</a></li>
+              <li><a href="/gut-health"><i class="fas fa-chevron-right"></i> Gut Health</a></li>
+            </ul>
+          </div>
+          <div class="col-lg-3 col-md-6">
+            <h5 class="footer-title">Contact Info</h5>
+            <ul class="footer-contact-info">
+              <li>
+                <i class="fas fa-map-marker-alt"></i>
+                <span>Plot No. 45, Greenway Colony, 517681, India</span>
+              </li>
+              <li>
+                <i class="fas fa-phone-alt"></i>
+                <a href="tel:+917075783143">+91 70757 83143</a>
+              </li>
+              <li>
+                <i class="fas Delivery Options fa-envelope"></i>
+                <a href="mailto:support@nutriconnect.com">support@nutriconnect.com</a>
+              </li>
+              <li>
+                <i class="fas fa-clock"></i>
+                <span>Mon-Fri: 9AM - 9PM</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="container">
+          <div class="row align-items-center">
+            <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+              <p class="copyright mb-0">&copy; 2025 NutriConnect. All rights reserved.</p>
+            </div>
+            <div class="col-md-6 text-center text-md-end">
+              <ul class="footer-menu">
+                <li><a href="/terms_conditions">Terms of Service</a></li>
+                <li><a href="/privacy-policy">Privacy Policy</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script src="/js/diabetes_thyroid.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
+  </body>
+</html>
